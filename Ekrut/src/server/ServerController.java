@@ -1,5 +1,6 @@
 package server;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -51,24 +52,33 @@ public class ServerController {
     private TableColumn<?, ?> status_col;
     
     public void connectToServer() {
-    	sv = new EKServer(5555);
-    	sv.main(null);
+    	//Start server
+    	sv = new EKServer(5555, this);
     	try {
-    		StringBuilder sb = new StringBuilder("jdbc:mysql://");
-			sb.append(ip.getText() + "/");
-			sb.append(db_name.getText() + "?serverTimezone=IST");
-			ServerConnection.setDB_Path(sb.toString());
-			ServerConnection.setDB_User(db_user.getText());
-			ServerConnection.setDB_Password(db_password.getText());
-			
-    		conn = ServerConnection.getConnection();
-    	}
-    	catch(SQLException e)
-    	{
-    		//UPDATE GUI FOR FAIL CONNECTION
-    		console_textbox.appendText("Fail to connect\n");
-    	}
-    	console_textbox.appendText("Connected\n");
+			sv.listen();
+			appendConsole("Server is up.");
+		} catch (IOException e) {
+			appendConsole("Server fail");
+			e.printStackTrace();
+		}
+    	
+    	//Start DB Connection
+		//Set connection parameters
+		StringBuilder sb = new StringBuilder("jdbc:mysql://");
+		sb.append(ip.getText() + "/");
+		sb.append(db_name.getText() + "?serverTimezone=IST");
+		ServerConnection.setDB_Path(sb.toString());
+		ServerConnection.setDB_User(db_user.getText());
+		ServerConnection.setDB_Password(db_password.getText());
+		ServerConnection.setSC(this);
+		
+		//Get database connection
+		conn = ServerConnection.getConnection();
+	
+    }
+    
+    public void appendConsole(String str) {
+    	console_textbox.appendText(str + "\n");
     }
 
 }

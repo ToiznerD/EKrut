@@ -5,9 +5,11 @@ import ocsf.server.*;
 public class EKServer extends AbstractServer{
 	//Default port to listen
 	final public static int DEFAULT_PORT = 5555;
+	private static ServerController sc;
 	
-	public EKServer(int port) {
+	public EKServer(int port, ServerController sc) {
 		super(port);
+		this.sc = sc;
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class EKServer extends AbstractServer{
 	      port = DEFAULT_PORT; //Set port to 5555
 	    }
 		
-	    EKServer sv = new EKServer(port);
+	    EKServer sv = new EKServer(port, null);
 	    
 	    try 
 	    {
