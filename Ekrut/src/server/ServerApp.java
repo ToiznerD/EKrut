@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ServerApp extends Application{
-
+	//sdfsdf
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = (Parent) FXMLLoader.load(getClass().getResource("ServerGUI.fxml"));
