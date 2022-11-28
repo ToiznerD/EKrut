@@ -54,7 +54,14 @@ public class ServerController {
     	sv = new EKServer(5555);
     	sv.main(null);
     	try {
-    	conn = ServerConnection.getConnection();
+    		StringBuilder sb = new StringBuilder("jdbc:mysql://");
+			sb.append(ip.getText() + "/");
+			sb.append(db_name.getText() + "?serverTimezone=IST");
+			ServerConnection.setDB_Path(sb.toString());
+			ServerConnection.setDB_User(db_user.getText());
+			ServerConnection.setDB_Password(db_password.getText());
+			
+    		conn = ServerConnection.getConnection();
     	}
     	catch(SQLException e)
     	{
