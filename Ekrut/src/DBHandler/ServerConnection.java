@@ -1,8 +1,10 @@
-package server;
+package DBHandler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import server.ServerController;
 
 public class ServerConnection {
 	private static Connection conn;
@@ -17,7 +19,7 @@ public class ServerConnection {
 			sc.appendConsole("Database successfuly connected.");
 		}
 		catch(Exception ex) {
-			sc.appendConsole("Database fail to connect");
+			//sc.appendConsole("Database fail to connect");
 			ex.printStackTrace();
 		}
 	}
@@ -42,6 +44,7 @@ public class ServerConnection {
 			if(conn == null)
 				Connection();
 			return conn;
-
 	}
+	
+	
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import DBHandler.ServerConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -52,6 +53,17 @@ public class ServerController {
     private TableColumn<?, ?> status_col;
     
     public void connectToServer() {
+    	
+      	//Start DB Connection
+		//Set connection parameters
+		StringBuilder sb = new StringBuilder("jdbc:mysql://");
+		sb.append(ip.getText() + "/");
+		sb.append(db_name.getText() + "?serverTimezone=IST");
+		ServerConnection.setDB_Path(sb.toString());
+		ServerConnection.setDB_User(db_user.getText());
+		ServerConnection.setDB_Password(db_password.getText());
+		ServerConnection.setSC(this);
+    	
     	//Start server
     	sv = new EKServer(5555, this);
     	try {
@@ -62,15 +74,7 @@ public class ServerController {
 			e.printStackTrace();
 		}
     	
-    	//Start DB Connection
-		//Set connection parameters
-		StringBuilder sb = new StringBuilder("jdbc:mysql://");
-		sb.append(ip.getText() + "/");
-		sb.append(db_name.getText() + "?serverTimezone=IST");
-		ServerConnection.setDB_Path(sb.toString());
-		ServerConnection.setDB_User(db_user.getText());
-		ServerConnection.setDB_Password(db_password.getText());
-		ServerConnection.setSC(this);
+  
 		
 		//Get database connection
 		conn = ServerConnection.getConnection();
