@@ -5,7 +5,6 @@ import java.io.IOException;
 import ocsf.client.AbstractClient;
 
 public class ClientBackEnd extends AbstractClient {
-	public Object response;
 
 	public ClientBackEnd(String host, int port) throws IOException {
 		super(host, port);
@@ -14,9 +13,7 @@ public class ClientBackEnd extends AbstractClient {
 	
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		response = msg;
 		System.out.println(msg);
-		
 		
 	}
 	

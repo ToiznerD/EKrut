@@ -11,24 +11,24 @@ public class EKServer extends AbstractServer{
 	//Default port to listen
 	final public static int DEFAULT_PORT = 5555;
 	private static ServerController sc;
-	private MySQLConnection SQLcon;
 	
 	public EKServer(int port, ServerController sc) {
 		super(port);
 		this.sc = sc;
-		this.SQLcon = new MySQLConnection();
 	}
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		String msgg = (String) msg;
-        if (msgg.contains("UPDATE")) {
-        	
-        	
-        } else if (msgg.contains("SELECT")) {
-        	ResultSet rs = SQLcon.runQuery(msgg);
-        	sendResultSet(rs);	
-        }		
+		System.out.println(msg);
+//		String msgg = (String) msg;
+//        if (msgg.contains("UPDATE")) {
+//        	
+//        	
+//        } else if (msgg.contains("SELECT")) {
+//        	ResultSet rs = SQLcon.runQuery(msgg);
+//        	sendResultSet(rs);	
+//        }		
+		sendToAllClients("Message Recieved");
 		
 	}
 	

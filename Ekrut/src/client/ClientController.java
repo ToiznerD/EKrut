@@ -53,7 +53,7 @@ public class ClientController {
 		}
 		
 		try {
-			client.handleMessageFromClientUI("SELECT * FROM subscriber;");
+			client.handleMessageFromClientUI("1"); //("SELECT * FROM subscriber;");
 		} catch (IOException e) {
 			consoleArea.appendText("when trying to connect to: " + host + ":" + DEFAULT_PORT  + ", the following error occured:" + "\n");
 			consoleArea.appendText(e.toString() + "\n" );
