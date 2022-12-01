@@ -4,17 +4,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-public class MySQLConnection {
-	private Connection con;
+public class DBController {
+	private static Connection con = ServerConnection.getConnection();
 
-	public MySQLConnection() {
-		con = ServerConnection.getConnection();
-	}
-
+//	public DBController() {
+//		con = ServerConnection.getConnection();
+//	}
+//
 	
-	public ResultSet runQuery(String query) {
-			
+	public static ResultSet runQuery(String query) {
 		Statement stmt;
 		try 
 		{
@@ -24,5 +24,6 @@ public class MySQLConnection {
 			return rs;
 		} catch (SQLException e) { e.printStackTrace(); return null; }	
 	}
+	
 
 }

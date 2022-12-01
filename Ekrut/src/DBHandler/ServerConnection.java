@@ -2,7 +2,9 @@ package DBHandler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import server.ServerController;
 
@@ -15,17 +17,26 @@ public class ServerConnection {
 	private static void Connection() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+			sc.appendConsole("Driver definition succeed");
+		} catch (Exception e) {
+        		//e.printStackTrace();
+        		sc.appendConsole(e.getStackTrace().toString());
+		 }
+		 
+		try {
 			conn = DriverManager.getConnection(DB_Path,DB_User,DB_Password);
 			sc.appendConsole("Database successfuly connected.");
-		}
-		catch(Exception ex) {
-			//sc.appendConsole("Database fail to connect");
-			ex.printStackTrace();
+		} catch (SQLException e) {
+			sc.appendConsole("Database fail to connect");
 		}
 	}
 	
 	public static void setDB_Path(String path) {
 		DB_Path = path;
+	}
+	
+	public static String getDB_Path() {
+		return DB_Path;
 	}
 	
 	public static void setDB_User(String user) {

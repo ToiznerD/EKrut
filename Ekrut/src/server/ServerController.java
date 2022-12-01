@@ -2,7 +2,9 @@ package server;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import DBHandler.ServerConnection;
 import javafx.fxml.FXML;
@@ -15,7 +17,7 @@ import javafx.scene.control.TextField;
 
 public class ServerController {
 	private EKServer sv;
-	private Connection conn;
+	protected Connection conn;
     @FXML
     private Button btnConnect;
 
@@ -75,7 +77,6 @@ public class ServerController {
 		}
     	
   
-		
 		//Get database connection
 		conn = ServerConnection.getConnection();
 	
