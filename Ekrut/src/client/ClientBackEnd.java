@@ -17,8 +17,18 @@ public class ClientBackEnd extends AbstractClient {
 	
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		ArrayList<Customer> CustomerArr = Customer.CreateCustomer2DArr((ArrayList<ArrayList<Object>>)msg);
-		clientController.fillUserTableView(CustomerArr);
+		if (msg instanceof Integer) {
+			Integer msgg = (Integer)msg;
+			if (msgg.intValue() == 0) {
+				clientController.appendConsole("Update error");
+			} else {
+				clientController.appendConsole("Update was done successfully");
+			}
+		}
+		else {
+			ArrayList<Customer> CustomerArr = Customer.CreateCustomer2DArr((ArrayList<ArrayList<Object>>) msg);
+			clientController.fillUserTableView(CustomerArr);
+		}
 	}
 	
 	public void handleMessageFromClientUI(Object message) throws IOException {

@@ -18,6 +18,7 @@ public class EKServer extends AbstractServer{
 	//Default port to listen
 	final public static int DEFAULT_PORT = 5555;
 	private static ServerController sc;
+
 	private Connection SQLcon;
 	
 	public EKServer(int port, ServerController sc) {
@@ -29,17 +30,20 @@ public class EKServer extends AbstractServer{
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		String msgg = (String)msg;
+		sc.appendConsole("Message recived on server side: " + msgg);
+
         if (msgg.contains("UPDATE")) {
-        	
-        	
-        } else if (msgg.contains("SELECT")) {
+			Integer returnVal = DBController.runUpdate(msgg);
+			sendToAllClients(returnVal);
+		}
+
+		else if (msgg.contains("SELECT")) {
         	ResultSet rs = DBController.runQuery(msgg);
         	try {
 	        	ResultSetMetaData rsmd = rs.getMetaData();
 	        	int columnCount = rsmd.getColumnCount();
 	        	ArrayList<ArrayList<Object>> TwoDdataArray = create2DArrFromRs(rs, columnCount);
-        	
-	        	sc.appendConsole("Message recived on server side: " + msgg);
+
         		sendToAllClients(TwoDdataArray);
         	} catch (SQLException e) { sc.appendConsole(e.getStackTrace().toString()); }
         }		
