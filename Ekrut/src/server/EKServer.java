@@ -39,64 +39,32 @@ public class EKServer extends AbstractServer{
 
 		else if (msgg.contains("SELECT")) {
         	ResultSet rs = DBController.runQuery(msgg);
-        	try {
-	        	ResultSetMetaData rsmd = rs.getMetaData();
-	        	int columnCount = rsmd.getColumnCount();
-	        	ArrayList<ArrayList<Object>> TwoDdataArray = create2DArrFromRs(rs, columnCount);
+        	
+        		//Dor changes
+        		ArrayList<Customer> customerArray = createCustomerArray(rs);
+        		sc.appendConsole("Sending list" + customerArray);
+        		sendToAllClients(customerArray);
 
-        		sendToAllClients(TwoDdataArray);
-        	} catch (SQLException e) { sc.appendConsole(e.getStackTrace().toString()); }
         }		
-//		
-//		
+		
 	}
 	
-	private ArrayList<ArrayList<Object>> create2DArrFromRs(ResultSet rs, int colNum) {
-		ArrayList<ArrayList<Object>> returnVal = new ArrayList<ArrayList<Object>>();
-		ArrayList<Object> innerArr = new ArrayList<Object>();;
-		
+	//Dor function to create ArrayList of serializable Customers
+	private ArrayList<Customer> createCustomerArray(ResultSet rs) {
+		ArrayList<Customer> customerArray = new ArrayList<>();
 		try {
 			while(rs.next()) {
-				innerArr = new ArrayList<Object>();
-				for (int i=1; i <= colNum; i++) {
-					innerArr.add(rs.getObject(i));
-				}
-				
-				returnVal.add(innerArr);
+				customerArray.add(new Customer(rs.getString(1), rs.getString(2),
+												rs.getInt(3), rs.getString(4),
+												rs.getString(5), rs.getString(6),
+												rs.getInt(7)));
 			}
-			return returnVal;
-			
+			return customerArray;
 		} catch (SQLException e) {
 			sc.appendConsole(e.getStackTrace().toString());
 			return null;
 		}
+		
 	}
 	
-	//
-	public static void main(String[] args) 
-	  {
-	    int port = 0; //Port to listen on
-
-	    try
-	    {
-	      port = Integer.parseInt(args[0]); //Get port from command line
-	    }
-	    catch(Throwable t)
-	    {
-	      port = DEFAULT_PORT; //Set port to 5555
-	    }
-		
-	    EKServer sv = new EKServer(port, null);
-	    
-	    try 
-	    {
-	      sv.listen(); //Start listening for connections
-	      System.out.println("LISTENING to port : " + DEFAULT_PORT);
-	    } 
-	    catch (Exception ex) 
-	    {
-	      System.out.println(ex);
-	      System.out.println("ERROR - Could not listen for clients!");
-	    }
-	  }
 }

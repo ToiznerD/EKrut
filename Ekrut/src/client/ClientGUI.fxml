@@ -9,17 +9,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="933.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientController">
    <children>
-      <AnchorPane prefHeight="516.0" prefWidth="715.0">
+      <AnchorPane prefHeight="539.0" prefWidth="873.0">
          <children>
             <Button fx:id="displayUsersBtn" layoutX="134.0" layoutY="107.0" mnemonicParsing="false" onAction="#displayUsersBtnClick" text="Display Users" />
             <Label layoutX="520.0" layoutY="5.0" text="Users" />
-            <TableView fx:id="customerTableView" layoutX="331.0" layoutY="30.0" prefHeight="154.0" prefWidth="406.0" AnchorPane.bottomAnchor="331.77777777777777" AnchorPane.leftAnchor="330.99999999999994" AnchorPane.rightAnchor="96.9999999999999" AnchorPane.topAnchor="30.0">
+            <TableView fx:id="customerTableView" layoutX="331.0" layoutY="30.0" prefHeight="154.0" prefWidth="498.0" AnchorPane.bottomAnchor="332.0" AnchorPane.leftAnchor="331.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="30.0">
               <columns>
-                <TableColumn fx:id="customerID" prefWidth="68.88885498046875" text="ID" />
-                <TableColumn fx:id="customerCreditCard" prefWidth="189.77783203125" text="Credit Card Number" />
-                  <TableColumn fx:id="customerSubscriberNum" minWidth="0.0" prefWidth="147.5555419921875" text="Subscriber Number" />
+                <TableColumn fx:id="customerID" prefWidth="96.79998779296875" text="ID" />
+                  <TableColumn fx:id="customerName" prefWidth="97.5999755859375" text="First Name" />
+                  <TableColumn fx:id="customerLName" prefWidth="98.4000244140625" text="Last Name" />
+                <TableColumn fx:id="customerCreditCard" prefWidth="184.0" text="Credit Card Number" />
+                  <TableColumn fx:id="customerSubscriberNum" minWidth="0.0" prefWidth="119.199951171875" text="Subscriber Number" />
               </columns>
             </TableView>
             <Label layoutX="14.0" layoutY="203.0" prefHeight="17.0" prefWidth="186.0" text="Choose user to update (enter ID): " />

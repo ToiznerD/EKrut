@@ -2,7 +2,6 @@ package client;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import DBHandler.Customer;
 import ocsf.client.AbstractClient;
 
@@ -26,7 +25,7 @@ public class ClientBackEnd extends AbstractClient {
 			}
 		}
 		else {
-			ArrayList<Customer> CustomerArr = Customer.CreateCustomer2DArr((ArrayList<ArrayList<Object>>) msg);
+			ArrayList<Customer> CustomerArr = (ArrayList<Customer>)msg; //New
 			clientController.fillUserTableView(CustomerArr);
 		}
 	}

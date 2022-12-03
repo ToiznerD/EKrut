@@ -55,6 +55,12 @@ public class ClientController {
 	private TableColumn<Customer, Integer> customerSubscriberNum;
 	
 	@FXML
+	private TableColumn<Customer, String> customerName;
+	
+	@FXML
+	private TableColumn<Customer, String> customerLName;
+	
+	@FXML
 	private TextArea consoleArea;
 	
 	/**
@@ -106,6 +112,8 @@ public class ClientController {
 		ObservableList<Customer> CustomerObservableArr = FXCollections.observableArrayList(CustomerArr);
 		
 		customerID.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("id"));
+		customerName.setCellValueFactory(new PropertyValueFactory<Customer, String>("fName"));
+		customerLName.setCellValueFactory(new PropertyValueFactory<Customer, String>("lName"));
 		customerCreditCard.setCellValueFactory(new PropertyValueFactory<Customer, String>("creditNum"));
 		customerSubscriberNum.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("subNum"));
 		
