@@ -102,6 +102,7 @@ public class ClientController {
 			query.append(", subscriber_number = \"" + subscriberNumberUpdateField.getText() + "\"");
 			query.append(" WHERE id=\"" + IDToUpdateField.getText() + "\"");
 			client.handleMessageFromClientUI(query.toString());
+			displayUsersBtnClick();
 		} catch (IOException e) {
 			logError(e);
 		}
