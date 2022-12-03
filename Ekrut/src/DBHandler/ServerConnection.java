@@ -57,5 +57,8 @@ public class ServerConnection {
 			return conn;
 	}
 	
+	public static void dropConnection() {
+		conn = null;
+	}
 	
 }

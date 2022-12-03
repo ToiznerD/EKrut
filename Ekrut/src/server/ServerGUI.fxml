@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -64,20 +65,26 @@
                </padding>
             </Label>
             <TextField fx:id="db_user" text="root" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button fx:id="btnConnect" mnemonicParsing="false" onAction="#connectToServer" prefHeight="27.0" prefWidth="251.0" text="Connect" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-               <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </GridPane.margin>
-            </Button>
             <PasswordField fx:id="db_password" text="1379825" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="252.0" text="Server Configuration" GridPane.columnSpan="2">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
+            <AnchorPane prefHeight="97.0" prefWidth="90.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
+               <children>
+                  <Button fx:id="btnConnect" layoutX="10.0" layoutY="8.0" mnemonicParsing="false" onAction="#connectToServer" prefHeight="27.0" prefWidth="236.0" style="-fx-background-radius: 100;" text="Connect">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="btnDisconnect" disable="true" layoutX="10.0" layoutY="41.0" mnemonicParsing="false" onAction="#disconnectFromServer" prefHeight="27.0" prefWidth="236.0" style="-fx-background-radius: 100;" text="Disconnect">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </GridPane>
       <VBox prefHeight="671.0" prefWidth="598.0">

@@ -20,6 +20,9 @@ public class ServerController {
 	protected Connection conn;
     @FXML
     private Button btnConnect;
+    
+    @FXML
+    private Button btnDisconnect;
 
     @FXML
     private Button btnImport;
@@ -79,7 +82,22 @@ public class ServerController {
   
 		//Get database connection
 		conn = ServerConnection.getConnection();
-	
+		btnConnect.setDisable(true);
+		btnDisconnect.setDisable(false);
+    }
+    
+    public void disconnectFromServer() {
+    	try {
+			sv.close();
+			ServerConnection.dropConnection();
+			btnDisconnect.setDisable(true);
+			btnConnect.setDisable(false);
+			appendConsole("Driver definition aborted");
+			appendConsole("DB connection is down");
+			appendConsole("Server is down");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     public void appendConsole(String str) {
