@@ -11,7 +11,6 @@ import java.sql.ResultSetMetaData;
 
 import DBHandler.Customer;
 import DBHandler.DBController;
-import DBHandler.ServerConnection;
 import ocsf.server.*;
 
 public class EKServer extends AbstractServer{
@@ -19,12 +18,10 @@ public class EKServer extends AbstractServer{
 	final public static int DEFAULT_PORT = 5555;
 	private static ServerController sc;
 
-	private Connection SQLcon;
 	
 	public EKServer(int port, ServerController sc) {
 		super(port);
-		this.sc = sc;
-		SQLcon = ServerConnection.getConnection();
+		EKServer.sc = sc;
 	}
 
 	@Override
@@ -38,33 +35,26 @@ public class EKServer extends AbstractServer{
 		}
 
 		else if (msgg.contains("SELECT")) {
-        	ResultSet rs = DBController.runQuery(msgg);
-        	
-        		//Dor changes
-        		ArrayList<Customer> customerArray = createCustomerArray(rs);
-        		sc.appendConsole("Sending list" + customerArray);
-        		sendToAllClients(customerArray);
+        	ResultSet rs = null;
+			try {
+				rs = DBController.runQuery(msgg);
+			} catch (SQLException e) {
+				sc.appendConsole(e.getMessage());
+				e.printStackTrace();
+			}
 
+        		ArrayList<Customer> customerArray = null;
+				try {
+					customerArray = Customer.createCustomerArray(rs);
+					sc.appendConsole("Sending list" + customerArray);
+	        		sendToAllClients(customerArray);
+	        		
+				} catch (SQLException e) {
+					sc.appendConsole(e.getStackTrace().toString());
+				}
         }		
 		
 	}
 	
-	//Dor function to create ArrayList of serializable Customers
-	private ArrayList<Customer> createCustomerArray(ResultSet rs) {
-		ArrayList<Customer> customerArray = new ArrayList<>();
-		try {
-			while(rs.next()) {
-				customerArray.add(new Customer(rs.getString(1), rs.getString(2),
-												rs.getInt(3), rs.getString(4),
-												rs.getString(5), rs.getString(6),
-												rs.getInt(7)));
-			}
-			return customerArray;
-		} catch (SQLException e) {
-			sc.appendConsole(e.getStackTrace().toString());
-			return null;
-		}
-		
-	}
 	
 }

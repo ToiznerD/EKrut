@@ -10,7 +10,7 @@ public class ClientBackEnd extends AbstractClient {
 
 	public ClientBackEnd(String host, int port, ClientController clientController) throws IOException {
 		super(host, port);
-		this.clientController = clientController;
+		ClientBackEnd.clientController = clientController;
 		openConnection();
 	}
 	

@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -77,7 +79,19 @@ public class Customer implements Serializable{
     	id = new SimpleIntegerProperty(s.readInt());
     	subNum = new SimpleIntegerProperty(s.readInt());
     }
-
+    
+    public static ArrayList<Customer> createCustomerArray(ResultSet rs) throws SQLException {
+		ArrayList<Customer> customerArray = new ArrayList<>();
+		while(rs.next()) {
+			customerArray.add(new Customer(rs.getString(1), rs.getString(2),
+											rs.getInt(3), rs.getString(4),
+											rs.getString(5), rs.getString(6),
+											rs.getInt(7)));
+		}
+		return customerArray;
+	
+	}
+    
 	@Override
 	public String toString() {
 		return "[fName=" + fName + ", lName=" + lName + ", phoneNum=" + phoneNum + ", email=" + email

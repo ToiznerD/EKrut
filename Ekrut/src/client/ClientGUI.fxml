@@ -13,7 +13,7 @@
    <children>
       <AnchorPane prefHeight="539.0" prefWidth="873.0">
          <children>
-            <Button fx:id="displayUsersBtn" layoutX="134.0" layoutY="107.0" mnemonicParsing="false" onAction="#displayUsersBtnClick" text="Display Users" />
+            <Button fx:id="displayUsersBtn" layoutX="586.0" layoutY="212.0" mnemonicParsing="false" onAction="#displayUsersBtnClick" text="Display Users" />
             <Label layoutX="520.0" layoutY="5.0" text="Users" />
             <TableView fx:id="customerTableView" layoutX="331.0" layoutY="30.0" prefHeight="154.0" prefWidth="498.0" AnchorPane.bottomAnchor="332.0" AnchorPane.leftAnchor="331.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="30.0">
               <columns>
@@ -24,17 +24,15 @@
                   <TableColumn fx:id="customerSubscriberNum" minWidth="0.0" prefWidth="119.199951171875" text="Subscriber Number" />
               </columns>
             </TableView>
-            <Label layoutX="14.0" layoutY="203.0" prefHeight="17.0" prefWidth="186.0" text="Choose user to update (enter ID): " />
-            <TextField fx:id="IDToUpdateField" layoutX="206.0" layoutY="199.0" prefHeight="25.0" prefWidth="115.0" />
-            <Label layoutX="14.0" layoutY="243.0" text="new Credit Card number:" />
-            <Label layoutX="17.0" layoutY="280.0" text="new subscriber number:" />
-            <TextField fx:id="creditCardUpdateField" layoutX="206.0" layoutY="239.0" prefHeight="25.0" prefWidth="115.0" />
-            <TextField fx:id="subscriberNumberUpdateField" layoutX="206.0" layoutY="276.0" prefHeight="25.0" prefWidth="115.0" />
-            <TextArea fx:id="consoleArea" layoutX="134.0" layoutY="380.0" prefHeight="105.0" prefWidth="604.0" />
-            <Label layoutX="415.0" layoutY="353.0" text="Console" />
-            <Label layoutX="34.0" layoutY="69.0" text="Enter host IP: " />
-            <TextField fx:id="hostIP" layoutX="114.0" layoutY="65.0" prefHeight="25.0" prefWidth="127.0" />
-            <Button fx:id="UpdateBtn" layoutX="152.0" layoutY="328.0" mnemonicParsing="false" onAction="#updateBtnClick" text="Update" />
+            <Label layoutX="17.0" layoutY="65.0" prefHeight="17.0" prefWidth="186.0" text="Choose user to update (enter ID): " />
+            <TextField fx:id="IDToUpdateField" layoutX="206.0" layoutY="61.0" prefHeight="25.0" prefWidth="115.0" />
+            <Label layoutX="14.0" layoutY="111.0" text="new Credit Card number:" />
+            <Label layoutX="16.0" layoutY="162.0" text="new subscriber number:" />
+            <TextField fx:id="creditCardUpdateField" layoutX="206.0" layoutY="107.0" prefHeight="25.0" prefWidth="115.0" />
+            <TextField fx:id="subscriberNumberUpdateField" layoutX="206.0" layoutY="157.0" prefHeight="25.0" prefWidth="115.0" />
+            <TextArea fx:id="consoleArea" layoutX="79.0" layoutY="318.0" prefHeight="162.0" prefWidth="773.0" />
+            <Label layoutX="368.0" layoutY="288.0" text="Console" />
+            <Button fx:id="UpdateBtn" layoutX="150.0" layoutY="212.0" mnemonicParsing="false" onAction="#updateBtnClick" text="Update" />
          </children>
       </AnchorPane>
    </children>

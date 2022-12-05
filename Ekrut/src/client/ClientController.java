@@ -23,9 +23,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class ClientController {
 	final public static int DEFAULT_PORT = 5555;
 	ClientBackEnd client;
-
-	@FXML
-	private TextField hostIP;
 	
 	@FXML
 	private Button displayUsersBtn;
@@ -69,24 +66,8 @@ public class ClientController {
 	 * request to server
 	 */
 
-	public void openConnection() {
-		String host = hostIP.getText();
-		if (host.equals("") || host == null) {
-			host = "localhost";
-		}
-
-		try {
-			if (client == null)
-				client = new ClientBackEnd(host, DEFAULT_PORT, this);
-		} catch (IOException e) {
-			appendConsole("when trying to connect to: " + host + ":" + DEFAULT_PORT  + ", the following error occured:" + "\n");
-			appendConsole(e.getStackTrace().toString() + "\n" );
-			e.printStackTrace();
-		}
-	}
 
 	public void displayUsersBtnClick() {
-		openConnection();
 		try {
 			String query = "SELECT * FROM subscriber;";
 			client.handleMessageFromClientUI(query);
@@ -96,7 +77,6 @@ public class ClientController {
 	}
 	
 	public void updateBtnClick() {
-		openConnection();
 		try {
 			StringBuilder query = new StringBuilder("UPDATE subscriber SET credit_card_number = \"" + creditCardUpdateField.getText() + "\"");
 			query.append(", subscriber_number = \"" + subscriberNumberUpdateField.getText() + "\"");
@@ -130,6 +110,10 @@ public class ClientController {
     public void appendConsole(String str) {
     	consoleArea.appendText(str + "\n");
     }
+
+	public void setClient(ClientBackEnd client) {
+		this.client = client;
+	}
 
 
 }

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import DBHandler.ServerConnection;
+import DBHandler.DBController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 
 public class ServerController {
 	private EKServer sv;
-	protected Connection conn;
+
     @FXML
     private Button btnConnect;
     
@@ -64,32 +64,41 @@ public class ServerController {
 		StringBuilder sb = new StringBuilder("jdbc:mysql://");
 		sb.append(ip.getText() + "/");
 		sb.append(db_name.getText() + "?serverTimezone=IST");
-		ServerConnection.setDB_Path(sb.toString());
-		ServerConnection.setDB_User(db_user.getText());
-		ServerConnection.setDB_Password(db_password.getText());
-		ServerConnection.setSC(this);
+		DBController.setDB_Path(sb.toString());
+		DBController.setDB_User(db_user.getText());
+		DBController.setDB_Password(db_password.getText());
     	
-    	//Start server
     	sv = new EKServer(5555, this);
     	try {
+    		//Start server
 			sv.listen();
 			appendConsole("Server is up.");
+			
+			//Start DB connection
+			DBController.connection();
+			appendConsole("Driver definition succeed.");
+			appendConsole("Database connected successfully.");
+			
+			btnConnect.setDisable(true);
+			btnDisconnect.setDisable(false);
+			
 		} catch (IOException e) {
-			appendConsole("Server fail");
+			appendConsole("Server fail.");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			appendConsole("Database connection failed.");
+			e.printStackTrace();
+		} catch (Exception e) {
+			appendConsole("Driver definition failed.");
 			e.printStackTrace();
 		}
-    	
-  
-		//Get database connection
-		conn = ServerConnection.getConnection();
-		btnConnect.setDisable(true);
-		btnDisconnect.setDisable(false);
+
     }
     
     public void disconnectFromServer() {
     	try {
 			sv.close();
-			ServerConnection.dropConnection();
+			DBController.dropConnection();
 			btnDisconnect.setDisable(true);
 			btnConnect.setDisable(false);
 			appendConsole("Driver definition aborted");
