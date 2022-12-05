@@ -25,7 +25,7 @@ public class ClientBackEnd extends AbstractClient {
 			}
 		}
 		else {
-			ArrayList<Customer> CustomerArr = (ArrayList<Customer>)msg; //New
+			ArrayList<Customer> CustomerArr = (ArrayList<Customer> )msg; //New
 			clientController.fillUserTableView(CustomerArr);
 		}
 	}
