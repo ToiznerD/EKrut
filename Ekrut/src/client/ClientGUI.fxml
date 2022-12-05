@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="933.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="933.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientController">
    <children>
       <AnchorPane prefHeight="539.0" prefWidth="873.0">
          <children>
@@ -20,6 +20,8 @@
                 <TableColumn fx:id="customerID" prefWidth="96.79998779296875" text="ID" />
                   <TableColumn fx:id="customerName" prefWidth="97.5999755859375" text="First Name" />
                   <TableColumn fx:id="customerLName" prefWidth="98.4000244140625" text="Last Name" />
+                  <TableColumn fx:id="customerEmail" prefWidth="98.4000244140625" text="Email" />
+                  <TableColumn fx:id="customerPhone" prefWidth="98.4000244140625" text="Phone Number" />
                 <TableColumn fx:id="customerCreditCard" prefWidth="184.0" text="Credit Card Number" />
                   <TableColumn fx:id="customerSubscriberNum" minWidth="0.0" prefWidth="119.199951171875" text="Subscriber Number" />
               </columns>
@@ -30,9 +32,10 @@
             <Label layoutX="16.0" layoutY="162.0" text="new subscriber number:" />
             <TextField fx:id="creditCardUpdateField" layoutX="206.0" layoutY="107.0" prefHeight="25.0" prefWidth="115.0" />
             <TextField fx:id="subscriberNumberUpdateField" layoutX="206.0" layoutY="157.0" prefHeight="25.0" prefWidth="115.0" />
-            <TextArea fx:id="consoleArea" layoutX="79.0" layoutY="318.0" prefHeight="162.0" prefWidth="773.0" />
-            <Label layoutX="368.0" layoutY="288.0" text="Console" />
-            <Button fx:id="UpdateBtn" layoutX="150.0" layoutY="212.0" mnemonicParsing="false" onAction="#updateBtnClick" text="Update" />
+            <TextArea fx:id="consoleArea" layoutX="80.0" layoutY="285.0" prefHeight="162.0" prefWidth="773.0" />
+            <Label layoutX="445.0" layoutY="261.0" text="Console" />
+            <Button fx:id="UpdateBtn" layoutX="143.0" layoutY="200.0" mnemonicParsing="false" onAction="#updateBtnClick" text="Update" />
+            <Button fx:id="disconnectBtn" layoutX="427.0" layoutY="470.0" mnemonicParsing="false" onAction="#disconnect" text="Disconnect" />
          </children>
       </AnchorPane>
    </children>

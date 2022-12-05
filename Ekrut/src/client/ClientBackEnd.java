@@ -13,34 +13,34 @@ public class ClientBackEnd extends AbstractClient {
 		ClientBackEnd.clientController = clientController;
 		openConnection();
 	}
-	
+
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		if (msg instanceof Integer) {
-			Integer msgg = (Integer)msg;
+			Integer msgg = (Integer) msg;
 			if (msgg.intValue() == 0) {
 				clientController.appendConsole("Update error");
 			} else {
 				clientController.appendConsole("Update was done successfully");
 			}
-		}
-		else {
-			ArrayList<Customer> CustomerArr = (ArrayList<Customer> )msg; //New
+		} else {
+			@SuppressWarnings("unchecked")
+			ArrayList<Customer> CustomerArr = (ArrayList<Customer>) msg; // New
 			clientController.fillUserTableView(CustomerArr);
 		}
 	}
-	
+
 	public void handleMessageFromClientUI(Object message) throws IOException {
 		sendToServer(message);
 	}
-	
-	public void quit()
-	  {
-	    try
-	    {
-	      closeConnection();
-	    }
-	    catch(IOException e) {}
-	    System.exit(0);
-	  }
+
+	public void quit() {
+		try {
+			closeConnection();
+		} catch (IOException e) {
+		} finally {
+			System.exit(0);
+		}
 	}
+
+}

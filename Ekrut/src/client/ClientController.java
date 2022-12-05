@@ -1,34 +1,31 @@
 package client;
 
-
-import javafx.scene.control.TextArea;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import DBHandler.Customer;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ClientController {
 	final public static int DEFAULT_PORT = 5555;
 	ClientBackEnd client;
-	
+
 	@FXML
 	private Button displayUsersBtn;
-	
+
 	@FXML
 	private TextField IDToUpdateField;
-	
+
 	@FXML
 	private TextField creditCardUpdateField;
-	
+
 	@FXML
 	private TextField subscriberNumberUpdateField;
 
@@ -37,31 +34,35 @@ public class ClientController {
 
 	@FXML
 	private TableView<Customer> customerTableView;
-	
+
 	@FXML
 	private TableColumn<Customer, Integer> customerID;
-	
+
 	@FXML
 	private TableColumn<Customer, String> customerCreditCard;
-	
+
 	@FXML
 	private TableColumn<Customer, Integer> customerSubscriberNum;
-	
+	@FXML
+	private TableColumn<Customer, String> customerEmail;
+
+	@FXML
+	private TableColumn<Customer, String> customerPhone;
+
 	@FXML
 	private TableColumn<Customer, String> customerName;
-	
+
 	@FXML
 	private TableColumn<Customer, String> customerLName;
-	
+
 	@FXML
 	private TextArea consoleArea;
-	
+
 	/**
-	 * function is invoked when clicking Display Users Button in GUI
-	 * parses parameters passed from GUI fields, instantiates a client, and sends a query 
+	 * function is invoked when clicking Display Users Button in GUI parses
+	 * parameters passed from GUI fields, instantiates a client, and sends a query
 	 * request to server
 	 */
-
 
 	public void displayUsersBtnClick() {
 		try {
@@ -71,11 +72,12 @@ public class ClientController {
 			logError(e);
 		}
 	}
-	
+
 	public void updateBtnClick() {
 		try {
-			StringBuilder query = new StringBuilder("UPDATE subscriber SET credit_card_number = \"" + creditCardUpdateField.getText() + "\"");
-			query.append(", subscriber_number = \"" + subscriberNumberUpdateField.getText() + "\"");
+			StringBuilder query = new StringBuilder(
+					"UPDATE subscriber SET creditNum = \"" + creditCardUpdateField.getText() + "\"");
+			query.append(", subNum = \"" + subscriberNumberUpdateField.getText() + "\"");
 			query.append(" WHERE id=\"" + IDToUpdateField.getText() + "\"");
 			client.handleMessageFromClientUI(query.toString());
 			displayUsersBtnClick();
@@ -84,32 +86,43 @@ public class ClientController {
 		}
 	}
 
+	public void disconnect() {
+		try {
+			client.handleMessageFromClientUI("disconnect");
+			System.exit(0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	protected void fillUserTableView(ArrayList<Customer> CustomerArr) {
-		
-		ObservableList<Customer> CustomerObservableArr = FXCollections.observableArrayList(CustomerArr);
-		
+
+		ObservableList<Customer> CustomerObservableArr = Customer.observableCustomer(CustomerArr);
+
 		customerID.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("id"));
 		customerName.setCellValueFactory(new PropertyValueFactory<Customer, String>("fName"));
 		customerLName.setCellValueFactory(new PropertyValueFactory<Customer, String>("lName"));
+		customerEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("email"));
+		customerPhone.setCellValueFactory(new PropertyValueFactory<Customer, String>("phoneNum"));
 		customerCreditCard.setCellValueFactory(new PropertyValueFactory<Customer, String>("creditNum"));
 		customerSubscriberNum.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("subNum"));
-		
+
 		customerTableView.setItems(CustomerObservableArr);
+		// customerTableView.getItems().
 	}
 
-	public void logError (Exception e) {
+	public void logError(Exception e) {
 		appendConsole("when trying to send a message to server, the following error occured: ");
-		appendConsole(e.toString() + "\n" );
+		appendConsole(e.toString() + "\n");
 		e.printStackTrace();
 	}
-	
-    public void appendConsole(String str) {
-    	consoleArea.appendText(str + "\n");
-    }
+
+	public void appendConsole(String str) {
+		consoleArea.appendText(str + "\n");
+	}
 
 	public void setClient(ClientBackEnd client) {
 		this.client = client;
 	}
-
 
 }

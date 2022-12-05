@@ -1,12 +1,11 @@
 package server;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import DBHandler.DBController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -14,74 +13,77 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import server.EKServer.clientConnectionData;
 
 public class ServerController {
 	private EKServer sv;
 
-    @FXML
-    private Button btnConnect;
-    
-    @FXML
-    private Button btnDisconnect;
+	@FXML
+	private Button btnConnect;
 
-    @FXML
-    private Button btnImport;
+	@FXML
+	private Button btnDisconnect;
 
-    @FXML
-    private TableView<?> connected_table;
+	@FXML
+	private Button btnImport;
 
-    @FXML
-    private TextArea console_textbox;
+	@FXML
+	private TableView<clientConnectionData> connected_table;
 
-    @FXML
-    private TextField db_name;
+	@FXML
+	private TextArea console_textbox;
 
-    @FXML
-    private PasswordField db_password;
+	@FXML
+	private TextField db_name;
 
-    @FXML
-    private TextField db_user;
+	@FXML
+	private PasswordField db_password;
 
-    @FXML
-    private TableColumn<?, ?> host_col;
+	@FXML
+	private TextField db_user;
 
-    @FXML
-    private TextField ip;
+	@FXML
+	private TableColumn<clientConnectionData, String> host_col;
 
-    @FXML
-    private TableColumn<?, ?> ip_col;
+	@FXML
+	private TextField ip;
 
-    @FXML
-    private TextField port;
+	@FXML
+	private TableColumn<clientConnectionData, String> ip_col;
 
-    @FXML
-    private TableColumn<?, ?> status_col;
-    
-    public void connectToServer() {
-    	
-      	//Start DB Connection
-		//Set connection parameters
+	@FXML
+	private TextField port;
+
+	@FXML
+	private TableColumn<clientConnectionData, String> status_col;
+	private ObservableList<clientConnectionData> connectedObserv = FXCollections.observableArrayList();
+
+	public void connectToServer() {
+
+		// Start DB Connection
+		// Set connection parameters
 		StringBuilder sb = new StringBuilder("jdbc:mysql://");
 		sb.append(ip.getText() + "/");
 		sb.append(db_name.getText() + "?serverTimezone=IST");
 		DBController.setDB_Path(sb.toString());
 		DBController.setDB_User(db_user.getText());
 		DBController.setDB_Password(db_password.getText());
-    	
-    	sv = new EKServer(5555, this);
-    	try {
-    		//Start server
+
+		sv = new EKServer(5555, this);
+		try {
+			// Start server
 			sv.listen();
 			appendConsole("Server is up.");
-			
-			//Start DB connection
+
+			// Start DB connection
 			DBController.connection();
 			appendConsole("Driver definition succeed.");
 			appendConsole("Database connected successfully.");
-			
+
 			btnConnect.setDisable(true);
 			btnDisconnect.setDisable(false);
-			
+
 		} catch (IOException e) {
 			appendConsole("Server fail.");
 			e.printStackTrace();
@@ -93,10 +95,10 @@ public class ServerController {
 			e.printStackTrace();
 		}
 
-    }
-    
-    public void disconnectFromServer() {
-    	try {
+	}
+
+	public void disconnectFromServer() {
+		try {
 			sv.close();
 			DBController.dropConnection();
 			btnDisconnect.setDisable(true);
@@ -107,10 +109,22 @@ public class ServerController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    }
-    
-    public void appendConsole(String str) {
-    	console_textbox.appendText(str + "\n");
-    }
+	}
+
+	public void appendConsole(String str) {
+		console_textbox.appendText(str + "\n");
+	}
+
+	protected void fillUserTableView(clientConnectionData connected) {
+		connectedObserv.add(connected);
+		host_col.setCellValueFactory(new PropertyValueFactory<clientConnectionData, String>("hostName"));
+		ip_col.setCellValueFactory(new PropertyValueFactory<clientConnectionData, String>("ip"));
+		status_col.setCellValueFactory(new PropertyValueFactory<clientConnectionData, String>("status"));
+		connected_table.setItems(connectedObserv);
+	}
+
+	protected void removeUserFromTable(clientConnectionData connected) {
+		connected_table.getItems().remove(connected);
+	}
 
 }
