@@ -61,8 +61,8 @@ public class ClientController {
 	@FXML
 	private TextArea consoleArea;
 
-	private ObservableList<Customer> CustomerObservableArr = FXCollections.observableArrayList();
-	private Map<Integer, Customer> customerMap = new HashMap<Integer, Customer>();
+	private final ObservableList<Customer> CustomerObservableArr = FXCollections.observableArrayList();
+	private final Map<Integer, Customer> customerMap = new HashMap<>();
 	private boolean isTableInit;
 
 	/**
@@ -124,9 +124,9 @@ public class ClientController {
 		StringBuilder query = new StringBuilder("UPDATE subscriber SET ");
 		String credit = creditCardUpdateField.getText(), sub = subscriberNumberUpdateField.getText();
 		if (!credit.isEmpty())
-			query.append("creditNum = \"" + credit + "\", ");
+			query.append("credit_card_number = \"" + credit + "\", ");
 		if (!sub.isEmpty())
-			query.append("subNum = \"" + subscriberNumberUpdateField.getText() + "\"");
+			query.append("number_subscriber = \"" + subscriberNumberUpdateField.getText() + "\"");
 		else
 			query.delete(query.length() - ", ".length(), query.length());
 		query.append(" WHERE id=\"" + IDToUpdateField.getText() + "\"");
@@ -143,24 +143,24 @@ public class ClientController {
 	}
 
 	private void initTable() {
-		customerID.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("id"));
-		customerName.setCellValueFactory(new PropertyValueFactory<Customer, String>("fName"));
-		customerLName.setCellValueFactory(new PropertyValueFactory<Customer, String>("lName"));
-		customerEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("email"));
-		customerPhone.setCellValueFactory(new PropertyValueFactory<Customer, String>("phoneNum"));
-		customerCreditCard.setCellValueFactory(new PropertyValueFactory<Customer, String>("creditNum"));
-		customerSubscriberNum.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("subNum"));
+		customerID.setCellValueFactory(new PropertyValueFactory<>("id"));
+		customerName.setCellValueFactory(new PropertyValueFactory<>("fName"));
+		customerLName.setCellValueFactory(new PropertyValueFactory<>("lName"));
+		customerEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+		customerPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNum"));
+		customerCreditCard.setCellValueFactory(new PropertyValueFactory<>("creditNum"));
+		customerSubscriberNum.setCellValueFactory(new PropertyValueFactory<>("subNum"));
 		customerTableView.setItems(CustomerObservableArr);
 	}
 
 	protected void updateTable() {
 		String credit = creditCardUpdateField.getText(), sub = subscriberNumberUpdateField.getText();
-		int id = Integer.valueOf(IDToUpdateField.getText());
+		int id = Integer.parseInt(IDToUpdateField.getText());
 		Customer customerToChange = customerMap.get(id);
 		if (customerToChange == null)
 			return;
 		if (!sub.isEmpty())
-			customerToChange.setSubNum(Integer.valueOf(sub));
+			customerToChange.setSubNum(Integer.parseInt(sub));
 		if (!credit.isEmpty())
 			customerToChange.setCreditNum(credit);
 		customerTableView.refresh();

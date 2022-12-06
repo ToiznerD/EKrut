@@ -14,7 +14,7 @@ public class DBController {
 	private static boolean initalize = false;
 
 	public static void init() throws Exception {
-		if (initalize == false) {
+		if (!initalize) {
 			Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
 			initalize = true;
 		}
@@ -22,7 +22,7 @@ public class DBController {
 	}
 
 	public static boolean isConnected() {
-		return (initalize == true && conn != null);
+		return (initalize && conn != null);
 	}
 
 	public static void setDB_Path(String dB_Path) {
@@ -37,10 +37,9 @@ public class DBController {
 		DB_Password = dB_Password;
 	}
 
-	public static Connection connection() throws Exception {
+	public static void connection() throws Exception {
 		if (conn == null)
 			init();
-		return conn;
 	}
 	
 	public static void dropConnection() {
@@ -50,16 +49,14 @@ public class DBController {
 	public static ResultSet runQuery(String query) throws SQLException {
 		Statement stmt;
 		stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(query);
-		return rs;
+		return stmt.executeQuery(query);
 	}
 
 	public static Integer runUpdate(String query) {
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
-			Integer queryReturnCode = stmt.executeUpdate(query);
-			return queryReturnCode;
+			return stmt.executeUpdate(query);
 		} catch (Exception e) {
 			return 0;
 		}

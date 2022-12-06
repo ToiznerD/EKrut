@@ -64,11 +64,11 @@ public class EKServer extends AbstractServer {
 		sc.removeUserFromTable(new clientConnectionData(client));
 	}
 
-	public class clientConnectionData {
+	public static class clientConnectionData {
 
-		private String hostName;
-		private String ip;
-		private String status;
+		private final String hostName;
+		private final String ip;
+		private final String status;
 
 		public clientConnectionData(ConnectionToClient client) {
 			this.hostName = client.getInetAddress().getHostName();

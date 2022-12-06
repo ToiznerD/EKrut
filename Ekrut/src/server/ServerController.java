@@ -57,7 +57,7 @@ public class ServerController {
 
 	@FXML
 	private TableColumn<clientConnectionData, String> status_col;
-	private ObservableList<clientConnectionData> connectedObserv = FXCollections.observableArrayList();
+	private final ObservableList<clientConnectionData> connectedObserv = FXCollections.observableArrayList();
 
 	public void connectToServer() {
 
@@ -117,9 +117,9 @@ public class ServerController {
 
 	protected void fillUserTableView(clientConnectionData connected) {
 		connectedObserv.add(connected);
-		host_col.setCellValueFactory(new PropertyValueFactory<clientConnectionData, String>("hostName"));
-		ip_col.setCellValueFactory(new PropertyValueFactory<clientConnectionData, String>("ip"));
-		status_col.setCellValueFactory(new PropertyValueFactory<clientConnectionData, String>("status"));
+		host_col.setCellValueFactory(new PropertyValueFactory<>("hostName"));
+		ip_col.setCellValueFactory(new PropertyValueFactory<>("ip"));
+		status_col.setCellValueFactory(new PropertyValueFactory<>("status"));
 		connected_table.setItems(connectedObserv);
 	}
 

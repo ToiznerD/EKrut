@@ -13,8 +13,13 @@ public class Customer implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String fName, lName, phoneNum, email, creditNum;
-	private int id, subNum;
+	private final String fName;
+    private final String lName;
+    private final String phoneNum;
+    private final String email;
+    private String creditNum;
+	private final int id;
+    private int subNum;
 
 	public Customer(String fName, String lName, int id, String phoneNum, String email, String creditNum, int subNum) {
 		this.fName = fName;

@@ -31,7 +31,7 @@ public class ServerConnectController {
     
     public void openConnection(ClientController clientController) {
 		String host = txtIP.getText();
-		if (host.equals("") || host == null) {
+		if (host.equals("")) {
 			host = "localhost";
 		}
 

@@ -18,7 +18,7 @@ public class ClientBackEnd extends AbstractClient {
 	protected void handleMessageFromServer(Object msg) {
 		if (msg instanceof Integer) {
 			Integer msgg = (Integer) msg;
-			if (msgg.intValue() == 0) {
+			if (msgg == 0) {
 				clientController.appendConsole("Update error");
 			} else {
 				clientController.appendConsole("Update was done successfully");
@@ -34,10 +34,12 @@ public class ClientBackEnd extends AbstractClient {
 		sendToServer(message);
 	}
 
+	@SuppressWarnings("finally")
 	public void quit() {
 		try {
 			closeConnection();
 		} catch (IOException e) {
+			throw new RuntimeException(e);
 		} finally {
 			System.exit(0);
 		}
