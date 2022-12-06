@@ -35,7 +35,7 @@ public class EKServer extends AbstractServer {
 			try {
 				ResultSet rs = DBController.runQuery(msgg);
 				ArrayList<Customer> customerArray = Customer.createCustomerArray(rs);
-				sc.appendConsole("Sending list" + customerArray + "to " + client.getInetAddress().getHostAddress());
+				sc.appendConsole("Sending Customer list to: " + client.getInetAddress().getHostAddress());
 				sendToAllClients(customerArray);
 			} catch (SQLException e) {
 				sc.appendConsole(e.getMessage());

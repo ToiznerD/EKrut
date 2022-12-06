@@ -70,11 +70,15 @@ public class ServerController {
 		DBController.setDB_User(db_user.getText());
 		DBController.setDB_Password(db_password.getText());
 
-		sv = new EKServer(5555, this);
+
+
 		try {
-			// Start server
-			sv.listen();
-			appendConsole("Server is up.");
+			if (sv == null) {
+				sv = new EKServer(5555, this);
+				// Start server
+				sv.listen();
+				appendConsole("Server is up.");
+			}
 
 			// Start DB connection
 			DBController.connection();

@@ -93,7 +93,7 @@ public class ClientController {
 				logError(e);
 			}
 		} else
-			appendConsole("Error: must provide ID(int) and new Credit Number(int) or new Subscriber Number(int)");
+			appendConsole("Error: must provide ID(int), new Credit Number(String) or new Subscriber Number(int)");
 	}
 
 	private void clearTextField() {
@@ -105,8 +105,8 @@ public class ClientController {
 	private boolean checkParseAble() {
 		String credit = creditCardUpdateField.getText(), sub = subscriberNumberUpdateField.getText();
 		try {
-			if (!credit.isEmpty())
-				Integer.parseInt(credit);
+			if (credit.isEmpty())
+				return false;
 			if (!sub.isEmpty())
 				Integer.parseInt(sub);
 		} catch (NumberFormatException e) {
@@ -126,7 +126,7 @@ public class ClientController {
 		if (!credit.isEmpty())
 			query.append("credit_card_number = \"" + credit + "\", ");
 		if (!sub.isEmpty())
-			query.append("number_subscriber = \"" + subscriberNumberUpdateField.getText() + "\"");
+			query.append("subscriber_number = \"" + subscriberNumberUpdateField.getText() + "\"");
 		else
 			query.delete(query.length() - ", ".length(), query.length());
 		query.append(" WHERE id=\"" + IDToUpdateField.getText() + "\"");
