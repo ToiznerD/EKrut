@@ -7,7 +7,7 @@ import ocsf.client.AbstractClient;
 
 public class ClientBackEnd extends AbstractClient {
 	private static ClientController clientController;
-
+	
 	public ClientBackEnd(String host, int port, ClientController clientController) throws IOException {
 		super(host, port);
 		ClientBackEnd.clientController = clientController;

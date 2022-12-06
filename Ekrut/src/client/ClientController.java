@@ -2,8 +2,11 @@ package client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import DBHandler.Customer;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -58,6 +61,10 @@ public class ClientController {
 	@FXML
 	private TextArea consoleArea;
 
+	private ObservableList<Customer> CustomerObservableArr = FXCollections.observableArrayList();
+	private Map<Integer, Customer> customerMap = new HashMap<Integer, Customer>();
+	private boolean isTableInit;
+
 	/**
 	 * function is invoked when clicking Display Users Button in GUI parses
 	 * parameters passed from GUI fields, instantiates a client, and sends a query
@@ -65,6 +72,8 @@ public class ClientController {
 	 */
 
 	public void displayUsersBtnClick() {
+		if (!isTableInit)
+			initTable();
 		try {
 			String query = "SELECT * FROM subscriber;";
 			client.handleMessageFromClientUI(query);
@@ -74,16 +83,54 @@ public class ClientController {
 	}
 
 	public void updateBtnClick() {
+		if (checkValidTextField() && checkParseable()) {
+			try {
+				String query = buildString();
+				client.handleMessageFromClientUI(query);
+				updateTable();
+				clearTextField();
+			} catch (IOException e) {
+				logError(e);
+			}
+		} else
+			appendConsole("Error: must provide ID(int) and new Credit Number(int) or new Subscriber Number(int)");
+	}
+
+	private void clearTextField() {
+		IDToUpdateField.clear();
+		creditCardUpdateField.clear();
+		subscriberNumberUpdateField.clear();
+	}
+
+	private boolean checkParseable() {
+		String credit = creditCardUpdateField.getText(), sub = subscriberNumberUpdateField.getText();
 		try {
-			StringBuilder query = new StringBuilder(
-					"UPDATE subscriber SET creditNum = \"" + creditCardUpdateField.getText() + "\"");
-			query.append(", subNum = \"" + subscriberNumberUpdateField.getText() + "\"");
-			query.append(" WHERE id=\"" + IDToUpdateField.getText() + "\"");
-			client.handleMessageFromClientUI(query.toString());
-			displayUsersBtnClick();
-		} catch (IOException e) {
-			logError(e);
+			if (!credit.isEmpty())
+				Integer.parseInt(credit);
+			if (!sub.isEmpty())
+				Integer.parseInt(sub);
+		} catch (NumberFormatException e) {
+			return false;
 		}
+		return true;
+	}
+
+	private boolean checkValidTextField() {
+		return !IDToUpdateField.getText().isEmpty() && !creditCardUpdateField.getText().isEmpty()
+				|| !subscriberNumberUpdateField.getText().isEmpty();
+	}
+
+	private String buildString() {
+		StringBuilder query = new StringBuilder("UPDATE subscriber SET ");
+		String credit = creditCardUpdateField.getText(), sub = subscriberNumberUpdateField.getText();
+		if (!credit.isEmpty())
+			query.append("creditNum = \"" + credit + "\", ");
+		if (!sub.isEmpty())
+			query.append("subNum = \"" + subscriberNumberUpdateField.getText() + "\"");
+		else
+			query.delete(query.length() - ", ".length(), query.length());
+		query.append(" WHERE id=\"" + IDToUpdateField.getText() + "\"");
+		return query.toString();
 	}
 
 	public void disconnect() {
@@ -95,10 +142,7 @@ public class ClientController {
 		}
 	}
 
-	protected void fillUserTableView(ArrayList<Customer> CustomerArr) {
-
-		ObservableList<Customer> CustomerObservableArr = Customer.observableCustomer(CustomerArr);
-
+	private void initTable() {
 		customerID.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("id"));
 		customerName.setCellValueFactory(new PropertyValueFactory<Customer, String>("fName"));
 		customerLName.setCellValueFactory(new PropertyValueFactory<Customer, String>("lName"));
@@ -106,9 +150,28 @@ public class ClientController {
 		customerPhone.setCellValueFactory(new PropertyValueFactory<Customer, String>("phoneNum"));
 		customerCreditCard.setCellValueFactory(new PropertyValueFactory<Customer, String>("creditNum"));
 		customerSubscriberNum.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("subNum"));
-
 		customerTableView.setItems(CustomerObservableArr);
-		// customerTableView.getItems().
+	}
+
+	protected void updateTable() {
+		String credit = creditCardUpdateField.getText(), sub = subscriberNumberUpdateField.getText();
+		int id = Integer.valueOf(IDToUpdateField.getText());
+		Customer customerToChange = customerMap.get(id);
+		if (customerToChange == null)
+			return;
+		if (!sub.isEmpty())
+			customerToChange.setSubNum(Integer.valueOf(sub));
+		if (!credit.isEmpty())
+			customerToChange.setCreditNum(credit);
+		customerTableView.refresh();
+	}
+
+	protected void fillUserTableView(ArrayList<Customer> CustomerArr) {
+		CustomerObservableArr.clear();
+		for (Customer c : CustomerArr) {
+			customerMap.put(c.getId(), c);
+			CustomerObservableArr.add(c);
+		}
 	}
 
 	public void logError(Exception e) {

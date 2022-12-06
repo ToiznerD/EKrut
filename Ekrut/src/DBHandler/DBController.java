@@ -61,8 +61,7 @@ public class DBController {
 			Integer queryReturnCode = stmt.executeUpdate(query);
 			return queryReturnCode;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return Integer.valueOf(1);
+			return 0;
 		}
 	}
 	

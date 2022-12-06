@@ -22,7 +22,7 @@ public class EKServer extends AbstractServer {
 
 	}
 
-
+	
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		String msgg = (String) msg;
