@@ -16,6 +16,7 @@ public class ClientBackEnd extends AbstractClient {
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
+		//Return message for update
 		if (msg instanceof Integer) {
 			Integer msgg = (Integer) msg;
 			if (msgg == 0) {
@@ -24,6 +25,7 @@ public class ClientBackEnd extends AbstractClient {
 				clientController.appendConsole("Update was done successfully");
 			}
 		} else {
+			//Return message for select
 			@SuppressWarnings("unchecked")
 			ArrayList<Customer> CustomerArr = (ArrayList<Customer>) msg; // New
 			clientController.fillUserTableView(CustomerArr);

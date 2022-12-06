@@ -26,17 +26,30 @@ public class EKServer extends AbstractServer {
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		String msgg = (String) msg;
+		
+		//Client ask to run update query
 		if (msgg.contains("UPDATE")) {
+			try {
 			Integer returnVal = DBController.runUpdate(msgg);
+			
+			//Send client success/fail message
 			sendToAllClients(returnVal);
+			
+			} catch(Exception e) {
+				sc.appendConsole(e.getMessage());
+			}
 		}
-
+		
+		//Client ask to run select query
 		else if (msgg.contains("SELECT")) {
 			try {
 				ResultSet rs = DBController.runQuery(msgg);
 				ArrayList<Customer> customerArray = Customer.createCustomerArray(rs);
 				sc.appendConsole("Sending Customer list to: " + client.getInetAddress().getHostAddress());
+				
+				//Send ArrayList<Customer> to client
 				sendToAllClients(customerArray);
+				
 			} catch (SQLException e) {
 				sc.appendConsole(e.getMessage());
 				e.printStackTrace();
@@ -45,6 +58,8 @@ public class EKServer extends AbstractServer {
 				e.printStackTrace();
 			}
 		}
+		
+		//Client disconnect
 		else if (msgg.contains("disconnect")) {
 			try {
 				removeClient(client);

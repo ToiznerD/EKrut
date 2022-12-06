@@ -47,6 +47,7 @@ public class ServerConnectController {
     public void connect(ActionEvent event) throws IOException {
     	((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
     	
+    	//Open next window
     	Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("ClientGUI.fxml"));

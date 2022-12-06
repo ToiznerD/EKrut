@@ -52,14 +52,10 @@ public class DBController {
 		return stmt.executeQuery(query);
 	}
 
-	public static Integer runUpdate(String query) {
+	public static Integer runUpdate(String query) throws SQLException{
 		Statement stmt;
-		try {
-			stmt = conn.createStatement();
-			return stmt.executeUpdate(query);
-		} catch (Exception e) {
-			return 0;
-		}
+		stmt = conn.createStatement();
+		return stmt.executeUpdate(query);
 	}
 	
 	

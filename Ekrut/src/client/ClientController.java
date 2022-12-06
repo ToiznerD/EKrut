@@ -70,7 +70,6 @@ public class ClientController {
 	 * parameters passed from GUI fields, instantiates a client, and sends a query
 	 * request to server
 	 */
-
 	public void displayUsersBtnClick() {
 		if (!isTableInit)
 			initTable();
@@ -81,7 +80,11 @@ public class ClientController {
 			logError(e);
 		}
 	}
-
+	
+	/*
+	 * function is invoked when clicking UPDATE button in GUI
+	 * sending the parameters from the GUI field to the server and update the DB
+	 */
 	public void updateBtnClick() {
 		if (checkValidTextField() && checkParseAble()) {
 			try {
@@ -95,7 +98,7 @@ public class ClientController {
 		} else
 			appendConsole("Error: must provide ID(int), new Credit Number(String) or new Subscriber Number(int)");
 	}
-
+	
 	private void clearTextField() {
 		IDToUpdateField.clear();
 		creditCardUpdateField.clear();
@@ -119,7 +122,10 @@ public class ClientController {
 		return !IDToUpdateField.getText().isEmpty() && !creditCardUpdateField.getText().isEmpty()
 				|| !subscriberNumberUpdateField.getText().isEmpty();
 	}
-
+	
+	/*
+	 * Creates the String query to send the server the parameters
+	 */
 	private String buildString() {
 		StringBuilder query = new StringBuilder("UPDATE subscriber SET ");
 		String credit = creditCardUpdateField.getText(), sub = subscriberNumberUpdateField.getText();

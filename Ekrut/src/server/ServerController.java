@@ -79,12 +79,18 @@ public class ServerController {
 				sv.listen();
 				appendConsole("Server is up.");
 			}
+			
+			//If listen failed, try again
+			if(sv != null && !sv.isListening()) {
+				sv.listen();
+			}
 
 			// Start DB connection
 			DBController.connection();
 			appendConsole("Driver definition succeed.");
 			appendConsole("Database connected successfully.");
-
+			
+			//Disable "Connect" button & Enable "Disconnect" button
 			btnConnect.setDisable(true);
 			btnDisconnect.setDisable(false);
 
@@ -103,10 +109,16 @@ public class ServerController {
 
 	public void disconnectFromServer() {
 		try {
+			//Close listening
 			sv.close();
+			
+			//Close DB connection
 			DBController.dropConnection();
+			
+			//Enable "Connect" button, disable "Disconnect" button
 			btnDisconnect.setDisable(true);
 			btnConnect.setDisable(false);
+			
 			appendConsole("Driver definition aborted");
 			appendConsole("DB connection is down");
 			appendConsole("Server is down");

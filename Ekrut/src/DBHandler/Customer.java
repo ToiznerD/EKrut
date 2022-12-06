@@ -66,7 +66,8 @@ public class Customer implements Serializable {
 	public void setSubNum(int subNum) {
 		this.subNum = subNum;
 	}
-
+	
+	//Create ArrayList<Customer> by given ResultSet
 	public static ArrayList<Customer> createCustomerArray(ResultSet rs) throws SQLException {
 		ArrayList<Customer> customerArray = new ArrayList<>();
 		while (rs.next()) {
@@ -79,11 +80,5 @@ public class Customer implements Serializable {
 	public static ObservableList<Customer> observableCustomer(ArrayList<Customer> customerArray) {
 		return FXCollections.observableArrayList(customerArray);
 	}
-
-	/*
-	 * @Override public String toString() { return "[fName=" + fName + ", lName=" +
-	 * lName + ", phoneNum=" + phoneNum + ", email=" + email + ", creditNum=" +
-	 * creditNum + ", id=" + id + ", subNum=" + subNum + "]"; }
-	 */
 
 }
