@@ -83,7 +83,7 @@ public class ClientController {
 	}
 
 	public void updateBtnClick() {
-		if (checkValidTextField() && checkParseable()) {
+		if (checkValidTextField() && checkParseAble()) {
 			try {
 				String query = buildString();
 				client.handleMessageFromClientUI(query);
@@ -102,7 +102,7 @@ public class ClientController {
 		subscriberNumberUpdateField.clear();
 	}
 
-	private boolean checkParseable() {
+	private boolean checkParseAble() {
 		String credit = creditCardUpdateField.getText(), sub = subscriberNumberUpdateField.getText();
 		try {
 			if (!credit.isEmpty())
