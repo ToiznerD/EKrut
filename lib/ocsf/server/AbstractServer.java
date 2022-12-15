@@ -5,7 +5,6 @@
 package ocsf.server;
 
 import java.net.*;
-import java.util.*;
 import java.io.*;
 
 /**
@@ -324,7 +323,8 @@ public abstract class AbstractServer implements Runnable
 
           synchronized(this)
           {
-            ConnectionToClient c = new ConnectionToClient(
+            @SuppressWarnings("unused")
+			ConnectionToClient c = new ConnectionToClient(
               this.clientThreadGroup, clientSocket, this);
           }
         }

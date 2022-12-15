@@ -7,9 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ClientApp extends Application {
-
+	public static Stage prStage;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		prStage = primaryStage;
 		//FXMLLoader clientGui = new FXMLLoader(getClass().getResource("ClientGui.fxml"));
 		//ClientController control = clientGui.getController();
 		Parent root = (Parent) FXMLLoader.load(getClass().getResource("/clientFxml/ServerConnect.fxml"));
@@ -21,6 +22,11 @@ public class ClientApp extends Application {
 		
 	}
 	
+	
+	public static Stage getStage() {
+		return ClientApp.prStage;
+	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}

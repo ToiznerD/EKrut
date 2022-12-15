@@ -61,7 +61,7 @@ public class ServerConnect {
 		openConnection(clientController);
 		clientController.setClient(client);
     	
-    	primaryStage.show();	
+    	primaryStage.show();
     	
     	
     }

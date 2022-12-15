@@ -63,17 +63,13 @@ public class ServerController {
 
 		// Start DB Connection
 		// Set connection parameters
-		DBController.setDB_Path(ip.getText(),db_name.getText());
-		DBController.setDB_User(db_user.getText());
-		DBController.setDB_Password(db_password.getText());
+		DBController.setDB_prop(ip.getText(),db_name.getText(),db_user.getText(),db_password.getText());
 		initTable();
-		
 		sv = new serverBackEnd(5555, this);
 		try {
 			// Start server
 			sv.listen();
 			appendConsole("Server is up.");
-
 			// Start DB connection
 			DBController.connection();
 			appendConsole("Driver definition succeed.\nDatabase connected successfully.");

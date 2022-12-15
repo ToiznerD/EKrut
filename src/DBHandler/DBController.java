@@ -11,57 +11,60 @@ public class DBController {
 	private static String DB_Path;
 	private static String DB_User;
 	private static String DB_Password;
-	private static boolean initalize = false;
 
-	public static void init() throws Exception {
-		if (initalize == false) {
-			Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-			initalize = true;
-		}
+	public DBController() throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
 		conn = DriverManager.getConnection(DB_Path, DB_User, DB_Password);
 	}
 
 	public static boolean isConnected() {
-		return (initalize == true && conn != null);
+		return conn != null;
 	}
-
-	public static void setDB_Path(String ip,String name) {
-		DB_Path = "jdbc:mysql://"+ip + "/"+name + "?serverTimezone=IST";
-	}
-
-	public static void setDB_User(String dB_User) {
-		DB_User = dB_User;
-	}
-
-	public static void setDB_Password(String dB_Password) {
-		DB_Password = dB_Password;
+	
+	public static void setDB_prop(String ip, String name, String user, String password) {
+		DB_Path = "jdbc:mysql://" + ip + "/" + name + "?serverTimezone=IST";
+		DB_User = user;
+		DB_Password = password;
 	}
 
 	public static Connection connection() throws Exception {
 		if (conn == null)
-			init();
+			new DBController();
 		return conn;
 	}
-	
+
 	public static void dropConnection() {
 		conn = null;
 	}
 
-	public static ResultSet select(String query) throws SQLException {
-		Statement stmt = conn.createStatement();
+	public static int getQuant(int id) {
+		//return quantity of product with given id
+		
+		ResultSet rs = DBController.select("SELECT quant FROM products WHERE id = " + id);
+		try {
+			rs.first();return rs.getInt(1);
+		} catch (SQLException e) {}
+		return -1;
+	}
+	public static ResultSet select(String query) {
+		try {
+		Statement stmt = connection().createStatement();
 		ResultSet rs = stmt.executeQuery(query);
 		return rs;
+		}catch (Exception e) {return null;}
+		
 	}
 
 	public static Integer update(String query) {
 		try {
-			Statement stmt = conn.createStatement();
+			Statement stmt = connection().createStatement();
 			Integer queryReturnCode = stmt.executeUpdate(query);
 			return queryReturnCode;
 		} catch (Exception e) {
 			return 0;
 		}
 	}
-	
-	
+
+
+
 }
