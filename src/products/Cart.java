@@ -2,7 +2,7 @@ package products;
 
 import java.util.ArrayList;
 
-public class Basket {
+public class Cart {
 	public static class BProduct extends Product {
 
 		public BProduct(Product prod) {
@@ -27,7 +27,7 @@ public class Basket {
 
 	private ArrayList<BProduct> products;
 
-	public Basket(ArrayList<BProduct> products) {
+	public Cart(ArrayList<BProduct> products) {
 		this.products = products;
 	}
 

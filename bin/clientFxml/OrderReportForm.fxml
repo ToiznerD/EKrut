@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="212.0" fitWidth="187.0" layoutX="382.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/EKrut%20logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="543.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/min-max-close.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="24.0" layoutY="352.0" mnemonicParsing="false" style="-fx-background-color: 0;" />
+      <ImageView fitHeight="45.0" fitWidth="118.0" layoutX="22.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/back%20icon.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="22.0" layoutY="29.0" prefHeight="304.0" prefWidth="342.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <ListView prefHeight="304.0" prefWidth="342.0" />
+            <Label layoutX="31.0" layoutY="14.0" prefHeight="42.0" prefWidth="275.0" text="Year: 2022    Month: 11" textFill="#cf4c0a">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="68.0" layoutY="66.0" prefHeight="26.0" prefWidth="63.0" text="Location">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="175.0" layoutY="65.0" prefHeight="26.0" prefWidth="63.0" text="Order ID">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Separator layoutX="48.0" layoutY="85.0" prefHeight="10.0" prefWidth="226.0" />
+            <Separator layoutX="154.0" layoutY="66.0" orientation="VERTICAL" prefHeight="219.0" prefWidth="4.0" />
+            <Label layoutX="77.0" layoutY="96.0" text="Haifa" />
+            <Label layoutX="77.0" layoutY="119.0" text="Haifa" />
+            <Label layoutX="77.0" layoutY="141.0" text="Haifa" />
+            <Label layoutX="77.0" layoutY="164.0" text="Tel Aviv" />
+            <Label layoutX="190.0" layoutY="96.0" prefHeight="18.0" prefWidth="42.0" text="110013" />
+            <Label layoutX="190.0" layoutY="118.0" text="110016" />
+            <Label layoutX="77.0" layoutY="187.0" text="Tel Aviv" />
+            <Label layoutX="77.0" layoutY="210.0" text="Karmiel" />
+            <Label layoutX="191.0" layoutY="140.0" text="110017" />
+            <Label layoutX="190.0" layoutY="163.0" prefHeight="18.0" prefWidth="42.0" text="110014" />
+            <Label layoutX="190.0" layoutY="186.0" text="110020" />
+            <Label layoutX="191.0" layoutY="208.0" text="110015" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

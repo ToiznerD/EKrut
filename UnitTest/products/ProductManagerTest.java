@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import DBHandler.DBController;
-import products.Basket.BProduct;
+import products.Cart.BProduct;
 import products.ProductManager.MProduct;
 
 
@@ -65,7 +65,7 @@ public class ProductManagerTest {
 
 	@Test
 	public void createBasketTest() {
-		Basket b = PM.createBasket();
+		Cart b = PM.createBasket();
 		BProduct bp1 = new BProduct(p1);
 		BProduct bp2 = new BProduct(p2);
 		BProduct bp3 = new BProduct(p3);
@@ -76,7 +76,7 @@ public class ProductManagerTest {
 
 	@Test
 	public void commitBasketSuccsess() throws SQLException {
-		Basket b = PM.createBasket();
+		Cart b = PM.createBasket();
 		if (PM.consume(1))
 			b.consume(1);
 		assertEquals(0, PM.findProduct(1).getQuant()); //after new basket consume 1.
@@ -88,7 +88,7 @@ public class ProductManagerTest {
 
 	@Test
 	public void abortBasketSuccsess() {
-		Basket b = PM.createBasket();
+		Cart b = PM.createBasket();
 		if (PM.consume(2))
 			b.consume(2);
 		assertEquals(2, PM.findProduct(2).getQuant());

@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import DBHandler.DBController;
-import products.Basket.BProduct;
+import products.Cart.BProduct;
 
 public class ProductManager {
 
@@ -45,14 +45,14 @@ public class ProductManager {
 		return "UPDATE products SET quant = " + quant + " WHERE id = " + p.getId();
 	}
 
-	public synchronized void commit(Basket basket) {
+	public synchronized void commit(Cart basket) {
 		//update product quantity in DB (reduce from basket)
 		for (BProduct p : basket.getProducts())
 			if (p.getQuant() > 0)
 				DBController.update(query(p));
 	}
 
-	public synchronized void abort(Basket basket) {
+	public synchronized void abort(Cart basket) {
 		//return quantity of product in basket to product manager
 		for (BProduct p : basket.getProducts())
 			if (p.getQuant() > 0)
@@ -78,12 +78,12 @@ public class ProductManager {
 		return products;
 	}
 
-	public Basket createBasket() {
+	public Cart createBasket() {
 		//return new basket for client
 		ArrayList<BProduct> basketArr = new ArrayList<BProduct>();
 		for (Product p : products)
 			basketArr.add(new BProduct(p));
-		return new Basket(basketArr);
+		return new Cart(basketArr);
 	}
 
 	public static ProductManager getInstance() throws SQLException {
