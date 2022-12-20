@@ -1,0 +1,18 @@
+Users(id, user, password, role, name, phone, address,...)
+Customer(id(fk)(pk),status )
+RegionManagers(id(fk)(pk), sid(fk))
+Region(rid(pk), name) 
+Store(sid(pk), rid(pk), name, address)
+CustomerReport(crp_id(pk),)
+OrderReport(orp_id(pk),)
+StockReport(srp_id(pk), date, prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8......)
+Product(pid(pk), price)
+StoreProduct(pid(pk), sid(pk), quantity, limit)
+Order(oid(pk), cid(fk), sid(fk), date, method, shipping_address(NULL), status)
+OrderItems(oid(fk), pid(fk), quantity)
+SaleTemplate(templateId, name, discount)
+SaleInitiate(initId(PK), templateId(FK), saleName (unique), rid(FK), startDate, endDate, startHour, endHour)
+RunningSales(initId(PK), rid(fk),saleName(fk))
+
+
+
