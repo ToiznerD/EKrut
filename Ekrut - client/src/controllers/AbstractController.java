@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import Util.Msg;
 import Util.Tasks;
 import client.ClientBackEnd;
 import javafx.fxml.FXML;
@@ -19,26 +20,8 @@ import javafx.stage.Stage;
 public abstract class AbstractController {
 
 	public static Stage prStage;
-	public static Scene prScene, backScene;
 	public static Object monitor = new Object();
-
-	@FXML
-	public void back(MouseEvent event) { //Nave
-		prStage.setScene(backScene);
-	}
-
-	public void switchScreen(String fxml, String title) throws IOException {
-		backScene = prStage.getScene();
-		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
-		Parent root = load.load();
-		Scene scene = new Scene(root);
-		prScene = scene;
-		prStage.setTitle("Ekrut" + " " + title);
-		prStage.setScene(scene);
-		prStage.setOnCloseRequest(event -> {
-			ClientBackEnd.getInstance().quit();
-		});//Nave
-	}
+	public static Msg msg;
 
 	public void start(String fxml, String title) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
@@ -48,8 +31,12 @@ public abstract class AbstractController {
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
 		prStage.setResizable(false);
+		prStage.setOnCloseRequest(event -> {
+			ClientBackEnd.getInstance().quit();
+		});
 		prStage.show();
 	}
+	
 	public void Wait() {//Nave
 		try {
 		synchronized (monitor) {
@@ -58,17 +45,27 @@ public abstract class AbstractController {
 			e.printStackTrace();
 		}
 	}
-    public void sendQuery(Tasks task,String query) {		//Nave
-    	ArrayList<Object> taskObj = new ArrayList<>();
-    	taskObj.add(task);
-    	taskObj.add(query);
+    public void sendMsg(Msg msg) {		//Nave
 		try {
-			ClientBackEnd.getInstance().handleMessageFromClientUI(taskObj);
+			ClientBackEnd.getInstance().handleMessageFromClientUI(msg);
 			Wait(); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} //Send task to server
     }
+    
+	/*    public void sendQuery(Tasks task,String query) {		//Nave
+		ArrayList<Object> taskObj = new ArrayList<>();
+		taskObj.add(task);
+		taskObj.add(query);
+			try {
+				ClientBackEnd.getInstance().handleMessageFromClientUI(taskObj);
+				Wait(); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			} //Send task to server
+	}*/
+    
 	public static void Notify() { //Nave
 		synchronized (monitor) {
 			monitor.notifyAll();

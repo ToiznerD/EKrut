@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+
+import Util.Msg;
 import Util.Tasks;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,13 +43,15 @@ public class LoginController extends AbstractController {
 		String userid = txtUserid.getText();
 		String password = txtPW.getText();
 		String query = "SELECT * FROM users WHERE name = '" + userid + "' AND pass = " + password;
-		sendQuery(Tasks.Login, query);
+		/*sendQuery(Tasks.Login, query);*/
+		msg = new Msg(Tasks.Login, query);
+		sendMsg(msg);
 		//Build task to server
-		if (result) {
-			switch (role) {
+		if (msg.getBool()) {
+			switch ((String) msg.getObj(3)) {
 			case "customer":
-				//switchScreen("CustomerPanel", "Customer Dashboard");
-				switchScreen("ResupplyReqScreen", "Customer Dashboard");
+				start("CustomerPanel", "Customer Dashboard");
+				//start("ResupplyReqScreen", "Customer Dashboard");
 				break;
 			default:
 				break;
@@ -58,3 +62,17 @@ public class LoginController extends AbstractController {
 
 	}
 }
+/*	
+	* This method is the logic layer for handling the login page
+	* The method will update LoginController (login page UI) about the msg returned from the server
+	* @param msg
+	
+	private void loginHandlers() {
+		if (msg.getArr(Object.class) != null)) {//Nave
+			LoginController.result = true;
+			LoginController.role = (String) msg.get(2); //Nave
+		} else {
+			LoginController.result = false;
+		}
+	}
+}*/

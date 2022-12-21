@@ -17,7 +17,6 @@ public class Tasker {
 		Tasks task = (Tasks) msg.get(0);
 		String query = (String) msg.get(1);
 		switch (task) {
-		
 		case Login:
 			return loginTask(query);
 		case RequiredStock:
@@ -37,7 +36,7 @@ public class Tasker {
 	}
 	private static ArrayList<Object> loginTask(String query) {
 		//Run query
-		ResultSet rs = DBController.select(query);
+		ResultSet rs = DBController.select(query); 
 		ArrayList<Object> returnMsg = new ArrayList<>();
 		try {//Nave
 			returnMsg.add(Tasks.Login);

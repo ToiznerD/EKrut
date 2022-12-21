@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class ConnectionController extends AbstractController{
+public class ConnectionController extends AbstractController {
 	public final int DEFAULT_PORT = 5555;
 	private final String DEFAULT_IP = "localhost";
 	@FXML
@@ -37,14 +37,15 @@ public class ConnectionController extends AbstractController{
 		if (port != -1) {
 			try {//Nave
 				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
-				switchScreen("LoginForm","Login");
+				start("LoginForm", "Login");
 			} catch (IOException e) {
 				errorLbl.setText("Error: cannot connect to remote\n" + ip + ":" + port);
 			}
 		}
 	}
-
-
+	public void back(ActionEvent event) {
+		
+	}
 	/**
 	 * @return port int -1 on fail
 	 */

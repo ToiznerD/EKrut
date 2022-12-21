@@ -31,7 +31,7 @@ public class DeliveryController{
     public void handleButton(ActionEvent e) throws IOException{
     	
     	if (e.getSource()==btnDeliveryOdrers) {
-    		switchScreen(e,"/clientFxml/DeliveryOrdersForm.fxml");
+    		start(e,"/clientFxml/DeliveryOrdersForm.fxml");
     		loadDeliveriesData();
     	}
 
@@ -42,7 +42,7 @@ public class DeliveryController{
 
     	else if (e.getSource()==btnBack) {
     		//back to previous screen(panel)
-    		switchScreen(e,"/clientFxml/DeliveryOperatorPanel.fxml");
+    		start(e,"/clientFxml/DeliveryOperatorPanel.fxml");
     	}
     	
     	else if (e.getSource()==btnApproveDelivery) {
@@ -58,7 +58,7 @@ public class DeliveryController{
     	//take data of deliveries from DB 
     }
 
-    private void switchScreen(ActionEvent e, String screen) throws IOException {
+    private void start(ActionEvent e, String screen) throws IOException {
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(FXMLLoader.load(getClass().getResource(screen)));
 		stage.setScene(scene);

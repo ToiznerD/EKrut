@@ -20,7 +20,7 @@ public class ViewReportsController extends AbstractController {
 
 
         try {
-            switchScreen("StockReportPanel","Stock Reports Panel");
+            start("StockReportPanel","Stock Reports Panel");
             
         } catch (Exception e) {
 // TODO: handle exception
@@ -34,7 +34,7 @@ public class ViewReportsController extends AbstractController {
      */
     public void OrderReportsBtnClick(ActionEvent event) {
         try {
-            switchScreen("OrderReport","Order Reports Panel");
+            start("OrderReport","Order Reports Panel");
         } catch (Exception e) {
 // TODO: handle exception
             e.printStackTrace();
@@ -47,7 +47,7 @@ public class ViewReportsController extends AbstractController {
      */
     public void customerReportsBtnClick(ActionEvent event) {
         try {
-            switchScreen("CustomersReport","Customers Reports Panel");
+            start("CustomersReport","Customers Reports Panel");
         } catch (Exception e) {
 // TODO: handle exception
             e.printStackTrace();

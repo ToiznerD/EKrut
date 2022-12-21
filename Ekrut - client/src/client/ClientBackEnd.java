@@ -5,9 +5,8 @@ import java.util.ArrayList;
 
 import controllers.AbstractController;
 import controllers.LoginController;
-import controllers.ResupplyReqController;
 import ocsf.client.AbstractClient;
-import tables.TableProd;
+import Util.Msg;
 import Util.Tasks;
 
 public class ClientBackEnd extends AbstractClient {
@@ -37,38 +36,11 @@ public class ClientBackEnd extends AbstractClient {
 		return instance;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		ArrayList<Object> returnMsg = (ArrayList<Object>) msg;
-		switch ((Tasks) returnMsg.get(0)) {
-		case Login:
-			loginHandlers(returnMsg);
-			break;
-		case RequiredStock:
-			ResupplyReqController.tprod = (ArrayList<TableProd>) returnMsg.get(2);
-			break;
-		case Update:
-			ResupplyReqController.updateResult = (int) returnMsg.get(2);
-			break;
-		default:
-			break;
-		}
+		Msg taskMsg = (Msg) msg;
+		AbstractController.msg = taskMsg;
 		AbstractController.Notify();
-	}
-
-	/*
-	 * This method is the logic layer for handling the login page
-	 * The method will update LoginController (login page UI) about the msg returned from the server
-	 * @param msg
-	 */
-	private void loginHandlers(ArrayList<Object> msg) {
-		if (msg.get(2) != null) {//Nave
-			LoginController.result = true;
-			LoginController.role = (String) msg.get(2); //Nave
-		} else {
-			LoginController.result = false;
-		}
 	}
 
 	public void handleMessageFromClientUI(Object message) throws IOException {
@@ -85,5 +57,26 @@ public class ClientBackEnd extends AbstractClient {
 			System.exit(0);
 		}
 	}
-
 }
+
+/*	@SuppressWarnings("unchecked")
+@Override
+protected void handleMessageFromServer(Object msg) {
+	ArrayList<Object> returnMsg = (ArrayList<Object>) msg;
+	switch ((Tasks) returnMsg.get(0)) {
+	case Login:
+		loginHandlers(returnMsg);
+		break;
+	case RequiredStock:
+		ResupplyReqController.tprod = (ArrayList<TableProd>) returnMsg.get(2);
+		break;
+	case Update:
+		ResupplyReqController.updateResult = (int) returnMsg.get(2);
+		break;
+	default:
+		break;
+	}
+	AbstractController.Notify();
+}*/
+
+

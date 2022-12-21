@@ -1,7 +1,7 @@
 package client;
 
 import controllers.AbstractController;
-import controllers.LoginController;
+import controllers.ConnectionController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -9,7 +9,7 @@ public class ClientApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		AbstractController abstractController = new LoginController();
+		AbstractController abstractController = new ConnectionController();
 		AbstractController.prStage = primaryStage;
 		abstractController.start("ConnectionConfig", "Login");
 	}
