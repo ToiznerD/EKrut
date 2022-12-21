@@ -1,11 +1,16 @@
 package tables;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
 
-public  class TableProd {
+public  class TableProd implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static String Done = "Done", Pending = "Not good";
 	private int id, rQuant, aQuant;
 	private String name, status;
@@ -15,7 +20,7 @@ public  class TableProd {
 		this.name = name;
 		this.rQuant = rQuant;
 		this.aQuant = aQuant;
-		this.status = rQuant < aQuant ? Done : Pending;
+		this.status = rQuant <= aQuant ? Done : Pending;
 	}
 
 	@Override
@@ -58,7 +63,7 @@ public  class TableProd {
 	public void setAquant(int quant) {
 		if (quant >= 0) {
 			this.aQuant = quant;
-			this.status = rQuant < aQuant ? Done : Pending;
+			this.status = rQuant <= aQuant ? Done : Pending;
 		}
 	}
 }

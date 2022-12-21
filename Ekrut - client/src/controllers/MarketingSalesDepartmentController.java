@@ -15,7 +15,7 @@ public class MarketingSalesDepartmentController {
     
     public void CreateSaleTemplateButton(ActionEvent event) throws Exception {
     	try {
-			ClientApp.setScene("SaleTemplateCreationForm");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -23,7 +23,7 @@ public class MarketingSalesDepartmentController {
     
     public void LogoutButton(ActionEvent event) throws Exception {
     	try {
-			ClientApp.setScene("LoginForm");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

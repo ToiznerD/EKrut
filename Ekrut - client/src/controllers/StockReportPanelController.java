@@ -16,7 +16,7 @@ public class StockReportPanelController extends AbstractController{
      */
     public void BackImgClick (ActionEvent event) {
         try {
-        	start(event,"ViewReportsScreen","View Reports");
+        	switchScreen("ViewReportsScreen","View Reports");
         } catch (Exception e) {
 
         }
@@ -28,7 +28,7 @@ public class StockReportPanelController extends AbstractController{
      */
     public void ShowReportClick (ActionEvent event) {
         try {
-            start(event,"StockReportForm","Stock Report");
+            switchScreen("StockReportForm","Stock Report");
         } catch (Exception e) {
 
         }

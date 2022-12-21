@@ -35,8 +35,9 @@ public class ConnectionController extends AbstractController{
 		if (ip.isEmpty())
 			ip = DEFAULT_IP;
 		if (port != -1) {
-			try {
-				ClientBackEnd clientBackend = new ClientBackEnd(ip, port); //Initiate client connection instance.
+			try {//Nave
+				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
+				switchScreen("LoginForm","Login");
 			} catch (IOException e) {
 				errorLbl.setText("Error: cannot connect to remote\n" + ip + ":" + port);
 			}

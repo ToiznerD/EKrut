@@ -15,7 +15,7 @@ public class SaleInitiateFormController {
 
     public void BackButton(ActionEvent event) throws Exception {
     	try {
-			ClientApp.setScene("MarketingManagerPanel");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

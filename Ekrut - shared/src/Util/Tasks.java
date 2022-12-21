@@ -1,6 +1,5 @@
 package Util;
 
-
 public enum Tasks {
-	Login, Reports, Order, Disconnect
+	Login, Reports, Order, RequiredStock, Disconnect,Update
 }

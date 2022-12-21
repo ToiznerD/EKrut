@@ -10,7 +10,7 @@ public class OrderReportPanelController extends AbstractController{
      */
     public void BackImgClick (ActionEvent event) {
         try {
-            start(event,"ViewReportsScreen","View Reports");
+            switchScreen("ViewReportsScreen","View Reports");
         } catch (Exception e) {
 
         }
@@ -22,7 +22,7 @@ public class OrderReportPanelController extends AbstractController{
      */
     public void showReportBtnClick(ActionEvent event) {
         try {
-            start(event,"ViewReportsScreen","View Reports");
+            switchScreen("ViewReportsScreen","View Reports");
         } catch (Exception e) {
 
         }

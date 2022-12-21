@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
+
+import Util.Tasks;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,63 +16,71 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import tables.TableProd;
 
-public class ResupplyReqController extends AbstractController{
-	//load from db
-	//update quant on finish
-	//change status 
-	//update manager
+public class ResupplyReqController extends AbstractController {
 
-	private ObservableList<TableProd> prodList;
-    @FXML
-    private ImageView backBtn;
-    @FXML
-    private Label regionLbl;
-    @FXML
+	public static ArrayList<TableProd> tprod;
+	public static int updateResult;
+	private ObservableList<TableProd> prodList = FXCollections.observableArrayList();;
+	@FXML
+	private ImageView backBtn;
+	@FXML
+	private Label regionLbl;
+	@FXML
 	private TableColumn<TableProd, Integer> idCell, rQuantCell, aQuantCell;
-    @FXML
+	@FXML
 	private TableColumn<TableProd, String> nameCell, statusCell;
-    @FXML
-    private TextField aQuantText,pidText;
+	@FXML
+	private TextField aQuantText, pidText;
 
 	@FXML
-    private Button updateBtn;
+	private Button updateBtn;
 
-    @FXML
-    private TableView<TableProd> Table;
+	@FXML
+	private TableView<TableProd> Table;
 	@FXML
 	private Label errorLbl;
-    @FXML
-    protected void initialize() {
-		prodList = FXCollections.observableArrayList();
+
+	@FXML
+	protected void initialize() {
+		updateList();
 		idCell.setCellValueFactory(new PropertyValueFactory<TableProd, Integer>("id"));
 		rQuantCell.setCellValueFactory(new PropertyValueFactory<TableProd, Integer>("Rquant"));
 		aQuantCell.setCellValueFactory(new PropertyValueFactory<TableProd, Integer>("Aquant"));
 		nameCell.setCellValueFactory(new PropertyValueFactory<TableProd, String>("name"));
 		statusCell.setCellValueFactory(new PropertyValueFactory<TableProd, String>("status"));
-		prodList.add(new TableProd(1,"s",2,1));
 		Table.setItems(prodList);
-    }
+	}
 
-    @FXML
-    public void update(ActionEvent event) {
-    	String query;
-    	if (checkInput())
-    		 query = "UPDATE reqproduct SET actual = "+aQuantText.getText()+" WHERE id = "+pidText.getText();
-    	
-    }
-    private boolean checkInput() {
-    	if (aQuantText.getText().isEmpty() || pidText.getText().isEmpty()) {
-    		errorLbl.setText("Error: Product id and Actual quantity cannot be empty");
-    		return false;
-    	}
-    	try {
-    		Integer.parseInt(aQuantText.getText());
-    		Integer.parseInt(pidText.getText());
-    	}catch (NumberFormatException e) {
-    		errorLbl.setText("Error: Input must be numbers [0-9]");
-    		return false;
-    	}
-    	errorLbl.setText("");
-    	return true;
-    }
+	private void updateList() {
+		sendQuery(Tasks.RequiredStock, "SELECT * FROM reqproduct");
+		prodList.clear();
+		prodList.addAll(tprod);
+	}
+
+	@FXML
+	public void update(ActionEvent event) {
+		if (checkInput())
+			sendQuery(Tasks.Update,
+					"UPDATE reqproduct SET actual = " + aQuantText.getText() + " WHERE id = " + pidText.getText());
+		if (updateResult != 0)
+			updateList();
+		else
+			errorLbl.setText("Error: product id not found");
+	}
+
+	private boolean checkInput() {
+		if (aQuantText.getText().isEmpty() || pidText.getText().isEmpty()) {
+			errorLbl.setText("Error: Product id and Actual quantity cannot be empty");
+			return false;
+		}
+		try {
+			Integer.parseInt(aQuantText.getText());
+			Integer.parseInt(pidText.getText());
+		} catch (NumberFormatException e) {
+			errorLbl.setText("Error: Input must be numbers [0-9]");
+			return false;
+		}
+		errorLbl.setText("");
+		return true;
+	}
 }

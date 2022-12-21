@@ -11,7 +11,7 @@ public class ClientApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		AbstractController abstractController = new LoginController();
 		AbstractController.prStage = primaryStage;
-		abstractController.start(null, "LoginForm", "Login");
+		abstractController.start("ConnectionConfig", "Login");
 	}
 
 

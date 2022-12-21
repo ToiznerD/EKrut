@@ -10,6 +10,8 @@ import DBHandler.DBController;
 import Util.Tasks;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+import tasker.Tasker;
+
 public class serverBackEnd extends AbstractServer {
 	// Default port to listen
 	final public static int DEFAULT_PORT = 5555;
@@ -24,48 +26,14 @@ public class serverBackEnd extends AbstractServer {
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		ArrayList<Object> task = (ArrayList<Object>)msg;
-		
-		switch((Tasks)task.get(0)) {
-			case Login:
-				loginTask(client, task);
-				break;
-			case Disconnect:
-				clientDisconnected(client);
-				break;
-			default:
-				break;
-		}
-	}
-
-	/*
-	 * This method is responsible to handle with tasks related to login page
-	 * @params client, task
-	 */
-	private void loginTask(ConnectionToClient client, ArrayList<Object> task) {
-		
-		//Run query
-		ResultSet rs = DBController.select((String)task.get(1));
-		
-		try {
-			if(rs.next()) { //Login details found
-				ArrayList<Object> returnMsg = new ArrayList<>();
-				returnMsg.add(Tasks.Login);
-				returnMsg.add(true);
-				returnMsg.add(rs.getString(4));
-				sendMsg(client, returnMsg, "Sending positive login check to {ip}");
-			}
-			else { //Login details not found
-				ArrayList<Object> returnMsg = new ArrayList<>();
-				returnMsg.add(Tasks.Login);
-				returnMsg.add(false);
-				sendMsg(client, returnMsg, "Sending negative login check to {ip}");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
+		@SuppressWarnings("unchecked")
+		ArrayList<Object> task = (ArrayList<Object>) msg;
+		if (task.get(0) == Tasks.Disconnect)
+			clientDisconnected(client);
+		else {
+		ArrayList<Object> parse = Tasker.parse(task);
+		sendMsg(client, parse, (String) parse.get(1)); //Nave
+	}}
 
 	protected void sendMsg(ConnectionToClient client, Object response, String consoleMsg) {
 		if (response != null)
@@ -77,18 +45,24 @@ public class serverBackEnd extends AbstractServer {
 		if (consoleMsg != null)
 			sc.appendConsole(consoleMsg.replace("{ip}", client.getInetAddress().getHostAddress()));
 	}
-	
-	/*
+
 	@Override
 	protected void clientConnected(ConnectionToClient client) {
 		sc.fillUserTableView(new clientConnectionData(client));
+		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is Connected to server.");
 	}
 
 	@Override
 	protected void clientDisconnected(ConnectionToClient client) {
 		sc.removeUserFromTable(new clientConnectionData(client));
 		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is disconnected from server.");
-	}*/
+		try {
+			client.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public class clientConnectionData {
 

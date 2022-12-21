@@ -33,7 +33,7 @@ public class SaleTemplateCreationController {
     
     public void BackButton(ActionEvent event) throws Exception {
     	try {
-			ClientApp.setScene("MarketingSalesDepartmentPanel");
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

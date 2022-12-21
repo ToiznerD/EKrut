@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="593.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="593.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MarketingManagerController">
    <children>
       <ImageView fitHeight="271.0" fitWidth="266.0" layoutX="348.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/EKrut%20logo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnLogout" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="14.0" layoutY="336.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="126.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Log out">
+      <Button fx:id="btnLogout" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="14.0" layoutY="336.0" mnemonicParsing="false" onAction="#LogoutButton" prefHeight="50.0" prefWidth="126.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Log out">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -24,7 +24,7 @@
             <Image url="@../../images/logout%20icon.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnInitiate" layoutX="106.0" layoutY="131.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Initiate new sale">
+      <Button fx:id="btnInitiate" layoutX="107.0" layoutY="136.0" mnemonicParsing="false" onAction="#InitiateSaleButton" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Initiate new sale">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
