@@ -25,54 +25,81 @@ public class Msg implements Serializable {
 		this.query = query;
 	}
 
+	/**
+	 * @return Tasks return the Msg task.
+	 */
 	public Tasks getTask() {
 		return task;
 	}
 
+	/**
+	 * @return int number updated row
+	 */
 	public int getInt() {
 		return intReturn;
 	}
 
+	/**
+	 * @return boolean false if resultset return empty from selected
+	 */
 	public boolean getBool() {
 		return boolReturn;
 	}
 
+	/**
+	 * @return String message to console
+	 */
 	public String getConsole() {
 		return consoleMsg;
 	}
+
+	/**
+	 * @param <T> class type of wanted return
+	 * @param num the number of column in table
+	 * @return <T> object class of wanted return
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getObj(int num) {
 		return (T) arrayReturn.get(0).get(num);
 	}
 
+	/**
+	 * @param <T> class type of wanted return
+	 * @param type ClassName.class , ClassName of wanted type return
+	 * @return List<T> List of wanted class
+	 */
 	@SuppressWarnings("unchecked")
-
 	public <T> List<T> getArr(Class<T> type) {
 		List<T> toConvert = new ArrayList<>();
 		try {
 			for (List<Object> o : arrayReturn)
 				toConvert.add((T) type.getConstructors()[0].newInstance(o.toArray()));
-		} catch (Exception e) {e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return toConvert;
 	}
 
-	public void taskerHandler() throws Exception {
+	/**
+	 * @throws Exception SQLException on select error
+	 */
+	public void taskerHandler() throws SQLException {
 		switch (task) {
 		case Update:
 			intReturn = DBController.update(query);
 			break;
 		case Select:
-			break;
-		case Login:
-			runQuery();
-			boolReturn = arrayReturn.size() == 0 ? false : true;
+			runSelect();
 			break;
 		default:
 			break;
 		}
 	}
-	private void runQuery() throws SQLException {
+
+	/**
+	 * @throws SQLException error in DB
+	 */
+	private void runSelect() throws SQLException {
 		ResultSet rs = DBController.select(query);
 		int columnCount = rs.getMetaData().getColumnCount();
 		while (rs.next()) {
@@ -81,5 +108,6 @@ public class Msg implements Serializable {
 				row.add(rs.getObject(i));
 			arrayReturn.add(row);
 		}
+		boolReturn = arrayReturn.size() == 0 ? false : true;
 	}
 }

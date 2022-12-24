@@ -1,16 +1,11 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import Util.Msg;
-import Util.Tasks;
 import client.ClientBackEnd;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -31,29 +26,32 @@ public abstract class AbstractController {
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
 		prStage.setResizable(false);
-		prStage.setOnCloseRequest(event -> {
-			ClientBackEnd.getInstance().quit();
-		});
+		if (fxml != "ConnectionConfig")
+			prStage.setOnCloseRequest(event -> {
+				ClientBackEnd.getInstance().quit();
+			});
 		prStage.show();
 	}
-	
+
 	public void Wait() {//Nave
 		try {
-		synchronized (monitor) {
+			synchronized (monitor) {
 				monitor.wait();
-		}}catch (InterruptedException e) {
+			}
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-    public void sendMsg(Msg msg) {		//Nave
+
+	public void sendMsg(Msg msg) { //Nave
 		try {
 			ClientBackEnd.getInstance().handleMessageFromClientUI(msg);
-			Wait(); 
+			Wait();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} //Send task to server
-    }
-    
+	}
+
 	/*    public void sendQuery(Tasks task,String query) {		//Nave
 		ArrayList<Object> taskObj = new ArrayList<>();
 		taskObj.add(task);
@@ -65,7 +63,7 @@ public abstract class AbstractController {
 				e.printStackTrace();
 			} //Send task to server
 	}*/
-    
+
 	public static void Notify() { //Nave
 		synchronized (monitor) {
 			monitor.notifyAll();

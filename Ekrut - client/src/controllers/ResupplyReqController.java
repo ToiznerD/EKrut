@@ -2,7 +2,6 @@ package controllers;
 
 import java.util.ArrayList;
 
-import Util.Tasks;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,16 +51,19 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	private void updateList() {
-		sendQuery(Tasks.RequiredStock, "SELECT * FROM reqproduct");
+		//sendQuery(Tasks.RequiredStock, "SELECT * FROM reqproduct");
 		prodList.clear();
 		prodList.addAll(tprod);
 	}
-
+	@FXML
+	public void back(ActionEvent event) {
+		
+	}
 	@FXML
 	public void update(ActionEvent event) {
-		if (checkInput())
-			sendQuery(Tasks.Update,
-					"UPDATE reqproduct SET actual = " + aQuantText.getText() + " WHERE id = " + pidText.getText());
+		//if (checkInput())
+			//sendQuery(Tasks.Update,
+					//"UPDATE reqproduct SET actual = " + aQuantText.getText() + " WHERE id = " + pidText.getText());
 		if (updateResult != 0)
 			updateList();
 		else
