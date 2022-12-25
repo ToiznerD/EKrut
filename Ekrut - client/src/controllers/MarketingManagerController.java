@@ -1,11 +1,5 @@
 package controllers;
 
-import java.util.ResourceBundle;
-
-import javax.print.DocFlavor.URL;
-
-import client.ClientApp;
-import client.ClientApp2;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

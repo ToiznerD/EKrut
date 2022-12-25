@@ -11,9 +11,8 @@ public class ClientApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		AbstractController abstractController = new ConnectionController();
 		AbstractController.prStage = primaryStage;
-		abstractController.start("ConnectionConfig", "Login");
+		abstractController.start("ConnectionConfig", "Connection Config");
 	}
-
 
 	public static void main(String[] args) {
 		launch(args);

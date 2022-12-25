@@ -1,37 +1,25 @@
 package controllers;
 
-import java.util.ResourceBundle;
-
-import javax.print.DocFlavor.URL;
-
-import client.ClientApp2;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class MarketingSalesDepartmentController {
+public class MarketingSalesDepartmentController extends AbstractController {
 
     @FXML
     private Button btnCreateNewSaleTemplate;
-
-    @FXML
-    private Button btnLogout;
     
     public void CreateSaleTemplateButton(ActionEvent event) throws Exception {
     	try {
-			ClientApp2.setScene("SaleTemplateCreationForm");
+    		start("SaleTemplateCreationForm", "Sale Template Creation Form");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
     }
-    
-    public void LogoutButton(ActionEvent event) throws Exception {
-    	try {
-			ClientApp2.setScene("LoginForm");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
+
+	@Override
+	public void back() {
+		// TODO Auto-generated method stub
+		
+	}
 }
