@@ -14,7 +14,7 @@
             <Image url="@../../images/EKrut%20logo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnLogout" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="14.0" layoutY="336.0" mnemonicParsing="false" onAction="#LogoutButton" prefHeight="50.0" prefWidth="126.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Log out">
+      <Button fx:id="btnLogout" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="14.0" layoutY="336.0" mnemonicParsing="false" onAction="#logout" prefHeight="50.0" prefWidth="126.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Log out">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
