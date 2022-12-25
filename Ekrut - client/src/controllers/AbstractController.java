@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  * All the controllers inherit from this class and the method start
  */
 public abstract class AbstractController {
-
+	//DOR TEST
 	public static Stage prStage;
 	public static Object monitor = new Object();
 	public static Msg msg;
