@@ -3,7 +3,6 @@ package controllers;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-import client.ClientApp2;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,8 +17,6 @@ import javafx.scene.control.TextField;
 
 public class SaleInitiateFormController extends AbstractController implements Initializable {
     
-    @FXML
-    private Button btnBack;
 
     @FXML
     private Button btnInitiate;
