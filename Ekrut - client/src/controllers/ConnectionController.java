@@ -62,4 +62,8 @@ public class ConnectionController extends AbstractController {
 		}
 		return -1;
 	}
+	@Override
+	public void back() {
+		// Not implemented
+	}
 }

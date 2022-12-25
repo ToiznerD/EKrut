@@ -52,21 +52,15 @@ public abstract class AbstractController {
 		} //Send task to server
 	}
 
-	/*    public void sendQuery(Tasks task,String query) {		//Nave
-		ArrayList<Object> taskObj = new ArrayList<>();
-		taskObj.add(task);
-		taskObj.add(query);
-			try {
-				ClientBackEnd.getInstance().handleMessageFromClientUI(taskObj);
-				Wait(); 
-			} catch (Exception e) {
-				e.printStackTrace();
-			} //Send task to server
-	}*/
-
 	public static void Notify() { //Nave
 		synchronized (monitor) {
 			monitor.notifyAll();
 		}
 	}
+	
+	public void logout() throws IOException {
+		start("LoginForm", "Login");
+	}
+	
+	public abstract void back();
 }

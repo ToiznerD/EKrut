@@ -27,4 +27,9 @@ public class OrderReportPanelController extends AbstractController{
 
         }
     }
+
+	@Override
+	public void back() {
+		// Not implemented
+	}
 }

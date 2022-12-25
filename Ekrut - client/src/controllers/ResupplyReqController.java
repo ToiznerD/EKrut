@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.ArrayList;
 
+import Util.Msg;
+import Util.Tasks;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,8 +19,6 @@ import tables.TableProd;
 
 public class ResupplyReqController extends AbstractController {
 
-	public static ArrayList<TableProd> tprod;
-	public static int updateResult;
 	private ObservableList<TableProd> prodList = FXCollections.observableArrayList();;
 	@FXML
 	private ImageView backBtn;
@@ -51,20 +51,26 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	private void updateList() {
-		//sendQuery(Tasks.RequiredStock, "SELECT * FROM reqproduct");
+		msg = new Msg(Tasks.Select,
+				"SELECT sp.pid,sp.pname,sp.lim,sp.quantity FROM storeproduct sp WHERE sp.sid = 2");
+		sendMsg(msg);
 		prodList.clear();
-		prodList.addAll(tprod);
+		prodList.addAll(msg.getArr(TableProd.class));
 	}
+
 	@FXML
 	public void back(ActionEvent event) {
-		
+
 	}
+
 	@FXML
 	public void update(ActionEvent event) {
-		//if (checkInput())
-			//sendQuery(Tasks.Update,
-					//"UPDATE reqproduct SET actual = " + aQuantText.getText() + " WHERE id = " + pidText.getText());
-		if (updateResult != 0)
+		if (checkInput()) {
+			msg = new Msg(Tasks.Update, "UPDATE storeproduct SET quantity = " + aQuantText.getText() + " WHERE pid = "
+					+ pidText.getText() + " AND sid = 2");
+			sendMsg(msg);
+		}
+		if (msg.getInt() != 0)
 			updateList();
 		else
 			errorLbl.setText("Error: product id not found");
@@ -84,5 +90,10 @@ public class ResupplyReqController extends AbstractController {
 		}
 		errorLbl.setText("");
 		return true;
+	}
+
+	@Override
+	public void back() {
+		//Not implemented
 	}
 }

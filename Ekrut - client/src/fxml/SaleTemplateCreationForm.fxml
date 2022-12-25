@@ -2,15 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.SaleTemplateCreationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SaleTemplateCreationController">
    <children>
       <ImageView fitHeight="184.0" fitWidth="180.0" layoutX="347.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -41,16 +39,6 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <ScrollPane layoutX="41.0" layoutY="107.0" prefHeight="164.0" prefWidth="320.0">
-         <content>
-            <HBox prefHeight="100.0" prefWidth="318.0">
-               <children>
-                  <TextField />
-                  <TextField />
-                  <TextField />
-               </children>
-            </HBox>
-         </content>
-      </ScrollPane>
+      <TextField layoutX="61.0" layoutY="106.0" promptText="Sale discount (in %)" />
    </children>
 </AnchorPane>

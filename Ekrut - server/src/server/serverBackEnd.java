@@ -36,17 +36,7 @@ public class serverBackEnd extends AbstractServer {
 		}
 
 	}
-	/*	@Override
-		protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-			@SuppressWarnings("unchecked")
-			ArrayList<Object> task = (ArrayList<Object>) msg;
-			if (task.get(0) == Tasks.Disconnect)
-				clientDisconnected(client);
-			else {
-				ArrayList<Object> parse = Tasker.parse(task);
-				sendMsg(client, parse, (String) parse.get(1)); //Nave
-			}
-		}*/
+
 
 	protected void sendMsg(ConnectionToClient client, Object response, String consoleMsg) {
 		if (response != null)

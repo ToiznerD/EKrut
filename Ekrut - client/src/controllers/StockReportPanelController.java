@@ -33,4 +33,9 @@ public class StockReportPanelController extends AbstractController{
 
         }
     }
+
+	@Override
+	public void back() {
+		// Not implemented
+	}
 }

@@ -54,4 +54,9 @@ public class ViewReportsController extends AbstractController {
         }
     }
 
+	@Override
+	public void back() {
+		// Not implemented
+	}
+
 }
