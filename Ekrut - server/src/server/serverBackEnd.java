@@ -2,7 +2,7 @@ package server;
 
 import java.io.IOException;
 import java.util.Objects;
-
+import Util.Tasks;
 import Util.Msg;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
@@ -22,15 +22,17 @@ public class serverBackEnd extends AbstractServer {
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		Msg taskMsg = (Msg) msg;
-		try {
-			taskMsg.taskerHandler();
-			client.sendToClient(taskMsg);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (taskMsg.getTask() == Tasks.Disconnect)
+			clientDisconnected(client);
+		else {
+			try {
+				taskMsg.taskerHandler();
+				client.sendToClient(taskMsg);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
 	}
-
 
 	protected void sendMsg(ConnectionToClient client, Object response, String consoleMsg) {
 		if (response != null)
@@ -56,7 +58,6 @@ public class serverBackEnd extends AbstractServer {
 		try {
 			client.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
