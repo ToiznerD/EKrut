@@ -3,9 +3,11 @@ package controllers;
 import java.io.IOException;
 import Util.Msg;
 import client.ClientBackEnd;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -62,5 +64,5 @@ public abstract class AbstractController {
 		start("LoginForm", "Login");
 	}
 	
-	public abstract void back();
+	public abstract void back(MouseEvent event);
 }

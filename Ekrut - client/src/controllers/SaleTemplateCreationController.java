@@ -1,7 +1,9 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 public class SaleTemplateCreationController extends AbstractController{
 
@@ -17,7 +19,7 @@ public class SaleTemplateCreationController extends AbstractController{
 //    }
     
 	@Override
-	public void back() {
+	public void back(MouseEvent event) {
 		try {
     		start("MarketingSalesDepartmentPanel","Marketing Sales Department Panel");
 		} catch (Exception e) {

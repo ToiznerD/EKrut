@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 public class CustomerServiceController extends AbstractController{
 
@@ -25,7 +26,7 @@ public class CustomerServiceController extends AbstractController{
     }
 
 	@Override
-	public void back() {
+	public void back(MouseEvent event) {
 		//Not implemented
 	}
 

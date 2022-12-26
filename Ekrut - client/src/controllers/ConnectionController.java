@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 public class ConnectionController extends AbstractController {
 	public final int DEFAULT_PORT = 5555;
@@ -35,18 +36,16 @@ public class ConnectionController extends AbstractController {
 		if (ip.isEmpty())
 			ip = DEFAULT_IP;
 		if (port != -1) {
-			try {//Nave
+			try {
 				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
 				//start("LoginForm", "Login");
-				start("MarketingSalesDepartmentPanel", "MarketingManagerPanel");
+				start("OperationEmpPanel", "Operation Employee panel");
 			} catch (IOException e) {
 				errorLbl.setText("Error: cannot connect to remote\n" + ip + ":" + port);
 			}
 		}
 	}
-	public void back(ActionEvent event) {
-		
-	}
+
 	/**
 	 * @return port int -1 on fail
 	 */
@@ -64,7 +63,7 @@ public class ConnectionController extends AbstractController {
 		return -1;
 	}
 	@Override
-	public void back() {
+	public void back(MouseEvent event) {
 		// Not implemented
 	}
 }

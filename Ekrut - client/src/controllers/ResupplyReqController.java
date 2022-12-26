@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import Util.Msg;
@@ -15,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import tables.TableProd;
 
 public class ResupplyReqController extends AbstractController {
@@ -58,9 +60,14 @@ public class ResupplyReqController extends AbstractController {
 		prodList.addAll(msg.getArr(TableProd.class));
 	}
 
-	@FXML
-	public void back(ActionEvent event) {
-
+	@Override
+	public void back(MouseEvent event) {
+		try {
+			start("OperationEmpPanel", "Operation Employee panel");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -92,8 +99,4 @@ public class ResupplyReqController extends AbstractController {
 		return true;
 	}
 
-	@Override
-	public void back() {
-		//Not implemented
-	}
 }
