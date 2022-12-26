@@ -1,13 +1,11 @@
 package client;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import controllers.AbstractController;
-import controllers.LoginController;
-import ocsf.client.AbstractClient;
 import Util.Msg;
 import Util.Tasks;
+import controllers.AbstractController;
+import ocsf.client.AbstractClient;
 
 public class ClientBackEnd extends AbstractClient {
 
@@ -49,8 +47,7 @@ public class ClientBackEnd extends AbstractClient {
 
 	public void quit() {
 		try {
-			sendToServer(Tasks.Disconnect);
-			closeConnection();
+			handleMessageFromClientUI(new Msg(Tasks.Disconnect,null));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 
-import client.ClientApp;
 import client.ClientBackEnd;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
