@@ -34,8 +34,8 @@ public class serverBackEnd extends AbstractServer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
+
 	/*	@Override
 		protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 			@SuppressWarnings("unchecked")

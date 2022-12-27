@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/Ekrut - client">
+      <sourceFolder url="file://$MODULE_DIR$/Ekrut - client/lib" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Ekrut - client/src" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/Ekrut - server/src">
+      <sourceFolder url="file://$MODULE_DIR$/Ekrut - server/src" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/Ekrut - shared/src">
+      <sourceFolder url="file://$MODULE_DIR$/Ekrut - shared/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/javafx-sdk-19/lib/javafx-swt.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/javafx-sdk-19/lib/javafx.base.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/javafx-sdk-19/lib/javafx.controls.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/javafx-sdk-19/lib/javafx.fxml.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/javafx-sdk-19/lib/javafx.graphics.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/javafx-sdk-19/lib/javafx.media.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/javafx-sdk-19/lib/javafx.swing.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/javafx-sdk-19/lib/javafx.web.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/Ekrut - shared" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/Ekrut - shared/lib" />
+          <root url="file://$MODULE_DIR$/Ekrut - shared/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/Ekrut - server/lib/mysql-connector-java-8.0.13.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>

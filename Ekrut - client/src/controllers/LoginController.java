@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import Util.Msg;
 import Util.Tasks;
+import Entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
  * This class is responsible to control the Login page
  */
 public class LoginController extends AbstractController {
+	public static User user = null;
 
 	@FXML
 	private Button btnLogin;
@@ -48,11 +50,14 @@ public class LoginController extends AbstractController {
 		sendMsg(msg);
 		//Build task to server
 		if (msg.getBool()) {
-			switch ((String) msg.getObj(3)) {
+			user = msg.getArr(User.class).get(0);
+			switch ( LoginController.user.getRole() ) {
 			case "customer":
 				start("CustomerPanel", "Customer Dashboard");
 				//start("ResupplyReqScreen", "Customer Dashboard");
 				break;
+			case "region_manager":
+				start("RegionManagerMainScreen", "Region Manager Dashboard");
 			default:
 				break;
 			}

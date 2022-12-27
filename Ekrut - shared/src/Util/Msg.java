@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBHandler.DBController;
+import Util.Tasks.*;
+
+import static Util.Tasks.getLocations;
+
 
 public class Msg implements Serializable {
 
@@ -91,6 +95,18 @@ public class Msg implements Serializable {
 		case Select:
 			runSelect();
 			break;
+		case Login:
+			runSelect();
+			break;
+		case getLocations:
+			runSelect();
+			break;
+		case getStoreProducts:
+			runSelect();
+			break;
+		case updateProdMinLimit:
+			runUpdate();
+			break;
 		default:
 			break;
 		}
@@ -110,4 +126,10 @@ public class Msg implements Serializable {
 		}
 		boolReturn = arrayReturn.size() == 0 ? false : true;
 	}
+
+	public void runUpdate() throws SQLException {
+		Integer updateReturnVal = DBController.update(query);
+		boolReturn = updateReturnVal > 0 ? true : false;
+	}
+
 }
