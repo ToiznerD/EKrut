@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 /*
  * Login controller class inheritting from AbstractController
@@ -43,7 +42,7 @@ public class LoginController extends AbstractController {
 		//Create query based on UI input
 		String userid = txtUserid.getText();
 		String password = txtPW.getText();
-		String query = "SELECT * FROM users WHERE name = '" + userid + "' AND pass = " + password;
+		String query = "SELECT * FROM users WHERE user = '" + userid + "' AND password = " + password;
 		
 		msg = new Msg(Tasks.Select, query);
 		sendMsg(msg);
@@ -65,7 +64,7 @@ public class LoginController extends AbstractController {
 	}
 
 	@Override
-	public void back(MouseEvent event) {
+	public void back() {
 		//Not implemented
 	}
 	

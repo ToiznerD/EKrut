@@ -14,9 +14,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 public class EditUserController extends AbstractController{
+
+
+    @FXML
+    private TableColumn<User, String> address_col;
 
     @FXML
     private Button btnLoad;
@@ -28,7 +31,13 @@ public class EditUserController extends AbstractController{
     private TableColumn<User, Integer> id_col;
 
     @FXML
+    private TableColumn<User, String> name_col;
+
+    @FXML
     private TableColumn<User, String> password_col;
+
+    @FXML
+    private TableColumn<User, String> phone_col;
 
     @FXML
     private TableColumn<User, String> role_col;
@@ -37,10 +46,19 @@ public class EditUserController extends AbstractController{
     private TableView<User> tableUsers;
 
     @FXML
+    private TextField txtAddress;
+
+    @FXML
     private TextField txtID;
 
     @FXML
+    private TextField txtName;
+
+    @FXML
     private TextField txtPassword;
+
+    @FXML
+    private TextField txtPhone;
 
     @FXML
     private TextField txtRole;
@@ -50,6 +68,7 @@ public class EditUserController extends AbstractController{
 
     @FXML
     private TableColumn<User, String> user_col;
+
 
     @FXML
     void loadUser(ActionEvent event) {
@@ -61,6 +80,9 @@ public class EditUserController extends AbstractController{
     	txtUser.setText(msg.getObj(1));
     	txtPassword.setText(msg.getObj(2));
     	txtRole.setText(msg.getObj(3));
+    	txtName.setText(msg.getObj(4));
+    	txtPhone.setText(msg.getObj(5));
+    	txtAddress.setText(msg.getObj(6));
     }
 
     @FXML
@@ -69,8 +91,13 @@ public class EditUserController extends AbstractController{
     	String username = txtUser.getText();
     	String password = txtPassword.getText();
     	String role = txtRole.getText();
-    	String query = "UPDATE users SET name = '" + username + "', pass = '" + password + "', role = '" + role + "'"
-    			+ " WHERE id = " + id;
+    	String name = txtName.getText();
+    	String phone = txtPhone.getText();
+    	String address = txtAddress.getText();
+    	String query = String.format("UPDATE users SET user = '%s', password = '%s', role = '%s', name = '%s', phone = '%s', address = '%s'"
+    			+ " WHERE id = %d", username, password, role, name, phone, address, id);
+//    	String query = "UPDATE users SET user = '" + username + "', password = '" + password + "', role = '" + role + "', name = '" + name
+//    			+ ", phone = '" + phone + ", address = '" + address + "' WHERE id = " + id;
     	msg = new Msg(Tasks.Update, query);
     	sendMsg(msg);
     	initialize();
@@ -93,11 +120,14 @@ public class EditUserController extends AbstractController{
     	user_col.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
     	password_col.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
     	role_col.setCellValueFactory(new PropertyValueFactory<User, String>("role"));
+    	name_col.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
+    	phone_col.setCellValueFactory(new PropertyValueFactory<User, String>("phone"));
+    	address_col.setCellValueFactory(new PropertyValueFactory<User, String>("address"));
     	tableUsers.setItems(userOBList);
     }
 
 	@Override
-	public void back(MouseEvent event) {
+	public void back() {
 		try {
 			start("CustomerService", "Customer Service");
 		} catch (IOException e) {
