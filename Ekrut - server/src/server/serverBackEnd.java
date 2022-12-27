@@ -6,6 +6,7 @@ import Util.Tasks;
 import Util.Msg;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+import tasker.Tasker;
 
 public class serverBackEnd extends AbstractServer {
 	// Default port to listen
@@ -26,73 +27,34 @@ public class serverBackEnd extends AbstractServer {
 			clientDisconnected(client);
 		else {
 			try {
-				taskMsg.taskerHandler();
-				client.sendToClient(taskMsg);
+				Tasker.taskerHandler(taskMsg);
+				sendMsg(client, taskMsg);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	protected void sendMsg(ConnectionToClient client, Object response, String consoleMsg) {
-		if (response != null)
-			try {
-				client.sendToClient(response);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		if (consoleMsg != null)
-			sc.appendConsole(consoleMsg.replace("{ip}", client.getInetAddress().getHostAddress()));
+	protected void sendMsg(ConnectionToClient client, Msg taskMsg) throws IOException {
+		client.sendToClient(taskMsg);
+		if (taskMsg.getConsole() != null)
+			sc.appendConsole(taskMsg.getConsole().replace("{ip}", client.getInetAddress().getHostAddress()));
 	}
 
 	@Override
 	protected void clientConnected(ConnectionToClient client) {
-		sc.fillUserTableView(new clientConnectionData(client));
+		sc.addConnected(client.getInetAddress());
 		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is Connected to server.");
 	}
 
 	@Override
 	protected void clientDisconnected(ConnectionToClient client) {
-		sc.removeUserFromTable(new clientConnectionData(client));
+		sc.removeConnected(client.getInetAddress());
 		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is disconnected from server.");
 		try {
 			client.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public class clientConnectionData {
-
-		private String hostName;
-		private String ip;
-		private String status;
-
-		public clientConnectionData(ConnectionToClient client) {
-			this.hostName = client.getInetAddress().getHostName();
-			this.ip = client.getInetAddress().getHostAddress();
-			this.status = "connected";
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (getClass() != obj.getClass())
-				return false;
-			clientConnectionData other = (clientConnectionData) obj;
-			return Objects.equals(ip, other.ip);
-		}
-
-		public String getHostName() {
-			return hostName;
-		}
-
-		public String getIp() {
-			return ip;
-		}
-
-		public String getStatus() {
-			return status;
-		}
-
 	}
 }
