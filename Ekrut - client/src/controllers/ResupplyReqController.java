@@ -52,7 +52,7 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	private void updateList() {
-		msg = new Msg(Tasks.Select,
+		msg = new Msg(Tasks.RequiredStock,
 				"SELECT sp.pid,sp.pname,sp.lim,sp.quantity FROM storeproduct sp WHERE sp.sid = 2");
 		sendMsg(msg);
 		prodList.clear();

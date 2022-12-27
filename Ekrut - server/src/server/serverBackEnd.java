@@ -6,6 +6,7 @@ import Util.Tasks;
 import Util.Msg;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+import tasker.Tasker;
 
 public class serverBackEnd extends AbstractServer {
 	// Default port to listen
@@ -26,23 +27,22 @@ public class serverBackEnd extends AbstractServer {
 			clientDisconnected(client);
 		else {
 			try {
-				taskMsg.taskerHandler();
-				client.sendToClient(taskMsg);
+				Tasker.taskerHandler(taskMsg);
+				sendMsg(client,taskMsg);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	protected void sendMsg(ConnectionToClient client, Object response, String consoleMsg) {
-		if (response != null)
-			try {
-				client.sendToClient(response);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		if (consoleMsg != null)
-			sc.appendConsole(consoleMsg.replace("{ip}", client.getInetAddress().getHostAddress()));
+	protected void sendMsg(ConnectionToClient client, Msg taskMsg) {
+		try {
+			client.sendToClient(taskMsg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (taskMsg.getConsole() != null)
+			sc.appendConsole(taskMsg.getConsole().replace("{ip}", client.getInetAddress().getHostAddress()));
 	}
 
 	@Override
