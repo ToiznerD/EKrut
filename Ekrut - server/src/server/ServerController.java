@@ -67,13 +67,14 @@ public class ServerController {
 		DBController.setDB_prop(ip.getText(),db_name.getText(),db_user.getText(),db_password.getText());
 		sv = new serverBackEnd(5555, this);
 		try {
-			// Start server
-			sv.listen();
-			appendConsole("Server is up.");
+
 			// Start DB connection
 			DBController.connection();
 			appendConsole("Driver definition succeed.\nDatabase connected successfully.");
-
+			// Start server
+			sv.listen();
+			appendConsole("Server is up.");
+			
 			btnConnect.setDisable(true);
 			btnDisconnect.setDisable(false);
 
@@ -81,13 +82,11 @@ public class ServerController {
 			appendConsole("Server fail.");
 			e.printStackTrace();
 		} catch (SQLException e) {
-			appendConsole("Database connection failed.");
-			e.printStackTrace();
+			appendConsole("Database connection failed.\npassword might be wrong.");
 		} catch (Exception e) {
 			appendConsole("Driver definition failed.");
 			e.printStackTrace();
 		}
-
 	}
 
 	public void disconnectFromServer() throws IOException {

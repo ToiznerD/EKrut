@@ -64,7 +64,6 @@ public class ResupplyReqController extends AbstractController {
 		try {
 			start("OperationEmpPanel", "Operation Employee panel");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
