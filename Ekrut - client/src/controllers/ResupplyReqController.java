@@ -24,7 +24,7 @@ public class ResupplyReqController extends AbstractController {
 	@FXML
 	private ImageView backBtn;
 	@FXML
-	private Label regionLbl;
+	private Label storeLbl;
 	@FXML
 	private TableColumn<TableProd, Integer> idCell, rQuantCell, aQuantCell;
 	@FXML
