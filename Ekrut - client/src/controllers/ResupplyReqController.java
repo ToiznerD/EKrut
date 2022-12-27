@@ -24,7 +24,7 @@ public class ResupplyReqController extends AbstractController {
 	@FXML
 	private ImageView backBtn;
 	@FXML
-	private Label regionLbl;
+	private Label storeLbl;
 	@FXML
 	private TableColumn<TableProd, Integer> idCell, rQuantCell, aQuantCell;
 	@FXML
@@ -52,7 +52,7 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	private void updateList() {
-		msg = new Msg(Tasks.Select,
+		msg = new Msg(Tasks.RequiredStock,
 				"SELECT sp.pid,sp.pname,sp.lim,sp.quantity FROM storeproduct sp WHERE sp.sid = 2");
 		sendMsg(msg);
 		prodList.clear();
@@ -64,7 +64,6 @@ public class ResupplyReqController extends AbstractController {
 		try {
 			start("OperationEmpPanel", "Operation Employee panel");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
