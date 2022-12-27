@@ -62,7 +62,9 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
             tableColInitialization();
 
         } else if (LoginController.role.equals("CEO")) {
-
+            // TODO: handle CEO case
+            // Need to add RegionSelection for both windows - CEO will have all regions, while
+            // RegionManager only will have hes
         }
     }
 
@@ -150,11 +152,20 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
      * @param event catches the CellEditEvent
      */
     public void onMinQuantityCommit(CellEditEvent event) {
-        StoreProduct storeProd = (StoreProduct) event.getRowValue();
-        storeProd.setMinLimit((Integer) event.getNewValue());
+        // get the StoreProduct that was edited
+        StoreProduct updatedstoreProd = (StoreProduct) event.getRowValue();
 
-        // TODO: ceck if there is a product of this type in the list: change if there is, add if not
-        updatedStoreProductsList.add(storeProd);
+        // Check if this product is already in the list, if it is just update the existing
+        for (StoreProduct sp: updatedStoreProductsList) {
+            if (sp.getPid() == updatedstoreProd.getPid()) {
+                sp.setMinLimit((Integer) event.getNewValue());
+                return;
+            }
+        }
+
+        // if the product is not in the list, add it
+        updatedstoreProd.setMinLimit((Integer) event.getNewValue());
+        updatedStoreProductsList.add(updatedstoreProd);
     }
 
     /**
