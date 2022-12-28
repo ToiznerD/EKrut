@@ -33,6 +33,7 @@ public abstract class AbstractController {
 			prStage.setOnCloseRequest(event -> {
 				ClientBackEnd.getInstance().quit();
 			});
+		ClientBackEnd.setAbstractController(load.getController());
 		prStage.show();
 	}
 
@@ -62,10 +63,10 @@ public abstract class AbstractController {
 	}
 	
 	public void logout() throws IOException {
-		//ClientBackEnd.getInstance().handleMessageFromClientUI(new Msg(Tasks.Disconnect,null));
 		String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
 		msg = new Msg(Tasks.Logout, logoutQuery);
 		sendMsg(msg);
+		myUser = null;
 		start("LoginForm", "Login");
 	}
 	
