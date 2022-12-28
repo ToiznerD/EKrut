@@ -11,6 +11,8 @@ public class Msg implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Tasks task;
+	private Tasks subTask;
+	
 	private String query, consoleMsg;
 	private int intReturn;
 	private boolean boolReturn;
@@ -20,12 +22,26 @@ public class Msg implements Serializable {
 		this.task = task;
 		this.query = query;
 	}
+	
+	public Msg(Tasks task, Tasks subTask, String query) {
+		this.task = task;
+		this.query = query;
+		this.subTask = subTask;
+	}
 
 	/**
 	 * @return Tasks return the Msg task.
 	 */
 	public Tasks getTask() {
 		return task;
+	}
+	
+	public Tasks getSubTask() {
+		return subTask;
+	}
+
+	public void setSubTask(Tasks subTask) {
+		this.subTask = subTask;
 	}
 
 	/**

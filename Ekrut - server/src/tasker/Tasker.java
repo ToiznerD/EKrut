@@ -22,8 +22,19 @@ public class Tasker {
 	private static void updateConsole(Msg msg) {
 		switch (msg.getTask()) {
 		case Login:
-			if (msg.getBool())
-				msg.setConsole("Client {ip} Login successfully");
+			switch(msg.getSubTask()) {
+				case Select:
+					msg.setConsole("Client {ip} trying to login");
+					break;
+				case Update:
+					msg.setConsole("Client {ip} Login successfuly");
+					break;
+				default:
+					break;
+			}
+			break;
+		case Logout:
+			msg.setConsole("Client {ip} has logged out.");
 			break;
 		case RequiredStock:
 			if (msg.getBool()) 
