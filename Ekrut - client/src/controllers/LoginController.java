@@ -1,13 +1,17 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import Util.Msg;
 import Util.Tasks;
 import Util.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -79,6 +83,31 @@ public class LoginController extends AbstractController {
 		else {
 			errMsgLbl.setText("Wrong Details");
 		}
+	}
+	
+	public void ConnectWithApp(ActionEvent event) {
+		File file = new File("config.txt");
+	    boolean exists = file.exists();
+	    if(!exists) {
+	    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+	    	alert.setTitle("Popup Message");
+	    	alert.setHeaderText("Choose between EK and OL");
+
+	    	ButtonType buttonEK = new ButtonType("EK");
+	    	ButtonType buttonOL = new ButtonType("OL");
+
+	    	alert.getButtonTypes().setAll(buttonEK, buttonOL);
+
+	    	Optional<ButtonType> result = alert.showAndWait();
+
+	    	if (result.get() == buttonEK) {
+	    	    // EK was chosen
+	    		System.out.println("EK");
+	    	} else if (result.get() == buttonOL) {
+	    	    // OL was chosen
+	    		System.out.println("OL");
+	    	}
+	    }
 	}
 
 	@Override

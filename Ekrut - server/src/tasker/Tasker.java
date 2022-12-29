@@ -17,24 +17,42 @@ public class Tasker {
 			runUpdate(msg);
 		else if (msg.getQuery().toLowerCase().startsWith("select"))
 			runSelect(msg);
+		else if(msg.getQuery().toLowerCase().startsWith("insert"))
+			runUpdate(msg);
 		updateConsole(msg);
 	}
+
 	private static void updateConsole(Msg msg) {
 		switch (msg.getTask()) {
 		case Login:
 			switch(msg.getSubTask()) {
 				case Select:
-					msg.setConsole("Client {ip} trying to login");
+					msg.setConsole("(Login): Client {ip} trying to login");
 					break;
 				case Update:
-					msg.setConsole("Client {ip} Login successfuly");
+					msg.setConsole("(Login): Client {ip} Login successfuly");
+					break;
+				default:
+					break;
+			}
+			break;
+		case CreateCustomer:
+			switch(msg.getSubTask()) {
+				case Select:
+					msg.setConsole("(Create Customer): Client {ip} asked for id");
+					break;
+				case CreateCustomer_Insert_Customer:
+					msg.setConsole("(Create Customer): Client {ip} adding new customer");
+					break;
+				case CreateCustomer_Insert_User:
+					msg.setConsole("(Create Customer): Client {ip} adding new user");
 					break;
 				default:
 					break;
 			}
 			break;
 		case Logout:
-			msg.setConsole("Client {ip} has logged out.");
+			msg.setConsole("(Logout): Client {ip} has logged out.");
 			break;
 		case RequiredStock:
 			if (msg.getBool()) 

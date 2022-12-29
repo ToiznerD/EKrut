@@ -16,65 +16,76 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The EditUserController class is responsible for handling user input and updating user data in the database.
+ * It provides methods for loading a user's data from the database and displaying it in the text fields,
+ * and for updating a user's data in the database based on the data in the text fields.
+ * It also provides a method for navigating back to the Customer Service screen.
+ */
 public class EditUserController extends AbstractController{
 
-	  @FXML
-	    private TableColumn<User, String> address_col;
+  @FXML
+    private TableColumn<User, String> address_col;
 
-	    @FXML
-	    private Button btnLoad;
+    @FXML
+    private Button btnLoad;
 
-	    @FXML
-	    private Button btnUpdate;
+    @FXML
+    private Button btnUpdate;
 
-	    @FXML
-	    private TableColumn<User, String> email_col;
+    @FXML
+    private TableColumn<User, String> email_col;
 
-	    @FXML
-	    private TableColumn<User, Integer> id_col;
+    @FXML
+    private TableColumn<User, Integer> id_col;
 
-	    @FXML
-	    private TableColumn<User, String> name_col;
+    @FXML
+    private TableColumn<User, String> name_col;
 
-	    @FXML
-	    private TableColumn<User, String> password_col;
+    @FXML
+    private TableColumn<User, String> password_col;
 
-	    @FXML
-	    private TableColumn<User, String> phone_col;
+    @FXML
+    private TableColumn<User, String> phone_col;
 
-	    @FXML
-	    private TableColumn<User, String> role_col;
+    @FXML
+    private TableColumn<User, String> role_col;
 
-	    @FXML
-	    private TableView<User> tableUsers;
+    @FXML
+    private TableView<User> tableUsers;
 
-	    @FXML
-	    private TextField txtAddress;
+    @FXML
+    private TextField txtAddress;
 
-	    @FXML
-	    private TextField txtEmail;
+    @FXML
+    private TextField txtEmail;
 
-	    @FXML
-	    private TextField txtID;
+    @FXML
+    private TextField txtID;
 
-	    @FXML
-	    private TextField txtName;
+    @FXML
+    private TextField txtName;
 
-	    @FXML
-	    private TextField txtPassword;
+    @FXML
+    private TextField txtPassword;
 
-	    @FXML
-	    private TextField txtPhone;
+    @FXML
+    private TextField txtPhone;
 
-	    @FXML
-	    private TextField txtRole;
+    @FXML
+    private TextField txtRole;
 
-	    @FXML
-	    private TextField txtUser;
+    @FXML
+    private TextField txtUser;
 
-	    @FXML
-	    private TableColumn<User, String> user_col;
-
+    @FXML
+    private TableColumn<User, String> user_col;
+    
+    /**
+     * Loads a user's data from the database and displays it in the text fields.
+     *
+     * @param event The ActionEvent that triggered this method.
+     */
     @FXML
     void loadUser(ActionEvent event) {
     	int id = Integer.parseInt(txtID.getText());
@@ -90,7 +101,13 @@ public class EditUserController extends AbstractController{
     	txtAddress.setText(msg.getObj(6));
     	txtEmail.setText(msg.getObj(7));
     }
+    
 
+	/**
+	 * Updates a user's data in the database based on the data in the text fields.
+	 *
+	 * @param event The ActionEvent that triggered this method.
+	 */
     @FXML
     void updateUser(ActionEvent event) {
     	int id = Integer.parseInt(txtID.getText());
@@ -109,10 +126,16 @@ public class EditUserController extends AbstractController{
     }
     
     @FXML
+    /**
+     * Initialize the TableView filled with all the users
+     */
     public void initialize() {
     	onLoad();
     }
     
+    /**
+     * Loads the user data into the table.
+     */
     public void onLoad() {
     	
     	msg = new Msg(Tasks.Select, "SELECT * FROM Users");
@@ -132,7 +155,12 @@ public class EditUserController extends AbstractController{
     	tableUsers.setItems(userOBList);
     }
 
-	@Override
+    /**
+     * Navigates back to the Customer Service screen.
+     *
+     * @param event The MouseEvent that triggered this method.
+     */
+    @Override
 	public void back(MouseEvent event) {
 		try {
 			start("CustomerService", "Customer Service");

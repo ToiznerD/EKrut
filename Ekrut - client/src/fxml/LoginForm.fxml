@@ -43,7 +43,7 @@
             <Image url="@../../images/EKrut%20logo.png" />
          </image>
       </ImageView>
-      <Button layoutX="80.0" layoutY="314.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Connect with App">
+      <Button layoutX="80.0" layoutY="314.0" mnemonicParsing="false" onAction="#ConnectWithApp" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Connect with App">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
