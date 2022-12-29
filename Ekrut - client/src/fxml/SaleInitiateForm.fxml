@@ -33,19 +33,43 @@
          </image>
       </ImageView>
       <TextField fx:id="txtSaleName" layoutX="60.0" layoutY="284.0" prefHeight="26.0" prefWidth="164.0" promptText="Enter sale name" />
-      <Button fx:id="btnInitiate" layoutX="385.0" layoutY="346.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Initiate sale">
+      <Button fx:id="btnInitiate" layoutX="385.0" layoutY="346.0" mnemonicParsing="false" onAction="#InitiateSaleButton" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Initiate sale">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <ComboBox fx:id="lstRegion" layoutX="60.0" layoutY="147.0" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose region" style="-fx-background-color: orange;" />
-      <ComboBox fx:id="lstSaleTemplate" layoutX="60.0" layoutY="100.0" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose sale template" style="-fx-background-color: orange;" />
+      <ComboBox fx:id="lstRegion" layoutX="60.0" layoutY="147.0" onAction="#checkRegion" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose region" style="-fx-background-color: orange;" />
+      <ComboBox fx:id="lstSaleTemplate" layoutX="60.0" layoutY="100.0" onAction="#checkTemplate" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose sale template" style="-fx-background-color: orange;" />
       <DatePicker fx:id="StartingDate" layoutX="60.0" layoutY="193.0" onAction="#checkDates" prefHeight="25.0" prefWidth="119.0" promptText="Starting date" />
       <DatePicker fx:id="EndingDate" layoutX="199.0" layoutY="193.0" onAction="#checkDates" prefHeight="25.0" prefWidth="119.0" promptText="Ending date" />
       <ComboBox fx:id="lstStartingHours" layoutX="60.0" layoutY="237.0" onAction="#checkTimes" opacity="0.7" prefHeight="25.0" prefWidth="119.0" promptText="Starting Hours" style="-fx-background-color: orange;" />
       <ComboBox fx:id="lstEndingHours" layoutX="199.0" layoutY="237.0" onAction="#checkTimes" opacity="0.7" prefHeight="25.0" prefWidth="119.0" promptText="Ending Hours" style="-fx-background-color: orange;" />
-      <Label fx:id="lblErrTime" layoutX="385.0" layoutY="276.0" prefHeight="17.0" prefWidth="158.0" text="Time" />
-      <Label fx:id="lblErrName" layoutX="385.0" layoutY="310.0" prefHeight="17.0" prefWidth="158.0" text="Name" />
-      <Label fx:id="lblErrDate" layoutX="385.0" layoutY="244.0" prefHeight="17.0" prefWidth="158.0" text="Date" />
+      <Label fx:id="lblErrTime" layoutX="347.0" layoutY="241.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="lblErrName" layoutX="232.0" layoutY="289.0" prefHeight="17.0" prefWidth="164.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="lblErrDate" layoutX="347.0" layoutY="197.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="lblInitiateMsg" layoutX="399.0" layoutY="306.0" prefHeight="42.0" prefWidth="131.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblErrTemplate" layoutX="232.0" layoutY="104.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblErrRegion" layoutX="232.0" layoutY="151.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

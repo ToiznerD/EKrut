@@ -68,7 +68,7 @@ public class EditUserController extends AbstractController{
     	String username = txtUser.getText();
     	String password = txtPassword.getText();
     	String role = txtRole.getText();
-    	String query = "UPDATE users SET name = '" + username + "', pass = '" + password + "', role = '" + role + "'"
+    	String query = "UPDATE users SET user = '" + username + "', password = '" + password + "', role = '" + role + "'"
     			+ " WHERE id = " + id;
     	msg = new Msg(Tasks.Update, query);
     	sendMsg(msg);

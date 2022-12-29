@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
-
 import Util.Msg;
 import Util.Tasks;
 import javafx.collections.FXCollections;

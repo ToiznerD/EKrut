@@ -91,6 +91,9 @@ public class Msg implements Serializable {
 		case Select:
 			runSelect();
 			break;
+		case Insert:
+			intReturn = DBController.update(query);
+			break;
 		default:
 			break;
 		}

@@ -6,7 +6,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class ClientApp extends Application {
-	//TEST12
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		AbstractController abstractController = new ConnectionController();
@@ -17,5 +17,5 @@ public class ClientApp extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
 }

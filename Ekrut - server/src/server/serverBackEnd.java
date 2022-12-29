@@ -1,17 +1,11 @@
 package server;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Objects;
 
-import DBHandler.DBController;
 import Util.Msg;
-import Util.Tasks;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
-import tasker.Tasker;
 
 public class serverBackEnd extends AbstractServer {
 	// Default port to listen
