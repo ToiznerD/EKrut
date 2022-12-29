@@ -1,5 +1,7 @@
 package controllers;
 
+import java.io.IOException;
+
 import Util.Msg;
 import Util.Tasks;
 import javafx.collections.FXCollections;
@@ -13,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import tables.TableProd;
 
 public class ResupplyReqController extends AbstractController {
@@ -21,7 +24,7 @@ public class ResupplyReqController extends AbstractController {
 	@FXML
 	private ImageView backBtn;
 	@FXML
-	private Label regionLbl;
+	private Label storeLbl;
 	@FXML
 	private TableColumn<TableProd, Integer> idCell, rQuantCell, aQuantCell;
 	@FXML
@@ -49,16 +52,20 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	private void updateList() {
-		msg = new Msg(Tasks.Select,
+		msg = new Msg(Tasks.RequiredStock,
 				"SELECT sp.pid,sp.pname,sp.lim,sp.quantity FROM storeproduct sp WHERE sp.sid = 2");
 		sendMsg(msg);
 		prodList.clear();
 		prodList.addAll(msg.getArr(TableProd.class));
 	}
 
-	@FXML
-	public void back(ActionEvent event) {
-
+	@Override
+	public void back(MouseEvent event) {
+		try {
+			start("OperationEmpPanel", "Operation Employee panel");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -90,8 +97,4 @@ public class ResupplyReqController extends AbstractController {
 		return true;
 	}
 
-	@Override
-	public void back() {
-		//Not implemented
-	}
 }

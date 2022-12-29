@@ -3,6 +3,7 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 public class MarketingManagerController extends AbstractController {
 
@@ -22,7 +23,7 @@ public class MarketingManagerController extends AbstractController {
 
     //Not implemented
 	@Override
-	public void back() {}
+	public void back(MouseEvent event) {}
 }
 
 

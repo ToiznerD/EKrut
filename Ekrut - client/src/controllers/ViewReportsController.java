@@ -3,6 +3,7 @@ package controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,7 @@ public class ViewReportsController extends AbstractController {
     }
 
 	@Override
-	public void back() {
+	public void back(MouseEvent event) {
 		// Not implemented
 	}
 

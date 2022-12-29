@@ -47,8 +47,7 @@ public class ClientBackEnd extends AbstractClient {
 
 	public void quit() {
 		try {
-			sendToServer(Tasks.Disconnect);
-			closeConnection();
+			handleMessageFromClientUI(new Msg(Tasks.Disconnect,null));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

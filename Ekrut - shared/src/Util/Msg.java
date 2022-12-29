@@ -33,12 +33,35 @@ public class Msg implements Serializable {
 	}
 
 	/**
+	 * @param int value
+	 */
+	public void setInt(int value) {
+		this.intReturn = value;
+	}
+	/**
 	 * @return int number updated row
 	 */
 	public int getInt() {
 		return intReturn;
 	}
-
+	/**
+	 * @param boolean value
+	 */
+	public void setBool(boolean value) {
+		this.boolReturn = value;
+	}
+	/**
+	 * @return String query
+	 */
+	public String getQuery() {
+		return query;
+	}
+	public void setConsole(String message) {
+		this.consoleMsg = message;
+	}
+	public ArrayList<List<Object>> getRawArray(){
+		return arrayReturn;
+	}
 	/**
 	 * @return boolean false if resultset return empty from selected
 	 */

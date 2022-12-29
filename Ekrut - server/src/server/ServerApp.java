@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ServerApp extends Application {
-	//sdfsdf
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader serverGui = new FXMLLoader(getClass().getResource("ServerGUI.fxml"));

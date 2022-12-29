@@ -7,6 +7,7 @@ import Util.Msg;
 import Util.Region;
 import Util.SaleTemplate;
 import Util.Tasks;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,8 +19,9 @@ import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
-public class SaleInitiateFormController extends AbstractController implements Initializable { 
+public class SaleInitiateFormController extends AbstractController implements Initializable {
 
     @FXML
     private Button btnInitiate;
@@ -208,7 +210,7 @@ public class SaleInitiateFormController extends AbstractController implements In
     }
     
     @Override
-    public void back() {
+    public void back(MouseEvent event) {
     	try {
 			start("MarketingManagerPanel","MarketManagerPanel");
 		} catch (Exception e) {

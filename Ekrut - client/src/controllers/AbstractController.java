@@ -2,10 +2,12 @@ package controllers;
 
 import java.io.IOException;
 import Util.Msg;
+import Util.Tasks;
 import client.ClientBackEnd;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -59,8 +61,9 @@ public abstract class AbstractController {
 	}
 	
 	public void logout() throws IOException {
+		ClientBackEnd.getInstance().handleMessageFromClientUI(new Msg(Tasks.Disconnect,null));
 		start("LoginForm", "Login");
 	}
 	
-	public abstract void back();
+	public abstract void back(MouseEvent event);
 }
