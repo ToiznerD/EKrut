@@ -24,7 +24,8 @@ import javafx.scene.input.MouseEvent;
  */
 public class EditUserController extends AbstractController{
 
-  @FXML
+    @FXML
+
     private TableColumn<User, String> address_col;
 
     @FXML
@@ -86,6 +87,7 @@ public class EditUserController extends AbstractController{
      *
      * @param event The ActionEvent that triggered this method.
      */
+
     @FXML
     void loadUser(ActionEvent event) {
     	int id = Integer.parseInt(txtID.getText());
