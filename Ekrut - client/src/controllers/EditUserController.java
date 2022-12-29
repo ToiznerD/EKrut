@@ -14,11 +14,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
+/**
+ * The EditUserController class is responsible for handling user input and updating user data in the database.
+ * It provides methods for loading a user's data from the database and displaying it in the text fields,
+ * and for updating a user's data in the database based on the data in the text fields.
+ * It also provides a method for navigating back to the Customer Service screen.
+ */
 public class EditUserController extends AbstractController{
 
-
     @FXML
+
     private TableColumn<User, String> address_col;
 
     @FXML
@@ -26,6 +33,9 @@ public class EditUserController extends AbstractController{
 
     @FXML
     private Button btnUpdate;
+
+    @FXML
+    private TableColumn<User, String> email_col;
 
     @FXML
     private TableColumn<User, Integer> id_col;
@@ -49,6 +59,9 @@ public class EditUserController extends AbstractController{
     private TextField txtAddress;
 
     @FXML
+    private TextField txtEmail;
+
+    @FXML
     private TextField txtID;
 
     @FXML
@@ -68,7 +81,12 @@ public class EditUserController extends AbstractController{
 
     @FXML
     private TableColumn<User, String> user_col;
-
+    
+    /**
+     * Loads a user's data from the database and displays it in the text fields.
+     *
+     * @param event The ActionEvent that triggered this method.
+     */
 
     @FXML
     void loadUser(ActionEvent event) {
@@ -83,8 +101,15 @@ public class EditUserController extends AbstractController{
     	txtName.setText(msg.getObj(4));
     	txtPhone.setText(msg.getObj(5));
     	txtAddress.setText(msg.getObj(6));
+    	txtEmail.setText(msg.getObj(7));
     }
+    
 
+	/**
+	 * Updates a user's data in the database based on the data in the text fields.
+	 *
+	 * @param event The ActionEvent that triggered this method.
+	 */
     @FXML
     void updateUser(ActionEvent event) {
     	int id = Integer.parseInt(txtID.getText());
@@ -94,20 +119,25 @@ public class EditUserController extends AbstractController{
     	String name = txtName.getText();
     	String phone = txtPhone.getText();
     	String address = txtAddress.getText();
-    	String query = String.format("UPDATE users SET user = '%s', password = '%s', role = '%s', name = '%s', phone = '%s', address = '%s'"
-    			+ " WHERE id = %d", username, password, role, name, phone, address, id);
-//    	String query = "UPDATE users SET user = '" + username + "', password = '" + password + "', role = '" + role + "', name = '" + name
-//    			+ ", phone = '" + phone + ", address = '" + address + "' WHERE id = " + id;
+    	String email = txtEmail.getText();
+    	String query = String.format("UPDATE users SET user = '%s', password = '%s', role = '%s', name = '%s', phone = '%s', address = '%s', email = '%s' "
+    			+ "WHERE id = %d", username, password, role, name, phone, address, email, id);
     	msg = new Msg(Tasks.Update, query);
     	sendMsg(msg);
     	initialize();
     }
     
     @FXML
+    /**
+     * Initialize the TableView filled with all the users
+     */
     public void initialize() {
     	onLoad();
     }
     
+    /**
+     * Loads the user data into the table.
+     */
     public void onLoad() {
     	
     	msg = new Msg(Tasks.Select, "SELECT * FROM Users");
@@ -123,11 +153,17 @@ public class EditUserController extends AbstractController{
     	name_col.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
     	phone_col.setCellValueFactory(new PropertyValueFactory<User, String>("phone"));
     	address_col.setCellValueFactory(new PropertyValueFactory<User, String>("address"));
+    	email_col.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
     	tableUsers.setItems(userOBList);
     }
 
-	@Override
-	public void back() {
+    /**
+     * Navigates back to the Customer Service screen.
+     *
+     * @param event The MouseEvent that triggered this method.
+     */
+    @Override
+	public void back(MouseEvent event) {
 		try {
 			start("CustomerService", "Customer Service");
 		} catch (IOException e) {
