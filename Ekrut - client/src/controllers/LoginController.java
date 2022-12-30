@@ -51,7 +51,7 @@ public class LoginController extends AbstractController {
 		if (msg.getBool()) {
 			switch ((String) msg.getObj(3)) {
 			case "customer":
-				start("SaleInitiateForm", "Customer Dashboard");
+				start("SaleTemplateCreationForm", "Customer Dashboard");
 				break;
 			case "service":
 				start("CustomerService", "Customer Service Dashboard");

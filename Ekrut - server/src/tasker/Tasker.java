@@ -13,7 +13,7 @@ public class Tasker {
 	 * @throws Exception SQLException on select error
 	 */
 	public static void taskerHandler(Msg msg) throws SQLException {
-		if (msg.getQuery().toLowerCase().startsWith("update"))
+		if (msg.getQuery().toLowerCase().startsWith("update") || msg.getQuery().toLowerCase().startsWith("insert"))
 			runUpdate(msg);
 		else if (msg.getQuery().toLowerCase().startsWith("select"))
 			runSelect(msg);
