@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 public class EditUserController extends AbstractController{
 
@@ -127,11 +128,13 @@ public class EditUserController extends AbstractController{
     }
 
 	@Override
-	public void back() {
+	public void back(MouseEvent event) {
 		try {
 			start("CustomerService", "Customer Service");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
+
 }

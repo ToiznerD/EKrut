@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 /*
  * Login controller class inheritting from AbstractController
@@ -64,7 +65,7 @@ public class LoginController extends AbstractController {
 	}
 
 	@Override
-	public void back() {
+	public void back(MouseEvent event) {
 		//Not implemented
 	}
 	

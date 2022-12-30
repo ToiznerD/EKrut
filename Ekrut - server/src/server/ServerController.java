@@ -27,9 +27,6 @@ public class ServerController {
 	private Button btnDisconnect;
 
 	@FXML
-	private Button btnImport;
-
-	@FXML
 	private TableView<InetAddress> connected_table;
 
 	@FXML
