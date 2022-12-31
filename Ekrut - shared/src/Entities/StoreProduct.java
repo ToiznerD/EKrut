@@ -4,7 +4,7 @@ public class StoreProduct {
     private int pid,sid,quantity,minLimit;
     private String pname;
 
-    public StoreProduct(int pid, String pname, int sid, int quantity, int minLimit) {
+    public StoreProduct(int pid, int sid, int quantity, int minLimit, String pname) {
         this.pid = pid;
         this.sid = sid;
         this.quantity = quantity;

@@ -74,8 +74,8 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
     public void getRegionManagerLocations() {
         String query = "SELECT s.*\n" +
                 "FROM store s\n" +
-                "JOIN region r ON s.rid = r.rid\n" +
-                "JOIN regionmanagers rm ON r.rid = rm.rid\n" +
+                "JOIN regions r ON s.rid = r.rid\n" +
+                "JOIN regions_managers rm ON r.rid = rm.rid\n" +
                 "WHERE rm.uid = " + LoginController.user.getId();
         msg = new Msg(Tasks.getLocations, query);
         sendMsg(msg);
@@ -129,10 +129,10 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
         String storeName = locationComboBox.getSelectionModel().getSelectedItem().toString();
         int sid = storeMap.get(storeName);
 
-        String query = "SELECT storeproduct.*\n" +
+        String query = "SELECT store_product.*, product.pname\n" +
                 "FROM store\n" +
-                "JOIN storeproduct ON store.sid = storeproduct.sid\n" +
-                "JOIN product ON product.pid = storeproduct.pid\n" +
+                "JOIN store_product ON store.sid = store_product.sid\n" +
+                "JOIN product ON product.pid = store_product.pid\n" +
                 "WHERE store.sid = " + sid;
 
         msg = new Msg(Tasks.getStoreProducts, query);
@@ -198,7 +198,7 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
         int currStoreId = updatedStoreProductsList.get(0).getSid();
 
         // Build query
-        query.append("UPDATE storeproduct\n SET lim = (case \n");
+        query.append("UPDATE store_product\n SET lim = (case \n");
 
         for (StoreProduct sp: updatedStoreProductsList) {
             query.append(String.format("WHEN pid = %d AND sid = %d then %d\n", sp.getPid(), currStoreId, sp.getMinLimit()));

@@ -44,7 +44,7 @@ public class LoginController extends AbstractController {
 		//Create query based on UI input
 		String userid = txtUserid.getText();
 		String password = txtPW.getText();
-		String query = "SELECT * FROM users WHERE name = '" + userid + "' AND pass = " + password;
+		String query = "SELECT * FROM users WHERE name = '" + userid + "' AND password = " + password;
 		/*sendQuery(Tasks.Login, query);*/
 		msg = new Msg(Tasks.Login, query);
 		sendMsg(msg);
