@@ -229,8 +229,7 @@ public class LoginController extends AbstractController {
 
 	@Override
 	public void back(MouseEvent event) {
-		// TODO Auto-generated method stub
-		
+		//Not implemented
 	}
 	
 }
