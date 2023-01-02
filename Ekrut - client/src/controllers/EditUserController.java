@@ -157,6 +157,9 @@ public class EditUserController extends AbstractController{
     	tableUsers.setItems(userOBList);
     }
 
+<<<<<<< HEAD
+	@Override
+=======
 
     /**
      * Navigates back to the Customer Service screen.
@@ -164,6 +167,7 @@ public class EditUserController extends AbstractController{
      * @param event The MouseEvent that triggered this method.
      */
     @Override
+>>>>>>> origin/master
 	public void back(MouseEvent event) {
 		try {
 			start("CustomerService", "Customer Service");
@@ -172,5 +176,8 @@ public class EditUserController extends AbstractController{
 		}
 	}
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master
 }
