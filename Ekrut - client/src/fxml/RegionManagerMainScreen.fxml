@@ -19,7 +19,7 @@
             <Font name="System Bold Italic" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="logOutBtn" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="15.0" layoutY="336.0" mnemonicParsing="false" onAction="#logOutBtnClick" prefHeight="50.0" prefWidth="126.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Log out">
+      <Button alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="15.0" layoutY="336.0" mnemonicParsing="false" onAction="#logOutClick" prefHeight="50.0" prefWidth="126.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Log out">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

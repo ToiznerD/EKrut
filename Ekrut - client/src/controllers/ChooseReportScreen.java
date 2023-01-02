@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
@@ -54,7 +55,8 @@ public class ChooseReportScreen extends AbstractController {
         return true;
     }
 
-    public void back() {
+    @Override
+    public void back(MouseEvent event) {
         try {
             // go back to previous screen
             start("RegionManagerMainScreen", "Region Manager Dashboard");

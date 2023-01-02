@@ -10,6 +10,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -61,7 +62,7 @@ public class OrderReportController extends AbstractController implements Initial
 
         // Set up label text
         String labelTxt = month + "\\" + year;
-        if (LoginController.user.getRole().equals("region_manager")) {
+        if (myUser.getRole().equals("region_manager")) {
             labelTxt = labelTxt + ", " + controllers.RegionManagerMainScreenController.regionName;
         }
         reportDetailsLabel.setText(labelTxt);
@@ -90,7 +91,7 @@ public class OrderReportController extends AbstractController implements Initial
      */
     private String getReportQuery() {
         String query;
-        if (LoginController.user.getRole().equals("region_manager")) {
+        if (myUser.getRole().equals("region_manager")) {
             query = "SELECT s_name, num_orders, total_profit FROM order_report\n" +
                     "INNER JOIN store ON order_report.s_name = store.name\n" +
                     "INNER JOIN regions ON store.rid = " + RegionManagerMainScreenController.regionID + "\n" +
@@ -102,10 +103,12 @@ public class OrderReportController extends AbstractController implements Initial
         return query;
     }
 
+
     /**
      * triggered when back image is clicked, goes back to previous screen
      */
-    public void back() {
+    @Override
+    public void back(MouseEvent event) {
         try {
             // reset details that were passed to this screen
             setDetails("","");

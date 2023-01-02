@@ -1,38 +1,26 @@
 package controllers;
 
 import java.io.IOException;
-import java.net.URL;
-import java.sql.Date;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.ResourceBundle;
 
 import Util.Msg;
 import Util.Tasks;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import tables.TableOrders;
-import tables.TableProd;
+import Entities.Order;
 
 public class DeliveryOrdersController extends AbstractController{
 	
-	private ObservableList<TableOrders> ordersList = FXCollections.observableArrayList();
+	private ObservableList<Order> ordersList = FXCollections.observableArrayList();
 
     @FXML
     private Button approveBtn;
@@ -41,19 +29,19 @@ public class DeliveryOrdersController extends AbstractController{
     private ImageView backBtn;
 	
 	@FXML
-	private TableColumn<TableOrders, Integer> idCell;
+	private TableColumn<Order, Integer> idCell;
 	
 	@FXML
-	private TableColumn<TableOrders, String> nameCell, addressCell, phoneCell;
+	private TableColumn<Order, String> nameCell, addressCell, phoneCell;
 	
 	@FXML
-	private TableColumn<TableOrders, String> dateCell;
+	private TableColumn<Order, String> dateCell;
 	
 	@FXML
-	private TableColumn<TableOrders, String> timeCell;
+	private TableColumn<Order, String> timeCell;
 	
 	@FXML
-	private TableView<TableOrders> ordersTable;
+	private TableView<Order> ordersTable;
 	
 	
     final int distance = 3;
@@ -63,12 +51,12 @@ public class DeliveryOrdersController extends AbstractController{
 	@FXML
 	protected void initialize() {
 		setOrdersList();
-		idCell.setCellValueFactory(new PropertyValueFactory<TableOrders, Integer>("OrderID"));
-		nameCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("RecieverName"));
-		addressCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("RecieverAddress"));
-		phoneCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("RecieverPhone"));
-		dateCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("ShippingDate"));
-		timeCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("ShippingTime"));
+		idCell.setCellValueFactory(new PropertyValueFactory<Order, Integer>("OrderID"));
+		nameCell.setCellValueFactory(new PropertyValueFactory<Order, String>("RecieverName"));
+		addressCell.setCellValueFactory(new PropertyValueFactory<Order, String>("RecieverAddress"));
+		phoneCell.setCellValueFactory(new PropertyValueFactory<Order, String>("RecieverPhone"));
+		dateCell.setCellValueFactory(new PropertyValueFactory<Order, String>("ShippingDate"));
+		timeCell.setCellValueFactory(new PropertyValueFactory<Order, String>("ShippingTime"));
 		ordersTable.setItems(ordersList);
 	}
     
@@ -79,7 +67,7 @@ public class DeliveryOrdersController extends AbstractController{
 				+ "where o.cid=u.id and o.oid=ordr.oid and o.method=\"delivery\";\r\n");
 		sendMsg(msg);
 		ordersList.clear();
-		ordersList.addAll(msg.getArr(TableOrders.class));
+		ordersList.addAll(msg.getArr(Order.class));
     }
     
     private String computeSupplyDate(String supplyDate) {

@@ -6,11 +6,7 @@ import java.util.Optional;
 
 import Util.Msg;
 import Util.Tasks;
-<<<<<<< HEAD
 import Entities.User;
-=======
-import Util.User;
->>>>>>> origin/master
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -25,7 +21,6 @@ import javafx.scene.input.MouseEvent;
  * This class is responsible to control the Login page
  */
 public class LoginController extends AbstractController {
-	public static User user = null;
 
 	@FXML
 	private Button btnLogin;
@@ -83,7 +78,6 @@ public class LoginController extends AbstractController {
 				}
 			} else {
 				errMsgLbl.setText(userid + " is already logged in");
-
 			}
 		}
 		else {

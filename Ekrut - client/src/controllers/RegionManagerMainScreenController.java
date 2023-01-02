@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,8 +19,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class RegionManagerMainScreenController extends AbstractController implements Initializable {
-    @FXML
-    public Button logOutBtn;
     protected static HashMap<String, Integer> storeMap = new HashMap<>();
     private static ObservableList<String> comboBoxOptions;
     public static Integer regionID;
@@ -41,14 +40,14 @@ public class RegionManagerMainScreenController extends AbstractController implem
      */
     public static Msg prepareLocationsMsg() {
         String query;
-        if (LoginController.user.getRole().equals("ceo"))
+        if (myUser.getRole().equals("ceo"))
             query = "SELECT s.* FROM store s";
         else {
             query = "SELECT s.*\n" +
                     "FROM store s\n" +
                     "JOIN regions r ON s.rid = r.rid\n" +
                     "JOIN regions_managers rm ON r.rid = rm.rid\n" +
-                    "WHERE rm.uid = " + LoginController.user.getId();
+                    "WHERE rm.uid = " + myUser.getId();
         }
         msg = new Msg(Tasks.getLocations, query);
         return msg;
@@ -69,10 +68,10 @@ public class RegionManagerMainScreenController extends AbstractController implem
      * sets the static var region to be the region of the connected region manager
      */
     private void getRegion() {
-        if (LoginController.user.getRole().equals("region_manager")) {
+        if (myUser.getRole().equals("region_manager")) {
             String query = "SELECT regions_managers.rid, name FROM regions_managers\n" +
                     "JOIN regions ON regions.rid = regions_managers.rid\n" +
-                    " WHERE uid = " + LoginController.user.getId();
+                    " WHERE uid = " + myUser.getId();
             msg = new Msg(Tasks.getRegion, query);
             sendMsg(msg);
 
@@ -123,16 +122,30 @@ public class RegionManagerMainScreenController extends AbstractController implem
      * triggered when log out is clicked, resets the user and send back to previous screen
      * @param event
      */
-    public void logOutBtnClick(ActionEvent event) {
+    public void logOutClick() {
         try {
-            LoginController.user = null;
-            start("LoginForm", "Login");
+            //Update isLogged
+            String loginQuery = "UPDATE users SET IsLogged = 0 WHERE id = " + myUser.getId();
+            msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
+            sendMsg(msg);
+
+            if (msg.getBool()) {
+                myUser = null;
+                start("LoginForm", "Login");
+            } else {
+                // TODO: handle case where you cant disconnect
+            }
+
         } catch (Exception e) {
-// TODO: handle exception
+            // TODO: handle exception
             e.printStackTrace();
         }
     }
 
+    // have to implement
+    @Override
+    public void back(MouseEvent event) {
+    }
 }
 
 

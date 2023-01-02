@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.scene.control.TableColumn.CellEditEvent;
 
@@ -177,7 +178,8 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
     }
 
 
-    public void back() {
+    @Override
+    public void back(MouseEvent event) {
         try {
             // go back to previous screen
             start("RegionManagerMainScreen", "Region Manager Dashboard");
@@ -185,5 +187,4 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
             // TODO: handle exception
         }
     }
-
 }

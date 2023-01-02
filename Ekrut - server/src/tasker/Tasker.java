@@ -65,6 +65,7 @@ public class Tasker {
 	private static void runUpdate(Msg msg) {
 		int returnVal = DBController.update(msg.getQuery());
 		msg.setInt(returnVal);
+		msg.setBool(returnVal > 0 ? true : false);
 	}
 	/**
 	 * @throws SQLException error in DB

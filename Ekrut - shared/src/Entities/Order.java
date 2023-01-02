@@ -1,12 +1,10 @@
-package tables;
+package Entities;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.Objects;
 
-public class TableOrders implements Serializable{
+public class Order implements Serializable{
 
 	private static final long serialVersionUID = 2L;
 	private int orderID;
@@ -15,7 +13,7 @@ public class TableOrders implements Serializable{
 	private String ShippingTime;
 //	private enum status{Pending,Approve};
 	
-	public TableOrders(int orderID,String RecieverName, String RecieverAddress, String RecieverPhone, Date ShippingDate, Time ShippingTime) {
+	public Order(int orderID, String RecieverName, String RecieverAddress, String RecieverPhone, Date ShippingDate, Time ShippingTime) {
 		this.orderID = orderID;
 		this.RecieverName = RecieverName;
 		this.RecieverAddress = RecieverAddress;

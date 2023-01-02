@@ -1,85 +1,80 @@
 package Entities;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
-
-    private String userName, password, role, name, address, email;
-    private Integer id, phone;
-    private Boolean isLogged;
-
-    public User(Integer id, String userName, String password, String role, String name,
-                Integer phone, String address, String email, Boolean isLogged) {
-        this.userName = userName;
-        this.role = role;
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-        this.password = password;
-        this.isLogged = isLogged;
-    }
-
-    public User() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+public class User {
+	private int id;
+	private String username, password, role, name, phone, address, email;
+	private boolean isLogged;
 
 
-    public String getRole() {
-        return role;
-    }
+	public User(int id, String username, String password, String role, String name, String phone, String address,
+			String email, boolean isLogged) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+		this.email = email;
+		this.isLogged = isLogged;
+	}
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getAddress() {
+		return address;
+	}
 
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public Integer getPhone() {
-        return phone;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setPhone(Integer phone) {
-        this.phone = phone;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public boolean isLogged() {
+		return isLogged;
+	}
 
-    public void setAddress(String phone) {
-        this.address = address;
-    }
+	public void setLogged(boolean isLogged) {
+		this.isLogged = isLogged;
+	}
 
-    public Boolean getLogged() {
-        return isLogged;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setLogged(Boolean logged) {
-        isLogged = logged;
-    }
+	public String getUsername() {
+		return username;
+	}
 
+	public String getPassword() {
+		return password;
+	}
 
+	public String getRole() {
+		return role;
+	}
+	
+	
 }
