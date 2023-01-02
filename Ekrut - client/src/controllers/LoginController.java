@@ -68,7 +68,8 @@ public class LoginController extends AbstractController {
 	public void connect(ActionEvent event) throws IOException {
 		//Connect to server
 		//Create query based on UI input
-		String query = "SELECT * FROM users WHERE user = '" + userid + "' AND password = " + password;
+		//String query = "SELECT * FROM users WHERE user = '" + userid + "' AND password = " + password;
+		String query = String.format("SELECT * FROM users WHERE user='%s' AND password = '%s'", userid, password);
 		msg = new Msg(Tasks.Login, Tasks.Select, query);
 		sendMsg(msg);
 		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
