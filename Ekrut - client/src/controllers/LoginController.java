@@ -1,12 +1,17 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import Util.Msg;
 import Util.Tasks;
+import Util.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -29,6 +34,7 @@ public class LoginController extends AbstractController {
 	@FXML
 	private Label errMsgLbl;
 
+
 	public static boolean result;
 
 	public static String role;
@@ -44,24 +50,64 @@ public class LoginController extends AbstractController {
 		String userid = txtUserid.getText();
 		String password = txtPW.getText();
 		String query = "SELECT * FROM users WHERE user = '" + userid + "' AND password = " + password;
-		
-		msg = new Msg(Tasks.Select, query);
+		msg = new Msg(Tasks.Login, Tasks.Select, query);
 		sendMsg(msg);
+		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
 		
-		if (msg.getBool()) {
-			switch ((String) msg.getObj(3)) {
-			case "customer":
-				start("CustomerPanel", "Customer Dashboard");
-				break;
-			case "service":
-				start("CustomerService", "Customer Service Dashboard");
-			default:
-				break;
+		if(myUser != null) {
+			if (!myUser.isLogged()) {
+				String role = myUser.getRole();
+				
+				//Update isLogged
+				String loginQuery = "UPDATE users SET IsLogged = 1 WHERE id = " + myUser.getId();
+				msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
+				sendMsg(msg);
+				
+				switch (role) {
+				case "customer":
+					start("CustomerPanel", "Customer Dashboard");
+					break;
+				case "service":
+					start("CustomerService", "Customer Service Dashboard");
+					break;
+				case "marketmanager":
+					start("MarketingManagerPanel", "Market manager dashboard");
+					break;
+				default:
+					break;
+				}
+			} else {
+				errMsgLbl.setText(userid + " is already logged in");
 			}
-		} else {
+		}
+		else {
 			errMsgLbl.setText("Wrong Details");
 		}
+	}
+	
+	public void ConnectWithApp(ActionEvent event) {
+		File file = new File("config.txt");
+	    boolean exists = file.exists();
+	    if(!exists) {
+	    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+	    	alert.setTitle("Popup Message");
+	    	alert.setHeaderText("Choose between EK and OL");
 
+	    	ButtonType buttonEK = new ButtonType("EK");
+	    	ButtonType buttonOL = new ButtonType("OL");
+
+	    	alert.getButtonTypes().setAll(buttonEK, buttonOL);
+
+	    	Optional<ButtonType> result = alert.showAndWait();
+
+	    	if (result.get() == buttonEK) {
+	    	    // EK was chosen
+	    		System.out.println("EK");
+	    	} else if (result.get() == buttonOL) {
+	    	    // OL was chosen
+	    		System.out.println("OL");
+	    	}
+	    }
 	}
 
 	@Override

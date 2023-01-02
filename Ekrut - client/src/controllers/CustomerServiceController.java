@@ -16,8 +16,8 @@ public class CustomerServiceController extends AbstractController{
     private Button btnEdit;
 
     @FXML
-    void openCreateMember(ActionEvent event) {
-
+    void openCreateMember(ActionEvent event) throws IOException {
+    	start("CreateCustomer", "Create new customer");
     }
 
     @FXML

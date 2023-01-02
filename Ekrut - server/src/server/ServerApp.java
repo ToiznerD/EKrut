@@ -17,6 +17,7 @@ public class ServerApp extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setOnCloseRequest(e -> control.closeConnection());
 		primaryStage.setTitle("EKrut Server");
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 	

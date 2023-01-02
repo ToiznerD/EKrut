@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import Util.Msg;
 import Util.Tasks;
+import Util.User;
 import client.ClientBackEnd;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,10 +16,10 @@ import javafx.stage.Stage;
  * All the controllers inherit from this class and the method start
  */
 public abstract class AbstractController {
-	//DOR TEST
 	public static Stage prStage;
 	public static Object monitor = new Object();
 	public static Msg msg;
+	public static User myUser;
 
 	public void start(String fxml, String title) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
@@ -32,6 +33,7 @@ public abstract class AbstractController {
 			prStage.setOnCloseRequest(event -> {
 				ClientBackEnd.getInstance().quit();
 			});
+		ClientBackEnd.setAbstractController(load.getController());
 		prStage.show();
 	}
 
@@ -61,9 +63,13 @@ public abstract class AbstractController {
 	}
 	
 	public void logout() throws IOException {
-		ClientBackEnd.getInstance().handleMessageFromClientUI(new Msg(Tasks.Disconnect,null));
+		String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
+		msg = new Msg(Tasks.Logout, logoutQuery);
+		sendMsg(msg);
+		myUser = null;
 		start("LoginForm", "Login");
 	}
 	
 	public abstract void back(MouseEvent event);
+
 }

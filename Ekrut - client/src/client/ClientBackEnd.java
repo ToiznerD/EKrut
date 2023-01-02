@@ -47,6 +47,8 @@ public class ClientBackEnd extends AbstractClient {
 
 	public void quit() {
 		try {
+			if(AbstractController.myUser != null)
+				abstractController.logout();
 			handleMessageFromClientUI(new Msg(Tasks.Disconnect,null));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -55,25 +57,4 @@ public class ClientBackEnd extends AbstractClient {
 		}
 	}
 }
-
-/*	@SuppressWarnings("unchecked")
-@Override
-protected void handleMessageFromServer(Object msg) {
-	ArrayList<Object> returnMsg = (ArrayList<Object>) msg;
-	switch ((Tasks) returnMsg.get(0)) {
-	case Login:
-		loginHandlers(returnMsg);
-		break;
-	case RequiredStock:
-		ResupplyReqController.tprod = (ArrayList<TableProd>) returnMsg.get(2);
-		break;
-	case Update:
-		ResupplyReqController.updateResult = (int) returnMsg.get(2);
-		break;
-	default:
-		break;
-	}
-	AbstractController.Notify();
-}*/
-
 
