@@ -30,11 +30,27 @@
             <Image url="@../../images/min-max-close.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnInitiate" layoutX="385.0" layoutY="346.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Initiate sale">
+      <Button fx:id="btnCreation" layoutX="385.0" layoutY="346.0" mnemonicParsing="false" onAction="#buttonCreation" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Create Template">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <TextField layoutX="61.0" layoutY="106.0" promptText="Sale discount (in %)" />
+      <TextField fx:id="txtTemplateName" layoutX="66.0" layoutY="151.0" prefHeight="25.0" prefWidth="199.0" promptText="Enter template name" />
+      <TextField fx:id="txtDiscount" layoutX="66.0" layoutY="188.0" prefHeight="25.0" prefWidth="199.0" promptText="Enter percent number of discount" />
+      <Label fx:id="lblErrTemplateName" layoutX="284.0" layoutY="155.0" prefHeight="17.0" prefWidth="243.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblErrDiscount" layoutX="284.0" layoutY="192.0" prefHeight="17.0" prefWidth="243.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCreationMsg" layoutX="378.0" layoutY="319.0" prefHeight="17.0" prefWidth="166.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

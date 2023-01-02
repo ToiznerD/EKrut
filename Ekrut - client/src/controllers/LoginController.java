@@ -74,6 +74,17 @@ public class LoginController extends AbstractController {
 		sendMsg(msg);
 		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
 		
+<<<<<<< HEAD
+		if (msg.getBool()) {
+			switch ((String) msg.getObj(3)) {
+			case "customer":
+				start("SaleTemplateCreationForm", "Customer Dashboard");
+				break;
+			case "service":
+				start("CustomerService", "Customer Service Dashboard");
+			default:
+				break;
+=======
 		if(myUser != null) {
 			if (!myUser.isLogged()) {
 				String role = myUser.getRole();
@@ -98,6 +109,7 @@ public class LoginController extends AbstractController {
 				}
 			} else {
 				errMsgLbl.setText(userid + " is already logged in");
+>>>>>>> origin/master
 			}
 		}
 		else {
