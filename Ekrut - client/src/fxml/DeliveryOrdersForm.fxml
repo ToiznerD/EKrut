@@ -9,33 +9,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="569.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DeliveryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="681.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DeliveryOrdersController">
    <children>
-      <Button fx:id="btnBack" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleButton" style="-fx-background-color: 0;" text="back">
-         <graphic>
-            <ImageView fitHeight="45.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/back%20icon.png" />
-               </image>
-            </ImageView>
-         </graphic></Button>
-      <ImageView fitHeight="185.0" fitWidth="183.0" layoutX="395.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="185.0" fitWidth="183.0" layoutX="498.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/EKrut%20logo.png" />
          </image>
       </ImageView>
-      <TableView layoutX="32.0" layoutY="72.0" prefHeight="266.0" prefWidth="367.0">
+      <TableView fx:id="ordersTable" layoutX="13.0" layoutY="73.0" prefHeight="293.0" prefWidth="498.0">
         <columns>
-          <TableColumn prefWidth="179.99994659423828" text="Order ID" />
-          <TableColumn prefWidth="198.3999816894531" text="Status" />
+            <TableColumn fx:id="idCell" prefWidth="59.200016021728516" text="Order ID" />
+            <TableColumn fx:id="nameCell" prefWidth="91.20001220703125" text="Name" />
+            <TableColumn fx:id="addressCell" prefWidth="68.800048828125" text="Address" />
+            <TableColumn fx:id="phoneCell" prefWidth="68.00006103515625" text="Phone" />
+          <TableColumn fx:id="dateCell" prefWidth="67.20001983642578" text="Date" />
+            <TableColumn fx:id="timeCell" prefWidth="68.800048828125" text="Time" />
         </columns>
       </TableView>
-      <Button fx:id="btnApproveDelivery" disable="true" layoutX="226.0" layoutY="350.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve delivery">
+      <ImageView fx:id="backBtn" fitHeight="45.0" fitWidth="118.0" layoutX="28.0" layoutY="378.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/back%20icon.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="approveBtn" disable="true" layoutX="363.0" layoutY="382.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve delivery">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <Label layoutX="77.0" layoutY="11.0" text="Delivery orders" textFill="#cf4c0a">
+      <Label layoutX="122.0" layoutY="14.0" text="Delivery orders" textFill="#cf4c0a">
          <font>
             <Font name="System Bold Italic" size="36.0" />
          </font>

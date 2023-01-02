@@ -1,14 +1,11 @@
 package server;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-import DBHandler.DBController;
-import Util.Msg;
 import Util.Tasks;
+import Util.Msg;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 import tasker.Tasker;
@@ -28,86 +25,40 @@ public class serverBackEnd extends AbstractServer {
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		Msg taskMsg = (Msg) msg;
-		try {
-			taskMsg.taskerHandler();
-			client.sendToClient(taskMsg);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (taskMsg.getTask() == Tasks.Disconnect)
+			clientDisconnected(client);
+		else {
+			try {
+				Tasker.taskerHandler(taskMsg);
+				sendMsg(client, taskMsg);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
-	/*	@Override
-		protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-			@SuppressWarnings("unchecked")
-			ArrayList<Object> task = (ArrayList<Object>) msg;
-			if (task.get(0) == Tasks.Disconnect)
-				clientDisconnected(client);
-			else {
-				ArrayList<Object> parse = Tasker.parse(task);
-				sendMsg(client, parse, (String) parse.get(1)); //Nave
-			}
-		}*/
-
-	protected void sendMsg(ConnectionToClient client, Object response, String consoleMsg) {
-		if (response != null)
-			try {
-				client.sendToClient(response);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		if (consoleMsg != null)
-			sc.appendConsole(consoleMsg.replace("{ip}", client.getInetAddress().getHostAddress()));
+	protected void sendMsg(ConnectionToClient client, Msg taskMsg) throws IOException {
+		client.sendToClient(taskMsg);
+		if (taskMsg.getConsole() != null)
+			sc.appendConsole(taskMsg.getConsole().replace("{ip}", client.getInetAddress().getHostAddress()));
 	}
 
 	@Override
 	protected void clientConnected(ConnectionToClient client) {
-		sc.fillUserTableView(new clientConnectionData(client));
-		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is Connected to server.");
+		sc.addConnected(client.getInetAddress());
+		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is Connected to server. ("
+				+LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+")");
 	}
 
 	@Override
 	protected void clientDisconnected(ConnectionToClient client) {
-		sc.removeUserFromTable(new clientConnectionData(client));
-		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is disconnected from server.");
+		sc.removeConnected(client.getInetAddress());
+		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is disconnected from server. ("
+				+LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+")");
 		try {
 			client.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public class clientConnectionData {
-
-		private String hostName;
-		private String ip;
-		private String status;
-
-		public clientConnectionData(ConnectionToClient client) {
-			this.hostName = client.getInetAddress().getHostName();
-			this.ip = client.getInetAddress().getHostAddress();
-			this.status = "connected";
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (getClass() != obj.getClass())
-				return false;
-			clientConnectionData other = (clientConnectionData) obj;
-			return Objects.equals(ip, other.ip);
-		}
-
-		public String getHostName() {
-			return hostName;
-		}
-
-		public String getIp() {
-			return ip;
-		}
-
-		public String getStatus() {
-			return status;
-		}
-
 	}
 }

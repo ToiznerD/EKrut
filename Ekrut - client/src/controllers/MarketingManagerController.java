@@ -1,11 +1,11 @@
 package controllers;
 
-import client.ClientApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
-public class MarketingManagerController {
+public class MarketingManagerController extends AbstractController {
 
     @FXML
     private Button btnInitiate;
@@ -15,19 +15,15 @@ public class MarketingManagerController {
     
     public void InitiateSaleButton(ActionEvent event) throws Exception {
     	try {
-			
+    		start("SaleInitiateForm", "Sale Initiate Form");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
     }
-    
-    public void LogoutButton(ActionEvent event) throws Exception {
-    	try {
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
+
+    //Not implemented
+	@Override
+	public void back(MouseEvent event) {}
 }
 
 

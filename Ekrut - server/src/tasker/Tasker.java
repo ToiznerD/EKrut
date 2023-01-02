@@ -3,72 +3,81 @@ package tasker;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import DBHandler.DBController;
-import Util.Tasks;
-import tables.TableProd;
+import Util.Msg;
 
 public class Tasker {
-	/*
-	 * This method is responsible to handle with tasks related to login page
-	 * @params client, task
+	/**
+	 * @throws Exception SQLException on select error
 	 */
-	public static ArrayList<Object> parse(ArrayList<Object> msg) {
-		Tasks task = (Tasks) msg.get(0);
-		String query = (String) msg.get(1);
-		switch (task) {
+	public static void taskerHandler(Msg msg) throws SQLException {
+		if (msg.getQuery().toLowerCase().startsWith("update"))
+			runUpdate(msg);
+		else if (msg.getQuery().toLowerCase().startsWith("select"))
+			runSelect(msg);
+		else if(msg.getQuery().toLowerCase().startsWith("insert"))
+			runUpdate(msg);
+		updateConsole(msg);
+	}
+
+	private static void updateConsole(Msg msg) {
+		switch (msg.getTask()) {
 		case Login:
-			return loginTask(query);
+			switch(msg.getSubTask()) {
+				case Select:
+					msg.setConsole("(Login): Client {ip} trying to login");
+					break;
+				case Update:
+					msg.setConsole("(Login): Client {ip} Login successfuly");
+					break;
+				default:
+					break;
+			}
+			break;
+		case CreateCustomer:
+			switch(msg.getSubTask()) {
+				case Select:
+					msg.setConsole("(Create Customer): Client {ip} asked for id");
+					break;
+				case CreateCustomer_Insert_Customer:
+					msg.setConsole("(Create Customer): Client {ip} adding new customer");
+					break;
+				case CreateCustomer_Insert_User:
+					msg.setConsole("(Create Customer): Client {ip} adding new user");
+					break;
+				default:
+					break;
+			}
+			break;
+		case Logout:
+			msg.setConsole("(Logout): Client {ip} has logged out.");
+			break;
 		case RequiredStock:
-			return requiredTask(query);
-		case Update:
-			return update(query);
+			if (msg.getBool()) 
+				msg.setConsole("stock sent successfully to Client {ip}");
+			break;
+		default:
+			break;	
 		}
-		return null;
 	}
-	private static ArrayList<Object> update(String query){
-		ArrayList<Object> returnMsg = new ArrayList<>();
-		int result = DBController.update(query);
-		returnMsg.add(Tasks.Update);
-		returnMsg.add("Update db");
-		returnMsg.add(result);
-		return returnMsg;
+	private static void runUpdate(Msg msg) {
+		int returnVal = DBController.update(msg.getQuery());
+		msg.setInt(returnVal);
 	}
-	private static ArrayList<Object> loginTask(String query) {
-		//Run query
-		ResultSet rs = DBController.select(query); 
-		ArrayList<Object> returnMsg = new ArrayList<>();
-		try {//Nave
-			returnMsg.add(Tasks.Login);
-			if(rs.next()) { //Login details found
-				returnMsg.add("Sending positive login check to {ip}");
-				returnMsg.add(rs.getString(4));
-			}//Nave
-			else { //Login details not found
-				returnMsg.add("Sending negative login check to {ip}");
-				returnMsg.add(null);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+	/**
+	 * @throws SQLException error in DB
+	 */
+	private static void runSelect(Msg msg) throws SQLException {
+		ResultSet rs = DBController.select(msg.getQuery());
+		int columnCount = rs.getMetaData().getColumnCount();
+		while (rs.next()) {
+			List<Object> row = new ArrayList<>();
+			for (int i = 1; i <= columnCount; i++)
+				row.add(rs.getObject(i));
+			msg.getRawArray().add(row);
 		}
-		return returnMsg;
-	}
-	private static ArrayList<Object> requiredTask(String query) {
-		
-		//Run query
-		ResultSet rs = DBController.select(query);
-		ArrayList<Object> returnMsg = new ArrayList<>();
-		ArrayList<TableProd> tProd = new ArrayList<>();
-		try {
-			returnMsg.add(Tasks.RequiredStock);
-			returnMsg.add("Sending Required table to {ip}");
-			while(rs.next()) { 
-				tProd.add(new TableProd(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4)));	
-			}
-			returnMsg.add(tProd);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return returnMsg;
+		msg.setBool(msg.getRawArray().size() == 0 ? false : true);
 	}
 }

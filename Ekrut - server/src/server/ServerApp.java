@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ServerApp extends Application {
-	//sdfsdf
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader serverGui = new FXMLLoader(getClass().getResource("ServerGUI.fxml"));
@@ -18,6 +17,7 @@ public class ServerApp extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setOnCloseRequest(e -> control.closeConnection());
 		primaryStage.setTitle("EKrut Server");
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 	

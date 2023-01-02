@@ -9,7 +9,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
       <Label layoutX="139.0" layoutY="22.0" prefHeight="54.0" prefWidth="307.0" text="Welcome to EKrut" textFill="#cf4c0a">
          <font>
@@ -43,7 +44,7 @@
             <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
-      <Button layoutX="80.0" layoutY="314.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Connect with App">
+      <Button layoutX="80.0" layoutY="314.0" mnemonicParsing="false" onAction="#ConnectWithApp" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Connect with App">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -51,7 +52,7 @@
       <Separator layoutX="290.0" layoutY="145.0" orientation="VERTICAL" prefHeight="225.0" prefWidth="7.0" />
       <Separator layoutX="44.0" layoutY="131.0" prefHeight="3.0" prefWidth="222.0" />
       <Separator layoutX="331.0" layoutY="130.0" prefHeight="3.0" prefWidth="222.0" />
-      <Label fx:id="errMsgLbl" layoutX="418.0" layoutY="282.0" prefHeight="18.0" prefWidth="94.0" textFill="RED">
+      <Label fx:id="errMsgLbl" layoutX="374.0" layoutY="282.0" prefHeight="18.0" prefWidth="186.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

@@ -2,10 +2,13 @@ package controllers;
 
 import java.io.IOException;
 import Util.Msg;
+import Util.Tasks;
+import Util.User;
 import client.ClientBackEnd;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -13,10 +16,10 @@ import javafx.stage.Stage;
  * All the controllers inherit from this class and the method start
  */
 public abstract class AbstractController {
-
 	public static Stage prStage;
 	public static Object monitor = new Object();
 	public static Msg msg;
+	public static User myUser;
 
 	public void start(String fxml, String title) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
@@ -30,6 +33,7 @@ public abstract class AbstractController {
 			prStage.setOnCloseRequest(event -> {
 				ClientBackEnd.getInstance().quit();
 			});
+		ClientBackEnd.setAbstractController(load.getController());
 		prStage.show();
 	}
 
@@ -52,21 +56,20 @@ public abstract class AbstractController {
 		} //Send task to server
 	}
 
-	/*    public void sendQuery(Tasks task,String query) {		//Nave
-		ArrayList<Object> taskObj = new ArrayList<>();
-		taskObj.add(task);
-		taskObj.add(query);
-			try {
-				ClientBackEnd.getInstance().handleMessageFromClientUI(taskObj);
-				Wait(); 
-			} catch (Exception e) {
-				e.printStackTrace();
-			} //Send task to server
-	}*/
-
 	public static void Notify() { //Nave
 		synchronized (monitor) {
 			monitor.notifyAll();
 		}
 	}
+	
+	public void logout() throws IOException {
+		String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
+		msg = new Msg(Tasks.Logout, logoutQuery);
+		sendMsg(msg);
+		myUser = null;
+		start("LoginForm", "Login");
+	}
+	
+	public abstract void back(MouseEvent event);
+
 }

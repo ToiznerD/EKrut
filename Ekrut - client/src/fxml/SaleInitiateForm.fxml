@@ -22,29 +22,30 @@
             <Font name="System Bold Italic" size="40.0" />
          </font>
       </Label>
-      <Button fx:id="btnBack" layoutX="21.0" layoutY="333.0" mnemonicParsing="false" onAction="#BackButton" style="-fx-background-color: 0;">
-         <graphic>
-            <ImageView fitHeight="45.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/back%20icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
+      <ImageView fitHeight="45.0" fitWidth="118.0" layoutX="14.0" layoutY="342.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/back%20icon.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="492.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/min-max-close.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txtSaleName" layoutX="60.0" layoutY="261.0" prefHeight="26.0" prefWidth="164.0" promptText="Enter sale name" />
+      <TextField fx:id="txtSaleName" layoutX="60.0" layoutY="284.0" prefHeight="26.0" prefWidth="164.0" promptText="Enter sale name" />
       <Button fx:id="btnInitiate" layoutX="385.0" layoutY="346.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Initiate sale">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <ComboBox fx:id="lstLocation" layoutX="60.0" layoutY="166.0" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose location" style="-fx-background-color: orange;" />
-      <ComboBox fx:id="lstSaleTemplate" layoutX="60.0" layoutY="118.0" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose sale template" style="-fx-background-color: orange;" />
-      <DatePicker fx:id="dateStart" layoutX="60.0" layoutY="214.0" prefHeight="25.0" prefWidth="123.0" promptText="Starting date" />
-      <DatePicker fx:id="dateEnd" layoutX="201.0" layoutY="214.0" prefHeight="25.0" prefWidth="123.0" promptText="Ending date" />
+      <ComboBox fx:id="lstRegion" layoutX="60.0" layoutY="147.0" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose region" style="-fx-background-color: orange;" />
+      <ComboBox fx:id="lstSaleTemplate" layoutX="60.0" layoutY="100.0" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose sale template" style="-fx-background-color: orange;" />
+      <DatePicker fx:id="StartingDate" layoutX="60.0" layoutY="193.0" onAction="#checkDates" prefHeight="25.0" prefWidth="119.0" promptText="Starting date" />
+      <DatePicker fx:id="EndingDate" layoutX="199.0" layoutY="193.0" onAction="#checkDates" prefHeight="25.0" prefWidth="119.0" promptText="Ending date" />
+      <ComboBox fx:id="lstStartingHours" layoutX="60.0" layoutY="237.0" onAction="#checkTimes" opacity="0.7" prefHeight="25.0" prefWidth="119.0" promptText="Starting Hours" style="-fx-background-color: orange;" />
+      <ComboBox fx:id="lstEndingHours" layoutX="199.0" layoutY="237.0" onAction="#checkTimes" opacity="0.7" prefHeight="25.0" prefWidth="119.0" promptText="Ending Hours" style="-fx-background-color: orange;" />
+      <Label fx:id="lblErrTime" layoutX="385.0" layoutY="276.0" prefHeight="17.0" prefWidth="158.0" text="Time" />
+      <Label fx:id="lblErrName" layoutX="385.0" layoutY="310.0" prefHeight="17.0" prefWidth="158.0" text="Name" />
+      <Label fx:id="lblErrDate" layoutX="385.0" layoutY="244.0" prefHeight="17.0" prefWidth="158.0" text="Date" />
    </children>
 </AnchorPane>

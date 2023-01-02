@@ -26,7 +26,7 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Button>
-      <Label fx:id="regionLbl" layoutX="14.0" layoutY="273.0" prefHeight="17.0" prefWidth="94.0" text="Region:" />
+      <Label fx:id="storeLbl" layoutX="14.0" layoutY="273.0" prefHeight="17.0" prefWidth="94.0" text="Store:" />
       <TextField fx:id="pidText" layoutX="224.0" layoutY="293.0" prefHeight="25.0" prefWidth="77.0" promptText="Product id" />
       <TextField fx:id="aQuantText" layoutX="317.0" layoutY="293.0" prefHeight="25.0" prefWidth="103.0" promptText="Actual quantity" />
       <ImageView fx:id="backBtn" fitHeight="45.0" fitWidth="103.0" layoutX="7.0" layoutY="311.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">

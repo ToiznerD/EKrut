@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseEvent;
 
 public class StockReportPanelController extends AbstractController{
 
@@ -33,4 +34,9 @@ public class StockReportPanelController extends AbstractController{
 
         }
     }
+
+	@Override
+	public void back(MouseEvent event) {
+		// Not implemented
+	}
 }

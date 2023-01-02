@@ -1,16 +1,8 @@
 package Util;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import DBHandler.DBController;
-import Util.Tasks.*;
-
-import static Util.Tasks.getLocations;
-
 
 public class Msg implements Serializable {
 
@@ -19,6 +11,8 @@ public class Msg implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Tasks task;
+	private Tasks subTask;
+	
 	private String query, consoleMsg;
 	private int intReturn;
 	private boolean boolReturn;
@@ -28,6 +22,12 @@ public class Msg implements Serializable {
 		this.task = task;
 		this.query = query;
 	}
+	
+	public Msg(Tasks task, Tasks subTask, String query) {
+		this.task = task;
+		this.query = query;
+		this.subTask = subTask;
+	}
 
 	/**
 	 * @return Tasks return the Msg task.
@@ -35,14 +35,45 @@ public class Msg implements Serializable {
 	public Tasks getTask() {
 		return task;
 	}
+	
+	public Tasks getSubTask() {
+		return subTask;
+	}
 
+	public void setSubTask(Tasks subTask) {
+		this.subTask = subTask;
+	}
+
+	/**
+	 * @param int value
+	 */
+	public void setInt(int value) {
+		this.intReturn = value;
+	}
 	/**
 	 * @return int number updated row
 	 */
 	public int getInt() {
 		return intReturn;
 	}
-
+	/**
+	 * @param boolean value
+	 */
+	public void setBool(boolean value) {
+		this.boolReturn = value;
+	}
+	/**
+	 * @return String query
+	 */
+	public String getQuery() {
+		return query;
+	}
+	public void setConsole(String message) {
+		this.consoleMsg = message;
+	}
+	public ArrayList<List<Object>> getRawArray(){
+		return arrayReturn;
+	}
 	/**
 	 * @return boolean false if resultset return empty from selected
 	 */
@@ -82,60 +113,6 @@ public class Msg implements Serializable {
 			e.printStackTrace();
 		}
 		return toConvert;
-	}
-
-	/**
-	 * @throws Exception SQLException on select error
-	 */
-	public void taskerHandler() throws SQLException {
-		switch (task) {
-		case Update:
-			intReturn = DBController.update(query);
-			break;
-		case Select:
-			runSelect();
-			break;
-		case Login:
-			runSelect();
-			break;
-		case getLocations:
-			runSelect();
-			break;
-		case getStoreProducts:
-			runSelect();
-			break;
-		case updateProdMinLimit:
-			runUpdate();
-			break;
-		case getOrderReports:
-			runSelect();
-			break;
-		case getRegion:
-			runSelect();
-			break;
-		default:
-			break;
-		}
-	}
-
-	/**
-	 * @throws SQLException error in DB
-	 */
-	private void runSelect() throws SQLException {
-		ResultSet rs = DBController.select(query);
-		int columnCount = rs.getMetaData().getColumnCount();
-		while (rs.next()) {
-			List<Object> row = new ArrayList<>();
-			for (int i = 1; i <= columnCount; i++)
-				row.add(rs.getObject(i));
-			arrayReturn.add(row);
-		}
-		boolReturn = arrayReturn.size() == 0 ? false : true;
-	}
-
-	public void runUpdate() throws SQLException {
-		Integer updateReturnVal = DBController.update(query);
-		boolReturn = updateReturnVal > 0 ? true : false;
 	}
 
 }

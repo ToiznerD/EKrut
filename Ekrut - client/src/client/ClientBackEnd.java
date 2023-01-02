@@ -1,13 +1,11 @@
 package client;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import controllers.AbstractController;
-import controllers.LoginController;
-import ocsf.client.AbstractClient;
 import Util.Msg;
 import Util.Tasks;
+import controllers.AbstractController;
+import ocsf.client.AbstractClient;
 
 public class ClientBackEnd extends AbstractClient {
 
@@ -49,8 +47,9 @@ public class ClientBackEnd extends AbstractClient {
 
 	public void quit() {
 		try {
-			sendToServer(Tasks.Disconnect);
-			closeConnection();
+			if(AbstractController.myUser != null)
+				abstractController.logout();
+			handleMessageFromClientUI(new Msg(Tasks.Disconnect,null));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -58,25 +57,4 @@ public class ClientBackEnd extends AbstractClient {
 		}
 	}
 }
-
-/*	@SuppressWarnings("unchecked")
-@Override
-protected void handleMessageFromServer(Object msg) {
-	ArrayList<Object> returnMsg = (ArrayList<Object>) msg;
-	switch ((Tasks) returnMsg.get(0)) {
-	case Login:
-		loginHandlers(returnMsg);
-		break;
-	case RequiredStock:
-		ResupplyReqController.tprod = (ArrayList<TableProd>) returnMsg.get(2);
-		break;
-	case Update:
-		ResupplyReqController.updateResult = (int) returnMsg.get(2);
-		break;
-	default:
-		break;
-	}
-	AbstractController.Notify();
-}*/
-
 

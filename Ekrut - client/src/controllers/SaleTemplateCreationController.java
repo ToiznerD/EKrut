@@ -1,42 +1,29 @@
 package controllers;
 
-import client.ClientApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
-public class SaleTemplateCreationController {
+public class SaleTemplateCreationController extends AbstractController{
 
-    @FXML
-    private Button btnBack;
-
-    @FXML
-    private Button btnInitiate;
-
-    @FXML
-    private DatePicker dateEnd;
-
-    @FXML
-    private DatePicker dateStart;
-
-    @FXML
-    private ComboBox<?> lstLocation;
-
-    @FXML
-    private ComboBox<?> lstSaleTemplate;
-
-    @FXML
-    private TextField txtSaleName;
+	    @FXML
+	    private Button btnInitiate;
     
-    public void BackButton(ActionEvent event) throws Exception {
-    	try {
-		
+//    public void BackButton(ActionEvent event) throws Exception {
+//    	try {
+//    		start("MarketingSalesDepartmentPanel","Marketing Sales Department Panel");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//    }
+    
+	@Override
+	public void back(MouseEvent event) {
+		try {
+    		start("MarketingSalesDepartmentPanel","Marketing Sales Department Panel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
-
+	}
 }

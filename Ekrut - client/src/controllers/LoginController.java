@@ -1,15 +1,24 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import Util.Msg;
 import Util.Tasks;
+<<<<<<< HEAD
 import Entities.User;
+=======
+import Util.User;
+>>>>>>> origin/master
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 /*
  * Login controller class inheritting from AbstractController
@@ -41,39 +50,76 @@ public class LoginController extends AbstractController {
 		//Create query based on UI input
 		String userid = txtUserid.getText();
 		String password = txtPW.getText();
-		String query = "SELECT * FROM users WHERE name = '" + userid + "' AND password = " + password;
-		/*sendQuery(Tasks.Login, query);*/
-		msg = new Msg(Tasks.Login, query);
+
+		String query = "SELECT * FROM users WHERE user = '" + userid + "' AND password = " + password;
+		msg = new Msg(Tasks.Login, Tasks.Select, query);
 		sendMsg(msg);
-		//Build task to server
-		if (msg.getBool()) {
-			user = msg.getArr(User.class).get(0);
-			switch ( LoginController.user.getRole() ) {
-			case "customer":
-				start("CustomerPanel", "Customer Dashboard");
-				break;
-			case "region_manager":
-				start("RegionManagerMainScreen", "Region Manager Dashboard");
-			default:
-				break;
+		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
+		
+		if(myUser != null) {
+			if (!myUser.isLogged()) {
+				String role = myUser.getRole();
+				
+				//Update isLogged
+				String loginQuery = "UPDATE users SET IsLogged = 1 WHERE id = " + myUser.getId();
+				msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
+				sendMsg(msg);
+				
+				switch (role) {
+				case "customer":
+					start("CustomerPanel", "Customer Dashboard");
+					break;
+				case "service":
+					start("CustomerService", "Customer Service Dashboard");
+					break;
+				case "marketmanager":
+					start("MarketingManagerPanel", "Market manager dashboard");
+					break;
+				case "region_manager":
+					start("RegionManagerMainScreen", "Region Manager Dashboard");
+					break;
+				default:
+					break;
+				}
+			} else {
+				errMsgLbl.setText(userid + " is already logged in");
+
 			}
-		} else {
+		}
+		else {
 			errMsgLbl.setText("Wrong Details");
 		}
-
 	}
-}
-/*	
-	* This method is the logic layer for handling the login page
-	* The method will update LoginController (login page UI) about the msg returned from the server
-	* @param msg
 	
-	private void loginHandlers() {
-		if (msg.getArr(Object.class) != null)) {//Nave
-			LoginController.result = true;
-			LoginController.role = (String) msg.get(2); //Nave
-		} else {
-			LoginController.result = false;
-		}
+	public void ConnectWithApp(ActionEvent event) {
+		File file = new File("config.txt");
+	    boolean exists = file.exists();
+	    if(!exists) {
+	    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+	    	alert.setTitle("Popup Message");
+	    	alert.setHeaderText("Choose between EK and OL");
+
+	    	ButtonType buttonEK = new ButtonType("EK");
+	    	ButtonType buttonOL = new ButtonType("OL");
+
+	    	alert.getButtonTypes().setAll(buttonEK, buttonOL);
+
+	    	Optional<ButtonType> result = alert.showAndWait();
+
+	    	if (result.get() == buttonEK) {
+	    	    // EK was chosen
+	    		System.out.println("EK");
+	    	} else if (result.get() == buttonOL) {
+	    	    // OL was chosen
+	    		System.out.println("OL");
+	    	}
+	    }
 	}
-}*/
+
+	@Override
+	public void back(MouseEvent event) {
+		//Not implemented
+	}
+	
+}
+
