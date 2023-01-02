@@ -1,6 +1,9 @@
 package server;
 
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import Util.Tasks;
 import tasker.Tasker;
 import Util.Msg;
@@ -43,13 +46,15 @@ public class serverBackEnd extends AbstractServer {
 	@Override
 	protected void clientConnected(ConnectionToClient client) {
 		sc.addConnected(client.getInetAddress());
-		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is Connected to server.");
+		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is Connected to server. ("
+				+LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+")");
 	}
 
 	@Override
 	protected void clientDisconnected(ConnectionToClient client) {
 		sc.removeConnected(client.getInetAddress());
-		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is disconnected from server.");
+		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is disconnected from server. ("
+				+LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+")");
 		try {
 			client.close();
 		} catch (IOException e) {
