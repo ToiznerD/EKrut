@@ -24,7 +24,7 @@ import static java.lang.Integer.parseInt;
 
 public class OrderReportController extends AbstractController implements Initializable {
     private static String month, year;
-    private List<OrderReport> orderReportToDisplay;
+    protected static List<OrderReport> orderReportsToDisplay;
 
     @FXML
     Label reportDetailsLabel;
@@ -50,16 +50,9 @@ public class OrderReportController extends AbstractController implements Initial
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String query = getReportQuery();
 
-        msg = new Msg(getOrderReports, query);
-        sendMsg(msg);
-        if (!msg.getBool())
-            throw new RuntimeException();
-            // TODO: handle exception better
-
-        orderReportToDisplay = msg.getArr(OrderReport.class);
-
+//        
+        
         // Set up label text
         String labelTxt = month + "\\" + year;
         if (myUser.getRole().equals("region_manager")) {
@@ -74,7 +67,7 @@ public class OrderReportController extends AbstractController implements Initial
         series.setName("Monthly Profit");
         Integer totalOrders = 0;
 
-        for (OrderReport orderReport : orderReportToDisplay) {
+        for (OrderReport orderReport : orderReportsToDisplay) {
             pieChartData.add(new PieChart.Data(orderReport.getsName(), orderReport.getNumOrders()));
             series.getData().add(new XYChart.Data(orderReport.getsName(), orderReport.getTotalProfit()));
             totalOrders = orderReport.getNumOrders();
@@ -84,25 +77,7 @@ public class OrderReportController extends AbstractController implements Initial
         storesPieChart.setTitle("Total number of orders: " + totalOrders);
         profitBarChart.getData().addAll(series);
     }
-
-    /**
-     * Generates a query to get appropriate reports, according to user role
-     * @return a db query to get all appropriate reports according to role and date that was passed
-     */
-    private String getReportQuery() {
-        String query;
-        if (myUser.getRole().equals("region_manager")) {
-            query = "SELECT s_name, num_orders, total_profit FROM order_report\n" +
-                    "INNER JOIN store ON order_report.s_name = store.name\n" +
-                    "INNER JOIN regions ON store.rid = " + RegionManagerMainScreenController.regionID + "\n" +
-                    "WHERE month = " + month + " AND year = " + year + " AND regions.rid = store.rid";
-        } else {
-            query = "SELECT s_name, num_orders, total_profit FROM order_report\n" +
-                    "WHERE month = " + month + " AND year = " + year;
-        }
-        return query;
-    }
-
+    
 
     /**
      * triggered when back image is clicked, goes back to previous screen
