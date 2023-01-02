@@ -33,7 +33,7 @@ public abstract class AbstractController {
 		prStage.show();
 	}
 
-	public void Wait() { //Nave
+	public void Wait() { // Nave
 		try {
 			synchronized (monitor) {
 				monitor.wait();

@@ -18,6 +18,7 @@ import javafx.util.converter.IntegerStringConverter;
 import javafx.scene.control.TableColumn.CellEditEvent;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,12 +26,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ManageInventoryScreenController extends BaseRegionManagerSubScreensContoller implements Initializable {
-    private List<Store> stores;
-    private HashMap<String, Integer> storeMap = new HashMap<>();;
-    private ObservableList<String> comboBoxOptions;
+    private HashMap<String, Integer> storeMap;
     private ObservableList<StoreProduct> itemObsList;
     private List<StoreProduct> updatedStoreProductsList;
-
 
     @FXML
     ComboBox<String> locationComboBox;
@@ -51,57 +49,18 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if (LoginController.user.getRole().equals("region_manager")) {
-            // add region store locations to ComboBox
-            getRegionManagerLocations();
+        // add store locations to ComboBox
+        storeMap = RegionManagerMainScreenController.storeMap;
 
-            // load comboBox options to comboBox
-            loadLocationsComboBox();
+        // load comboBox options to comboBox
+        RegionManagerMainScreenController.loadLocationsComboBox(locationComboBox);
 
-            // setup Table columns to listen on observable list
-            tableColInitialization();
+        // setup Table columns to listen on observable list
+        tableColInitialization();
 
-        } else if (LoginController.role.equals("CEO")) {
-            // TODO: handle CEO case
-            // Need to add RegionSelection for both windows - CEO will have all regions, while
-            // RegionManager only will have hes
-        }
     }
 
-    /**
-     * send a query to server to get all relevant store locations of the region manager connected to the system
-     */
-    public void getRegionManagerLocations() {
-        String query = "SELECT s.*\n" +
-                "FROM store s\n" +
-                "JOIN regions r ON s.rid = r.rid\n" +
-                "JOIN regions_managers rm ON r.rid = rm.rid\n" +
-                "WHERE rm.uid = " + LoginController.user.getId();
-        msg = new Msg(Tasks.getLocations, query);
-        sendMsg(msg);
-        saveStoreMap();
-    }
 
-    /**
-     * create hashMap of {store_name:store_id} and saves it to storesMap
-     */
-    public void saveStoreMap() {
-        List<Store> stores = msg.getArr(Store.class);
-        // generate HashMap for storing sname:sid key-value pairs
-        for (Store s : stores) {
-            storeMap.put(s.getName(), s.getSid());
-        }
-    }
-
-    /**
-     * loads the location comboBox with the relevant locations
-     */
-    public void loadLocationsComboBox() {
-        List<String> options = new ArrayList<>();
-        options.addAll(storeMap.keySet());
-        comboBoxOptions = FXCollections.observableArrayList(options);
-        locationComboBox.setItems(comboBoxOptions);
-    }
 
     /**
      * initializes the tableview - sets up property factory, and initializes it with empty observable list
@@ -215,6 +174,16 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
         query.append(String.format("WHERE pid in (%s) AND sid = %d", pids.toString(), currStoreId));
 
         return query.toString();
+    }
+
+
+    public void back() {
+        try {
+            // go back to previous screen
+            start("RegionManagerMainScreen", "Region Manager Dashboard");
+        } catch (IOException e) {
+            // TODO: handle exception
+        }
     }
 
 }

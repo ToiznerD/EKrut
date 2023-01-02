@@ -12,29 +12,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ManageInventoryScreenController">
    <children>
-      <ImageView fitHeight="221.0" fitWidth="152.0" layoutX="431.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="140.0" fitWidth="137.0" layoutX="449.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/manager.png" />
+            <Image url="file:/C:/Users/97253/Desktop/EKrut/Ekrut%20-%20client/images/EKrutLogo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="52.0" layoutX="540.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="542.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/EKrutLogo.png" />
-         </image>
-      </ImageView>
-      <Button alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="15.0" layoutY="336.0" mnemonicParsing="false" onAction="#backToRegionManagerScreenButtonClick" prefHeight="50.0" prefWidth="126.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Back">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="22.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/logoutIcon.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="543.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
+            <Image url="file:/C:/Users/97253/Desktop/EKrut/Ekrut%20-%20client/images/min-max-close.png" />
          </image>
       </ImageView>
       <Label layoutX="30.0" layoutY="14.0" text="Manage Inventory" textFill="#cf4c0a">
@@ -42,15 +27,20 @@
             <Font name="System Bold Italic" size="40.0" />
          </font>
       </Label>
-      <Label layoutX="12.0" layoutY="120.0" text="Choose Location:" />
-      <ComboBox fx:id="locationComboBox" layoutX="15.0" layoutY="144.0" onAction="#loadItemsToTable" prefHeight="25.0" prefWidth="126.0" />
-      <TableView fx:id="itemsTableView" layoutX="165.0" layoutY="94.0" prefHeight="217.0" prefWidth="271.0">
+      <Label layoutX="14.0" layoutY="112.0" text="Choose Location:" />
+      <ComboBox fx:id="locationComboBox" layoutX="22.0" layoutY="140.0" onAction="#loadItemsToTable" prefHeight="25.0" prefWidth="126.0" />
+      <TableView fx:id="itemsTableView" layoutX="164.0" layoutY="105.0" prefHeight="217.0" prefWidth="271.0">
         <columns>
           <TableColumn fx:id="itemCol" prefWidth="75.0" text="Item" />
           <TableColumn fx:id="quantityCol" prefWidth="101.0" text="Quantity" />
             <TableColumn fx:id="limitCol" onEditCommit="#onMinQuantityCommit" prefWidth="94.0" text="Min. limit" />
         </columns>
       </TableView>
-      <Button fx:id="saveBtn" layoutX="274.0" layoutY="332.0" mnemonicParsing="false" onAction="#updateMinQuantity" text="Save" />
+      <Button fx:id="saveBtn" layoutX="274.0" layoutY="347.0" mnemonicParsing="false" onAction="#updateMinQuantity" text="Save" />
+      <ImageView fitHeight="45.0" fitWidth="118.0" layoutX="26.0" layoutY="342.0" onMousePressed="#back" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/C:/Users/97253/Desktop/EKrut/Ekrut%20-%20client/images/back%20icon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

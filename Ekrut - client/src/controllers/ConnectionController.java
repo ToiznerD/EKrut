@@ -38,10 +38,12 @@ public class ConnectionController extends AbstractController {
 			try {//Nave
 				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
 				start("LoginForm", "Login");
+				//start("ChooseReportScreen", "Choose Report");
 			} catch (IOException e) {
 				errorLbl.setText("Error: cannot connect to remote\n" + ip + ":" + port);
 			}
 		}
+
 	}
 	public void back(ActionEvent event) {
 		

@@ -1,5 +1,6 @@
 package Util;
 
 public enum Tasks {
-	Login, Reports, Order, RequiredStock, Disconnect, Update, Select, getLocations, getStoreProducts, updateProdMinLimit
+	Login, Reports, Order, RequiredStock, Disconnect, Update, Select, getLocations, getStoreProducts, updateProdMinLimit,
+	getOrderReports, getRegion
 }

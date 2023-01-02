@@ -30,9 +30,6 @@ public class LoginController extends AbstractController {
 	@FXML
 	private Label errMsgLbl;
 
-	public static boolean result;
-
-	public static String role;
 
 	/*
 	 * connect method to login to the system
@@ -54,7 +51,6 @@ public class LoginController extends AbstractController {
 			switch ( LoginController.user.getRole() ) {
 			case "customer":
 				start("CustomerPanel", "Customer Dashboard");
-				//start("ResupplyReqScreen", "Customer Dashboard");
 				break;
 			case "region_manager":
 				start("RegionManagerMainScreen", "Region Manager Dashboard");

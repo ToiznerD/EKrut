@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$/Ekrut - client">
       <sourceFolder url="file://$MODULE_DIR$/Ekrut - client/lib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Ekrut - client/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Ekrut - client/images" type="java-resource" />
     </content>
     <content url="file://$MODULE_DIR$/Ekrut - server/src">
       <sourceFolder url="file://$MODULE_DIR$/Ekrut - server/src" isTestSource="false" />

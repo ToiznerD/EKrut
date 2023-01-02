@@ -107,6 +107,12 @@ public class Msg implements Serializable {
 		case updateProdMinLimit:
 			runUpdate();
 			break;
+		case getOrderReports:
+			runSelect();
+			break;
+		case getRegion:
+			runSelect();
+			break;
 		default:
 			break;
 		}
