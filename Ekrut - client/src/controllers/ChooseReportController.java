@@ -12,13 +12,15 @@ import java.io.IOException;
 import static Util.Tasks.getOrderReports;
 
 public class ChooseReportController extends AbstractController {
+    private String month, year;
+
     @FXML
     TextField yearTxtField;
     @FXML
     TextField monthTxtField;
     @FXML
     Label errorLabel;
-    private String month, year;
+
 
 
     /**
@@ -48,8 +50,10 @@ public class ChooseReportController extends AbstractController {
             return false;
         }
 
+        // get query
         String query = getReportQuery();
 
+        // get report and save it for next screen controller, if dont exist show msg
         msg = new Msg(getOrderReports, query);
         sendMsg(msg);
         if (msg.getBool())
