@@ -1,4 +1,4 @@
-package Util;
+package Entities;
 
 public class User {
 	private int id;

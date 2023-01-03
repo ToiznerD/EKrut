@@ -1,4 +1,4 @@
-package Util;
+package Entities;
 
 public class Sale {
 	private int saleId;
