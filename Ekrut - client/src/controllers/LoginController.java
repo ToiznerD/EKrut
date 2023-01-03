@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -74,17 +73,6 @@ public class LoginController extends AbstractController {
 		sendMsg(msg);
 		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
 		
-<<<<<<< HEAD
-		if (msg.getBool()) {
-			switch ((String) msg.getObj(3)) {
-			case "customer":
-				start("SaleTemplateCreationForm", "Customer Dashboard");
-				break;
-			case "service":
-				start("CustomerService", "Customer Service Dashboard");
-			default:
-				break;
-=======
 		if(myUser != null) {
 			if (!myUser.isLogged()) {
 				String role = myUser.getRole();
@@ -101,20 +89,19 @@ public class LoginController extends AbstractController {
 				case "service":
 					start("CustomerService", "Customer Service Dashboard");
 					break;
-				case "marketmanager":
-					start("MarketingManagerPanel", "Market manager dashboard");
+				case "marketing_manager":
+					start("MarketingManagerPanel", "Marketing Manager Dashboard");
 					break;
+				case "marketing_department":
+					start("MarketingSalesDepartmentPanel", "Marketing Department Dashboard");
 				default:
 					break;
 				}
-			} else {
+			} else 
 				errMsgLbl.setText(userid + " is already logged in");
->>>>>>> origin/master
-			}
 		}
-		else {
+		else 
 			errMsgLbl.setText("Wrong Details");
-		}
 	}
 	
 	public void ConnectWithApp(ActionEvent event) throws IOException {
@@ -185,6 +172,7 @@ public class LoginController extends AbstractController {
 	    }
 	}
 
+
 	private Pair<String, String> getLoginDetails() {
 	    Dialog<Pair<String, String>> loginDialog = new Dialog<>();
 	    loginDialog.setTitle("Login");
@@ -242,8 +230,7 @@ public class LoginController extends AbstractController {
 
 	@Override
 	public void back(MouseEvent event) {
-		//Not implemented
+		// TODO Auto-generated method stub
+		
 	}
-	
 }
-
