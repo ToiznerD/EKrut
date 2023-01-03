@@ -157,7 +157,6 @@ public class EditUserController extends AbstractController{
     	tableUsers.setItems(userOBList);
     }
 
-
     /**
      * Navigates back to the Customer Service screen.
      *
@@ -171,6 +170,4 @@ public class EditUserController extends AbstractController{
 			e.printStackTrace();
 		}
 	}
-
-
 }

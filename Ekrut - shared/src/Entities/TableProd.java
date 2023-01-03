@@ -5,7 +5,7 @@ import java.util.Objects;
 
 
 
-public  class TableProd implements Serializable{
+public class TableProd implements Serializable{
 
 	/**
 	 * 

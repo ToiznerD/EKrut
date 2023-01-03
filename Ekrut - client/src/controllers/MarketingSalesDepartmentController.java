@@ -20,7 +20,6 @@ public class MarketingSalesDepartmentController extends AbstractController {
 
 	@Override
 	public void back(MouseEvent event) {
-		// TODO Auto-generated method stub
-		
+		//not implemented
 	}
 }
