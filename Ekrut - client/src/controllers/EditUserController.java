@@ -2,9 +2,9 @@ package controllers;
 import java.io.IOException;
 import java.util.List;
 
+import Entities.User;
 import Util.Msg;
 import Util.Tasks;
-import Util.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

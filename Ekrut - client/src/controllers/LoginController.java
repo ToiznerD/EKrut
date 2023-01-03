@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import Util.Msg;
 import Util.Tasks;
-import Util.User;
+import Entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -35,10 +35,6 @@ public class LoginController extends AbstractController {
 	private Label errMsgLbl;
 
 
-	public static boolean result;
-
-	public static String role;
-
 	/*
 	 * connect method to login to the system
 	 * this method responsible to check the login details
@@ -49,6 +45,7 @@ public class LoginController extends AbstractController {
 		//Create query based on UI input
 		String userid = txtUserid.getText();
 		String password = txtPW.getText();
+
 		String query = "SELECT * FROM users WHERE user = '" + userid + "' AND password = " + password;
 		msg = new Msg(Tasks.Login, Tasks.Select, query);
 		sendMsg(msg);
@@ -72,6 +69,9 @@ public class LoginController extends AbstractController {
 					break;
 				case "marketmanager":
 					start("MarketingManagerPanel", "Market manager dashboard");
+					break;
+				case "region_manager":
+					start("RegionManagerMainScreen", "Region Manager Dashboard");
 					break;
 				default:
 					break;

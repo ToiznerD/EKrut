@@ -3,7 +3,7 @@ package controllers;
 import java.io.IOException;
 import Util.Msg;
 import Util.Tasks;
-import Util.User;
+import Entities.User;
 import client.ClientBackEnd;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,7 +37,7 @@ public abstract class AbstractController {
 		prStage.show();
 	}
 
-	public void Wait() {//Nave
+	public void Wait() { // Nave
 		try {
 			synchronized (monitor) {
 				monitor.wait();
