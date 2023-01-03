@@ -28,7 +28,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import tables.TableOrders;
-import tables.TableProd;
 
 public class DeliveryOrdersController extends AbstractController{
 	
