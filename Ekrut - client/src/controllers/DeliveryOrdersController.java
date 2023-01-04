@@ -1,49 +1,52 @@
 package controllers;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.HashMap;
 
+import Entities.TableOrders;
 import Util.Msg;
 import Util.Tasks;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-
-import Entities.Order;
+import javafx.scene.paint.Color;
 
 public class DeliveryOrdersController extends AbstractController{
 	
-	private ObservableList<Order> ordersList = FXCollections.observableArrayList();
-
+	private ObservableList<TableOrders> ordersList = FXCollections.observableArrayList();
+	private HashMap<String, String> statusMap;
     @FXML
     private Button approveBtn;
 	
     @FXML
     private ImageView backBtn;
+    
+    @FXML
+    private ImageView refreshBtn;
+    
+    @FXML
+    private Label errorLbl;
+    
+    @FXML
+    private TextField OrderIdLbl;
+    
+	@FXML
+	private TableColumn<TableOrders, Integer> idCell;
 	
 	@FXML
-	private TableColumn<Order, Integer> idCell;
-	
+	private TableColumn<TableOrders, String> nameCell, addressCell, phoneCell, dateCell, timeCell, statusCell;
+
 	@FXML
-	private TableColumn<Order, String> nameCell, addressCell, phoneCell;
-	
-	@FXML
-	private TableColumn<Order, String> dateCell;
-	
-	@FXML
-	private TableColumn<Order, String> timeCell;
-	
-	@FXML
-	private TableView<Order> ordersTable;
-	
+	private TableView<TableOrders> ordersTable;
+
 	
     final int distance = 3;
     final int droneAvailability = 2;
@@ -52,39 +55,30 @@ public class DeliveryOrdersController extends AbstractController{
 	@FXML
 	protected void initialize() {
 		setOrdersList();
-		idCell.setCellValueFactory(new PropertyValueFactory<Order, Integer>("OrderID"));
-		nameCell.setCellValueFactory(new PropertyValueFactory<Order, String>("RecieverName"));
-		addressCell.setCellValueFactory(new PropertyValueFactory<Order, String>("RecieverAddress"));
-		phoneCell.setCellValueFactory(new PropertyValueFactory<Order, String>("RecieverPhone"));
-		dateCell.setCellValueFactory(new PropertyValueFactory<Order, String>("ShippingDate"));
-		timeCell.setCellValueFactory(new PropertyValueFactory<Order, String>("ShippingTime"));
+		idCell.setCellValueFactory(new PropertyValueFactory<TableOrders, Integer>("OrderID"));
+		nameCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("RecieverName"));
+		addressCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("RecieverAddress"));
+		phoneCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("RecieverPhone"));
+		dateCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("ShippingDate"));
+		timeCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("ShippingTime"));
+		statusCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("Status"));
 		ordersTable.setItems(ordersList);
 	}
     
     private void setOrdersList() {
 		msg = new Msg(Tasks.DeliveryOrders,
-				"select o.oid, u.name, ordr.shipping_address, u.phone, o.ord_date, o.ord_time\r\n"
-				+ "from users u,orders o, order_report ordr\r\n"
-				+ "where o.cid=u.id and o.oid=ordr.oid and o.method=\"delivery\";\r\n");
+				   "select o.oid, u.name, o.shipping_address, u.phone, o.ord_date, o.ord_time, o.ord_status\r\n"
+				+ "	from users u,orders o\r\n"
+				+ "	where o.cid=u.id and o.method=\"delivery\";");
 		sendMsg(msg);
 		ordersList.clear();
-		ordersList.addAll(msg.getArr(Order.class));
+		statusMap = new HashMap<>();
+		for (TableOrders order : msg.getArr(TableOrders.class)) {
+			ordersList.add(order);
+			statusMap.put(Integer.toString(order.getOrderID()), order.getStatus());
+		}
     }
     
-    private String computeSupplyDate(String supplyDate) {
-    	int computedTime = distance + droneAvailability + shippingCharge;
-    	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    	Calendar cal = Calendar.getInstance();
-        try {  
-            cal.setTime(sdf.parse(supplyDate));  
-        } catch(ParseException e){  
-             e.printStackTrace();  
-        }
-        cal.add(Calendar.DAY_OF_MONTH, computedTime);
-        return sdf.format(cal.getTime());
-    }
-
-	
 	@Override
 	public void back(MouseEvent event) {
 		try {
@@ -93,5 +87,38 @@ public class DeliveryOrdersController extends AbstractController{
 			e.printStackTrace();
 		}
 	}
+	
+	@FXML
+	public void approveDelivery(MouseEvent event) {
+		String selectedID = OrderIdLbl.getText();
+		errorLbl.setText("");
+		errorLbl.setTextFill(Color.web("Red"));
+		if (!checkInput(selectedID)) 
+			return;
+		msg = new Msg(Tasks.Update, "UPDATE orders SET ord_status = 'in progress' WHERE oid = "+selectedID);
+		sendMsg(msg);	
+		if (msg.getBool()) {
+			errorLbl.setTextFill(Color.web("Green"));
+			errorLbl.setText("Order approved successfully");
+			initialize();
+		}
+	}
+
+	private boolean checkInput(String id) {
+		if (statusMap.containsKey(id) && statusMap.get(id).equals("pending"))
+			return true;
+		if (id.isEmpty())
+			errorLbl.setText("Error: Order ID cannot be empty");
+		else if (!id.matches("[0-9]+"))
+			errorLbl.setText("Error: Input must be numbers [0-9]");
+		else if(!statusMap.containsKey(id))
+			errorLbl.setText("Order ID not found");
+		else if(statusMap.get(id).equals("in progress"))
+			errorLbl.setText("Error: Order already approved");
+		else if(statusMap.get(id).equals("completed")) 
+			errorLbl.setText("Error: Order completed");
+		return false;
+	}
+
 
 }

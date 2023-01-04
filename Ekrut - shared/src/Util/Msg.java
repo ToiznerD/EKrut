@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import DBHandler.DBController;
 
 public class Msg implements Serializable {
 
