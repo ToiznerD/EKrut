@@ -1,14 +1,12 @@
-package Util;
+package Entities;
 
 public class Sale {
-	public static int saleIdGenerator = 1;
 	private int saleId;
 	private String name;
 	private int discount;
 	
-	public Sale(String name, int discount) {
-		this.saleId = saleIdGenerator;
-		saleIdGenerator++;
+	public Sale(int saleId, String name, int discount) {
+		this.saleId = saleId;
 		this.name = name;
 		this.discount = discount;
 	}
@@ -23,10 +21,6 @@ public class Sale {
 
 	public int getDiscount() {
 		return discount;
-	}
-	
-	public static int generateSaleId() {
-		return saleIdGenerator++;
 	}
 	
 }

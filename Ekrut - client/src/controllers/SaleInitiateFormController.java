@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import Util.Msg;
-import Util.Region;
-import Util.SaleTemplate;
+import Entities.Region;
+import Entities.SaleTemplate;
 import Util.Tasks;
 
 import javafx.collections.FXCollections;

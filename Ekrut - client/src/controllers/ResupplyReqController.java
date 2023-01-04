@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import tables.TableProd;
+import Entities.TableProd;
 
 public class ResupplyReqController extends AbstractController {
 

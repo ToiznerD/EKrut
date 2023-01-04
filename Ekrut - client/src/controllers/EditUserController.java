@@ -2,9 +2,9 @@ package controllers;
 import java.io.IOException;
 import java.util.List;
 
+import Entities.User;
 import Util.Msg;
 import Util.Tasks;
-import Util.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -139,7 +139,6 @@ public class EditUserController extends AbstractController{
      * Loads the user data into the table.
      */
     public void onLoad() {
-    	
     	msg = new Msg(Tasks.Select, "SELECT * FROM Users");
     	sendMsg(msg);
     	List<User> userList = msg.getArr(User.class);
@@ -157,17 +156,12 @@ public class EditUserController extends AbstractController{
     	tableUsers.setItems(userOBList);
     }
 
-<<<<<<< HEAD
-	@Override
-=======
-
     /**
      * Navigates back to the Customer Service screen.
      *
      * @param event The MouseEvent that triggered this method.
      */
     @Override
->>>>>>> origin/master
 	public void back(MouseEvent event) {
 		try {
 			start("CustomerService", "Customer Service");
@@ -175,9 +169,4 @@ public class EditUserController extends AbstractController{
 			e.printStackTrace();
 		}
 	}
-
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 }

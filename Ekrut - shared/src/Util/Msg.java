@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import DBHandler.DBController;
 
 public class Msg implements Serializable {
 
@@ -117,39 +116,5 @@ public class Msg implements Serializable {
 			e.printStackTrace();
 		}
 		return toConvert;
-	}
-
-	/**
-	 * @throws Exception SQLException on select error
-	 */
-	public void taskerHandler() throws SQLException {
-		switch (task) {
-		case Update:
-			intReturn = DBController.update(query);
-			break;
-		case Select:
-			runSelect();
-			break;
-		case Insert:
-			intReturn = DBController.update(query);
-			break;
-		default:
-			break;
-		}
-	}
-
-	/**
-	 * @throws SQLException error in DB
-	 */
-	private void runSelect() throws SQLException {
-		ResultSet rs = DBController.select(query);
-		int columnCount = rs.getMetaData().getColumnCount();
-		while (rs.next()) {
-			List<Object> row = new ArrayList<>();
-			for (int i = 1; i <= columnCount; i++)
-				row.add(rs.getObject(i));
-			arrayReturn.add(row);
-		}
-		boolReturn = arrayReturn.size() == 0 ? false : true;
 	}
 }

@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import Util.Msg;
 import Util.Tasks;
-import Util.User;
+import Entities.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
 /*
- * Login controller class inheritting from AbstractController
+ * Login controller class inheriting from AbstractController
  * This class is responsible to control the Login page
  */
 public class LoginController extends AbstractController {
@@ -69,6 +69,7 @@ public class LoginController extends AbstractController {
 		//Create query based on UI input
 		//String query = "SELECT * FROM users WHERE user = '" + userid + "' AND password = " + password;
 		String query = String.format("SELECT * FROM users WHERE user='%s' AND password = '%s'", userid, password);
+
 		msg = new Msg(Tasks.Login, Tasks.Select, query);
 		sendMsg(msg);
 		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
@@ -81,10 +82,20 @@ public class LoginController extends AbstractController {
 				String loginQuery = "UPDATE users SET IsLogged = 1 WHERE id = " + myUser.getId();
 				msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
 				sendMsg(msg);
-				
 				switch (role) {
+				case "new_user":
+					start("UserPanel", "User Dashboard");
+					break;
 				case "customer":
-					start("CustomerPanel", "Customer Dashboard");
+					String customerQuery = "SELECT status FROM customer WHERE id = " + myUser.getId();
+					msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
+					sendMsg(msg);
+					if(msg.getBool()) {
+						if(msg.getObj(0).equals("Not Approved"))
+							start("UserPanel", "User Dashboard");
+						else
+							start("CustomerPanel", "Customer Dashboard");
+					}
 					break;
 				case "service":
 					start("CustomerService", "Customer Service Dashboard");
@@ -94,6 +105,9 @@ public class LoginController extends AbstractController {
 					break;
 				case "marketing_department":
 					start("MarketingSalesDepartmentPanel", "Marketing Department Dashboard");
+				case "region_manager":
+					start("RegionManagerMainScreen", "Region Manager Dashboard");
+					break;
 				default:
 					break;
 				}

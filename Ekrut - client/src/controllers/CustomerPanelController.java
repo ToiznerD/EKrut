@@ -1,21 +1,19 @@
 package controllers;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-public class CustomerServiceController extends AbstractController{
+public class CustomerPanelController extends AbstractController{
 
     @FXML
-    private Button btnCreate;
+    private Button btnLogout;
 
     @FXML
-    private Button btnEdit;
-    
+    private Button btnMakeOrder;
+
     @FXML
     private Label welcomeLbl;
     
@@ -25,20 +23,9 @@ public class CustomerServiceController extends AbstractController{
     	welcome = myUser.getName() == null ? welcome + myUser.getUsername() : welcome + myUser.getName();
     	welcomeLbl.setText(welcome);
     }
-    
-    @FXML
-    void openCreateMember(ActionEvent event) throws IOException {
-    	start("CreateCustomer", "Create new customer");
-    }
-
-    @FXML
-    void openEdit(ActionEvent event) throws IOException {
-    	start("EditUser", "Edit Users");
-    }
-
 	@Override
 	public void back(MouseEvent event) {
-		//Not implemented
+		// not implemented
 	}
 
 }
