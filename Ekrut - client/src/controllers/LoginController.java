@@ -1,30 +1,18 @@
 package controllers;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.Optional;
-import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
+import Entities.User;
 import Util.Msg;
 import Util.Tasks;
-import Entities.User;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.util.Pair;
 
 /*
  * Login controller class inheriting from AbstractController
@@ -43,21 +31,25 @@ public class LoginController extends AbstractController {
 
 	@FXML
 	private Label errMsgLbl;
-
-
-	public static boolean result;
-
-	public static String role;
 	
 	private String userid;
 	
 	private String password;
 	
+	/**
+	 * Logs in to the app with the given username and password.
+	 *
+	 * @param event the action event that triggered the method call
+	 * @throws IOException if an I/O error occurs while communicating with the app
+	 */
 	public void regulerLogin(ActionEvent event) throws IOException {
-		userid = txtUserid.getText();
-		password = txtPW.getText();
-		connect(event);
-	}
+			// Get the username and password from the text fields
+			userid = txtUserid.getText();
+			password = txtPW.getText();
+			
+			// Connect to the app
+			connect(event);
+		}
 
 	/*
 	 * connect method to login to the system
@@ -82,34 +74,45 @@ public class LoginController extends AbstractController {
 				String loginQuery = "UPDATE users SET IsLogged = 1 WHERE id = " + myUser.getId();
 				msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
 				sendMsg(msg);
+				
 				switch (role) {
-				case "new_user":
-					start("UserPanel", "User Dashboard");
-					break;
-				case "customer":
-					String customerQuery = "SELECT status FROM customer WHERE id = " + myUser.getId();
-					msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
-					sendMsg(msg);
-					if(msg.getBool()) {
-						if(msg.getObj(0).equals("Not Approved"))
-							start("UserPanel", "User Dashboard");
-						else
-							start("CustomerPanel", "Customer Dashboard");
-					}
-					break;
-				case "service":
-					start("CustomerService", "Customer Service Dashboard");
-					break;
-				case "marketing_manager":
-					start("MarketingManagerPanel", "Marketing Manager Dashboard");
-					break;
-				case "marketing_department":
-					start("MarketingSalesDepartmentPanel", "Marketing Department Dashboard");
-				case "region_manager":
-					start("RegionManagerMainScreen", "Region Manager Dashboard");
-					break;
-				default:
-					break;
+					case "new_user":
+						start("UserPanel", "User Dashboard");
+						break;
+						
+					case "customer":
+						//Get the customer status
+						String customerQuery = "SELECT status FROM customer WHERE id = " + myUser.getId();
+						msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
+						sendMsg(msg);
+						
+						//Check if the customer has been approved
+						if(msg.getBool()) {
+							if(msg.getObj(0).equals("Not Approved"))
+								start("UserPanel", "User Dashboard");
+							else
+								start("CustomerPanel", "Customer Dashboard");
+						}
+						break;
+						
+					case "service":
+						start("CustomerService", "Customer Service Dashboard");
+						break;
+						
+					case "marketing_manager":
+						start("MarketingManagerPanel", "Marketing Manager Dashboard");
+						break;
+						
+					case "marketing_department":
+						start("MarketingSalesDepartmentPanel", "Marketing Department Dashboard");
+						break;
+						
+					case "region_manager":
+						start("RegionManagerMainScreen", "Region Manager Dashboard");
+						break;
+						
+					default:
+						break;
 				}
 			} else 
 				errMsgLbl.setText(userid + " is already logged in");
@@ -118,129 +121,38 @@ public class LoginController extends AbstractController {
 			errMsgLbl.setText("Wrong Details");
 	}
 	
+	/**
+	 * Connects to the app with the given ID.
+	 *
+	 * @param event the action event that triggered the method call
+	 * @throws IOException if an I/O error occurs while communicating with the app
+	 */
 	public void ConnectWithApp(ActionEvent event) throws IOException {
-		File file = new File("config.txt");
-	    boolean exists = file.exists();
-	    if(!exists) {
-	    	
-	    	
-	    	String username = "";
-	    	String password = "";
-	    	String config = "OL";
-	    	Pair<String, String> result = getLoginDetails();
-	    	if(result != null) {
-	    		username = result.getKey();
-	    	    password = result.getValue();
-	    	}
-	    	String configString = String.format("Configuration=%s\nUsername=%s\nPassword=%s", config, username, password);
-	    	RandomAccessFile raf = new RandomAccessFile(file, "rw");
-	    	raf.writeUTF(configString);
-	    	raf.close();
-	    	this.userid = username;
-	    	this.password = password;
-	    	connect(event);
-	    }
-	    else {
-	    	try {
-				Scanner scanner = new Scanner(file);
-				String user = "", password = "", config = "";
-				while (scanner.hasNextLine()) {
-			        String line = scanner.nextLine();
-			        if(line.contains("Configuration=")) {
-			        	String[] configLine = line.split("=");
-			        	config = configLine[1];
-			        }
-			        if (line.contains("Username=")) {
-			            String[] userLine = line.split("=");
-			            user = userLine[1];
-			        }
-			        if(line.contains("Password=")) {
-			        	String[] passwordLine = line.split("=");
-			        	password = passwordLine[1];
-			        }
-			    }
-				scanner.close();
-				if(!user.equals("") && !password.equals("")) {
-					this.userid = user;
-					this.password = password;
-					connect(event);
-				}
-				else {
-					Pair<String, String> result = getLoginDetails();
-			    	if(result != null) {
-			    		user = result.getKey();
-			    	    password = result.getValue();
-			    	}
-			    	String configString = String.format("Configuration=%s\nUsername=%s\nPassword=%s", config, user, password);
-			    	RandomAccessFile raf = new RandomAccessFile(file, "rw");
-			    	raf.writeUTF(configString);
-			    	raf.close();
-			    	this.userid = user;
-			    	this.password = password;
-			    	connect(event);
-				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+			// Prompt the user to enter their ID
+			String idString = JOptionPane.showInputDialog(null, "Please enter your ID:", "Login", JOptionPane.QUESTION_MESSAGE);
+			
+			// Parse the ID into an integer, or set it to 0 if the user cancelled the input dialog
+			int id = idString != null ? Integer.parseInt(idString) : 0;
+			
+			// Get the username and password for the given ID
+			String query = String.format("SELECT * FROM users WHERE id = %d", id);
+			msg = new Msg(Tasks.Login, Tasks.Select, query);
+			sendMsg(msg);
+			
+			// Check if the given ID is valid
+			if(!msg.getBool()) {
+				JOptionPane.showMessageDialog(null, "Invalid ID", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
 			}
-	    	
-	    }
-	}
+			
+			// Save the username and password
+			userid = msg.getObj(1);
+			password = msg.getObj(2);
+			
+			// Connect to the app
+			connect(event);
+		}
 
-
-	private Pair<String, String> getLoginDetails() {
-	    Dialog<Pair<String, String>> loginDialog = new Dialog<>();
-	    loginDialog.setTitle("Login");
-
-	    // Set the button types.
-	    ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
-	    loginDialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
-
-	    // Create the username and password labels and fields.
-	    GridPane grid = new GridPane();
-	    grid.setHgap(10);
-	    grid.setVgap(10);
-	    grid.setPadding(new Insets(20, 150, 10, 10));
-
-	    TextField username = new TextField();
-	    username.setPromptText("Username");
-	    PasswordField password = new PasswordField();
-	    password.setPromptText("Password");
-
-	    grid.add(new Label("Username:"), 0, 0);
-	    grid.add(username, 1, 0);
-	    grid.add(new Label("Password:"), 0, 1);
-	    grid.add(password, 1, 1);
-
-	    // Enable/Disable login button depending on whether a username was entered.
-	    Node loginButton = loginDialog.getDialogPane().lookupButton(loginButtonType);
-	    loginButton.setDisable(true);
-
-	    // Do some validation (using the Java 8 lambda syntax).
-	    username.textProperty().addListener((observable, oldValue, newValue) -> {
-	        loginButton.setDisable(newValue.trim().isEmpty());
-	    });
-
-	    loginDialog.getDialogPane().setContent(grid);
-
-	    // Request focus on the username field by default.
-	    Platform.runLater(() -> username.requestFocus());
-
-	    // Convert the result to a username-password-pair when the login button is clicked.
-	    loginDialog.setResultConverter(dialogButton -> {
-	        if (dialogButton == loginButtonType) {
-	            return new Pair<>(username.getText(), password.getText());
-	        }
-	        return null;
-	    });
-
-	    Optional<Pair<String, String>> result = loginDialog.showAndWait();
-
-	    if (result.isPresent()) {
-	        return result.get();
-	    } else {
-	        return null;
-	    }
-	}
 
 	@Override
 	public void back(MouseEvent event) {

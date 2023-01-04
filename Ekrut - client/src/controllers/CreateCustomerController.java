@@ -2,6 +2,8 @@ package controllers;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import Util.Msg;
 import Util.Tasks;
 import javafx.event.ActionEvent;
@@ -67,50 +69,62 @@ public class CreateCustomerController extends AbstractController{
     private TextField txtUser;
 	
     private int id;
-    
+    /**
+     * Gets the user information for the given username.
+     * Displays an error message if the user is not found or is not a new user.
+     */
     public void getUser() {
-    	String username = txtUser.getText();
-    	if(username.equals("")) {lblErr.setText("Please fill in a user"); return;}
-    	
-    	//Get the user ID of the user
-    	String query2 = String.format("SELECT * FROM users WHERE user = '%s'", username);
-    	msg = new Msg(Tasks.CreateCustomer, Tasks.Select, query2);
-    	sendMsg(msg);
-    	
-    	if(!msg.getBool()) {
-    		lblErr.setText(username + " is not a valid username.");
-    		return;
+    		cleanErrors();
+    		String username = txtUser.getText();
+    		if(username.equals("")) {
+    			lblErr.setText("Please fill in a user");
+    			return;
+    		}
+    		
+    		// Get the user ID of the user
+    		String query2 = String.format("SELECT * FROM users WHERE user = '%s'", username);
+    		msg = new Msg(Tasks.CreateCustomer, Tasks.Select, query2);
+    		sendMsg(msg);
+    		
+    		if(!msg.getBool()) {
+    			lblErr.setText(username + " is not a valid username.");
+    			return;
+    		}
+    		
+    		id = msg.getObj(0);
+    		if(!msg.getObj(3).equals("new_user")) {
+    			lblErr.setText(msg.getObj(1) + " is not a new user!");
+    			return;
+    		}
+    		else
+    			lblErr.setText("");
+    		
+    		if(msg.getObj(4) != null)
+    			txtName.setText(msg.getObj(4));
+    		if(msg.getObj(5) != null)
+    			txtPhone.setText(msg.getObj(5));
+    		if(msg.getObj(6) != null)
+    			txtAddress.setText(msg.getObj(6));
+    		if(msg.getObj(7) != null)
+    			txtEmail.setText(msg.getObj(7));
+    		txtUser.setDisable(true);
+    		btnCreate.setDisable(false);
     	}
-    	
-    	id = msg.getObj(0);
-    	if(!msg.getObj(3).equals("new_user")) {
-    		lblErr.setText(msg.getObj(1) + " is not a new user!");
-    		return;
-    	}
-    	else
-    		lblErr.setText("");
-    	
-    	if(msg.getObj(4) != null)
-    		txtName.setText(msg.getObj(4));
-    	if(msg.getObj(5) != null)
-    		txtPhone.setText(msg.getObj(5));
-    	if(msg.getObj(6) != null)
-    		txtAddress.setText(msg.getObj(6));
-    	if(msg.getObj(7) != null)
-    		txtEmail.setText(msg.getObj(7));
-    	txtUser.setDisable(true);
-    }
-    
+
+    /**
+     * Resets the form fields and enables the "Create" button.
+     */
     public void reset() {
-    	lblErr.setText("");
-    	txtUser.setText("");
-    	txtName.setText("");
-    	txtPhone.setText("");
-    	txtAddress.setText("");
-    	txtEmail.setText("");
-    	txtCC.setText("");
-    	txtUser.setDisable(false);
-    }
+    		lblErr.setText("");
+    		txtUser.setText("");
+    		txtName.setText("");
+    		txtPhone.setText("");
+    		txtAddress.setText("");
+    		txtEmail.setText("");
+    		txtCC.setText("");
+    		txtUser.setDisable(false);
+    		btnCreate.setDisable(true);
+    	}
     
     /**
      * Handles the creation of a new customer. Validates input and adds the customer to the database.
@@ -120,8 +134,14 @@ public class CreateCustomerController extends AbstractController{
     @FXML
     void customerCreate(ActionEvent event) {
     	cleanErrors();
+    	
+    	if(txtUser.getText().equals("")) {
+    		lblErr.setText("No user has been located.");
+    		return;
+    	}
+    	
     	boolean legit = true;
-
+    	
     	String name = txtName.getText();
     	if(name.equals("")) {errName.setText("Please fill in"); legit = false;}
     	
@@ -152,10 +172,13 @@ public class CreateCustomerController extends AbstractController{
     	msg = new Msg(Tasks.CreateCustomer, Tasks.CreateCustomer_Insert_Customer, query3);
     	sendMsg(msg);
     	
-    	if(msg.getInt() != 0)
+    	if(msg.getInt() != 0) {
     		lblErr.setText(txtUser.getText() + " has been added successfuly!");
-    	else
+    		JOptionPane.showMessageDialog(null, "A confirmation message has been sent to: " + phone + ", " + email, "Success!", 0);
+    		btnCreate.setDisable(true);
+    	} else
     		lblErr.setText("Something went wrong");
+
     }
     
     /**

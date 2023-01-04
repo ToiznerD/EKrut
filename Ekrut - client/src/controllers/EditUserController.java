@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -78,6 +79,9 @@ public class EditUserController extends AbstractController{
 
     @FXML
     private TextField txtUser;
+    
+    @FXML
+    private Label errLbl;
 
     @FXML
     private TableColumn<User, String> user_col;
@@ -90,11 +94,25 @@ public class EditUserController extends AbstractController{
 
     @FXML
     void loadUser(ActionEvent event) {
-    	int id = Integer.parseInt(txtID.getText());
+    	errLbl.setText("");
+    	
+    	String stringID = txtID.getText();
+    	if(stringID.equals("")) {
+    		errLbl.setText("Please enter ID");
+    		return;
+    	}
+    	
+    	int id = Integer.parseInt(stringID);
+    	
     	String query = "Select * FROM Users WHERE id = " + id;
     	msg = new Msg(Tasks.Select, query);
     	sendMsg(msg);
     	
+    	if(!msg.getBool()) {
+    		errLbl.setText(id + " is invalid");
+    		return;
+    	}
+    		
     	txtUser.setText(msg.getObj(1));
     	txtPassword.setText(msg.getObj(2));
     	txtRole.setText(msg.getObj(3));
@@ -102,29 +120,65 @@ public class EditUserController extends AbstractController{
     	txtPhone.setText(msg.getObj(5));
     	txtAddress.setText(msg.getObj(6));
     	txtEmail.setText(msg.getObj(7));
+    	
+    	txtID.setDisable(true);
+    	txtUser.setDisable(true);
+    	btnUpdate.setDisable(false);
     }
     
 
-	/**
-	 * Updates a user's data in the database based on the data in the text fields.
-	 *
-	 * @param event The ActionEvent that triggered this method.
-	 */
-    @FXML
+    /**
+     * Updates a user's data in the database based on the data in the text fields.
+     * Displays an error message if the update was unsuccessful.
+     *
+     * @param event The ActionEvent that triggered this method.
+     */
     void updateUser(ActionEvent event) {
-    	int id = Integer.parseInt(txtID.getText());
-    	String username = txtUser.getText();
-    	String password = txtPassword.getText();
-    	String role = txtRole.getText();
-    	String name = txtName.getText();
-    	String phone = txtPhone.getText();
-    	String address = txtAddress.getText();
-    	String email = txtEmail.getText();
-    	String query = String.format("UPDATE users SET user = '%s', password = '%s', role = '%s', name = '%s', phone = '%s', address = '%s', email = '%s' "
-    			+ "WHERE id = %d", username, password, role, name, phone, address, email, id);
-    	msg = new Msg(Tasks.Update, query);
-    	sendMsg(msg);
-    	initialize();
+    		// Get the user data from the text fields
+    		int id = Integer.parseInt(txtID.getText());
+    		String username = txtUser.getText();
+    		String password = txtPassword.getText();
+    		String role = txtRole.getText();
+    		String name = txtName.getText();
+    		String phone = txtPhone.getText();
+    		String address = txtAddress.getText();
+    		String email = txtEmail.getText();
+    		
+    		// Build the update query
+    		String query = String.format("UPDATE users SET user = '%s', password = '%s', role = '%s', name = '%s', phone = '%s', address = '%s', email = '%s' "
+    				+ "WHERE id = %d", username, password, role, name, phone, address, email, id);
+    		
+    		// Send the update request to the app
+    		msg = new Msg(Tasks.Update, query);
+    		sendMsg(msg);
+    		
+    		// Check if the update was successful
+    		if(msg.getInt() == 0) {
+    			errLbl.setText("Something went wrong");
+    			return;
+    		}
+    		
+    		// Reset the form fields and refresh the data
+    		reset();
+    		initialize();
+    	}
+
+    /**
+     * Resets the form fields and enables the "Update" button.
+     */
+    public void reset() {
+    	errLbl.setText("");
+    	txtID.setText("");
+    	txtUser.setText("");
+    	txtPassword.setText("");
+    	txtRole.setText("");
+    	txtName.setText("");
+    	txtPhone.setText("");
+    	txtAddress.setText("");
+    	txtEmail.setText("");
+    	txtUser.setDisable(false);
+    	txtID.setDisable(false);
+    	btnUpdate.setDisable(true);
     }
     
     @FXML
