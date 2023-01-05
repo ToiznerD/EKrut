@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="105.0" prefWidth="508.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="img" fitHeight="94.0" fitWidth="59.0" layoutX="22.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+      <Separator layoutX="14.0" layoutY="108.0" prefHeight="3.0" prefWidth="479.0" />
+      <Button fx:id="btnAddToCart" alignment="BOTTOM_CENTER" layoutX="369.0" layoutY="42.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="130.0" style="-fx-border-color: #000000; -fx-border-width: 2;" text="Add to cart">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/add%20to%20cart%20icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text fx:id="lblName" fill="#cf4c0a" layoutX="106.0" layoutY="20.0" stroke="#cf4c0a" strokeType="INSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="247.05859375">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Separator layoutX="105.0" layoutY="8.0" orientation="VERTICAL" prefHeight="94.0" prefWidth="2.0" />
+      <Separator layoutX="352.0" layoutY="7.0" orientation="VERTICAL" prefHeight="94.0" prefWidth="2.0" />
+      <Text fx:id="lblPrice" layoutX="419.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="43.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="lblID" fill="#050000" layoutX="110.0" layoutY="66.0" lineSpacing="2.0" stroke="#cf4c0a" strokeType="INSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="240.6585693359375">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
