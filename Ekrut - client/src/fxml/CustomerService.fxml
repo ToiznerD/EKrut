@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="271.0" fitWidth="266.0" layoutX="348.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/EKrut%20logo.png" />
+            <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
       <Button alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="14.0" layoutY="336.0" mnemonicParsing="false" onAction="#logout" prefHeight="50.0" prefWidth="126.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Log out">
@@ -29,7 +29,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="74.0" layoutY="38.0" text="Welcome back">
+      <Label fx:id="welcomeLbl" layoutX="74.0" layoutY="38.0" text="Welcome back">
          <font>
             <Font name="System Bold Italic" size="36.0" />
          </font>
@@ -39,9 +39,9 @@
             <Image url="@../../images/min-max-close.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnCreate" layoutX="106.0" layoutY="187.0" mnemonicParsing="false" onAction="#openCreateMember" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Create New Member">
+      <Button fx:id="btnCreate" layoutX="106.0" layoutY="187.0" mnemonicParsing="false" onAction="#openCreateMember" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Create New Customer">
          <font>
-            <Font name="System Bold Italic" size="16.0" />
+            <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
    </children>
