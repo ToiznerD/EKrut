@@ -34,5 +34,10 @@
             <Image url="@../../images/min-max-close.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="271.0" fitWidth="266.0" layoutX="358.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/EKrutLogo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

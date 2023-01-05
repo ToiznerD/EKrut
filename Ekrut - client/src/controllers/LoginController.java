@@ -70,44 +70,53 @@ public class LoginController extends AbstractController {
 			if (!myUser.isLogged()) {
 				String role = myUser.getRole();
 				
-				//Update isLogged
-				String loginQuery = "UPDATE users SET IsLogged = 1 WHERE id = " + myUser.getId();
-				msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
-				sendMsg(msg);
 				
 				switch (role) {
 					case "new_user":
+						login();
 						start("UserPanel", "User Dashboard");
 						break;
 						
 					case "customer":
 						//Get the customer status
-						String customerQuery = "SELECT status FROM customer WHERE id = " + myUser.getId();
+						String customerQuery = "SELECT status, subscriber FROM customer WHERE id = " + myUser.getId();
 						msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
 						sendMsg(msg);
 						
 						//Check if the customer has been approved
+						//Validates that the customer is a subscriber
 						if(msg.getBool()) {
-							if(msg.getObj(0).equals("Not Approved"))
+							if(msg.getObj(0).equals("Not Approved")) {
+								login();
 								start("UserPanel", "User Dashboard");
-							else
-								start("CustomerPanel", "Customer Dashboard");
+								return;
+							}
+							else if((int)msg.getObj(1) == 0 && config.equals("OL")) {
+								errMsgLbl.setText("You need to be a subscriber to login here");
+								return;
+							}
+							login();
+							start("CustomerPanel", "Customer Dashboard");
 						}
 						break;
 						
 					case "service":
+						login();
 						start("CustomerService", "Customer Service Dashboard");
 						break;
 						
 					case "marketing_manager":
+						login();
 						start("MarketingManagerPanel", "Marketing Manager Dashboard");
 						break;
 						
 					case "marketing_department":
+						login();
 						start("MarketingSalesDepartmentPanel", "Marketing Department Dashboard");
 						break;
 						
 					case "region_manager":
+						login();
 						start("RegionManagerMainScreen", "Region Manager Dashboard");
 						break;
 						
@@ -119,6 +128,13 @@ public class LoginController extends AbstractController {
 		}
 		else 
 			errMsgLbl.setText("Wrong Details");
+	}
+
+	private void login() {
+		//Update isLogged
+		String loginQuery = "UPDATE users SET IsLogged = 1 WHERE id = " + myUser.getId();
+		msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
+		sendMsg(msg);
 	}
 	
 	/**

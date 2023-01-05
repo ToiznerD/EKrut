@@ -34,5 +34,10 @@
             <Font name="Tahoma Bold" size="15.0" />
          </font>
       </Label>
+      <ImageView fitHeight="183.0" fitWidth="214.0" layoutX="396.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/EKrutLogo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

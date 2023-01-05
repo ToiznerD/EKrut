@@ -133,7 +133,7 @@ public class EditUserController extends AbstractController{
      *
      * @param event The ActionEvent that triggered this method.
      */
-    void updateUser(ActionEvent event) {
+    public void updateUser(ActionEvent event) {
     		// Get the user data from the text fields
     		int id = Integer.parseInt(txtID.getText());
     		String username = txtUser.getText();

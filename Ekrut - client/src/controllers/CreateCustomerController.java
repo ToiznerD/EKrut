@@ -69,6 +69,9 @@ public class CreateCustomerController extends AbstractController{
     private TextField txtUser;
 	
     private int id;
+    
+    private String role;
+    
     /**
      * Gets the user information for the given username.
      * Displays an error message if the user is not found or is not a new user.
@@ -92,12 +95,14 @@ public class CreateCustomerController extends AbstractController{
     		}
     		
     		id = msg.getObj(0);
-    		if(!msg.getObj(3).equals("new_user")) {
+    		role = msg.getObj(3).equals("new_user") ? "customer" : msg.getObj(3);
+    		
+    		/*if(!msg.getObj(3).equals("new_user")) {
     			lblErr.setText(msg.getObj(1) + " is not a new user!");
     			return;
     		}
     		else
-    			lblErr.setText("");
+    			lblErr.setText("");*/
     		
     		if(msg.getObj(4) != null)
     			txtName.setText(msg.getObj(4));
@@ -161,7 +166,7 @@ public class CreateCustomerController extends AbstractController{
     		return;
     	}
     	//Update user details
-    	String query = String.format("UPDATE users SET role='customer', name='%s', phone = '%s', address='%s', email='%s', isLogged=0 WHERE id=%d", name, phone, address, email, id);
+    	String query = String.format("UPDATE users SET role='%s', name='%s', phone = '%s', address='%s', email='%s', isLogged=0 WHERE id=%d", role, name, phone, address, email, id);
     	msg = new Msg(Tasks.CreateCustomer, Tasks.CreateCustomer_Update_User, query);
     	sendMsg(msg);
     	if(msg.getInt() == 0) {lblErr.setText("Something went wrong"); return;}
