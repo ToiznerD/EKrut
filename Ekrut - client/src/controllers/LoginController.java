@@ -69,8 +69,6 @@ public class LoginController extends AbstractController {
 		if(myUser != null) {
 			if (!myUser.isLogged()) {
 				String role = myUser.getRole();
-				
-				
 				switch (role) {
 					case "new_user":
 						login();
@@ -110,9 +108,9 @@ public class LoginController extends AbstractController {
 						start("MarketingManagerPanel", "Marketing Manager Dashboard");
 						break;
 						
-					case "marketing_department":
+					case "marketing_employee":
 						login();
-						start("MarketingSalesDepartmentPanel", "Marketing Department Dashboard");
+						start("MarketingEmployeePanel", "Marketing Department Dashboard");
 						break;
 						
 					case "region_manager":
