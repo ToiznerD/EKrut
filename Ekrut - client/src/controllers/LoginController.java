@@ -67,11 +67,14 @@ public class LoginController extends AbstractController {
 				case "service":
 					start("CustomerService", "Customer Service Dashboard");
 					break;
-				case "marketmanager":
-					start("MarketingManagerPanel", "Market manager dashboard");
+				case "market_manager":
+					start("MarketingManagerPanel", "Market manager Dashboard");
 					break;
 				case "region_manager":
 					start("RegionManagerMainScreen", "Region Manager Dashboard");
+					break;
+				case "marketing_employee":
+					start("MarketingEmployeePanel", "Marketing Employee Dashboard");
 					break;
 				default:
 					break;

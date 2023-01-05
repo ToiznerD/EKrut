@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="271.0" fitWidth="266.0" layoutX="348.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/EKrut%20logo.png" />
+            <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
       <Button fx:id="btnLogout" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="14.0" layoutY="336.0" mnemonicParsing="false" onAction="#logout" prefHeight="50.0" prefWidth="126.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Log out">
@@ -24,12 +24,12 @@
             <Image url="@../../images/logout%20icon.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnInitiate" layoutX="107.0" layoutY="136.0" mnemonicParsing="false" onAction="#InitiateSaleButton" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Initiate new sale">
+      <Button fx:id="btnInitiate" layoutX="80.0" layoutY="127.0" mnemonicParsing="false" onAction="#InitiateSaleButton" prefHeight="54.0" prefWidth="245.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Initiate new sale">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Label layoutX="74.0" layoutY="38.0" text="Welcome back">
+      <Label fx:id="welcomeLbl" layoutX="74.0" layoutY="38.0" text="Welcome back">
          <font>
             <Font name="System Bold Italic" size="36.0" />
          </font>
@@ -39,5 +39,10 @@
             <Image url="@../../images/min-max-close.png" />
          </image>
       </ImageView>
+      <Button fx:id="btnCreateNewSaleTemplate" layoutX="80.0" layoutY="200.0" mnemonicParsing="false" onAction="#CreateSaleTemplateButton" prefHeight="54.0" prefWidth="245.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Create new sale template">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

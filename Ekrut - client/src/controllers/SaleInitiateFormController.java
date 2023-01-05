@@ -1,18 +1,14 @@
 package controllers;
 
 import java.time.LocalDate;
-import java.util.ResourceBundle;
 
 import Util.Msg;
-import Entities.Region;
-import Entities.SaleTemplate;
 import Util.Tasks;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
@@ -21,16 +17,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class SaleInitiateFormController extends AbstractController implements Initializable {
+public class SaleInitiateFormController extends AbstractController {
 
     @FXML
     private Button btnInitiate;
 
     @FXML
-    private ComboBox<String> lstSaleTemplate;
+    private ComboBox<StringBuilder> lstSaleTemplate;
     
     @FXML
-    private ComboBox<String> lstRegion;
+    private ComboBox<StringBuilder> lstRegion;
     
     @FXML
     private DatePicker StartingDate;
@@ -69,35 +65,24 @@ public class SaleInitiateFormController extends AbstractController implements In
      * Initializes the form by setting up the combo boxes for sale templates and regions,
      * and configuring the date picker fields to only allow selecting dates that are not in the past.
      * 
-     * @param url the URL of the FXML file that defined the form
-     * @param rb the resource bundle to use for localizing the form
      */
-    @Override
-    public void initialize(java.net.URL url, ResourceBundle rb) {
+    @FXML
+    public void initialize() {
     	
     	//Initializing templates combo-box
-    	String templatesQuery = "SELECT * FROM sale_template";
+    	String templatesQuery = "SELECT templateName FROM sale_template";
     	msg = new Msg(Tasks.Select, templatesQuery);
     	sendMsg(msg);
-    	ObservableList<SaleTemplate> saleTemplates = FXCollections.observableArrayList(msg.getArr(SaleTemplate.class));
-    	ObservableList<String> saleTemplatesList = FXCollections.observableArrayList();
-    	for(SaleTemplate s : saleTemplates) {
-    		saleTemplatesList.add(s.getName());
-    	}
+    	ObservableList<StringBuilder> saleTemplatesList = FXCollections.observableArrayList(msg.getArr(StringBuilder.class));
     	lstSaleTemplate.setItems(saleTemplatesList);
     	
-    	
     	//Initializing regions combo-box
-    	String regionsQuery = "SELECT * FROM regions";
+    	String regionsQuery = "SELECT name FROM regions";
     	msg = new Msg(Tasks.Select, regionsQuery);
     	sendMsg(msg);
-    	ObservableList<Region> regions = FXCollections.observableArrayList(msg.getArr(Region.class));
-    	ObservableList<String> regionsList = FXCollections.observableArrayList();
-    	for(Region r : regions) {
-    		regionsList.add(r.getName());
-    	}
-    	lstRegion.setItems(regionsList);
     	
+    	ObservableList<StringBuilder> regionsList = FXCollections.observableArrayList(msg.getArr(StringBuilder.class));
+    	lstRegion.setItems(regionsList);
     	
     	//Disabling past dates for StartingDate
     	StartingDate.setDayCellFactory(picker -> new DateCell() {
@@ -240,15 +225,6 @@ public class SaleInitiateFormController extends AbstractController implements In
     	return true;
     }
     
-    @Override
-    public void back(MouseEvent event) {
-    	try {
-			start("MarketingManagerPanel","MarketManagerPanel");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
-    
     /**
      * Method to initiate a sale.
      * 
@@ -290,13 +266,17 @@ public class SaleInitiateFormController extends AbstractController implements In
 		    	msg = new Msg(Tasks.Select, query);
 		    	sendMsg(msg);
 		    	int templateId = msg.getObj(0);
+		    	
+		    	//Getting rid
 		    	query = "SELECT * FROM regions WHERE name = '" + lstRegion.getValue() + "'";
 		    	msg = new Msg(Tasks.Select, query);
 		    	sendMsg(msg);
 		    	int rid = msg.getObj(0);
-		    	query = "INSERT into sale_initiate (templateId, saleName, rid, startDate, endDate, startHour, endHour, active) "
+		    	
+		    	//Insert sale to database
+		    	query = "INSERT into sale_initiate (templateId, saleName, rid, startDate, endDate, startHour, endHour) "
 		    			+ "VALUES (" + templateId + " , '" + txtSaleName.getText() + "' , " + rid + " , '" + StartingDate.getValue() + 
-		    			"' , '" + EndingDate.getValue() + "' , '" + lstStartingHours.getValue() + "' , '" + lstEndingHours.getValue() + "' , 0)";
+		    			"' , '" + EndingDate.getValue() + "' , '" + lstStartingHours.getValue() + "' , '" + lstEndingHours.getValue() + "')";
 		    	msg = new Msg(Tasks.Insert, query);
 		    	sendMsg(msg);
 		    	lblInitiateMsg.setText("Sale initiate succeeded");
@@ -306,4 +286,35 @@ public class SaleInitiateFormController extends AbstractController implements In
     		lblInitiateMsg.setText("Sale initiate failed");
     	}
     }
+    
+    
+    /**
+     * Handles the mouse event of the back button.
+     * 
+     * @param event the mouse event that triggered this method
+     */
+    @Override
+    public void back(MouseEvent event) {
+    	try {
+			start("MarketingManagerPanel","Marketing Manager Panel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
