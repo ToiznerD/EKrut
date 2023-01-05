@@ -1,9 +1,10 @@
 package controllers;
 
 import java.io.IOException;
+
+import Entities.User;
 import Util.Msg;
 import Util.Tasks;
-import Entities.User;
 import client.ClientBackEnd;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +21,8 @@ public abstract class AbstractController {
 	public static Object monitor = new Object();
 	public static Msg msg;
 	public static User myUser;
-
+	public static String config;
+	public static int store;
 	public void start(String fxml, String title) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
 		Parent root = load.load();

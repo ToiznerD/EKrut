@@ -2,7 +2,7 @@ package Util;
 
 public enum Tasks {
 	Login, Reports, Order, RequiredStock, Disconnect,Update,Select, Logout, Insert, CreateCustomer,
-	CreateCustomer_Insert_Customer, CreateCustomer_Insert_User, getLocations, getStoreProducts, updateProdMinLimit,
-	getOrderReports, getRegion, DeliveryOrders
+	CreateCustomer_Insert_Customer, getLocations, getStoreProducts, updateProdMinLimit,
+	getOrderReports, getRegion, DeliveryOrders, CustomerStatus, CreateCustomer_Update_User
 
 }

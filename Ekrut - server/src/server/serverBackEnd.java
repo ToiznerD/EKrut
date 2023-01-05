@@ -46,15 +46,13 @@ public class serverBackEnd extends AbstractServer {
 	@Override
 	protected void clientConnected(ConnectionToClient client) {
 		sc.addConnected(client.getInetAddress());
-		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is Connected to server. ("
-				+LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+")");
+		sc.appendConsole(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+": " + "Client " + client.getInetAddress().getHostAddress() + " is Connected to server. ");
 	}
 
 	@Override
 	protected void clientDisconnected(ConnectionToClient client) {
 		sc.removeConnected(client.getInetAddress());
-		sc.appendConsole("Client " + client.getInetAddress().getHostAddress() + " is disconnected from server. ("
-				+LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+")");
+		sc.appendConsole(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+": " + "Client " + client.getInetAddress().getHostAddress() + " is Disconnected from the server. ");
 		try {
 			client.close();
 		} catch (IOException e) {
