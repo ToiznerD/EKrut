@@ -8,6 +8,7 @@ import Util.Msg;
 import Util.Tasks;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -178,8 +179,15 @@ public class CreateCustomerController extends AbstractController{
     	sendMsg(msg);
     	
     	if(msg.getInt() != 0) {
-    		lblErr.setText(txtUser.getText() + " has been added successfuly!");
-    		JOptionPane.showMessageDialog(null, "A confirmation message has been sent to: " + phone + ", " + email, "Success!", 0);
+			lblErr.setText(txtUser.getText() + " has been added successfuly!");
+			
+			//Email and SMS SIMULATION
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+	        alert.setTitle("Success");
+	        alert.setHeaderText("Customer successfuly registered");
+	        alert.setContentText("A confirmation with the details has been sent to: " + phone + ", " + email);
+	        alert.showAndWait();
+	        
     		btnCreate.setDisable(true);
     	} else
     		lblErr.setText("Something went wrong");

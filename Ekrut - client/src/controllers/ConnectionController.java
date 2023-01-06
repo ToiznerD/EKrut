@@ -3,15 +3,14 @@ package controllers;
 import java.io.IOException;
 import java.util.Optional;
 
-import javax.swing.JOptionPane;
-
 import Util.Msg;
 import Util.Tasks;
 import client.ClientBackEnd;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -45,7 +44,7 @@ public class ConnectionController extends AbstractController {
 			try {
 				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
 				
-				// Show a dialog box with two options: "OL" and "EK"
+				/*// Show a dialog box with two options: "OL" and "EK"
 			    String[] options = {"OL", "EK"};
 			    int choice = JOptionPane.showOptionDialog(null, "Please choose OL or EK", "Configuration Choice", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
@@ -68,7 +67,53 @@ public class ConnectionController extends AbstractController {
 						//ClientBackEnd.getInstance().closeConnection();
 						return;
 					}
-			    }
+			    }*/
+				
+				ChoiceDialog<String> dialog = new ChoiceDialog<>("EK", "EK", "OL");
+		        dialog.setTitle("Choice Dialog");
+		        dialog.setHeaderText("Choose between EK and OL");
+		        dialog.setContentText("Your choice:");
+
+		        // show the dialog and get the user's response
+		        Optional<String> result = dialog.showAndWait();
+
+		        // save the user's choice
+		        if (result.isPresent()) {
+		            config = result.get();
+		        }
+		        if(config.equals("EK")) {
+			     // Ask for Store ID
+				      String storeString = null;
+				      while(storeString == null || storeString.equals("")) {
+				    	// create the text input dialog
+				          TextInputDialog dialog2 = new TextInputDialog();
+				          dialog2.setTitle("Text Input Dialog");
+				          dialog2.setHeaderText("Enter a store id");
+				          dialog2.setContentText("Store id:");
+	
+				          // show the dialog and get the user's response
+				          Optional<String> result2 = dialog2.showAndWait();
+	
+				          // save the user's input
+				          storeString = "";
+				          if (result2.isPresent()) {
+				        	  storeString = result2.get();
+				          }
+				      }
+				      String query = "SELECT * FROM store WHERE sid =" + Integer.parseInt(storeString);
+				      msg = new Msg(Tasks.Select, query);
+				      sendMsg(msg);
+				      if(!msg.getBool()) {
+					    	  Alert alert = new Alert(Alert.AlertType.ERROR);
+					          alert.setTitle("Error Dialog");
+					          alert.setHeaderText("Invalid store id");
+					          alert.setContentText("The store id you entered is not valid. Please try again.");
+		
+					          // show the error dialog
+					          alert.showAndWait();
+							return;
+						}
+		        }
 				
 				start("LoginForm", "Login");
 				//start("ChooseReportScreen", "Choose Report");
