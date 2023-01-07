@@ -2,14 +2,13 @@ package controllers;
 
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
 import Util.Msg;
 import Util.Tasks;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -68,6 +67,9 @@ public class CreateCustomerController extends AbstractController{
 
     @FXML
     private TextField txtUser;
+    
+    @FXML
+    private CheckBox chkboxSub;
 	
     private int id;
     
@@ -128,6 +130,7 @@ public class CreateCustomerController extends AbstractController{
     		txtAddress.setText("");
     		txtEmail.setText("");
     		txtCC.setText("");
+    		chkboxSub.setSelected(false);
     		txtUser.setDisable(false);
     		btnCreate.setDisable(true);
     	}
@@ -163,6 +166,8 @@ public class CreateCustomerController extends AbstractController{
     	String creditcard = txtCC.getText();
     	if(creditcard.equals("")) {errCC.setText("Please fill in"); legit = false;}
     	
+    	boolean subscriber = chkboxSub.isSelected();
+    	
     	if(!legit) {
     		return;
     	}
@@ -174,7 +179,7 @@ public class CreateCustomerController extends AbstractController{
 
     	
     	//Add customer to customer table
-    	String query3 = String.format("INSERT INTO customer (id, status, credit_card) VALUES (%d, '%s', '%s')", id, "Not Approved", creditcard);
+    	String query3 = String.format("INSERT INTO customer (id, status, credit_card, subscriber, first_order) VALUES (%d, '%s', '%s', %s, %s)", id, "Not Approved", creditcard, subscriber, subscriber);
     	msg = new Msg(Tasks.CreateCustomer, Tasks.CreateCustomer_Insert_Customer, query3);
     	sendMsg(msg);
     	
