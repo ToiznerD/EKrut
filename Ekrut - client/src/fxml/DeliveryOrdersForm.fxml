@@ -10,55 +10,54 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="938.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DeliveryOrdersController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="976.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DeliveryOrdersController">
    <children>
-      <ImageView fitHeight="200.0" fitWidth="216.0" layoutX="743.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="200.0" fitWidth="216.0" layoutX="786.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/EKrutLogo.png" />
-         </image>
-      </ImageView>
-      <TableView fx:id="ordersTable" layoutX="21.0" layoutY="73.0" prefHeight="419.0" prefWidth="754.0">
+         </image></ImageView>
+      <TableView fx:id="ordersTable" layoutX="24.0" layoutY="90.0" prefHeight="410.0" prefWidth="788.0">
         <columns>
             <TableColumn fx:id="idCell" prefWidth="35.999999046325684" resizable="false" text="ID" />
-            <TableColumn fx:id="nameCell" prefWidth="144.80002212524414" resizable="false" text="Name" />
-            <TableColumn fx:id="addressCell" prefWidth="213.6000518798828" resizable="false" text="Address" />
-            <TableColumn fx:id="phoneCell" prefWidth="116.79998779296875" resizable="false" text="Phone" />
-          <TableColumn fx:id="dateCell" prefWidth="79.20001220703125" resizable="false" text="Date" />
-            <TableColumn fx:id="timeCell" prefWidth="71.20001220703125" resizable="false" text="Time" />
-            <TableColumn fx:id="statusCell" prefWidth="90.4000244140625" resizable="false" text="Status" />
+            <TableColumn fx:id="nameCell" prefWidth="131.19997787475586" resizable="false" text="Name" />
+            <TableColumn fx:id="addressCell" prefWidth="168.0000762939453" resizable="false" text="Address" />
+            <TableColumn fx:id="phoneCell" prefWidth="103.20001220703125" resizable="false" text="Phone" />
+          <TableColumn fx:id="dateAndTimeCell" prefWidth="117.60009765625" resizable="false" text="Purchase time" />
+            <TableColumn fx:id="statusCell" prefWidth="96.79998779296875" text="Status" />
+            <TableColumn fx:id="deliveryCell" prefWidth="152.00006103515625" text="Delivery time" />
         </columns>
       </TableView>
-      <ImageView fx:id="backBtn" fitHeight="54.0" fitWidth="132.0" layoutX="18.0" layoutY="522.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backBtn" fitHeight="54.0" fitWidth="132.0" layoutX="24.0" layoutY="522.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/back%20icon.png" />
          </image>
       </ImageView>
-      <Button fx:id="approveBtn" layoutX="414.0" layoutY="523.0" mnemonicParsing="false" onMouseClicked="#approveDelivery" prefHeight="42.0" prefWidth="178.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve delivery">
+      <Button fx:id="approveBtn" layoutX="420.0" layoutY="523.0" mnemonicParsing="false" onMouseClicked="#approveDelivery" prefHeight="42.0" prefWidth="178.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve delivery">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="201.0" layoutY="14.0" text="Delivery orders" textFill="#cf4c0a">
+      <Label layoutX="247.0" layoutY="14.0" prefHeight="66.0" prefWidth="386.0" text="Delivery orders" textFill="#cf4c0a">
          <font>
-            <Font name="System Bold Italic" size="36.0" />
+            <Font name="System Bold Italic" size="44.0" />
          </font>
       </Label>
-      <ImageView fx:id="refreshBtn" fitHeight="84.0" fitWidth="76.0" layoutX="795.0" layoutY="228.0" onMouseClicked="#initialize" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="refreshBtn" fitHeight="84.0" fitWidth="76.0" layoutX="834.0" layoutY="253.0" onMouseClicked="#initialize" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/refresh.png" />
          </image>
       </ImageView>
-      <Label layoutX="182.0" layoutY="531.0" text="Enter Order ID: ">
+      <Label layoutX="188.0" layoutY="531.0" text="Enter Order ID: ">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="OrderIdLbl" layoutX="326.0" layoutY="527.0" prefHeight="35.0" prefWidth="76.0">
+      <TextField fx:id="OrderIdLbl" layoutX="332.0" layoutY="527.0" prefHeight="35.0" prefWidth="76.0">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label fx:id="errorLbl" layoutX="605.0" layoutY="521.0" prefHeight="47.0" prefWidth="321.0" textFill="RED">
+      <Label fx:id="errorLbl" layoutX="611.0" layoutY="521.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="47.0" prefWidth="321.0" textFill="RED">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

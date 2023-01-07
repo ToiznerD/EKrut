@@ -1,35 +1,40 @@
 package Entities;
+
 import java.io.Serializable;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
 import javafx.util.converter.LocalTimeStringConverter;
 
-public class TableOrders implements Serializable{
+public class TableOrders implements Serializable {
 
 	private static final long serialVersionUID = 2L;
 	private int OrderID;
-	private String RecieverName, RecieverAddress, RecieverPhone,ShippingDate, ShippingTime, Status;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
-	private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
-	
-	public TableOrders(int OrderID,String RecieverName, String RecieverAddress,
-				String RecieverPhone, Date ShippingDate, Time ShippingTime, String Status) {
+	private String RecieverName, RecieverAddress, RecieverPhone, Status;
+	private Date OrderDate, EstimatedDate;
+	private Time OrderTime, EstimatedTime;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+	public TableOrders(int OrderID, String RecieverName, String RecieverAddress, String RecieverPhone, Date OrderDate,
+			Time OrderTime, String Status, Date EstimatedDate, Time EstimatedTime) {
 		this.OrderID = OrderID;
 		this.RecieverName = RecieverName;
 		this.RecieverAddress = RecieverAddress;
 		this.RecieverPhone = RecieverPhone;
-		this.ShippingDate = dateFormat.format(ShippingDate);
-		this.ShippingTime = timeFormat.format(ShippingTime);
+		this.OrderDate = OrderDate;
+		this.OrderTime = OrderTime;
 		this.Status = Status;
+		this.EstimatedDate = EstimatedDate;
+		this.EstimatedTime = EstimatedTime;
 	}
 
-	
 	public int getOrderID() {
 		return OrderID;
 	}
@@ -46,17 +51,32 @@ public class TableOrders implements Serializable{
 		return RecieverPhone;
 	}
 
-	public String getShippingDate() {
-		return ShippingDate;
+	public Date getOrderDate() {
+		return OrderDate;
 	}
 
-	public String getShippingTime() {
-		return ShippingTime;
+	public Time getOrderTime() {
+		return OrderTime;
 	}
-	
+
 	public String getStatus() {
 		return Status;
 	}
-	
-	
+
+	public Date getEstimatedDate() {
+		return EstimatedDate;
+	}
+
+	public Time getEstimatedTime() {
+		return EstimatedTime;
+	}
+
+	public String getOrderDateAndTime() {
+		return dateFormat.format(OrderDate) + ", " + timeFormat.format(OrderTime);
+	}
+
+	public String getEstimatedDelivery() {
+		return EstimatedDate == null ? "Need approval" : dateFormat.format(EstimatedDate) + ", " + timeFormat.format(EstimatedTime);
+	}
+
 }

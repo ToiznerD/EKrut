@@ -2,10 +2,13 @@ package controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import Util.Msg;
 import Util.Tasks;
+import Entities.TableOrders;
 import Entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +23,7 @@ import javafx.scene.input.MouseEvent;
  * Login controller class inheritting from AbstractController
  * This class is responsible to control the Login page
  */
-public class LoginController extends AbstractController {
+public class LoginController extends AbstractController implements Runnable {
 
 	@FXML
 	private Button btnLogin;
@@ -50,7 +53,6 @@ public class LoginController extends AbstractController {
 		msg = new Msg(Tasks.Login, Tasks.Select, query);
 		sendMsg(msg);
 		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
-		
 		if(myUser != null) {
 			if (!myUser.isLogged()) {
 				String role = myUser.getRole();
@@ -86,6 +88,8 @@ public class LoginController extends AbstractController {
 		else {
 			errMsgLbl.setText("Wrong Details");
 		}
+		if(myUser.getRole().equals("customer"))
+			new Thread(new LoginController()).start();
 	}
 	
 	public void ConnectWithApp(ActionEvent event) {
@@ -110,12 +114,51 @@ public class LoginController extends AbstractController {
 	    	    // OL was chosen
 	    		System.out.println("OL");
 	    	}
-	    }
+	    }	
 	}
 
+
+	public HashMap<Integer, String> getOrdersStatus(){
+		msg = new Msg(Tasks.DeliveryOrders,
+				   "select o.oid, u.name, o.shipping_address, u.phone, o.ord_date, o.ord_time, o.ord_status\r\n"
+				+ "	from users u,orders o\r\n"
+				+ "	where o.cid=u.id and o.cid="+myUser.getId()+";");
+		sendMsg(msg);
+		HashMap<Integer, String> clientordersMap = new HashMap<>();
+		for (TableOrders order : msg.getArr(TableOrders.class)) {
+			if( order.getStatus().equals("completed"))
+				continue;
+			clientordersMap.put(order.getOrderID(), order.getStatus());
+		}
+		return clientordersMap;
+	}
+	
+	
 	@Override
 	public void back(MouseEvent event) {
 		//Not implemented
+	}
+
+	@Override
+	public void run() {
+		HashMap<Integer, String> clientorders = getOrdersStatus();
+        try {
+            while(true) {
+            	System.out.println(">>");
+            	HashMap<Integer,String> temp = getOrdersStatus();
+            	for(int i=0;i<clientorders.size();i++) {
+            		if(!clientorders.get(Integer.valueOf(i)).equals(temp.get(Integer.valueOf(i)))) {
+            			System.out.println("YES");
+            			break;
+            		}
+            	}
+                Thread.sleep(10000);
+            }
+
+        } catch (InterruptedException e) {
+            System.out.println(" interrupted");
+        }
+		
 	}
 	
 }
