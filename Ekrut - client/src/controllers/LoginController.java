@@ -2,7 +2,9 @@ package controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -10,6 +12,7 @@ import Util.Msg;
 import Util.Tasks;
 import Entities.TableOrders;
 import Entities.User;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -23,14 +26,14 @@ import javafx.scene.input.MouseEvent;
  * Login controller class inheritting from AbstractController
  * This class is responsible to control the Login page
  */
-public class LoginController extends AbstractController implements Runnable {
+public class LoginController extends AbstractController {
 
 	@FXML
 	private Button btnLogin;
 
 	@FXML
 	private TextField txtPW;
-
+	
 	@FXML
 	private TextField txtUserid;
 
@@ -88,8 +91,8 @@ public class LoginController extends AbstractController implements Runnable {
 		else {
 			errMsgLbl.setText("Wrong Details");
 		}
-		if(myUser.getRole().equals("customer"))
-			new Thread(new LoginController()).start();
+		if(myUser.getRole().equals("customer")) //erik
+			waitForAlert();
 	}
 	
 	public void ConnectWithApp(ActionEvent event) {
@@ -118,17 +121,18 @@ public class LoginController extends AbstractController implements Runnable {
 	}
 
 
-	public HashMap<Integer, String> getOrdersStatus(){
+	public HashMap<Integer,  List<String>> getOrdersStatus(){ //erik
 		msg = new Msg(Tasks.DeliveryOrders,
-				   "select o.oid, u.name, o.shipping_address, u.phone, o.ord_date, o.ord_time, o.ord_status\r\n"
-				+ "	from users u,orders o\r\n"
-				+ "	where o.cid=u.id and o.cid="+myUser.getId()+";");
+				"select o.oid, u.name, o.shipping_address, u.phone, o.ord_date,"
+						+ " o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
+						+ "	from users u,orders o,deliveries d\r\n"
+						+ "	where o.cid=u.id and o.oid=d.oid and o.method=\"delivery\" and o.cid="+myUser.getId());
 		sendMsg(msg);
-		HashMap<Integer, String> clientordersMap = new HashMap<>();
+		HashMap<Integer, List<String>> clientordersMap = new HashMap<>();
 		for (TableOrders order : msg.getArr(TableOrders.class)) {
 			if( order.getStatus().equals("completed"))
 				continue;
-			clientordersMap.put(order.getOrderID(), order.getStatus());
+			clientordersMap.put(order.getOrderID(),Arrays.asList(order.getStatus(),order.getEstimatedDelivery()));
 		}
 		return clientordersMap;
 	}
@@ -138,27 +142,45 @@ public class LoginController extends AbstractController implements Runnable {
 	public void back(MouseEvent event) {
 		//Not implemented
 	}
+	
+	public void waitForAlert() { //erik
+		 Runnable task = new Runnable() {
+			 @Override
+			 public void run() {
+					HashMap<Integer, List<String>> clientorders = getOrdersStatus();
+			        try {
+			            while(true) {
+			            	System.out.println(">>");
+			            	HashMap<Integer, List<String>> temp = getOrdersStatus();
+			            	for(int i : clientorders.keySet()) {
+				            	if (!temp.get(i).get(0).equals(clientorders.get(i).get(0))){
+				            		Platform.runLater(new Runnable() {
+				            			 @Override
+				            	         public void run() {
+				            				 popupAlert(temp.get(i).get(1));
+				            	            }
+				            	        });
+				            		break;
+				            	}
+			            	}
+			                Thread.sleep(10000);	
+			            }
 
-	@Override
-	public void run() {
-		HashMap<Integer, String> clientorders = getOrdersStatus();
-        try {
-            while(true) {
-            	System.out.println(">>");
-            	HashMap<Integer,String> temp = getOrdersStatus();
-            	for(int i=0;i<clientorders.size();i++) {
-            		if(!clientorders.get(Integer.valueOf(i)).equals(temp.get(Integer.valueOf(i)))) {
-            			System.out.println("YES");
-            			break;
-            		}
-            	}
-                Thread.sleep(10000);
-            }
-
-        } catch (InterruptedException e) {
-            System.out.println(" interrupted");
-        }
-		
+			        } catch (InterruptedException e) {
+			            System.out.println("interrupted");
+			        }
+			        run();
+			 }
+     };
+     new Thread(task).start();
+}
+	
+	public void popupAlert(String value) { //ERIK
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.initOwner(prStage);
+		alert.setTitle("info");
+		alert.setContentText("Delivery approved!/nEstimated date and time: "+value);
+		alert.showAndWait();
 	}
 	
 }
