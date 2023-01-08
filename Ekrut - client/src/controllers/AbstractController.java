@@ -39,7 +39,6 @@ public abstract class AbstractController {
 				System.exit(0);
 			});
 		prStage.setResizable(false);
-
 		prStage.show();
 	}
 

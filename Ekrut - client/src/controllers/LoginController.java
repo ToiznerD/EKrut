@@ -92,7 +92,7 @@ public class LoginController extends AbstractController {
 								start("UserPanel", "User Dashboard");
 								return;
 							}
-							else if((boolean)msg.getObj(1) == false && config.equals("OL")) {
+							else if((int)msg.getObj(1) == 0 && config.equals("OL")) {
 								errMsgLbl.setText("You need to be a subscriber to login here");
 								return;
 							}
