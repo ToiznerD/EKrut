@@ -97,4 +97,10 @@ public class ResupplyReqController extends AbstractController {
 		return true;
 	}
 
+	@Override
+	public void setUp(Object[] objects) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

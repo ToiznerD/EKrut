@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="207.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cart.CartCellController">
+   <children>
+      <Text fx:id="nameLbl" layoutX="7.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="94.294921875" />
+      <Button fx:id="removeBtn" layoutX="112.0" layoutY="7.0" mnemonicParsing="false" onAction="#removePushed" text="-" />
+      <Button fx:id="addBtn" layoutX="176.0" layoutY="6.0" mnemonicParsing="false" onAction="#addPushed" text="+" />
+      <Text fx:id="quantLbl" layoutX="157.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+   </children>
+</AnchorPane>

@@ -47,4 +47,10 @@ public class MarketingEmployeeController extends AbstractController {
 	public void back(MouseEvent event) {
 		//Not implemented
 	}
+
+	@Override
+	public void setUp(Object[] objects) {
+		// TODO Auto-generated method stub
+		
+	}
 }

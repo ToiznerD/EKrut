@@ -124,4 +124,10 @@ public class SaleTemplateCreationController extends AbstractController{
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void setUp(Object[] objects) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -120,7 +120,10 @@ public class LoginController extends AbstractController {
 						login();
 						start("RegionManagerMainScreen", "Region Manager Dashboard");
 						break;
-						
+					case "operation_employee":
+						login();
+						start("ResupplyReqScreen", "Operation Employee Dashboard");
+						break;
 					default:
 						break;
 				}
@@ -206,6 +209,12 @@ public class LoginController extends AbstractController {
 
 	@Override
 	public void back(MouseEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setUp(Object[] objects) {
 		// TODO Auto-generated method stub
 		
 	}
