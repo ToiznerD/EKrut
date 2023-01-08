@@ -2,8 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -36,7 +34,6 @@ public class OrderScreenController extends AbstractController {
 		cartList.setCellFactory(listView -> new CartCell());
 		cartList.setItems(cartOList);
 		catlogList.setItems(productOList);
-
 	}
 
 	private void addListeners() {
@@ -52,6 +49,22 @@ public class OrderScreenController extends AbstractController {
 			});
 	}
 
+	private boolean checkOrder() {
+		msg = new Msg(Tasks.Select,
+				"SELECT p.id,p.name,p.price,sp.quantity FROM store_product sp product p WHERE sp.id=p.id AND sp.sid = "
+						+ shopID);
+		sendMsg(msg);
+		ArrayList<OrderProduct> arr = (ArrayList<OrderProduct>) msg.getArr(OrderProduct.class);
+		for (OrderProduct p : arr) {
+			OrderProduct old = productOList.get(productOList.indexOf(p));
+			old.setQuant(p.getQuant());
+		}
+		for (OrderProduct o : productOList)
+			if (o.getQuant() < o.getCartQuant())
+				return false;
+		return true;
+	}
+
 	@Override
 	public void setUp(Object... objects) {
 		this.shopID = (int) objects[0];
@@ -61,18 +74,18 @@ public class OrderScreenController extends AbstractController {
 		sendMsg(msg);
 		productOList.addAll(msg.getArr(OrderProduct.class));
 		addListeners();
-		/////////////////////////////////////
 	}
 
 	@FXML
 	public void checkout(MouseEvent event) {
+		if (checkOrder())
+			System.out.println("ok to send");
 		///start(nextWindow,title,cartOList);
 	}
 
 	@Override
 	public void back(MouseEvent event) {
 		// TODO Auto-generated method stub
-
 	}
 
 }

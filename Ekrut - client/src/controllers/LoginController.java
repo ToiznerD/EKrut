@@ -3,8 +3,6 @@ package controllers;
 import java.io.IOException;
 import java.util.Optional;
 
-import javax.swing.JOptionPane;
-
 import Entities.User;
 import Util.Msg;
 import Util.Tasks;

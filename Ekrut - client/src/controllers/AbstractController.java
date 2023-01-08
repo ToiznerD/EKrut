@@ -32,7 +32,7 @@ public abstract class AbstractController {
 		Scene scene = new Scene(root);
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
-		if (fxml != "ConnectionConfig")
+		if (fxml != "ConnectionConfig" && fxml != "LoginForm")
 			prStage.setOnCloseRequest(event -> {
 				logout();
 				ClientBackEnd.getInstance().quit();
