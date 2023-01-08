@@ -28,5 +28,12 @@ public class DeliveryOperatorController extends AbstractController{
 	public void back(MouseEvent event) {
 		// TODO Auto-generated method stub
 	}
+
+
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }
