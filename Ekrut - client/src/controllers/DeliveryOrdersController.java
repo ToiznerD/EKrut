@@ -65,7 +65,7 @@ public class DeliveryOrdersController extends AbstractController{
 	}
     
     private void setOrdersList() {
-		msg = new Msg(Tasks.DeliveryOrders, "select o.oid, u.name, o.shipping_address, u.phone, o.ord_date,"
+		msg = new Msg(Tasks.DeliveryOrders, "select o.cid, o.oid, u.name, o.shipping_address, u.phone, o.ord_date,"
 										+ " o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
 										+ "	from users u,orders o,deliveries d\r\n"
 										+ "	where o.cid=u.id and o.oid=d.oid and o.method=\"delivery\";");
@@ -73,13 +73,13 @@ public class DeliveryOrdersController extends AbstractController{
 		ordersList.clear();
 		for (TableOrders order : msg.getArr(TableOrders.class)){
 			ordersList.add(order);
-			dataMap.put(order.getOrderID(),Arrays.asList(order.getOrderDate(), order.getOrderTime(), order.getStatus()));
+			dataMap.put(order.getOrderID(),Arrays.asList(order.getCustomerID(), order.getOrderDate(), order.getOrderTime(), order.getStatus()));
 		}
     }
     
     private String calculateEstimatedDate(int orderID){
     	Calendar cal = Calendar.getInstance();
-        cal.setTime((java.util.Date) dataMap.get(orderID).get(0));  
+        cal.setTime((java.util.Date) dataMap.get(orderID).get(1));  
         cal.add(Calendar.DAY_OF_MONTH, shippingTime+droneAvailability+distance);  
         return new SimpleDateFormat("dd/MM/yy").format(cal.getTime());  
     }
@@ -95,7 +95,7 @@ public class DeliveryOrdersController extends AbstractController{
 		String EstimatedDate = calculateEstimatedDate(orderID);
 		msg = new Msg(Tasks.Update, "UPDATE orders o, deliveries d"
 								 + " SET d.status = \"in progress\", d.estimated_date = '"+EstimatedDate+"',"
-								 + " d.estimated_time = '"+dataMap.get(orderID).get(1)
+								 + " d.estimated_time = '"+dataMap.get(orderID).get(2)
 								 + "' WHERE o.oid = d.oid and o.oid = "+orderID);
 		sendMsg(msg);
 		if (msg.getBool()) {
@@ -103,12 +103,15 @@ public class DeliveryOrdersController extends AbstractController{
 			errorLbl.setText("Success: Sent alert to client");
 			initialize(); 
 		}
+		int costumerID = (Integer) dataMap.get(orderID).get(0);
+		msg = new Msg(Tasks.popUp,costumerID, "Delivery approved!/nEstimated date and time: "+EstimatedDate);//erik
+		sendMsg(msg);//erik
 	}
 
 	private boolean checkInput(String text) {
 		int labelInput = text.isEmpty() ? 0 : !text.matches("[0-9]+") ? -1 : Integer.parseInt(text);
 		boolean orderExist = dataMap.containsKey(labelInput);
-		String Status = orderExist ? (String) dataMap.get(labelInput).get(2) : "";
+		String Status = orderExist ? (String) dataMap.get(labelInput).get(3) : "";
 		if (Status.equals("pending"))
 			return true;
 		if (labelInput == 0)

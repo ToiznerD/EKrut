@@ -91,8 +91,6 @@ public class LoginController extends AbstractController {
 		else {
 			errMsgLbl.setText("Wrong Details");
 		}
-		if(myUser.getRole().equals("customer")) //erik
-			waitForAlert();
 	}
 	
 	public void ConnectWithApp(ActionEvent event) {
@@ -119,68 +117,11 @@ public class LoginController extends AbstractController {
 	    	}
 	    }	
 	}
-
-
-	public HashMap<Integer,  List<String>> getOrdersStatus(){ //erik
-		msg = new Msg(Tasks.DeliveryOrders,
-				"select o.oid, u.name, o.shipping_address, u.phone, o.ord_date,"
-						+ " o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
-						+ "	from users u,orders o,deliveries d\r\n"
-						+ "	where o.cid=u.id and o.oid=d.oid and o.method=\"delivery\" and o.cid="+myUser.getId());
-		sendMsg(msg);
-		HashMap<Integer, List<String>> clientordersMap = new HashMap<>();
-		for (TableOrders order : msg.getArr(TableOrders.class)) {
-			if( order.getStatus().equals("completed"))
-				continue;
-			clientordersMap.put(order.getOrderID(),Arrays.asList(order.getStatus(),order.getEstimatedDelivery()));
-		}
-		return clientordersMap;
-	}
 	
 	
 	@Override
 	public void back(MouseEvent event) {
 		//Not implemented
-	}
-	
-	public void waitForAlert() { //erik
-		 Runnable task = new Runnable() {
-			 @Override
-			 public void run() {
-					HashMap<Integer, List<String>> clientorders = getOrdersStatus();
-			        try {
-			            while(true) {
-			            	System.out.println(">>");
-			            	HashMap<Integer, List<String>> temp = getOrdersStatus();
-			            	for(int i : clientorders.keySet()) {
-				            	if (!temp.get(i).get(0).equals(clientorders.get(i).get(0))){
-				            		Platform.runLater(new Runnable() {
-				            			 @Override
-				            	         public void run() {
-				            				 popupAlert(temp.get(i).get(1));
-				            	            }
-				            	        });
-				            		break;
-				            	}
-			            	}
-			                Thread.sleep(10000);	
-			            }
-
-			        } catch (InterruptedException e) {
-			            System.out.println("interrupted");
-			        }
-			        run();
-			 }
-     };
-     new Thread(task).start();
-}
-	
-	public void popupAlert(String value) { //ERIK
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.initOwner(prStage);
-		alert.setTitle("info");
-		alert.setContentText("Delivery approved!/nEstimated date and time: "+value);
-		alert.showAndWait();
 	}
 	
 }

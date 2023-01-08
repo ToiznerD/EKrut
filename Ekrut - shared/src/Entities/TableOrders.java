@@ -15,15 +15,16 @@ import javafx.util.converter.LocalTimeStringConverter;
 public class TableOrders implements Serializable {
 
 	private static final long serialVersionUID = 2L;
-	private int OrderID;
+	private int OrderID, CustomerID;
 	private String RecieverName, RecieverAddress, RecieverPhone, Status;
 	private Date OrderDate, EstimatedDate;
 	private Time OrderTime, EstimatedTime;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-	public TableOrders(int OrderID, String RecieverName, String RecieverAddress, String RecieverPhone, Date OrderDate,
+	public TableOrders(int CustomerID, int OrderID, String RecieverName, String RecieverAddress, String RecieverPhone, Date OrderDate,
 			Time OrderTime, String Status, Date EstimatedDate, Time EstimatedTime) {
+		this.CustomerID = CustomerID;
 		this.OrderID = OrderID;
 		this.RecieverName = RecieverName;
 		this.RecieverAddress = RecieverAddress;
@@ -34,7 +35,9 @@ public class TableOrders implements Serializable {
 		this.EstimatedDate = EstimatedDate;
 		this.EstimatedTime = EstimatedTime;
 	}
-
+	public int getCustomerID() {//erik
+		return CustomerID;
+	}
 	public int getOrderID() {
 		return OrderID;
 	}

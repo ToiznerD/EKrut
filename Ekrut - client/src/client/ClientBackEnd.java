@@ -37,6 +37,8 @@ public class ClientBackEnd extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		Msg taskMsg = (Msg) msg;
+		if(taskMsg.getTask()==Tasks.popUp) 
+			abstractController.waitForAlert(taskMsg.getAlertMsg());
 		AbstractController.msg = taskMsg;
 		AbstractController.Notify();
 	}

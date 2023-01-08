@@ -5,9 +5,11 @@ import Util.Msg;
 import Util.Tasks;
 import Entities.User;
 import client.ClientBackEnd;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -68,6 +70,26 @@ public abstract class AbstractController {
 		sendMsg(msg);
 		myUser = null;
 		start("LoginForm", "Login");
+	}
+	
+	public void popupAlert(String msg) { //ERIK
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.initOwner(prStage);
+		alert.setTitle("info");
+		alert.setContentText(msg);
+		alert.showAndWait();
+	}
+	
+	public void waitForAlert(String msg) { //erik
+		new Thread(new Runnable() {
+		    @Override public void run() {
+		        Platform.runLater(new Runnable() {
+		            @Override public void run() {
+		            	popupAlert(msg);
+		            }
+		        });
+		    }
+		}).start();
 	}
 	
 	public abstract void back(MouseEvent event);
