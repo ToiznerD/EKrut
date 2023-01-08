@@ -71,12 +71,39 @@ public class LoginController extends AbstractController {
 		
 		if(myUser != null) {
 			if (!myUser.isLogged()) {
-				String role = myUser.getRole();
-				switch (role) {
-					case "new_user":
+				
+				// EK Configuration
+				if(config.equals("EK")) {
+					//Get the customer status
+					String customerQuery = "SELECT status FROM customer WHERE id = " + myUser.getId();
+					msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
+					sendMsg(msg);
+					
+					// customer?
+					if(msg.getBool()) {
+						// Customer Not Approved
+						if(msg.getObj(0).equals("Not Approved")) {
+							login();
+							start("UserPanel", "User Dashboard");
+							return;
+						}
+						login();
+						start("CustomerPanel", "Customer Dashboard");
+						return;
+					} else { // Not a customer
 						login();
 						start("UserPanel", "User Dashboard");
-						break;
+						return;
+					}
+				}
+				
+				//OL Configuration
+				String role = myUser.getRole();
+				switch (role) {
+//					case "new_user":
+//						login();
+//						start("UserPanel", "User Dashboard");
+//						break;
 						
 					case "customer":
 						//Get the customer status
@@ -87,15 +114,19 @@ public class LoginController extends AbstractController {
 						//Check if the customer has been approved
 						//Validates that the customer is a subscriber
 						if(msg.getBool()) {
+							//Customer not approved
 							if(msg.getObj(0).equals("Not Approved")) {
 								login();
 								start("UserPanel", "User Dashboard");
 								return;
 							}
-							else if((boolean)msg.getObj(1) == false && config.equals("OL")) {
+							//Approved but not a subscriber
+							else if(!(boolean)msg.getObj(1)) {
 								errMsgLbl.setText("You need to be a subscriber to login here");
 								return;
 							}
+							
+							//All good
 							login();
 							start("CustomerPanel", "Customer Dashboard");
 						}
@@ -122,6 +153,8 @@ public class LoginController extends AbstractController {
 						break;
 						
 					default:
+						login();
+						start("UserPanel", "User Dashboard");
 						break;
 				}
 			} else 
