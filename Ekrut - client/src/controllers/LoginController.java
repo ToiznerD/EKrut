@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
@@ -9,9 +10,11 @@ import Util.Msg;
 import Util.Tasks;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 
 /*
@@ -89,7 +92,7 @@ public class LoginController extends AbstractController {
 								start("UserPanel", "User Dashboard");
 								return;
 							}
-							else if((int)msg.getObj(1) == 0 && config.equals("OL")) {
+							else if((boolean)msg.getObj(1) == false && config.equals("OL")) {
 								errMsgLbl.setText("You need to be a subscriber to login here");
 								return;
 							}
@@ -142,22 +145,55 @@ public class LoginController extends AbstractController {
 	 * @throws IOException if an I/O error occurs while communicating with the app
 	 */
 	public void ConnectWithApp(ActionEvent event) throws IOException {
-			// Prompt the user to enter their ID
+			/*// Prompt the user to enter their ID
 			String idString = JOptionPane.showInputDialog(null, "Please enter your ID:", "Login", JOptionPane.QUESTION_MESSAGE);
 			
 			// Parse the ID into an integer, or set it to 0 if the user cancelled the input dialog
 			int id = idString != null ? Integer.parseInt(idString) : 0;
-			
+			*/
+		
+		// Ask for Store ID
+	      String idString = null;
+	      while(idString == null || idString.equals("")) {
+	    	// create the text input dialog
+	          TextInputDialog dialog2 = new TextInputDialog();
+	          dialog2.setTitle("Connect with app");
+	          dialog2.setHeaderText("Enter a user id");
+	          dialog2.setContentText("user id:");
+
+	          // show the dialog and get the user's response
+	          Optional<String> result2 = dialog2.showAndWait();
+
+	          // save the user's input
+	          idString = "";
+	          if (result2.isPresent()) {
+	        	  idString = result2.get();
+	          }
+	      }
+	      
+	      String query = "SELECT * FROM users WHERE id =" + Integer.parseInt(idString);
+	      msg = new Msg(Tasks.Select, query);
+	      sendMsg(msg);
+	      if(!msg.getBool()) {
+		    	  Alert alert = new Alert(Alert.AlertType.ERROR);
+		          alert.setTitle("Error Dialog");
+		          alert.setHeaderText("Invalid User ID");
+		          alert.setContentText("The user id you entered is not valid. Please try again.");
+
+		          // show the error dialog
+		          alert.showAndWait();
+		          return;
+	      }
 			// Get the username and password for the given ID
-			String query = String.format("SELECT * FROM users WHERE id = %d", id);
-			msg = new Msg(Tasks.Login, Tasks.Select, query);
-			sendMsg(msg);
+//		    query = String.format("SELECT * FROM users WHERE id = %d", id);
+//			msg = new Msg(Tasks.Login, Tasks.Select, query);
+//			sendMsg(msg);
 			
-			// Check if the given ID is valid
-			if(!msg.getBool()) {
-				JOptionPane.showMessageDialog(null, "Invalid ID", "Error", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
+//			// Check if the given ID is valid
+//			if(!msg.getBool()) {
+//				JOptionPane.showMessageDialog(null, "Invalid ID", "Error", JOptionPane.ERROR_MESSAGE);
+//				return;
+//			}
 			
 			// Save the username and password
 			userid = msg.getObj(1);
