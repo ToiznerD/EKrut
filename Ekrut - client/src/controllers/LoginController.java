@@ -122,7 +122,7 @@ public class LoginController extends AbstractController {
 						break;
 					case "operation_employee":
 						login();
-						start("ResupplyReqScreen", "Operation Employee Dashboard");
+						start("OperationEmpPanel", "Operation Employee Dashboard");
 						break;
 					default:
 						break;
