@@ -32,6 +32,12 @@ public abstract class AbstractController {
 		Scene scene = new Scene(root);
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
+		if (fxml != "ConnectionConfig")
+			prStage.setOnCloseRequest(event -> {
+				logout();
+				ClientBackEnd.getInstance().quit();
+				System.exit(0);
+			});
 		prStage.setResizable(false);
 
 		prStage.show();
@@ -62,12 +68,16 @@ public abstract class AbstractController {
 		}
 	}
 
-	public void logout() throws IOException {
+	public void logout() {
 		String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
 		msg = new Msg(Tasks.Logout, logoutQuery);
 		sendMsg(msg);
 		myUser = null;
-		start("LoginForm", "Login");
+		try {
+			start("LoginForm", "Login");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public abstract void setUp(Object... objects);
