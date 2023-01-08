@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import DBHandler.DBController;
 import Util.Tasks;
 import tasker.Tasker;
 import Util.Msg;
@@ -58,5 +59,9 @@ public class serverBackEnd extends AbstractServer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	protected boolean importUsers() {
+		return DBController.importUsers();
 	}
 }
