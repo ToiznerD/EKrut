@@ -42,7 +42,6 @@ public class ResupplyReqController extends AbstractController {
 
 	@FXML
 	protected void initialize() {
-		updateList();
 		idCell.setCellValueFactory(new PropertyValueFactory<TableProd, Integer>("id"));
 		rQuantCell.setCellValueFactory(new PropertyValueFactory<TableProd, Integer>("Rquant"));
 		aQuantCell.setCellValueFactory(new PropertyValueFactory<TableProd, Integer>("Aquant"));
@@ -52,11 +51,7 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	private void updateList() {
-		msg = new Msg(Tasks.RequiredStock,
-				"SELECT sp.pid,sp.pname,sp.lim,sp.quantity FROM storeproduct sp WHERE sp.sid = 2");
-		sendMsg(msg);
-		prodList.clear();
-		prodList.addAll(msg.getArr(TableProd.class));
+
 	}
 
 	@Override
@@ -76,7 +71,7 @@ public class ResupplyReqController extends AbstractController {
 			sendMsg(msg);
 		}
 		if (msg.getInt() != 0)
-			updateList();
+			setUp();
 		else
 			errorLbl.setText("Error: product id not found");
 	}
@@ -98,9 +93,12 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	@Override
-	public void setUp(Object[] objects) {
-		// TODO Auto-generated method stub
-		
+	public void setUp(Object... objects) {
+		msg = new Msg(Tasks.RequiredStock,
+				"SELECT sp.pid,sp.pname,sp.lim,sp.quantity FROM storeproduct sp WHERE sp.sid = 2");
+		sendMsg(msg);
+		prodList.clear();
+		prodList.addAll(msg.getArr(TableProd.class));
 	}
 
 }

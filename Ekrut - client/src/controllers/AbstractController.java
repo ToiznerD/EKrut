@@ -70,7 +70,7 @@ public abstract class AbstractController {
 		start("LoginForm", "Login");
 	}
 
-	public abstract void setUp(Object[] objects);
+	public abstract void setUp(Object... objects);
 
 	public abstract void back(MouseEvent event);
 

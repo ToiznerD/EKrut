@@ -25,7 +25,7 @@ public class UserPanelController extends AbstractController{
 		//Not implemented
 	}
 	@Override
-	public void setUp(Object[] objects) {
+	public void setUp(Object... objects) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -53,7 +53,7 @@ public class OrderScreenController extends AbstractController {
 	}
 
 	@Override
-	public void setUp(Object[] objects) {
+	public void setUp(Object... objects) {
 		this.shopID = (int) objects[0];
 		msg = new Msg(Tasks.Select,
 				"SELECT p.id,p.name,p.price,sp.quantity FROM store_product sp product p WHERE sp.id=p.id AND sp.sid = "

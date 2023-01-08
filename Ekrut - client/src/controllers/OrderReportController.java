@@ -95,7 +95,7 @@ public class OrderReportController extends AbstractController implements Initial
     }
 
 	@Override
-	public void setUp(Object[] objects) {
+	public void setUp(Object... objects) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -28,7 +28,7 @@ public class CustomerPanelController extends AbstractController{
 		// not implemented
 	}
 	@Override
-	public void setUp(Object[] objects) {
+	public void setUp(Object... objects) {
 		// TODO Auto-generated method stub
 		
 	}

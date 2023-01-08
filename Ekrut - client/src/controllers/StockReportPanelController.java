@@ -41,7 +41,7 @@ public class StockReportPanelController extends AbstractController{
 	}
 
 	@Override
-	public void setUp(Object[] objects) {
+	public void setUp(Object... objects) {
 		// TODO Auto-generated method stub
 		
 	}
