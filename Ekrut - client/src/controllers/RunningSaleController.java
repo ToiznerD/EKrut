@@ -35,14 +35,16 @@ public class RunningSaleController extends AbstractController {
     	//Initializing sales combo-box
     	String salesQuery = null;
     	int userRegion = myUser.getId();
-    	
     	//Getting the region sales related to this marketing employee that are not running already
-    	if(myUser.getRole().equals("marketing_employee"))
-	    	salesQuery = "SELECT saleName FROM sale_initiate WHERE rid = " + userRegion + " AND active = 0";
+    	salesQuery = "SELECT saleName FROM sale_initiate WHERE rid = " + userRegion + " AND active = 0";
     	
-    	//Getting all the sales that are not running already to the CEO
-    	else if(myUser.getRole().equals("ceo"))
-    		salesQuery = "SELECT saleName FROM sale_initiate WHERE active = 0";
+//    	//Getting the region sales related to this marketing employee that are not running already
+//    	if(myUser.getRole().equals("marketing_employee"))
+//	    	salesQuery = "SELECT saleName FROM sale_initiate WHERE rid = " + userRegion + " AND active = 0";
+//    	
+//    	//Getting all the sales that are not running already to the CEO
+//    	else if(myUser.getRole().equals("ceo"))
+//    		salesQuery = "SELECT saleName FROM sale_initiate WHERE active = 0";
     	
 	    msg = new Msg(Tasks.Select, salesQuery);
 	    sendMsg(msg);
