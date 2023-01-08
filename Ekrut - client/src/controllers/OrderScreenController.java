@@ -1,11 +1,11 @@
 package controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -29,7 +29,7 @@ public class OrderScreenController extends AbstractController {
 	private int shopID;
 
 	@FXML
-	public void initialize() throws IOException {
+	public void initialize() {
 		catlogList.setCellFactory(listView -> new CatalogCell());
 		cartList.setCellFactory(listView -> new CartCell());
 		cartList.setItems(cartOList);
@@ -50,11 +50,7 @@ public class OrderScreenController extends AbstractController {
 	}
 
 	private boolean checkOrder() {
-		msg = new Msg(Tasks.Select,
-				"SELECT p.id,p.name,p.price,sp.quantity FROM store_product sp product p WHERE sp.id=p.id AND sp.sid = "
-						+ shopID);
-		sendMsg(msg);
-		ArrayList<OrderProduct> arr = (ArrayList<OrderProduct>) msg.getArr(OrderProduct.class);
+		ArrayList<OrderProduct> arr = getProductList();
 		for (OrderProduct p : arr) {
 			OrderProduct old = productOList.get(productOList.indexOf(p));
 			old.setQuant(p.getQuant());
@@ -65,19 +61,20 @@ public class OrderScreenController extends AbstractController {
 		return true;
 	}
 
+	private ArrayList<OrderProduct> getProductList(){
+		msg = new Msg(Tasks.Select,
+				"SELECT p.pid,p.pname,p.price,sp.quantity FROM store_product sp ,product p WHERE sp.pid = p.pid AND sp.sid = "+ shopID);
+		sendMsg(msg);
+		return (ArrayList<OrderProduct>) msg.getArr(OrderProduct.class);
+	}
 	@Override
 	public void setUp(Object... objects) {
 		this.shopID = (int) objects[0];
-		msg = new Msg(Tasks.Select,
-				"SELECT p.id,p.name,p.price,sp.quantity FROM store_product sp product p WHERE sp.id=p.id AND sp.sid = "
-						+ shopID);
-		sendMsg(msg);
-		productOList.addAll(msg.getArr(OrderProduct.class));
+		productOList.addAll(getProductList());
 		addListeners();
 	}
-
 	@FXML
-	public void checkout(MouseEvent event) {
+	public void checkout(ActionEvent event) {
 		if (checkOrder())
 			System.out.println("ok to send");
 		///start(nextWindow,title,cartOList);

@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="801.0" style="-fx-background-color: #faf2d7;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order.OrderScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="801.0" style="-fx-background-color: #faf2d7;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderScreenController">
    <children>
-      <ListView fx:id="lvProductCatalog" layoutX="22.0" layoutY="95.0" prefHeight="338.0" prefWidth="530.0" style="-fx-selection-bar: transparent; -fx-border-color: black;" />
+      <ListView fx:id="catlogList" layoutX="22.0" layoutY="95.0" prefHeight="338.0" prefWidth="530.0" style="-fx-selection-bar: transparent; -fx-border-color: black;" />
       <ListView fx:id="cartList" layoutX="559.0" layoutY="96.0" prefHeight="338.0" prefWidth="219.0" style="-fx-border-color: black;" />
       <ImageView fx:id="backBtn" fitHeight="39.0" fitWidth="109.0" layoutX="14.0" layoutY="449.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
          <image>

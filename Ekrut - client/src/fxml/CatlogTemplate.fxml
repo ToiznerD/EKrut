@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="apProductNode" prefHeight="82.0" prefWidth="508.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="catalog.CatlogCellController">
+<AnchorPane fx:id="apProductNode" prefHeight="82.0" prefWidth="508.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CatlogCellController">
 	<children>
 		<ImageView fx:id="img" fitHeight="68.0" fitWidth="87.0" layoutX="8.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
 		<Button fx:id="btnAddToCart" alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="379.0" layoutY="23.0" mnemonicParsing="false" onAction="#addClick" prefHeight="36.0" prefWidth="123.0" style="-fx-border-color: #000000; -fx-border-width: 2; -fx-background-color: #f54655;" text="Add to cart">
