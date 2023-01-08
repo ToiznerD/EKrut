@@ -10,58 +10,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="356.0" prefWidth="681.0"
-	style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;"
-	xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="controllers.ResupplyReqController">
+<AnchorPane prefHeight="276.0" prefWidth="684.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ResupplyReqController">
 	<children>
-		<TableView fx:id="Table" layoutX="7.0" layoutY="6.0"
-			prefHeight="261.0" prefWidth="669.0"
-			style="-fx-background-color: #faf2d7; -fx-border-color: #bcbcbc;">
+		<TableView fx:id="Table" layoutX="7.0" layoutY="6.0" prefHeight="287.0" prefWidth="669.0" style="-fx-background-color: #faf2d7; -fx-border-color: #bcbcbc;">
 			<placeholder>
 				<Label text="You dont have any request to resupply " />
 			</placeholder>
 			<columns>
-				<TableColumn fx:id="sidCell" editable="false"
-					prefWidth="75.0" text="Store_ID" />
-				<TableColumn fx:id="snameCell" editable="false"
-					prefWidth="111.0" text="Store_Name" />
-				<TableColumn fx:id="pidCell" editable="false"
-					prefWidth="73.0" text="Product_ID" />
-				<TableColumn fx:id="pnameCell" prefWidth="118.0"
-					text="Product_Name" />
-				<TableColumn fx:id="aQuantCell" editable="false"
-					prefWidth="116.0" text="Actual_Quantity" />
-				<TableColumn fx:id="addQuantCell" prefWidth="109.0"
-					text="Quantity_to_add" />
-				<TableColumn fx:id="statusCell" prefWidth="63.0"
-					text="Status" />
+				<TableColumn fx:id="sidCell" editable="false" prefWidth="75.0" text="Store_ID" />
+				<TableColumn fx:id="snameCell" editable="false" prefWidth="111.0" text="Store_Name" />
+				<TableColumn fx:id="pidCell" editable="false" prefWidth="73.0" text="Product_ID" />
+				<TableColumn fx:id="pnameCell" prefWidth="118.0" text="Product_Name" />
+				<TableColumn fx:id="aQuantCell" editable="false" prefWidth="116.0" text="Actual_Quantity" />
+				<TableColumn fx:id="addQuantCell" prefWidth="109.0" text="Quantity_to_add" />
+				<TableColumn fx:id="statusCell" prefWidth="63.0" text="Status" />
 			</columns>
 		</TableView>
-		<Button fx:id="updateBtn" layoutX="583.0" layoutY="290.0"
-			mnemonicParsing="false" onAction="#update" prefHeight="5.0"
-			prefWidth="87.0"
-			style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;"
-			text="Update">
+		<Button fx:id="updateBtn" layoutX="583.0" layoutY="309.0" mnemonicParsing="false" onAction="#update" prefHeight="5.0" prefWidth="87.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Update">
 			<font>
 				<Font name="System Bold Italic" size="12.0" />
 			</font>
 		</Button>
-		<Label fx:id="storeLbl" layoutX="14.0" layoutY="273.0"
-			prefHeight="17.0" prefWidth="94.0" text="Store:" />
-		<TextField fx:id="sidText" layoutX="373.0" layoutY="292.0"
-			prefHeight="25.0" prefWidth="77.0" promptText="Store_ID" />
-		<TextField fx:id="pidText" layoutX="466.0" layoutY="292.0"
-			prefHeight="25.0" prefWidth="103.0" promptText="Product_ID" />
-		<ImageView fx:id="backBtn" fitHeight="45.0" fitWidth="103.0"
-			layoutX="7.0" layoutY="311.0" onMouseClicked="#back"
-			pickOnBounds="true" preserveRatio="true">
+		<TextField fx:id="sidText" layoutX="373.0" layoutY="311.0" prefHeight="25.0" prefWidth="77.0" promptText="Store_ID" />
+		<TextField fx:id="pidText" layoutX="466.0" layoutY="311.0" prefHeight="25.0" prefWidth="103.0" promptText="Product_ID" />
+		<ImageView fx:id="backBtn" fitHeight="45.0" fitWidth="103.0" layoutX="7.0" layoutY="305.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
 			<image>
 				<Image url="@../../images/back%20icon.png" />
 			</image>
 		</ImageView>
-		<Label fx:id="errorLbl" alignment="CENTER"
-			contentDisplay="CENTER" layoutX="373.0" layoutY="326.0"
-			prefHeight="17.0" prefWidth="294.0" textFill="RED" />
+		<Label fx:id="errorLbl" alignment="CENTER" contentDisplay="CENTER" layoutX="373.0" layoutY="326.0" prefHeight="17.0" prefWidth="294.0" textFill="RED" />
 	</children>
 </AnchorPane>

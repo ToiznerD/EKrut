@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import Entities.ResupplyProduct;
+import Entities.User;
 
 public class ResupplyReqController extends AbstractController {
 
@@ -69,8 +70,8 @@ public class ResupplyReqController extends AbstractController {
 							+ pidText.getText() + " AND sid = " + sidText.getText() + ") WHERE pid = "
 							+ pidText.getText() + " AND sid = " + sidText.getText());
 			sendMsg(msg);
-			msg = new Msg(Tasks.Update,"UPDATE resupply_request SET status=\"Done\" WHERE pid=" + pidText.getText()
-							+ " AND sid = " + sidText.getText());
+			msg = new Msg(Tasks.Update, "UPDATE resupply_request SET status=\"Done\" WHERE pid=" + pidText.getText()
+					+ " AND sid = " + sidText.getText());
 			sendMsg(msg);
 		}
 		if (msg.getInt() != 0)
@@ -98,7 +99,8 @@ public class ResupplyReqController extends AbstractController {
 	@Override
 	public void setUp(Object... objects) {
 		msg = new Msg(Tasks.RequiredStock,
-				"SELECT DISTINCT s.sid,s.name,p.pid,p.pname,sp.quantity,rs.quantity,rs.status FROM store s,product,store_product sp,product p,resupply_request rs WHERE s.sid=rs.sid AND p.pid=rs.pid AND sp.pid=rs.pid AND status=\"Pending\"");
+				"SELECT DISTINCT s.sid,s.name,p.pid,p.pname,sp.quantity,rs.quantity,rs.status FROM store s,product,store_product sp,product p,resupply_request rs WHERE rs.uid = "
+						+ myUser.getId() + " AND s.sid=rs.sid AND p.pid=rs.pid AND sp.pid=rs.pid AND status=\"Pending\"");
 		//store id,Store name,product id,product name,store_product quantity,resupply_request quantity,status
 		sendMsg(msg);
 		prodList.clear();

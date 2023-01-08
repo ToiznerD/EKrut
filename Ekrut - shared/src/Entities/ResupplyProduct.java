@@ -9,17 +9,17 @@ public class ResupplyProduct implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int sid, pid, rQuant, aQuant;
+	private int sid, pid, Rquant, Aquant;
 	private String sname, pname, status;
 
 	//store id,Store name,product id,product name,store_product quantity,resupply_request quantity,status
-	public ResupplyProduct(int sid, String sname, int pid, String pname, int aQuant, int rQuant, String status) {
+	public ResupplyProduct(int sid, String sname, int pid, String pname, int Aquant, int Rquant, String status) {
 		this.sid = sid;
 		this.sname = sname;
 		this.pid = pid;
 		this.pname = pname;
-		this.rQuant = rQuant;
-		this.aQuant = aQuant;
+		this.Rquant = Rquant;
+		this.Aquant = Aquant;
 		this.status = status;
 	}
 
@@ -49,11 +49,11 @@ public class ResupplyProduct implements Serializable {
 	}
 
 	public int getRquant() {
-		return rQuant;
+		return Rquant;
 	}
 
 	public int getaAquant() {
-		return aQuant;
+		return Aquant;
 	}
 
 	public String getSname() {
