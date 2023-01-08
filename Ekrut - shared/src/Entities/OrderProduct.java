@@ -1,8 +1,27 @@
 package Entities;
 
+import java.util.Objects;
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class OrderProduct {
+	@Override
+	public int hashCode() {
+		return Objects.hash(productID);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderProduct other = (OrderProduct) obj;
+		return productID == other.productID;
+	}
+
 	// image
 	private int productID;
 	private String name;

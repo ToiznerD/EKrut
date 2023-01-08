@@ -61,18 +61,21 @@ public class OrderScreenController extends AbstractController {
 		return true;
 	}
 
-	private ArrayList<OrderProduct> getProductList(){
+	private ArrayList<OrderProduct> getProductList() {
 		msg = new Msg(Tasks.Select,
-				"SELECT p.pid,p.pname,p.price,sp.quantity FROM store_product sp ,product p WHERE sp.pid = p.pid AND sp.sid = "+ shopID);
+				"SELECT p.pid,p.pname,p.price,sp.quantity FROM store_product sp ,product p WHERE sp.pid = p.pid AND sp.sid = "
+						+ shopID);
 		sendMsg(msg);
 		return (ArrayList<OrderProduct>) msg.getArr(OrderProduct.class);
 	}
+
 	@Override
 	public void setUp(Object... objects) {
 		this.shopID = (int) objects[0];
 		productOList.addAll(getProductList());
 		addListeners();
 	}
+
 	@FXML
 	public void checkout(ActionEvent event) {
 		if (checkOrder())
