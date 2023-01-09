@@ -123,6 +123,7 @@ public class CreateCustomerController extends AbstractController{
      * Resets the form fields and enables the "Create" button.
      */
     public void reset() {
+    		cleanErrors();
     		lblErr.setText("");
     		txtUser.setText("");
     		txtName.setText("");

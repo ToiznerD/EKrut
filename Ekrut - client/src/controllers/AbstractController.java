@@ -22,7 +22,7 @@ public abstract class AbstractController {
 	public static Msg msg;
 	public static User myUser;
 	public static String config;
-
+	public static int storeID;
 
 	public void start(String fxml, String title, Object... objects) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
@@ -32,9 +32,9 @@ public abstract class AbstractController {
 		Scene scene = new Scene(root);
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
-		if (fxml != "ConnectionConfig" && fxml != "LoginForm")
+		if (fxml != "ConnectionConfig")
 			prStage.setOnCloseRequest(event -> {
-				logout();
+				if(!fxml.equals("LoginForm")) logout();;
 				ClientBackEnd.getInstance().quit();
 				System.exit(0);
 			});
