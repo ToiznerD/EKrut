@@ -2,9 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.util.Optional;
-
-import javax.swing.JOptionPane;
-
 import Entities.User;
 import Util.Msg;
 import Util.Tasks;
@@ -128,7 +125,7 @@ public class LoginController extends AbstractController {
 							
 							//All good
 							login();
-							start("CustomerPanel", "Customer Dashboard");
+							start("Customer", "Customer Dashboard");
 						}
 						break;
 						
@@ -151,7 +148,15 @@ public class LoginController extends AbstractController {
 						login();
 						start("RegionManagerMainScreen", "Region Manager Dashboard");
 						break;
-						
+
+					case "ceo":
+						start("RegionManagerMainScreen", "CEO Dashboard");
+						break;
+
+					case "operation_employee":
+						login();
+						start("OperationEmpPanel", "Operation Employee Dashboard");
+						break;
 					default:
 						login();
 						start("UserPanel", "User Dashboard");
@@ -239,6 +244,12 @@ public class LoginController extends AbstractController {
 
 	@Override
 	public void back(MouseEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setUp(Object... objects) {
 		// TODO Auto-generated method stub
 		
 	}
