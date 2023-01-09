@@ -1,7 +1,10 @@
 package DBHandler;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -63,6 +66,18 @@ public class DBController {
 		} catch (Exception e) {
 			return 0;
 		}
+	}
+	
+	public static boolean importUsers() {
+			Statement stmt;
+			try {
+				stmt = conn.createStatement();
+				stmt.executeUpdate("SET GLOBAL local_infile=1");
+				stmt.executeUpdate("load data local infile \"users.txt\" into table users");
+				stmt.executeUpdate("load data local infile \"customer.txt\" into table customer");
+		 		
+			} catch (SQLException e) {	e.printStackTrace(); return false;}
+			 return true;
 	}
 
 }

@@ -90,4 +90,10 @@ public class OrderReportController extends AbstractController implements Initial
             // TODO: handle exception
         }
     }
+
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
+	}
 }

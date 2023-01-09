@@ -41,7 +41,7 @@ public class SaleTemplateCreationController extends AbstractController{
      * @return true if the template name is valid, false otherwise
      */
     public boolean checkTemplateName() {
-    	if(txtTemplateName.getText() == "") {
+    	if(txtTemplateName.getText().equals("")) {
     		lblErrTemplateName.setText("Please enter template name");
     		return false;
     	}
@@ -64,7 +64,7 @@ public class SaleTemplateCreationController extends AbstractController{
     public boolean CheckDiscount()
     {
     	int discountInt;
-    	if(txtDiscount.getText() == "") {
+    	if(txtDiscount.getText().equals("")) {
     		lblErrDiscount.setText("Please enter discount");
     		return false;
     	}
@@ -74,11 +74,11 @@ public class SaleTemplateCreationController extends AbstractController{
             	lblErrDiscount.setText("Please enter discount with numbers only");
                 return false;
             }
-            discountInt = Integer.parseInt(discount);
-            if(discountInt <= 0 || discountInt >= 100) {
-            	lblErrDiscount.setText("Please enter numbers between 1-99");
-            	return false;
-            }
+        }
+        discountInt = Integer.parseInt(discount);
+        if(discountInt <= 0 || discountInt >= 100) {
+        	lblErrDiscount.setText("Please enter numbers between 1-99");
+        	return false;
         }
         lblErrDiscount.setText("");
         return true;
@@ -119,9 +119,15 @@ public class SaleTemplateCreationController extends AbstractController{
 	@Override
 	public void back(MouseEvent event) {
 		try {
-    		start("MarketingSalesDepartmentPanel","Marketing Sales Department Panel");
+    		start("MarketingManagerPanel","Marketing Manager Panel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
 	}
 }

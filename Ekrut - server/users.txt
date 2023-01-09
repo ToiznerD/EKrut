@@ -1,0 +1,6 @@
+1	dor	123	service	dor	0548005434	palmach	dor@gmail.com	0
+2	user1	123	new_user	user1	0500000000	Derek hay	user1@gmail.com	0
+3	user2	123	customer	user2	0501111111	zalafim 5	user2@gmail.com	0
+4	user3	123	customer	user3	0502222222	keren hayseed	user3@gmail.com	0
+5	user4	123	customer	user4	0503333333	karma 2	user4@gmail.com	0
+6	user5	123	customer	user5	0504444444	harel 31	user5@gmail.com	0

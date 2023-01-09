@@ -184,4 +184,12 @@ public class UpdateMinLimitController extends AbstractController implements Init
             // TODO: handle exception
         }
     }
+
+
+
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
+	}
 }
