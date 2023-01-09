@@ -5,6 +5,21 @@ import java.util.Objects;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class OrderProduct {
+
+	// image
+	private int productID;
+	private String name;
+	private int price, quant;
+	private SimpleIntegerProperty cartQuant = new SimpleIntegerProperty(0);
+	// quantity
+
+	public OrderProduct(int productID, String name, int price, int quant) {
+		this.productID = productID;
+		this.name = name;
+		this.price = price;
+		this.quant = quant;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(productID);
@@ -20,20 +35,6 @@ public class OrderProduct {
 			return false;
 		OrderProduct other = (OrderProduct) obj;
 		return productID == other.productID;
-	}
-
-	// image
-	private int productID;
-	private String name;
-	private int price, quant;
-	private SimpleIntegerProperty cartQuant = new SimpleIntegerProperty(0);
-	// quantity
-
-	public OrderProduct(int productID, String name, int price, int quant) {
-		this.productID = productID;
-		this.name = name;
-		this.price = price;
-		this.quant = quant;
 	}
 
 	public int getProductID() {
@@ -91,5 +92,7 @@ public class OrderProduct {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
+	public int getProductSum() {
+		return price*cartQuant.get();
+	}
 }
