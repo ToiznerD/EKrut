@@ -10,6 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
@@ -21,7 +23,7 @@ import Entities.OrderProduct;
 import Util.Msg;
 import Util.Tasks;
 
-public class OrderScreenController extends AbstractController {
+public class OrderScreenController extends AbstractOrderController {
 	private ObservableList<OrderProduct> productOList = FXCollections.observableArrayList();
 	private ObservableList<OrderProduct> cartOList = FXCollections.observableArrayList();
 	private int sum = 0;
@@ -42,6 +44,7 @@ public class OrderScreenController extends AbstractController {
 	private Button checkoutBtn;
 	private int shopID;
 	private static final DecimalFormat decimal = new DecimalFormat("0.00");
+	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private Double discount = 1.0;
 
 	@FXML
@@ -97,19 +100,29 @@ public class OrderScreenController extends AbstractController {
 		return (ArrayList<OrderProduct>) msg.getArr(OrderProduct.class);
 	}
 
-	private Double getDiscount() {
+	private void installDiscount() {
 		msg = new Msg(Tasks.Select,
 				"SELECT s.saleName ,t.discount FROM sale_initiate s,sale_template t WHERE s.active = 1 AND s.templateId=t.templateId AND \""
 						+ java.sql.Time.valueOf(LocalTime.now()) + "\" BETWEEN s.startHour AND s.endHour AND \""
 						+ java.sql.Date.valueOf(LocalDate.now()) + "\" BETWEEN s.startDate AND s.endDate");
 		sendMsg(msg);
-		return msg.getBool() == true ? msg.getObj(1) : 1.0;
+		if (msg.getBool()) {
+			discount = msg.getObj(1);
+			String saleName = msg.getObj(0);
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("SALE");
+			alert.setHeaderText(saleName+" Sale!");
+			alert.setContentText("SALE for " + saleName + " is now active you can enjoy "
+					+ decimalToInt.format(discount * 100) + "% discount for every item in cart.");
+			alert.show();
+		}
+
 	}
 
 	@Override
 	public void setUp(Object... objects) {
 		this.shopID = (int) objects[0];
-		discount = getDiscount(); //To add popup
+		installDiscount();
 		productOList.addAll(getProductList());
 		addListeners();
 	}

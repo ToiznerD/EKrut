@@ -34,7 +34,7 @@ public abstract class AbstractController {
 		prStage.setScene(scene);
 		if (fxml != "ConnectionConfig" && fxml != "LoginForm")
 			prStage.setOnCloseRequest(event -> {
-				logout();
+				logoutFromDb();
 				ClientBackEnd.getInstance().quit();
 				System.exit(0);
 			});
@@ -67,10 +67,13 @@ public abstract class AbstractController {
 		}
 	}
 
-	public void logout() {
+	public void logoutFromDb() {
 		String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
 		msg = new Msg(Tasks.Logout, logoutQuery);
 		sendMsg(msg);
+	}
+	public void logout() {
+		logoutFromDb();
 		myUser = null;
 		try {
 			start("LoginForm", "Login");
