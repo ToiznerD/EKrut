@@ -119,6 +119,11 @@ public class ApproveCustomersController extends AbstractController {
     }
 
     @Override
+    public void setUp(Object... objects) {
+
+    }
+
+    @Override
     public void back(MouseEvent event) {
         try {
             // go back to previous screen

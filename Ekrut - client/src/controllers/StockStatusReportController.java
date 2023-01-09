@@ -220,6 +220,11 @@ public class StockStatusReportController extends AbstractController {
     }
 
     @Override
+    public void setUp(Object... objects) {
+
+    }
+
+    @Override
     public void back(MouseEvent event) {
         try {
             start("ChooseReportScreen", "Choose Report");

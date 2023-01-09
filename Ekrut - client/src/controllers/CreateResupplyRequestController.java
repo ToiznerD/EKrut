@@ -208,6 +208,11 @@ public class CreateResupplyRequestController extends AbstractController {
 
 
     @Override
+    public void setUp(Object... objects) {
+
+    }
+
+    @Override
     public void back(MouseEvent event) {
         try {
             start("ManageInventoryScreen", "Manage Inventory");
