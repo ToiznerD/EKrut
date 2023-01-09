@@ -99,4 +99,10 @@ public class ChooseReportController extends AbstractController {
             // TODO: handle exception
         }
     }
+
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
+	}
 }

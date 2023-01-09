@@ -47,4 +47,10 @@ public class CustomerServiceController extends AbstractController{
 		//Not implemented
 	}
 
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

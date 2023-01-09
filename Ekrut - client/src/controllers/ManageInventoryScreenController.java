@@ -187,4 +187,12 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
             // TODO: handle exception
         }
     }
+
+
+
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
+	}
 }

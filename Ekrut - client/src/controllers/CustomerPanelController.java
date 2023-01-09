@@ -27,5 +27,10 @@ public class CustomerPanelController extends AbstractController{
 	public void back(MouseEvent event) {
 		// not implemented
 	}
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
