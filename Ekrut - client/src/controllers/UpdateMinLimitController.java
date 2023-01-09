@@ -3,7 +3,6 @@ package controllers;
 import Entities.StoreProduct;
 import Util.Msg;
 import Util.Tasks;
-import Entities.Store;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ManageInventoryScreenController extends BaseRegionManagerSubScreensContoller implements Initializable {
+public class UpdateMinLimitController extends AbstractController implements Initializable {
     private HashMap<String, Integer> storeMap;
     private ObservableList<StoreProduct> itemObsList;
     private List<StoreProduct> updatedStoreProductsList;
@@ -60,8 +59,6 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
         tableColInitialization();
 
     }
-
-
 
     /**
      * initializes the tableview - sets up property factory, and initializes it with empty observable list
@@ -182,7 +179,7 @@ public class ManageInventoryScreenController extends BaseRegionManagerSubScreens
     public void back(MouseEvent event) {
         try {
             // go back to previous screen
-            start("RegionManagerMainScreen", "Region Manager Dashboard");
+            start("ManageInventoryScreen", "Manage Inventory");
         } catch (IOException e) {
             // TODO: handle exception
         }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="681.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ApproveCustomersController">
+   <children>
+      <ImageView fitHeight="135.0" fitWidth="129.0" layoutX="552.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/EKrut%20logo.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="newCustomersTable" layoutX="13.0" layoutY="73.0" prefHeight="293.0" prefWidth="498.0">
+        <columns>
+            <TableColumn fx:id="idCol" prefWidth="91.5" text="User ID" />
+            <TableColumn fx:id="nameCol" prefWidth="87.5" text="Name" />
+            <TableColumn fx:id="addressCol" prefWidth="89.0" text="Address" />
+            <TableColumn fx:id="phoneCol" prefWidth="111.5" text="Phone" />
+          <TableColumn fx:id="emailCol" prefWidth="117.5" text="Email" />
+        </columns>
+      </TableView>
+      <ImageView fx:id="backBtn" fitHeight="45.0" fitWidth="118.0" layoutX="13.0" layoutY="383.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/back%20icon.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="approveCustomerBtn" layoutX="516.0" layoutY="155.0" mnemonicParsing="false" onAction="#approveBtnClick" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="28.0" layoutY="14.0" text="Approve Customers" textFill="#cf4c0a">
+         <font>
+            <Font name="System Bold Italic" size="36.0" />
+         </font>
+      </Label>
+      <Button fx:id="disapproveCustomerBtn" layoutX="516.0" layoutY="220.0" mnemonicParsing="false" onAction="#disapproveBtnClick" prefHeight="34.0" prefWidth="147.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Disapprove">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="notificationLabel" layoutX="173.0" layoutY="383.0" prefHeight="17.0" prefWidth="238.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
