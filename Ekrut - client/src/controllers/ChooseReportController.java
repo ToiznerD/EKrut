@@ -22,7 +22,6 @@ public class ChooseReportController extends AbstractController {
     @FXML
     Label errorLabel;
 
-
 // --------------------------------------- Handle Order Report Request ---------------------------------------------- //
 
     /**
@@ -115,8 +114,23 @@ public class ChooseReportController extends AbstractController {
                 // TODO: handle exception
             }
         }
-
     }
+
+    // ------------------------------------ Handle Customer Report Request ------------------------------------------ //
+
+
+//    public void CustomerReportImgClick() {
+//        // validate details
+//        if (validateDateInput()) {
+//            try {
+//                StockStatusReportController.setDetails(month, year);
+//                start("StockStatusReportScreen", "Stock Status Report");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                // TODO: handle exception
+//            }
+//        }
+//    }
 
 
     /**
@@ -126,8 +140,11 @@ public class ChooseReportController extends AbstractController {
     @Override
     public void back(MouseEvent event) {
         try {
+            String title = "Region Manager Dashboard";
             // go back to previous screen
-            start("RegionManagerMainScreen", "Region Manager Dashboard");
+            if(myUser.getRole().equals("ceo"))
+                title = "CEO Dashboard";
+            start("RegionManagerMainScreen", title);
         } catch (IOException e) {
             // TODO: handle exception
         }

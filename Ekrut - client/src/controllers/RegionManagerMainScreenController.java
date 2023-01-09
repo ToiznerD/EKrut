@@ -24,6 +24,13 @@ public class RegionManagerMainScreenController extends AbstractController implem
     public static Integer regionID;
     public static String regionName;
 
+    @FXML
+    Button manageInventoryBtn;
+    @FXML
+    Button approveEmployeesBtn;
+    @FXML
+    Button viewReportsBtn;
+
     /**
      * JavaFX Initializable interface method, sends a query to db to get locations according to region
      * @param url
@@ -33,6 +40,10 @@ public class RegionManagerMainScreenController extends AbstractController implem
         sendMsg(prepareLocationsMsg());
         saveStoreMap();
         getRegion();
+        if (myUser.getRole().equals("ceo")) {
+            manageInventoryBtn.setVisible(false);
+            approveEmployeesBtn.setVisible(false);
+        }
     }
 
     /**
@@ -113,7 +124,19 @@ public class RegionManagerMainScreenController extends AbstractController implem
         try {
             start("ManageInventoryScreen", "Manage Inventory");
         } catch (Exception e) {
-// TODO: handle exception
+        // TODO: handle exception
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * loads the approve employees screen
+     */
+    public void approveEmployeesBtnClick() {
+        try {
+            start("ApproveCustomersScreen", "Approve new Customers");
+        } catch (Exception e) {
+            // TODO: handle exception
             e.printStackTrace();
         }
     }
@@ -142,7 +165,7 @@ public class RegionManagerMainScreenController extends AbstractController implem
         }
     }
 
-    // have to implement
+
     @Override
     public void back(MouseEvent event) {
     }

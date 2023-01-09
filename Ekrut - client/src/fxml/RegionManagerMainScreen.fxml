@@ -24,12 +24,12 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="manageInventoryBtn" layoutX="241.0" layoutY="153.0" mnemonicParsing="false" onAction="#ManageInventoryClick" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Manage Inventory">
+      <Button fx:id="manageInventoryBtn" layoutX="197.0" layoutY="101.0" mnemonicParsing="false" onAction="#ManageInventoryClick" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Manage Inventory">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="viewReportsBtn" layoutX="31.0" layoutY="153.0" mnemonicParsing="false" onAction="#viewReportsClick" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="View Reports">
+      <Button fx:id="viewReportsBtn" layoutX="197.0" layoutY="175.0" mnemonicParsing="false" onAction="#viewReportsClick" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="View Reports">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
@@ -44,5 +44,10 @@
             <Image url="@../../images/logout%20icon.png" />
          </image>
       </ImageView>
+      <Button fx:id="approveEmployeesBtn" layoutX="179.0" layoutY="246.0" mnemonicParsing="false" onAction="#approveEmployeesBtnClick" prefHeight="50.0" prefWidth="208.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve new Employees">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

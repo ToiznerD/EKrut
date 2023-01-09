@@ -1,6 +1,5 @@
 package controllers;
 
-import Entities.OrderReport;
 import Entities.StockReport;
 import Entities.StoreProduct;
 import Util.Msg;
@@ -10,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -17,15 +17,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 public class StockStatusReportController extends AbstractController {
     private static String month, year;
-    protected static List<StockReport> lastThreeReports;
-    private static StockReport targetStockReport;
     private ObservableList<StoreProduct> itemObsList;
+    private static StockReport targetStockReport;
+    protected static List<StockReport> lastReports;
+    protected HashMap<String, Integer> targetReportsItemsMap;
+    protected ArrayList<HashMap<String, Integer>> lastReportsItemsMaps;
+
 
     @FXML
     BarChart dataBarGraph;
@@ -39,6 +40,10 @@ public class StockStatusReportController extends AbstractController {
     TableColumn<StoreProduct, String> productCol;
     @FXML
     TableColumn<StoreProduct, Integer> quantityCol;
+    @FXML
+    Label errorLabel;
+
+
 
     @FXML
     public void initialize() {
@@ -63,31 +68,97 @@ public class StockStatusReportController extends AbstractController {
      * present a stock status report to user
      * @return
      */
-    public boolean getStockStatusReportDetails(ActionEvent event) {
+    public void getStockStatusReportDetails(ActionEvent event) {
+        // reset all info on screen when an option is clicked
+        errorLabel.setText("");
+        itemObsList.clear();
+        dataBarGraph.getData().clear();
+
         // get query
         String storeLocation = locationsComboBox.getSelectionModel().getSelectedItem().toString();
         String query = getStockStatusReportQuery(storeLocation);
         msg = new Msg(Tasks.getStockStatusReport, query);
         sendMsg(msg);
 
+        // if query failed - there is no report
+        if (!msg.getBool()) {
+            errorLabel.setText("* Report does not exist");
+            return;
+        }
+
         targetStockReport = msg.getArr(StockReport.class).get(0);
-        fillProductList();
 
-        int lastReportsFetchedS = getQueryForLastThreeReports(storeLocation);
+        fillProductTable();
 
-        // fill barChart
-        // fill table of products
+        boolean savedLastReportsSuccessfully = getLastReports(storeLocation);
+        if (savedLastReportsSuccessfully) {
+            createLastReportsItemsHashMaps();
+        }
 
-        return true;
+        loadDataToBarGraph(savedLastReportsSuccessfully);
 
+        return;
+    }
+
+    /**
+     * fills the barGraph with data we fetched earlier
+     * @param savedLastReportsSuccessfully boolean, indicating if there are past reports to load data to graph
+     */
+    private void loadDataToBarGraph (boolean savedLastReportsSuccessfully) {
+        // Set up the serieses for barChart
+        XYChart.Series currReport = new XYChart.Series();
+        currReport.setName("Current Report Items");
+        XYChart.Series prevReport = new XYChart.Series();
+
+
+        // save the data in the barGraph
+        for (HashMap.Entry<String, Integer> itemSet : targetReportsItemsMap.entrySet()) {
+            currReport.getData().add(new XYChart.Data(itemSet.getKey(), itemSet.getValue()));
+            if (savedLastReportsSuccessfully) {
+                // Gather last reports info only if it was saved successfully, otherwise no info to gather
+                int sum = 0, appearance_cnt = 0;
+                for (HashMap<String, Integer> itemMap : lastReportsItemsMaps) {
+                    try {
+                        sum += itemMap.get(itemSet.getKey());
+                        appearance_cnt += 1;
+                    } catch (NullPointerException e) { }
+                }
+                if (appearance_cnt > 0)
+                    prevReport.getData().add(new XYChart.Data(itemSet.getKey(), sum / appearance_cnt));
+            }
+        }
+        dataBarGraph.getData().addAll(currReport);
+        if (savedLastReportsSuccessfully)
+            prevReport.setName("Average of Last " + lastReports.size() + " Reports");
+            dataBarGraph.getData().addAll(prevReport);
+    }
+
+    /**
+     * Save array of HashMaps for last report's items to get easily for the calculation phase
+     */
+    private void createLastReportsItemsHashMaps() {
+        lastReportsItemsMaps = new ArrayList<>();
+        for (int i = 0; i < lastReports.size(); i++) {
+            // extract report
+            StockReport currStockReport = lastReports.get(i);
+            // create new hashmap for items
+            HashMap<String, Integer> itemMap = new HashMap<>();
+            // parse item data
+            String[] currReportstockData = currStockReport.getStockData().split(",");
+            // insert to hashMap
+            for (int j = 0; j < currReportstockData.length; j = j + 2) {
+                itemMap.put(currReportstockData[j], Integer.valueOf(currReportstockData[j + 1]));
+            }
+            lastReportsItemsMaps.add(itemMap);
+        }
     }
 
     /**
      * Save last three reports in a field
      * @param storeLocation store were querying about
-     * @return number of last reports that were found
+     * @return true if reports were found, false ptherwise
      */
-    private int getQueryForLastThreeReports(String storeLocation) {
+    private boolean getLastReports(String storeLocation) {
         // Parse the month and year strings
         int month1 = Integer.parseInt(month);
         int year1 = Integer.parseInt(year);
@@ -103,7 +174,7 @@ public class StockStatusReportController extends AbstractController {
         // store the last three months and years
         for (int i = 0; i < 3; i++) {
             // roll one month back
-            calendar.roll(Calendar.MONTH, -1);
+            calendar.add(Calendar.MONTH, -1);
             // build string
             query.append("(month = " + calendar.get(Calendar.MONTH) + " AND year = " + calendar.get(Calendar.YEAR) + ")");
             if (i!=2)
@@ -113,11 +184,11 @@ public class StockStatusReportController extends AbstractController {
         msg = new Msg(Tasks.getStockStatusReport, query.toString());
         sendMsg(msg);
 
-        if (msg.getInt() > 0) {
-            lastThreeReports = msg.getArr(StockReport.class);
-            return msg.getInt();
+        if (msg.getBool()) {
+            lastReports = msg.getArr(StockReport.class);
+            return true;
         } else {
-            return 0;
+            return false;
         }
     }
 
@@ -135,17 +206,26 @@ public class StockStatusReportController extends AbstractController {
 
     /**
      * add store products to observable list to be displayed to the user
+     * and add them to targetReportsItemsMap field
      */
-    private void fillProductList() {
+    private void fillProductTable() {
+        itemObsList.clear();
+        targetReportsItemsMap = new HashMap<>();
         String stock_data = targetStockReport.getStockData();
         String dataArr[] = stock_data.split(",");
         for (int i=0; i<dataArr.length; i=i+2) {
-            itemObsList.add(new StoreProduct(Integer.parseInt(dataArr[i+1]), dataArr[i]));
+            itemObsList.add(new StoreProduct(Integer.valueOf(dataArr[i+1]), dataArr[i]));
+            targetReportsItemsMap.put(dataArr[i], Integer.valueOf(dataArr[i+1]));
         }
     }
 
     @Override
     public void back(MouseEvent event) {
-        // Not implemented yet
+        try {
+            start("ChooseReportScreen", "Choose Report");
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
     }
 }
