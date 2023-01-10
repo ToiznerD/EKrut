@@ -31,6 +31,7 @@ public abstract class AbstractController {
 		Scene scene = new Scene(root);
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
+
 		if (fxml != "ConnectionConfig") {
 			prStage.setOnCloseRequest(event -> {
 				logoutFromDb();

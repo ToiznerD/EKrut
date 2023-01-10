@@ -3,6 +3,7 @@ package controllers;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,8 +18,8 @@ import Entities.OrderProduct;
 
 public class CatlogCellController {
 
-	private static String imgPath = "C:\\Users\\nave1\\Downloads\\"; ///// Need Change///////
-	private static String defaultImg = "C:\\Users\\nave1\\Downloads\\cola.png"; ///// Need C
+	private static String imgPath = Paths.get("\\images\\").toAbsolutePath().toString();
+	private static String defaultImg = Paths.get("\\images\\defaultCatlogImg.png").toAbsolutePath().toString();
 	private OrderProduct product;
 	@FXML
 	private AnchorPane root;
