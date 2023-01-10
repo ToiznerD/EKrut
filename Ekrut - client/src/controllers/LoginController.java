@@ -118,6 +118,11 @@ public class LoginController extends AbstractController {
 						login();
 						start("RegionManagerMainScreen", "Region Manager Dashboard");
 						break;
+
+					case "ceo":
+						start("RegionManagerMainScreen", "CEO Dashboard");
+						break;
+
 					case "operation_employee":
 						login();
 						start("OperationEmpPanel", "Operation Employee Dashboard");

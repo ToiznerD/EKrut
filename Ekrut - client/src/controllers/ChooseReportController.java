@@ -3,6 +3,7 @@ package controllers;
 import Entities.OrderReport;
 import Util.Msg;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -21,14 +22,14 @@ public class ChooseReportController extends AbstractController {
     @FXML
     Label errorLabel;
 
-
+// --------------------------------------- Handle Order Report Request ---------------------------------------------- //
 
     /**
      * proceed to next screen when clicking on the order report Img
      */
     public void OrdersReportImgClick() {
         // validate details
-        if (getReportDetails()) {
+        if (getOrderReportDetails()) {
             try {
                 OrderReportController.setDetails(month, year);
                 start("orderReportScreen", "Order Report");
@@ -42,16 +43,13 @@ public class ChooseReportController extends AbstractController {
      * validates the report details, query the db for order reports, and save it in the report screen controller
      * @return
      */
-    private boolean getReportDetails() {
-        year = yearTxtField.getText();
-        month = monthTxtField.getText();
-        if (year.equals("") || month.equals("")) {
-            errorLabel.setText("* Please enter valid date");
+    private boolean getOrderReportDetails() {
+        // validate date input
+        if (!validateDateInput())
             return false;
-        }
 
         // get query
-        String query = getReportQuery();
+        String query = getOrderReportQuery();
 
         // get report and save it for next screen controller, if dont exist show msg
         msg = new Msg(getOrderReports, query);
@@ -66,15 +64,28 @@ public class ChooseReportController extends AbstractController {
         return true;
     }
 
+    /**
+     * Check if ant field was left empty
+     * @return true if noth not empty, false otherwise
+     */
+    private boolean validateDateInput() {
+        year = yearTxtField.getText();
+        month = monthTxtField.getText();
+        if (year.equals("") || month.equals("")) {
+            errorLabel.setText("* Please enter valid date");
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Generates a query to get appropriate reports, according to user role
      * @return a db query to get all appropriate reports according to role and date that was passed
      */
-    private String getReportQuery() {
+    private String getOrderReportQuery() {
         String query;
         if (myUser.getRole().equals("region_manager")) {
-            query = "SELECT s_name, num_orders, total_profit FROM order_report\n" +
+            query = "SELECT DISTINCT s_name, num_orders, total_profit FROM order_report\n" +
                     "INNER JOIN store ON order_report.s_name = store.name\n" +
                     "INNER JOIN regions ON store.rid = " + RegionManagerMainScreenController.regionID + "\n" +
                     "WHERE month = " + month + " AND year = " + year + " AND regions.rid = store.rid";
@@ -86,6 +97,42 @@ public class ChooseReportController extends AbstractController {
     }
 
 
+// ------------------------------------ Handle Stock Status Report Request ------------------------------------------ //
+
+
+    /**
+     * proceed to next screen when clicking on the stock status report Img
+     */
+    public void StockStatusReportImgClick() {
+        // validate details
+        if (validateDateInput()) {
+            try {
+                StockStatusReportController.setDetails(month, year);
+                start("StockStatusReportScreen", "Stock Status Report");
+            } catch (IOException e) {
+                e.printStackTrace();
+                // TODO: handle exception
+            }
+        }
+    }
+
+    // ------------------------------------ Handle Customer Report Request ------------------------------------------ //
+
+
+//    public void CustomerReportImgClick() {
+//        // validate details
+//        if (validateDateInput()) {
+//            try {
+//                StockStatusReportController.setDetails(month, year);
+//                start("StockStatusReportScreen", "Stock Status Report");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                // TODO: handle exception
+//            }
+//        }
+//    }
+
+
     /**
      * goes back to Region manager main screen
      * @param event captures mouse event
@@ -93,8 +140,11 @@ public class ChooseReportController extends AbstractController {
     @Override
     public void back(MouseEvent event) {
         try {
+            String title = "Region Manager Dashboard";
             // go back to previous screen
-            start("RegionManagerMainScreen", "Region Manager Dashboard");
+            if(myUser.getRole().equals("ceo"))
+                title = "CEO Dashboard";
+            start("RegionManagerMainScreen", title);
         } catch (IOException e) {
             // TODO: handle exception
         }
