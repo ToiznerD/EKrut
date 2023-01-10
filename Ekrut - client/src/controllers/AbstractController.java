@@ -60,7 +60,7 @@ public abstract class AbstractController {
 
 	public static void Notify() { //Nave
 		synchronized (monitor) {
-			monitor.notifyAll();
+			monitor.notify();
 		}
 	}
 	

@@ -34,7 +34,6 @@ public class serverBackEnd extends AbstractServer {
 			msg = new Msg(Tasks.popUp, taskMsg.getID(),taskMsg.getAlertMsg());
 			try {
 				sendMsg(connectedUsers.get(taskMsg.getID()), taskMsg);
-//				client.notifyAll();//without notify its crushes
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
