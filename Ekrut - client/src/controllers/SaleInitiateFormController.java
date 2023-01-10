@@ -84,7 +84,6 @@ public class SaleInitiateFormController extends AbstractController {
     	String regionsQuery = "SELECT name FROM regions";
     	msg = new Msg(Tasks.Select, regionsQuery);
     	sendMsg(msg);
-    	
     	ObservableList<StringBuilder> regionsList = FXCollections.observableArrayList(msg.getArr(StringBuilder.class));
     	lstRegion.setItems(regionsList);
     	
