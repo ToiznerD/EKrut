@@ -37,7 +37,6 @@ public class AbstractOrderController extends AbstractController {
 	@Override
 	public void setUp(Object... objects) {
 		setTimer();
-
 	}
 
 	@Override
