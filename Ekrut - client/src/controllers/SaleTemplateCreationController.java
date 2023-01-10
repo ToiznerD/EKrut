@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 
 
 /**
- * A controller class for a JavaFX application that allows users to create sale templates.
+ * A controller class for a JavaFX application that allows marketing managers to create sale templates.
  * 
  * @author [Raz]
  */
@@ -108,6 +108,7 @@ public class SaleTemplateCreationController extends AbstractController{
     		String query = "INSERT into sale_template (templateName, discount)" + "VALUES ('" + txtTemplateName.getText() + "' , " + discount +")";
 	    	msg = new Msg(Tasks.Insert, query);
 	    	sendMsg(msg);
+	    	
 	    	//Display a confirmation pop-up message and resetting the fields
 			Alert alert = new Alert(Alert.AlertType.NONE, "Sale template creation succeeded !", ButtonType.FINISH);
 	        alert.setTitle("Success");
@@ -123,11 +124,19 @@ public class SaleTemplateCreationController extends AbstractController{
 		}
     }
     
+    /**
+     * Resets the fields on the GUI to their default state.
+     */
     public void resetFields() {
         txtTemplateName.setText("");
         txtDiscount.setText("");
     }
 	    
+    /**
+     * Handles the mouse event of the back button.
+     * 
+     * @param event the mouse event that triggered this method
+     */
 	@Override
 	public void back(MouseEvent event) {
 		try {
@@ -139,13 +148,6 @@ public class SaleTemplateCreationController extends AbstractController{
 
 	@Override
 	public void setUp(Object... objects) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public static void main(String[] args) {
-		double discount = Double.parseDouble("85");
-		discount =  1 - (discount / 100.00);
-		System.out.println(discount);
+		//Not implemented		
 	}
 }

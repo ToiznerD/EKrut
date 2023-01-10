@@ -19,6 +19,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * A controller class for a JavaFX application that allows marketing managers to initiate sales.
+ * 
+ * @author [Raz]
+ */
 public class SaleInitiateFormController extends AbstractController {
 
     @FXML
@@ -295,6 +300,9 @@ public class SaleInitiateFormController extends AbstractController {
     	}
     }
     
+    /**
+     * Resets the fields on the GUI to their default state.
+     */
     public void resetFields() {
         lstSaleTemplate.setValue(null);
         lstRegion.setValue(null);
@@ -324,8 +332,7 @@ public class SaleInitiateFormController extends AbstractController {
 
 	@Override
 	public void setUp(Object... objects) {
-		// TODO Auto-generated method stub
-		
+		//Not implemented
 	}
 }
 
