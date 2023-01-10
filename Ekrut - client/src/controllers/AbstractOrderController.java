@@ -17,6 +17,10 @@ public class AbstractOrderController extends AbstractController {
 	public void onMouseMove(MouseEvent e) {
 		if (task != null)
 			task.cancel();
+		setTimer();
+	}
+
+	private void setTimer() {
 		task = new TimerTask() {
 			@Override
 			public void run() {
@@ -32,7 +36,7 @@ public class AbstractOrderController extends AbstractController {
 
 	@Override
 	public void setUp(Object... objects) {
-		// TODO Auto-generated method stub
+		setTimer();
 
 	}
 

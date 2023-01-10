@@ -121,6 +121,7 @@ public class OrderScreenController extends AbstractOrderController {
 
 	@Override
 	public void setUp(Object... objects) {
+		super.setUp();
 		this.shopID = (int) objects[0];
 		installDiscount();
 		productOList.addAll(getProductList());

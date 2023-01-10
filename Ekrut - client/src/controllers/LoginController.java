@@ -95,7 +95,7 @@ public class LoginController extends AbstractController {
 								return;
 							}
 							login();
-							start("Customer", "Customer Dashboard");
+							start("CustomerPanel", "Customer Dashboard");
 						}
 						break;
 						
