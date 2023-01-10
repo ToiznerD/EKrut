@@ -46,31 +46,6 @@ public class ConnectionController extends AbstractController {
 			try {
 				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
 				
-				/*// Show a dialog box with two options: "OL" and "EK"
-			    String[] options = {"OL", "EK"};
-			    int choice = JOptionPane.showOptionDialog(null, "Please choose OL or EK", "Configuration Choice", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-
-			    // Save the user's choice
-			    if (choice == 0) {
-			      config = "OL";
-			    } else if (choice == 1) {
-			      config = "EK";
-			      
-			      // Ask for Store ID
-			      String storeString = null;
-			      while(storeString == null || storeString.equals("")) {
-			    	  storeString = JOptionPane.showInputDialog(null, "Enter the store ID:", "Store ID Input", JOptionPane.PLAIN_MESSAGE);
-			      }
-			      String query = "SELECT * FROM store WHERE sid =" + Integer.parseInt(storeString);
-			      msg = new Msg(Tasks.Select, query);
-			      sendMsg(msg);
-			      if(!msg.getBool()) {
-						JOptionPane.showMessageDialog(null, "Invalid ID", "Error", JOptionPane.ERROR_MESSAGE);
-						//ClientBackEnd.getInstance().closeConnection();
-						return;
-					}
-			    }*/
-				
 				ChoiceDialog<String> dialog = new ChoiceDialog<>("EK", "EK", "OL");
 		        dialog.setTitle("Choice Dialog");
 		        dialog.setHeaderText("Choose between EK and OL");

@@ -125,7 +125,7 @@ public class LoginController extends AbstractController {
 							
 							//All good
 							login();
-							start("Customer", "Customer Dashboard");
+							start("CustomerPanel", "Customer Dashboard");
 						}
 						break;
 						
@@ -183,14 +183,8 @@ public class LoginController extends AbstractController {
 	 * @throws IOException if an I/O error occurs while communicating with the app
 	 */
 	public void ConnectWithApp(ActionEvent event) throws IOException {
-			/*// Prompt the user to enter their ID
-			String idString = JOptionPane.showInputDialog(null, "Please enter your ID:", "Login", JOptionPane.QUESTION_MESSAGE);
-			
-			// Parse the ID into an integer, or set it to 0 if the user cancelled the input dialog
-			int id = idString != null ? Integer.parseInt(idString) : 0;
-			*/
 		
-		// Ask for Store ID
+		// Ask for Store 
 	      String idString = null;
 	      while(idString == null || idString.equals("")) {
 	    	// create the text input dialog
@@ -222,16 +216,6 @@ public class LoginController extends AbstractController {
 		          alert.showAndWait();
 		          return;
 	      }
-			// Get the username and password for the given ID
-//		    query = String.format("SELECT * FROM users WHERE id = %d", id);
-//			msg = new Msg(Tasks.Login, Tasks.Select, query);
-//			sendMsg(msg);
-			
-//			// Check if the given ID is valid
-//			if(!msg.getBool()) {
-//				JOptionPane.showMessageDialog(null, "Invalid ID", "Error", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
 			
 			// Save the username and password
 			userid = msg.getObj(1);

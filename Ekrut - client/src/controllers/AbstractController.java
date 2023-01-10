@@ -24,6 +24,7 @@ public abstract class AbstractController {
 	public static String config;
 	public static int storeID;
 
+
 	public void start(String fxml, String title, Object... objects) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
 		Parent root = load.load();
@@ -32,12 +33,13 @@ public abstract class AbstractController {
 		Scene scene = new Scene(root);
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
-		if (fxml != "ConnectionConfig")
+		if (fxml != "ConnectionConfig") {
 			prStage.setOnCloseRequest(event -> {
-				if(!fxml.equals("LoginForm")) logout();;
+				logoutFromDb();
 				ClientBackEnd.getInstance().quit();
 				System.exit(0);
 			});
+		}
 		prStage.setResizable(false);
 		prStage.show();
 	}
@@ -67,11 +69,17 @@ public abstract class AbstractController {
 		}
 	}
 
+	public void logoutFromDb() {
+		if (myUser != null) {
+			String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
+			msg = new Msg(Tasks.Logout, logoutQuery);
+			sendMsg(msg);
+			myUser = null;
+		}
+	}
+
 	public void logout() {
-		String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
-		msg = new Msg(Tasks.Logout, logoutQuery);
-		sendMsg(msg);
-		myUser = null;
+		logoutFromDb();
 		try {
 			start("LoginForm", "Login");
 		} catch (IOException e) {
