@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.util.Optional;
-
 import Entities.User;
 import Util.Msg;
 import Util.Tasks;
@@ -69,12 +68,39 @@ public class LoginController extends AbstractController {
 		
 		if(myUser != null) {
 			if (!myUser.isLogged()) {
-				String role = myUser.getRole();
-				switch (role) {
-					case "new_user":
+				
+				// EK Configuration
+				if(config.equals("EK")) {
+					//Get the customer status
+					String customerQuery = "SELECT status FROM customer WHERE id = " + myUser.getId();
+					msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
+					sendMsg(msg);
+					
+					// customer?
+					if(msg.getBool()) {
+						// Customer Not Approved
+						if(msg.getObj(0).equals("Not Approved")) {
+							login();
+							start("UserPanel", "User Dashboard");
+							return;
+						}
+						login();
+						start("CustomerPanel", "Customer Dashboard");
+						return;
+					} else { // Not a customer
 						login();
 						start("UserPanel", "User Dashboard");
-						break;
+						return;
+					}
+				}
+				
+				//OL Configuration
+				String role = myUser.getRole();
+				switch (role) {
+//					case "new_user":
+//						login();
+//						start("UserPanel", "User Dashboard");
+//						break;
 						
 					case "customer":
 						//Get the customer status
@@ -85,15 +111,19 @@ public class LoginController extends AbstractController {
 						//Check if the customer has been approved
 						//Validates that the customer is a subscriber
 						if(msg.getBool()) {
+							//Customer not approved
 							if(msg.getObj(0).equals("Not Approved")) {
 								login();
 								start("UserPanel", "User Dashboard");
 								return;
 							}
-							else if((int)msg.getObj(1) == 0 && config.equals("OL")) {
+							//Approved but not a subscriber
+							else if(!(boolean)msg.getObj(1)) {
 								errMsgLbl.setText("You need to be a subscriber to login here");
 								return;
 							}
+							
+							//All good
 							login();
 							start("CustomerPanel", "Customer Dashboard");
 						}
@@ -128,6 +158,8 @@ public class LoginController extends AbstractController {
 						start("OperationEmpPanel", "Operation Employee Dashboard");
 						break;
 					default:
+						login();
+						start("UserPanel", "User Dashboard");
 						break;
 				}
 			} else 
@@ -151,14 +183,8 @@ public class LoginController extends AbstractController {
 	 * @throws IOException if an I/O error occurs while communicating with the app
 	 */
 	public void ConnectWithApp(ActionEvent event) throws IOException {
-			/*// Prompt the user to enter their ID
-			String idString = JOptionPane.showInputDialog(null, "Please enter your ID:", "Login", JOptionPane.QUESTION_MESSAGE);
-			
-			// Parse the ID into an integer, or set it to 0 if the user cancelled the input dialog
-			int id = idString != null ? Integer.parseInt(idString) : 0;
-			*/
 		
-		// Ask for Store ID
+		// Ask for Store 
 	      String idString = null;
 	      while(idString == null || idString.equals("")) {
 	    	// create the text input dialog
@@ -190,16 +216,6 @@ public class LoginController extends AbstractController {
 		          alert.showAndWait();
 		          return;
 	      }
-			// Get the username and password for the given ID
-//		    query = String.format("SELECT * FROM users WHERE id = %d", id);
-//			msg = new Msg(Tasks.Login, Tasks.Select, query);
-//			sendMsg(msg);
-			
-//			// Check if the given ID is valid
-//			if(!msg.getBool()) {
-//				JOptionPane.showMessageDialog(null, "Invalid ID", "Error", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
 			
 			// Save the username and password
 			userid = msg.getObj(1);
