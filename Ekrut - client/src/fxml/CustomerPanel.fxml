@@ -39,7 +39,7 @@
             <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnPickupOrder" layoutX="106.0" layoutY="209.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Pickup order">
+      <Button fx:id="btnPickup" layoutX="106.0" layoutY="200.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Pickup">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
