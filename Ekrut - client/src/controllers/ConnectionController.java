@@ -10,12 +10,10 @@ import Util.Tasks;
 import client.ClientBackEnd;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 
 public class ConnectionController extends AbstractController {

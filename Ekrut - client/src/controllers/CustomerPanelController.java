@@ -2,14 +2,13 @@ package controllers;
 
 import Util.Msg;
 import Util.Tasks;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-public class CustomerPanelController extends AbstractController{
-	private boolean subscriber;
+public class CustomerPanelController extends AbstractController {
+	private boolean subscriber; // raz
 
     @FXML
     private Button btnLogout;
@@ -17,6 +16,7 @@ public class CustomerPanelController extends AbstractController{
     @FXML
     private Button btnMakeOrder;
     
+    @FXML
     private Button btnPickup;
     
     @FXML
@@ -38,6 +38,7 @@ public class CustomerPanelController extends AbstractController{
 			btnPickup.setDisable(true);
 			btnPickup.setVisible(false);
 		}
+		subscriber = (boolean)msg.getObj(0); //raz
     }
 	@Override
 	public void back(MouseEvent event) {
@@ -46,7 +47,7 @@ public class CustomerPanelController extends AbstractController{
 	
 	public void MakeOrder() {
 		try {
-			start("OrderMethodForm","Order Method Form", subscriber);
+			start("OrderMethodForm","Order Method Form"); // raz
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,11 +55,19 @@ public class CustomerPanelController extends AbstractController{
 	
 	@Override
 	public void setUp(Object... objects) {
-		subscriber = (boolean) objects[0];
-		
-		//if no subscriber, hide pickup option
-		btnPickup.setVisible(subscriber);
-		btnPickup.setDisable(subscriber);
+		//Not implemented
 	}
+	
+	//raz
+//	@Override
+//	public void setUp(Object... objects) {
+//		subscriber = (boolean) objects[0];
+//		
+//		if(config.equals("OL") || !subscriber) {
+//			//if no subscriber or in OL configuration , hide pickup option
+//			btnPickup.setVisible(subscriber);
+//			btnPickup.setDisable(subscriber);
+//		}
+//	}
 
 }

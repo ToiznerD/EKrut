@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderMethodFormController">
    <children>
       <ImageView fitHeight="184.0" fitWidth="180.0" layoutX="347.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -22,34 +22,26 @@
             <Font name="System Bold Italic" size="40.0" />
          </font>
       </Label>
-      <Button layoutX="21.0" layoutY="333.0" mnemonicParsing="false" style="-fx-background-color: 0;">
-         <graphic>
-            <ImageView fitHeight="45.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/back%20icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <RadioButton layoutX="32.0" layoutY="109.0" mnemonicParsing="false" style="-fx-border-color: #;" text="Pick up">
+      <RadioButton fx:id="rbPickup" layoutX="33.0" layoutY="116.0" mnemonicParsing="false" onAction="#pickupSelected" text="Pickup">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </RadioButton>
-      <RadioButton layoutX="32.0" layoutY="155.0" mnemonicParsing="false" style="-fx-border-color: #;" text="Delivery">
+      <RadioButton fx:id="rbDelivery" layoutX="33.0" layoutY="158.0" mnemonicParsing="false" onAction="#deliverySelected" text="Delivery">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </RadioButton>
-      <Button layoutX="385.0" layoutY="346.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Proceed to order">
+      <Button fx:id="btnProceed" layoutX="385.0" layoutY="346.0" mnemonicParsing="false" onAction="#ProceedToOrderbutton" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Proceed to order">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <ComboBox fx:id="lstRegions" layoutX="149.0" layoutY="109.0" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose location" style="-fx-background-color: orange;" />
+      <ComboBox fx:id="lstStore" layoutX="137.0" layoutY="116.0" onAction="#checkStore" opacity="0.7" prefHeight="25.0" prefWidth="118.0" promptText="Choose store" style="-fx-background-color: orange;" visible="false" />
       <AnchorPane fx:id="apDetails" layoutX="21.0" layoutY="200.0" prefHeight="136.0" prefWidth="357.0" visible="false">
          <children>
-            <Label layoutX="14.0" layoutY="14.0" text="Supply Details:">
+            <DatePicker fx:id="supplyDate" layoutX="115.0" layoutY="11.0" onAction="#checkDate" prefHeight="26.0" prefWidth="118.0" promptText="Choose a date" />
+            <Label layoutX="14.0" layoutY="14.0" text="Supply date:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -64,18 +56,37 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <DatePicker fx:id="lstSupplyDate" layoutX="131.0" layoutY="11.0" prefHeight="26.0" prefWidth="160.0" promptText="Choose a date" />
-            <Label fx:id="lblAddress" layoutX="86.0" layoutY="47.0" prefHeight="20.0" prefWidth="278.0" text="Haifa, Neve Sha'anan, Dultchin Arie 5/2">
+            <Label fx:id="lblAddress" layoutX="85.0" layoutY="47.0" prefHeight="20.0" prefWidth="278.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblRecieverDetails" layoutX="137.0" layoutY="80.0" prefHeight="20.0" prefWidth="219.0" text="Raz Ben - Aharon , 050-5551761">
+            <Label fx:id="lblRecieverDetails" layoutX="137.0" layoutY="80.0" prefHeight="20.0" prefWidth="219.0">
                <font>
                   <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblErrDate" layoutX="240.0" layoutY="16.0" prefHeight="17.0" prefWidth="131.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
+      <ImageView fitHeight="45.0" fitWidth="118.0" layoutX="20.0" layoutY="342.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/back%20icon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblErrStore" layoutX="259.0" layoutY="120.0" prefHeight="17.0" prefWidth="131.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblErrProceedButton" layoutX="394.0" layoutY="319.0" prefHeight="17.0" prefWidth="141.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
