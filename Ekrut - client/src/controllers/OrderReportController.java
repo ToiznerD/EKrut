@@ -50,9 +50,6 @@ public class OrderReportController extends AbstractController implements Initial
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-//        
-        
         // Set up label text
         String labelTxt = month + "\\" + year;
         if (myUser.getRole().equals("region_manager")) {
@@ -93,4 +90,10 @@ public class OrderReportController extends AbstractController implements Initial
             // TODO: handle exception
         }
     }
+
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
+	}
 }

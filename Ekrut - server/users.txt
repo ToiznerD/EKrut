@@ -1,0 +1,9 @@
+1	service	123	service	danny	0554334123	palmach	service@gmail.com	0
+2	not_customer	123	new_user	user1	0500000000	Derek hay	user1@gmail.com	0
+3	na_customer	123	customer	user2	0501111111	zalafim 5	user2@gmail.com	0
+4	a_customer	123	customer	user3	0502222222	keren hayseed	user3@gmail.com	0
+5	as_customer	123	customer	user4	0503333333	karma 2	user4@gmail.com	0
+6	nans_customer	123	customer	user5	0504444444	harel 31	user5@gmail.com	0
+7	region_manager	123	region_manager	yaniv	0505555555	radof 2	rm@gmail.com	0
+8	market_employee	123	marketing_employee	shaul	0506666666	ilanot 34	me@gmail.com	0
+9	market_manager	123	marketing_manager	eliyahu	0507777777	keren hayesod 91	mm@gmail.com	0

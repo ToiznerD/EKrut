@@ -6,7 +6,9 @@ import Util.Msg;
 import Util.Tasks;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +24,12 @@ public class CreateCustomerController extends AbstractController{
 
   @FXML
     private Button btnCreate;
+  
+  @FXML
+  private Button btnGetUser;
+  
+  @FXML
+  private Button btnReset;
 
     @FXML
     private Label errAddress;
@@ -36,13 +44,8 @@ public class CreateCustomerController extends AbstractController{
     private Label errName;
 
     @FXML
-    private Label errPassword;
-
-    @FXML
     private Label errPhone;
 
-    @FXML
-    private Label errUser;
 
     @FXML
     private Label lblErr;
@@ -60,14 +63,78 @@ public class CreateCustomerController extends AbstractController{
     private TextField txtName;
 
     @FXML
-    private TextField txtPassword;
-
-    @FXML
     private TextField txtPhone;
 
     @FXML
     private TextField txtUser;
-	   
+    
+    @FXML
+    private CheckBox chkboxSub;
+	
+    private int id;
+    
+    private String role;
+    
+    /**
+     * Gets the user information for the given username.
+     * Displays an error message if the user is not found or is not a new user.
+     */
+    public void getUser() {
+    		cleanErrors();
+    		String username = txtUser.getText();
+    		if(username.equals("")) {
+    			lblErr.setText("Please fill in a user");
+    			return;
+    		}
+    		
+    		// Get the user ID of the user
+    		String query2 = String.format("SELECT * FROM users WHERE user = '%s'", username);
+    		msg = new Msg(Tasks.CreateCustomer, Tasks.Select, query2);
+    		sendMsg(msg);
+    		
+    		if(!msg.getBool()) {
+    			lblErr.setText(username + " is not a valid username.");
+    			return;
+    		}
+    		
+    		id = msg.getObj(0);
+    		role = msg.getObj(3).equals("new_user") ? "customer" : msg.getObj(3);
+    		
+    		/*if(!msg.getObj(3).equals("new_user")) {
+    			lblErr.setText(msg.getObj(1) + " is not a new user!");
+    			return;
+    		}
+    		else
+    			lblErr.setText("");*/
+    		
+    		if(msg.getObj(4) != null)
+    			txtName.setText(msg.getObj(4));
+    		if(msg.getObj(5) != null)
+    			txtPhone.setText(msg.getObj(5));
+    		if(msg.getObj(6) != null)
+    			txtAddress.setText(msg.getObj(6));
+    		if(msg.getObj(7) != null)
+    			txtEmail.setText(msg.getObj(7));
+    		txtUser.setDisable(true);
+    		btnCreate.setDisable(false);
+    	}
+
+    /**
+     * Resets the form fields and enables the "Create" button.
+     */
+    public void reset() {
+    		cleanErrors();
+    		lblErr.setText("");
+    		txtUser.setText("");
+    		txtName.setText("");
+    		txtPhone.setText("");
+    		txtAddress.setText("");
+    		txtEmail.setText("");
+    		txtCC.setText("");
+    		chkboxSub.setSelected(false);
+    		txtUser.setDisable(false);
+    		btnCreate.setDisable(true);
+    	}
     
     /**
      * Handles the creation of a new customer. Validates input and adds the customer to the database.
@@ -77,13 +144,13 @@ public class CreateCustomerController extends AbstractController{
     @FXML
     void customerCreate(ActionEvent event) {
     	cleanErrors();
+    	
+    	if(txtUser.getText().equals("")) {
+    		lblErr.setText("No user has been located.");
+    		return;
+    	}
+    	
     	boolean legit = true;
-    	
-    	String username = txtUser.getText();
-    	if(username.equals("")) {errUser.setText("Please fill in"); legit = false;}
-    	
-    	String password = txtPassword.getText();
-    	if(password.equals("")) {errPassword.setText("Please fill in"); legit = false;}
     	
     	String name = txtName.getText();
     	if(name.equals("")) {errName.setText("Please fill in"); legit = false;}
@@ -100,39 +167,43 @@ public class CreateCustomerController extends AbstractController{
     	String creditcard = txtCC.getText();
     	if(creditcard.equals("")) {errCC.setText("Please fill in"); legit = false;}
     	
+    	boolean subscriber = chkboxSub.isSelected();
+    	
     	if(!legit) {
     		return;
     	}
-    	//Add user to users table
-    	String query = String.format("INSERT INTO users (user, password, role, name, phone, address, email, isLogged) "
-    			+ "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', 0)", username, password, "customer", name, phone, address, email);
-    	msg = new Msg(Tasks.CreateCustomer, Tasks.CreateCustomer_Insert_User, query);
+    	//Update user details
+    	String query = String.format("UPDATE users SET role='%s', name='%s', phone = '%s', address='%s', email='%s', isLogged=0 WHERE id=%d", role, name, phone, address, email, id);
+    	msg = new Msg(Tasks.CreateCustomer, Tasks.CreateCustomer_Update_User, query);
     	sendMsg(msg);
     	if(msg.getInt() == 0) {lblErr.setText("Something went wrong"); return;}
-    	
-    	//Get the user ID generated by user creation
-    	String query2 = String.format("SELECT id FROM users WHERE user = '%s'", username);
-    	msg = new Msg(Tasks.CreateCustomer, Tasks.Select, query2);
-    	sendMsg(msg);
-    	int id = msg.getObj(0);
+
     	
     	//Add customer to customer table
-    	String query3 = String.format("INSERT INTO customer (id, status, credit_card) VALUES (%d, '%s', '%s')", id, "Not Approved", creditcard);
+    	String query3 = String.format("INSERT INTO customer (id, status, credit_card, subscriber, first_order) VALUES (%d, '%s', '%s', %s, %s)", id, "Not Approved", creditcard, subscriber, subscriber);
     	msg = new Msg(Tasks.CreateCustomer, Tasks.CreateCustomer_Insert_Customer, query3);
     	sendMsg(msg);
     	
-    	if(msg.getInt() != 0)
-    		lblErr.setText(username + " has been added successfuly!");
-    	else
+    	if(msg.getInt() != 0) {
+			lblErr.setText(txtUser.getText() + " has been added successfuly!");
+			
+			//Email and SMS SIMULATION
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+	        alert.setTitle("Success");
+	        alert.setHeaderText("Customer successfuly registered");
+	        alert.setContentText("A confirmation with the details has been sent to: " + phone + ", " + email);
+	        alert.showAndWait();
+	        
+    		btnCreate.setDisable(true);
+    	} else
     		lblErr.setText("Something went wrong");
+
     }
     
     /**
      * Clean up all the error labels
      */
 	private void cleanErrors() {
-		errUser.setText("");
-		errPassword.setText("");
 		errName.setText("");
 		errPhone.setText("");
 		errAddress.setText("");
@@ -153,6 +224,12 @@ public class CreateCustomerController extends AbstractController{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void setUp(Object... objects) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

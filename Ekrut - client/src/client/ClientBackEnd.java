@@ -49,13 +49,9 @@ public class ClientBackEnd extends AbstractClient {
 
 	public void quit() {
 		try {
-			if(AbstractController.myUser != null)
-				abstractController.logout();
 			handleMessageFromClientUI(new Msg(Tasks.Disconnect,null));
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			System.exit(0);
 		}
 	}
 }

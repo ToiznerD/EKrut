@@ -9,6 +9,7 @@ public class ClientApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+
 		AbstractController abstractController = new ConnectionController();
 		AbstractController.prStage = primaryStage;
 		abstractController.start("ConnectionConfig", "Connection Config");
@@ -17,5 +18,5 @@ public class ClientApp extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 }

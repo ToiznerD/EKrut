@@ -1,9 +1,10 @@
 package controllers;
 
 import java.io.IOException;
+
+import Entities.User;
 import Util.Msg;
 import Util.Tasks;
-import Entities.User;
 import client.ClientBackEnd;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -22,20 +23,26 @@ public abstract class AbstractController {
 	public static Object monitor = new Object();
 	public static Msg msg;
 	public static User myUser;
+	public static String config;
+	public static int storeID;
 
-	public void start(String fxml, String title) throws IOException {
+
+	public void start(String fxml, String title, Object... objects) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
 		Parent root = load.load();
+		AbstractController controller = load.getController();
+		controller.setUp(objects);
 		Scene scene = new Scene(root);
-
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
-		prStage.setResizable(false);
-		if (fxml != "ConnectionConfig")
+		if (fxml != "ConnectionConfig") {
 			prStage.setOnCloseRequest(event -> {
+				logoutFromDb();
 				ClientBackEnd.getInstance().quit();
+				System.exit(0);
 			});
-		ClientBackEnd.setAbstractController(load.getController());
+		}
+		prStage.setResizable(false);
 		prStage.show();
 	}
 
@@ -63,13 +70,14 @@ public abstract class AbstractController {
 			monitor.notify();
 		}
 	}
-	
-	public void logout() throws IOException {
-		String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
-		msg = new Msg(Tasks.Logout, logoutQuery);
-		sendMsg(msg);
-		myUser = null;
-		start("LoginForm", "Login");
+
+	public void logoutFromDb() {
+		if (myUser != null) {
+			String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
+			msg = new Msg(Tasks.Logout, logoutQuery);
+			sendMsg(msg);
+			myUser = null;
+		}
 	}
 	
 	public void popupAlert(String msg) { //ERIK
@@ -92,6 +100,18 @@ public abstract class AbstractController {
 		}).start();
 	}
 	
+
+	public void logout() {
+		logoutFromDb();
+		try {
+			start("LoginForm", "Login");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public abstract void setUp(Object... objects);
+
 	public abstract void back(MouseEvent event);
 
 }

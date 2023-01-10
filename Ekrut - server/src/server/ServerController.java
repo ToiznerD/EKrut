@@ -8,6 +8,7 @@ import DBHandler.DBController;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -55,6 +56,10 @@ public class ServerController {
 
 	@FXML
 	private TableColumn<InetAddress, String> status_col;
+	
+	@FXML
+	private Button btnImport;
+	
 	private ObservableList<InetAddress> connectedObserv = FXCollections.observableArrayList();
 
 	public void connectToServer() {
@@ -122,5 +127,12 @@ public class ServerController {
 			System.exit(0);
 		}
 	}
-
+	
+	public void importUsers(ActionEvent event) {
+		if(sv.importUsers()) 
+			appendConsole("Users has been imported successfuly.");
+		else
+			appendConsole("Import has failed.");
+		
+	}
 }

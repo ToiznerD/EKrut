@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="740.0" style="-fx-background-color: #e8eaca; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="740.0" style="-fx-background-color: #e8eaca; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
    <children>
       <AnchorPane layoutX="14.0" layoutY="121.0" prefHeight="452.0" prefWidth="275.0" style="-fx-border-width: 3; -fx-border-color: #000000; -fx-border-radius: 25;">
          <children>
@@ -96,7 +96,7 @@
             <Font name="System Bold" size="32.0" />
          </font>
       </Label>
-      <TableView fx:id="connected_table" layoutX="300.0" layoutY="55.0" prefHeight="223.0" prefWidth="425.0" style="-fx-border-width: 3; -fx-border-color: #000000;">
+      <TableView fx:id="connected_table" layoutX="300.0" layoutY="55.0" prefHeight="186.0" prefWidth="425.0" style="-fx-border-width: 3; -fx-border-color: #000000;">
          <columns>
             <TableColumn fx:id="ip_col" prefWidth="118.4000244140625" text="IP" />
             <TableColumn fx:id="host_col" minWidth="0.0" prefWidth="180.00003051757812" text="Host" />
@@ -120,5 +120,13 @@
             <Image url="@../../../Ekrut%20-%20client/images/Server.png" />
          </image>
       </ImageView>
+      <Button fx:id="btnImport" layoutX="434.0" layoutY="250.0" mnemonicParsing="false" onAction="#importUsers" prefHeight="27.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #7fb975; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Import Users">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
