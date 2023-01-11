@@ -34,15 +34,20 @@
             <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnMakeOrder" layoutX="103.0" layoutY="131.0" mnemonicParsing="false" onAction="#MakeOrder" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Make new order">
+      <Button fx:id="btnMakeOrder" layoutX="103.0" layoutY="131.0" mnemonicParsing="false" onAction="#MakeOrder" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Make new order" visible="false">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnPickup" layoutX="103.0" layoutY="200.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Pickup">
+      <Button fx:id="btnPickup" layoutX="103.0" layoutY="200.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Pickup" visible="false">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
+      <Label fx:id="errLbl" layoutX="41.0" layoutY="159.0" prefHeight="50.0" prefWidth="532.0" textFill="RED">
+         <font>
+            <Font name="Tahoma Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
