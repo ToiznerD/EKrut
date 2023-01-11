@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.file.Paths;
 
+import Entities.OrderProduct;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,13 +15,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import Entities.OrderProduct;
 
 public class CatlogCellController {
 
-	private static String imgPath = Paths.get("src\\..\\images\\").toAbsolutePath().toString();
-	private static String defaultImg = Paths.get("src\\..\\images\\defaultCatlogImg.png").toAbsolutePath().toString();
+	private static String imgPath = Paths.get("src\\").toAbsolutePath().getParent().toString() + "\\images\\";
+	private static String defaultImg = imgPath + "defaultCatlogImg.png";
 	private OrderProduct product;
+
 	@FXML
 	private AnchorPane root;
 
@@ -40,10 +41,10 @@ public class CatlogCellController {
 	private Text lblPrice;
 
 	public void setTemplate(OrderProduct p) {
-		this.product = p;
-		lblID.setText(lblID.getText() + " " + String.valueOf(p.getProductID()));
-		lblName.setText(lblName.getText() + " " + p.getName());
-		lblPrice.setText(lblPrice.getText() + " " + String.valueOf(p.getPrice()) + " ₪");
+		product = p;
+		lblID.setText(String.valueOf(p.getProductID()));
+		lblName.setText(p.getName());
+		lblPrice.setText(String.valueOf(p.getPrice()) + " ₪");
 		img.setImage(buildImg(p.getName()));
 		product.getCartQuantProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -59,7 +60,7 @@ public class CatlogCellController {
 	private Image buildImg(String productName) {
 		InputStream stream = null;
 		try {
-			stream = new FileInputStream(imgPath + productName + ".png");
+			stream = new FileInputStream(imgPath + productName.toLowerCase() + ".png");
 		} catch (FileNotFoundException e) {
 			try {
 				stream = new FileInputStream(defaultImg);

@@ -22,7 +22,7 @@ public class OrderProduct {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(productID);
+		return Objects.hash(cartQuant, name, price, productID, quant);
 	}
 
 	@Override
@@ -34,7 +34,8 @@ public class OrderProduct {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderProduct other = (OrderProduct) obj;
-		return productID == other.productID;
+		return Objects.equals(cartQuant, other.cartQuant) && Objects.equals(name, other.name) && price == other.price
+				&& productID == other.productID && quant == other.quant;
 	}
 
 	public int getProductID() {
@@ -91,8 +92,5 @@ public class OrderProduct {
 
 	public void setPrice(int price) {
 		this.price = price;
-	}
-	public int getProductSum() {
-		return price*cartQuant.get();
 	}
 }

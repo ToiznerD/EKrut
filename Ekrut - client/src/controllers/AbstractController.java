@@ -21,7 +21,7 @@ public abstract class AbstractController {
 	public static Object monitor = new Object();
 	public static Msg msg;
 	public static User myUser;
-	public static String config;
+
 
 	public void start(String fxml, String title, Object... objects) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));

@@ -25,7 +25,12 @@ import Util.Tasks;
 public class OrderScreenController extends AbstractOrderController {
 	private ObservableList<OrderProduct> productOList = FXCollections.observableArrayList();
 	private ObservableList<OrderProduct> cartOList = FXCollections.observableArrayList();
+	private static final DecimalFormat decimal = new DecimalFormat("0.00");
+	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private int sum = 0;
+	private Double discount = 1.0;
+	private int shopID;
+
 	@FXML
 	private ListView<OrderProduct> catlogList, cartList;
 
@@ -41,10 +46,6 @@ public class OrderScreenController extends AbstractOrderController {
 	private Text discountPriceText;
 	@FXML
 	private Button checkoutBtn;
-	private int shopID;
-	private static final DecimalFormat decimal = new DecimalFormat("0.00");
-	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
-	private Double discount = 1.0;
 
 	@FXML
 	public void initialize() {
@@ -98,7 +99,6 @@ public class OrderScreenController extends AbstractOrderController {
 		sendMsg(msg);
 		return (ArrayList<OrderProduct>) msg.getArr(OrderProduct.class);
 
-
 	}
 
 	private void installDiscount() {
@@ -124,9 +124,9 @@ public class OrderScreenController extends AbstractOrderController {
 	public void setUp(Object... objects) {
 		super.setUp();
 		this.shopID = (int) objects[0];
+		installDiscount();
 		productOList.addAll(getProductList());
 		addListeners();
-		installDiscount();
 	}
 
 	@FXML

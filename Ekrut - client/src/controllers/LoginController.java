@@ -6,6 +6,7 @@ import java.util.Optional;
 import Entities.User;
 import Util.Msg;
 import Util.Tasks;
+import client.Config;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -90,12 +91,12 @@ public class LoginController extends AbstractController {
 								start("UserPanel", "User Dashboard");
 								return;
 							}
-							else if((int)msg.getObj(1) == 0 && config.equals("OL")) {
+							else if((int)msg.getObj(1) == 0 && Config.getConfig().equals("OL")) {
 								errMsgLbl.setText("You need to be a subscriber to login here");
 								return;
 							}
 							login();
-							start("OrderScreen", "Customer Dashboard",1);
+							start("CustomerPanel", "Customer Dashboard");
 						}
 						break;
 						
