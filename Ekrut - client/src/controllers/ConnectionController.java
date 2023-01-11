@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 import Util.Msg;
@@ -44,9 +46,11 @@ public class ConnectionController extends AbstractController {
 		if (port != -1) {
 			try {
 				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
-				msg = new Msg(Tasks.Select,"SELECT sid FROM store ORDER BY sid DESC LIMIT 1");
+				msg = new Msg(Tasks.Select,"SELECT name,sid FROM store");
 				sendMsg(msg);
-				Config.showDialog(msg.getObj(0));
+				HashMap<String,Integer> map = new HashMap<String, Integer>();
+				Config.showDialog(map,msg.getRawArray());
+				
 				start("LoginForm", "Login");
 			} catch (IOException e) {
 				errorLbl.setText("Error: cannot connect to remote\n" + ip + ":" + port);

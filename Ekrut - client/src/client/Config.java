@@ -8,13 +8,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
 
 public class Config {
 	private static Path pathToFile = Paths.get("src\\client\\Config.txt").toAbsolutePath();
+	private static HashMap<String, Integer> mapper;
 
 	public static String showFirstDialog() {
 		String config = null;
@@ -33,40 +38,49 @@ public class Config {
 		return config;
 	}
 
-	public static int showSecondDialog(String config) {
+	public static String showSecondDialog(String config, Set<String> stores) {
 		if (config.equals("EK")) {
 			// Ask for Store ID
 			// create the text input dialog
-			TextInputDialog dialog = new TextInputDialog();
-			dialog.setTitle("Text Input Dialog");
-			dialog.setHeaderText("Enter a store id");
-			dialog.setContentText("Store id:");
+			ChoiceDialog<String> dialog = new ChoiceDialog<>("Choose Store", stores);
+			dialog.setTitle("Choice Dialog");
+			dialog.setHeaderText("Choose Store");
+			dialog.setContentText("Your choice:");
 
 			// show the dialog and get the user's response
 			Optional<String> result = dialog.showAndWait();
 
 			// save the user's input
-			if (result.isPresent()) {
-				return Integer.parseInt(result.get());
-			} else {
-				return -1;
-			}
+			if (result.isPresent())
+				return result.get();
 		}
 		;
-		return 0;
+		return null;
 	}
 
-	public static void showDialog(int storeNum) {
+	public static void showDialog(HashMap<String, Integer> map, ArrayList<List<Object>> rawMsg) {
 
 		File file = new File(pathToFile.toString());
 		if (!file.exists()) {
 			String config;
+			String Store;
+			setMap(map, rawMsg);
 			while ((config = showFirstDialog()) == null)
 				;
-			int StoreID;
-			while ((StoreID = showSecondDialog(config)) < 1 || StoreID > storeNum && config == "EK");
-			configWrite(file, config, StoreID);
+			while ((Store = showSecondDialog(config, mapper.keySet())) == "Choose Store" && config == "EK")
+				;
+			if (Store == null)
+				configWrite(file, config, 0);
+			else
+				configWrite(file, config, mapper.get(Store));
 		}
+	}
+
+	public static void setMap(HashMap<String, Integer> map, ArrayList<List<Object>> rawMsg) {
+		for (List<Object> o : rawMsg) {
+			map.put((String) o.get(0), (Integer) o.get(1));
+		}
+		mapper = map;
 	}
 
 	private static void configWrite(File file, String config, int StoreID) {

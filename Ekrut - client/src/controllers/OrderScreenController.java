@@ -16,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import Entities.OrderProduct;
@@ -95,9 +94,11 @@ public class OrderScreenController extends AbstractOrderController {
 	private ArrayList<OrderProduct> getProductList() {
 		msg = new Msg(Tasks.Select,
 				"SELECT p.pid,p.pname,p.price,sp.quantity FROM store_product sp ,product p WHERE sp.pid = p.pid AND sp.sid = "
-						+ shopID);
+						+ (shopID == 0 ? 1 : shopID));
 		sendMsg(msg);
 		return (ArrayList<OrderProduct>) msg.getArr(OrderProduct.class);
+
+
 	}
 
 	private void installDiscount() {
@@ -111,10 +112,10 @@ public class OrderScreenController extends AbstractOrderController {
 			String saleName = msg.getObj(0);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("SALE");
-			alert.setHeaderText(saleName+" Sale!");
+			alert.setHeaderText(saleName + " Sale!");
 			alert.setContentText("SALE for " + saleName + " is now active you can enjoy "
 					+ decimalToInt.format(discount * 100) + "% discount for every item in cart.");
-			alert.show();
+			alert.showAndWait();
 		}
 
 	}
@@ -123,9 +124,9 @@ public class OrderScreenController extends AbstractOrderController {
 	public void setUp(Object... objects) {
 		super.setUp();
 		this.shopID = (int) objects[0];
-		installDiscount();
 		productOList.addAll(getProductList());
 		addListeners();
+		installDiscount();
 	}
 
 	@FXML

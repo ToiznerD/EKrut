@@ -18,8 +18,8 @@ import Entities.OrderProduct;
 
 public class CatlogCellController {
 
-	private static String imgPath = Paths.get("\\images\\").toAbsolutePath().toString();
-	private static String defaultImg = Paths.get("\\images\\defaultCatlogImg.png").toAbsolutePath().toString();
+	private static String imgPath = Paths.get("src\\..\\images\\").toAbsolutePath().toString();
+	private static String defaultImg = Paths.get("src\\..\\images\\defaultCatlogImg.png").toAbsolutePath().toString();
 	private OrderProduct product;
 	@FXML
 	private AnchorPane root;
