@@ -36,13 +36,7 @@ public class OrderMethodFormController extends AbstractOrderController {
     private Label lblRecieverDetails;
     
     @FXML
-    private Label lblErrDate;
-    
-    @FXML
     private Label lblErrStore;
-
-    @FXML
-    private DatePicker supplyDate;
     
     @FXML
     private AnchorPane apDetails;
@@ -67,15 +61,6 @@ public class OrderMethodFormController extends AbstractOrderController {
     	ObservableList<StringBuilder> storesList = FXCollections.observableArrayList(msg.getArr(StringBuilder.class));
     	lstStore.setItems(storesList);
     	
-    	//Disabling past dates and the next 3 days(minimum for delivery) for supplyDate
-    	supplyDate.setDayCellFactory(picker -> new DateCell() {
-    		public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                LocalDate today = LocalDate.now();
-                setDisable(empty || date.compareTo(today.plusDays(3)) < 0 );
-    		}
-    	});
-    	
     	//Getting the user details
     	lblAddress.setText(myUser.getAddress());
     	lblRecieverDetails.setText(myUser.getName() + ", " + myUser.getPhone());
@@ -96,19 +81,6 @@ public class OrderMethodFormController extends AbstractOrderController {
     }
     
     /**
-     * checkDate checks if the user has selected a date. If no date is selected, an error message is displayed.
-     * @return true if a date is selected, false otherwise
-     */
-    public boolean checkDate() {
-    	if(supplyDate.getValue() == null) {
-    		lblErrDate.setText("Please choose a date");
-    		return false;
-    	}
-    	lblErrDate.setText("");
-    	return true;
-    }
-    
-    /**
      * pickupSelected handles the case when the user has selected the pickup option.
      * It reset and hide of the fields that related to delivery option and make the list of store visible.
      */
@@ -116,8 +88,6 @@ public class OrderMethodFormController extends AbstractOrderController {
     	rbDelivery.setSelected(false);
     	apDetails.setVisible(false);
     	lstStore.setVisible(true);
-    	supplyDate.setValue(null);
-    	lblErrDate.setText("");
     }
     
     /**
@@ -158,7 +128,7 @@ public class OrderMethodFormController extends AbstractOrderController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		else if(rbDelivery.isSelected() && checkDate()) {
+		else if(rbDelivery.isSelected()) {
 			try {
 				start("OrderScreen", "Order Screen", 0);
 			} catch (IOException e) {
