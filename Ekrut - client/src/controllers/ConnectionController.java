@@ -10,12 +10,10 @@ import Util.Tasks;
 import client.ClientBackEnd;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 
 public class ConnectionController extends AbstractController {
@@ -84,44 +82,10 @@ public class ConnectionController extends AbstractController {
 				     query = "SELECT * FROM store WHERE name = '" + storeString + "'";
 				     msg = new Msg(Tasks.Select, query);
 				     sendMsg(msg);
-				     storeID = msg.getObj(0);
-				      
-				     
-//		        	// Ask for Store ID
-//				      String storeString = null;
-//				      while(storeString == null || storeString.equals("")) {
-//				    	// create the text input dialog
-//				          TextInputDialog dialog2 = new TextInputDialog();
-//				          dialog2.setTitle("Text Input Dialog");
-//				          dialog2.setHeaderText("Enter a store id");
-//				          dialog2.setContentText("Store id:");
-//	
-//				          // show the dialog and get the user's response
-//				          Optional<String> result2 = dialog2.showAndWait();
-//	
-//				          // save the user's input
-//				          storeString = "";
-//				          if (result2.isPresent()) {
-//				        	  storeString = result2.get();
-//				          }
-//				      }
-//				      String query = "SELECT * FROM store WHERE sid =" + Integer.parseInt(storeString);
-//				      msg = new Msg(Tasks.Select, query);
-//				      sendMsg(msg);
-//				      if(!msg.getBool()) {
-//					    	  Alert alert = new Alert(Alert.AlertType.ERROR);
-//					          alert.setTitle("Error Dialog");
-//					          alert.setHeaderText("Invalid store id");
-//					          alert.setContentText("The store id you entered is not valid. Please try again.");
-//		
-//					          // show the error dialog
-//					          alert.showAndWait();
-//							return;
-//						}
-				      
+				     storeID = msg.getObj(0); //change it to local field ? /////////////////////////////////////
 		        }
 				
-				start("LoginForm", "Login");
+				start("LoginForm", "Login", storeID);
 				//start("ChooseReportScreen", "Choose Report");
 			} catch (IOException e) {
 				errorLbl.setText("Error: cannot connect to remote\n" + ip + ":" + port);
