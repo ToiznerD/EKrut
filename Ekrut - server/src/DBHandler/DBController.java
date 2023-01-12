@@ -1,19 +1,16 @@
 package DBHandler;
 
-import java.io.BufferedReader;
-import java.io.File;
+
 import java.io.FileReader;
 import java.io.Reader;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 public class DBController {

@@ -25,6 +25,7 @@ import Util.Tasks;
 public class OrderScreenController extends AbstractOrderController {
 	private ObservableList<OrderProduct> productOList = FXCollections.observableArrayList();
 	private ObservableList<OrderProduct> cartOList = FXCollections.observableArrayList();
+
 	private static final DecimalFormat decimal = new DecimalFormat("0.00");
 	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private int sum = 0;
@@ -46,6 +47,7 @@ public class OrderScreenController extends AbstractOrderController {
 	private Text discountPriceText;
 	@FXML
 	private Button checkoutBtn;
+
 
 	@FXML
 	public void initialize() {

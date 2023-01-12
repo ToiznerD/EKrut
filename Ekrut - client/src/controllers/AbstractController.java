@@ -22,7 +22,6 @@ public abstract class AbstractController {
 	public static Msg msg;
 	public static User myUser;
 
-
 	public void start(String fxml, String title, Object... objects) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
 		Parent root = load.load();
@@ -31,7 +30,6 @@ public abstract class AbstractController {
 		Scene scene = new Scene(root);
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
-
 		if (fxml != "ConnectionConfig") {
 			prStage.setOnCloseRequest(event -> {
 				logoutFromDb();

@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="184.0" fitWidth="180.0" layoutX="347.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/EKrut%20logo.png" />
+            <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
       <Label layoutX="47.0" layoutY="31.0" text="Sale initiate" textFill="#cf4c0a">
@@ -27,46 +27,51 @@
             <Image url="@../../images/back%20icon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="492.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
-      <TextField fx:id="txtSaleName" layoutX="60.0" layoutY="284.0" prefHeight="26.0" prefWidth="164.0" promptText="Enter sale name" />
+      <TextField fx:id="txtSaleName" layoutX="141.0" layoutY="281.0" prefHeight="26.0" prefWidth="143.0" promptText="Enter sale name" />
       <Button fx:id="btnInitiate" layoutX="385.0" layoutY="346.0" mnemonicParsing="false" onAction="#InitiateSaleButton" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Initiate sale">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <ComboBox fx:id="lstRegion" layoutX="60.0" layoutY="147.0" onAction="#checkRegion" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose region" style="-fx-background-color: orange;" />
-      <ComboBox fx:id="lstSaleTemplate" layoutX="60.0" layoutY="100.0" onAction="#checkTemplate" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose sale template" style="-fx-background-color: orange;" />
-      <DatePicker fx:id="StartingDate" layoutX="60.0" layoutY="193.0" onAction="#checkDates" prefHeight="25.0" prefWidth="119.0" promptText="Starting date" />
-      <DatePicker fx:id="EndingDate" layoutX="199.0" layoutY="193.0" onAction="#checkDates" prefHeight="25.0" prefWidth="119.0" promptText="Ending date" />
-      <ComboBox fx:id="lstStartingHours" layoutX="60.0" layoutY="237.0" onAction="#checkTimes" opacity="0.7" prefHeight="25.0" prefWidth="119.0" promptText="Starting Hours" style="-fx-background-color: orange;" />
-      <ComboBox fx:id="lstEndingHours" layoutX="199.0" layoutY="237.0" onAction="#checkTimes" opacity="0.7" prefHeight="25.0" prefWidth="119.0" promptText="Ending Hours" style="-fx-background-color: orange;" />
-      <Label fx:id="lblErrTime" layoutX="347.0" layoutY="241.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
+      <ComboBox fx:id="lstRegion" layoutX="41.0" layoutY="147.0" onAction="#checkRegion" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose region" style="-fx-background-color: orange;" />
+      <ComboBox fx:id="lstSaleTemplate" layoutX="41.0" layoutY="100.0" onAction="#checkTemplate" opacity="0.7" prefHeight="25.0" prefWidth="164.0" promptText="Choose sale template" style="-fx-background-color: orange;" />
+      <DatePicker fx:id="StartingDate" layoutX="141.0" layoutY="193.0" onAction="#checkDates" prefHeight="25.0" prefWidth="104.0" promptText="From" />
+      <DatePicker fx:id="EndingDate" layoutX="260.0" layoutY="193.0" onAction="#checkDates" prefHeight="25.0" prefWidth="104.0" promptText="Until" />
+      <ComboBox fx:id="lstStartingHours" layoutX="141.0" layoutY="237.0" onAction="#checkTimes" opacity="0.7" prefHeight="25.0" prefWidth="104.0" promptText="From" style="-fx-background-color: orange;" />
+      <ComboBox fx:id="lstEndingHours" layoutX="260.0" layoutY="237.0" onAction="#checkTimes" opacity="0.7" prefHeight="25.0" prefWidth="104.0" promptText="Until" style="-fx-background-color: orange;" />
+      <Label fx:id="lblErrTime" layoutX="382.0" layoutY="241.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label fx:id="lblErrName" layoutX="232.0" layoutY="289.0" prefHeight="17.0" prefWidth="164.0" textFill="RED">
+      <Label fx:id="lblErrName" layoutX="306.0" layoutY="290.0" prefHeight="17.0" prefWidth="164.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label fx:id="lblErrDate" layoutX="347.0" layoutY="197.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
+      <Label fx:id="lblErrDate" layoutX="382.0" layoutY="197.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label fx:id="lblInitiateMsg" layoutX="399.0" layoutY="306.0" prefHeight="42.0" prefWidth="131.0" textFill="RED">
+      <Label fx:id="lblErrTemplate" layoutX="213.0" layoutY="104.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblErrTemplate" layoutX="232.0" layoutY="104.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
+      <Label fx:id="lblErrRegion" layoutX="213.0" layoutY="151.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblErrRegion" layoutX="232.0" layoutY="151.0" prefHeight="17.0" prefWidth="158.0" textFill="RED">
+      <Label layoutX="41.0" layoutY="285.0" text="Enter sale name:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="41.0" layoutY="241.0" text="Choose hours:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="41.0" layoutY="197.0" text="Choose dates:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

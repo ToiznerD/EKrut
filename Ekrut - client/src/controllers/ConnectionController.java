@@ -40,12 +40,13 @@ public class ConnectionController extends AbstractController {
 		if (port != -1) {
 			try {
 				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
-				msg = new Msg(Tasks.Select,"SELECT name,sid FROM store");
+				msg = new Msg(Tasks.Select, "SELECT name,sid FROM store");
 				sendMsg(msg);
-				HashMap<String,Integer> map = new HashMap<String, Integer>();
-				Config.showDialog(map,msg.getRawArray());
-				
+				HashMap<String, Integer> map = new HashMap<String, Integer>();
+				Config.showDialog(map, msg.getRawArray());
+
 				start("LoginForm", "Login");
+
 			} catch (IOException e) {
 				errorLbl.setText("Error: cannot connect to remote\n" + ip + ":" + port);
 			}
@@ -68,6 +69,7 @@ public class ConnectionController extends AbstractController {
 		}
 		return -1;
 	}
+
 	@Override
 	public void back(MouseEvent event) {
 		// Not implemented
@@ -76,6 +78,6 @@ public class ConnectionController extends AbstractController {
 	@Override
 	public void setUp(Object... objects) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
