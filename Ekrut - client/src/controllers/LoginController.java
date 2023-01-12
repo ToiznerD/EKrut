@@ -5,6 +5,7 @@ import java.util.Optional;
 import Entities.User;
 import Util.Msg;
 import Util.Tasks;
+import client.Config;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -70,7 +71,7 @@ public class LoginController extends AbstractController {
 			if (!myUser.isLogged()) {
 				
 				// EK Configuration
-				if(config.equals("EK")) {
+				if(Config.getConfig().equals("EK")) {
 					login();
 					start("CustomerPanel", "Customer Dashboard");
 					return;

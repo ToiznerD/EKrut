@@ -17,7 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class OrderMethodFormController extends AbstractOrderController {
-	//private boolean subscriber;
 	private int storeID;
 	
 	@FXML
@@ -45,9 +44,7 @@ public class OrderMethodFormController extends AbstractOrderController {
     private RadioButton rbDelivery;
 
     /**
-     * Initializes the form by setting up the combo boxes for stores, the user details,
-     * and configuring the date picker field to only allow selecting dates that are not in the past and 3 next days from today.
-     * 
+     * Initializes the form by setting up the combo boxes for stores and the user details.
      */
     @FXML
     public void initialize() {
@@ -136,7 +133,7 @@ public class OrderMethodFormController extends AbstractOrderController {
     
 	@Override
 	public void setUp(Object... objects) {
-		//subscriber = (boolean) objects[0];
+		super.setUp(objects);
 	}
 
 	/**
