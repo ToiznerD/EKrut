@@ -21,8 +21,6 @@ public abstract class AbstractController {
 	public static Object monitor = new Object();
 	public static Msg msg;
 	public static User myUser;
-	public static String config;
-	public static int storeID;
 
 
 	public void start(String fxml, String title, Object... objects) throws IOException {
@@ -33,6 +31,7 @@ public abstract class AbstractController {
 		Scene scene = new Scene(root);
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
+
 		if (fxml != "ConnectionConfig") {
 			prStage.setOnCloseRequest(event -> {
 				logoutFromDb();

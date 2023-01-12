@@ -87,7 +87,7 @@ public class LoginController extends AbstractController {
 					case "customer":
 						login();
 						start("CustomerPanel", "Customer Dashboard");
-						break;    
+						break; 
 						
 					case "service":
 						login();
