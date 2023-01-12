@@ -2,6 +2,7 @@ package controllers;
 
 import Util.Msg;
 import Util.Tasks;
+import client.Config;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -54,7 +55,7 @@ public class CustomerPanelController extends AbstractController {
 			
 			else {
 				//Customer approved
-				if(config.equals("OL")) {
+				if(Config.getConfig().equals("OL")) {
 					//OL configuration
 					if(!(boolean)(msg.getObj(1))) {
 						//Regular customer
@@ -81,7 +82,7 @@ public class CustomerPanelController extends AbstractController {
 	}
 	
 	public void MakeOrder() {
-		if(config.equals("OL")) {
+		if(Config.getConfig().equals("OL")) {
 			try {
 				start("OrderMethodForm","Order Method Form");
 			} catch (Exception e) {

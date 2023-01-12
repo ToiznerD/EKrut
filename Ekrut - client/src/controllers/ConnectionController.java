@@ -1,17 +1,14 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import java.util.HashMap;
 import Util.Msg;
 import Util.Tasks;
 import client.ClientBackEnd;
+import client.Config;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -43,57 +40,17 @@ public class ConnectionController extends AbstractController {
 		if (port != -1) {
 			try {
 				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
-				
-				ChoiceDialog<String> dialog = new ChoiceDialog<>("EK", "EK", "OL");
-		        dialog.setTitle("Choice Dialog");
-		        dialog.setHeaderText("Choose between EK and OL");
-		        dialog.setContentText("Your choice:");
+				msg = new Msg(Tasks.Select, "SELECT name,sid FROM store");
+				sendMsg(msg);
+				HashMap<String, Integer> map = new HashMap<String, Integer>();
+				Config.showDialog(map, msg.getRawArray());
 
-		        // show the dialog and get the user's response
-		        Optional<String> result = dialog.showAndWait();
+				start("LoginForm", "Login");
 
-		        // save the user's choice
-		        if (result.isPresent()) {
-		            config = result.get();
-		        }
-		        if(config.equals("EK")) {
-		        	String storeString = null;
-		        	 String query = "SELECT name FROM store";
-				     msg = new Msg(Tasks.Select, query);
-				     sendMsg(msg);
-				     while(storeString == null || storeString.equals("")) {
-					     List<StringBuilder> stores = msg.getArr(StringBuilder.class);
-			        	 List<String> stringStores = new ArrayList<>();
-			        	 for(StringBuilder s : stores) stringStores.add(s.toString());
-			        	 
-					     ChoiceDialog<String> dialogStore = new ChoiceDialog<>("Store", stringStores);
-					     dialogStore.setTitle("Choice Dialog");
-					     dialogStore.setHeaderText("Choose Store");
-					     dialogStore.setContentText("Your choice:");
-					     
-					     Optional<String> result2 = dialogStore.showAndWait();
-					     
-					     //save the user's input
-				          storeString = "";
-				          if (result2.isPresent()) {
-				        	  storeString = result2.get();
-				          }
-				     }
-				     query = "SELECT * FROM store WHERE name = '" + storeString + "'";
-				     msg = new Msg(Tasks.Select, query);
-				     sendMsg(msg);
-				     storeID = msg.getObj(0); //change it to local field ? /////////////////////////////////////
-		        }
-				
-				start("LoginForm", "Login", storeID);
-				//start("ChooseReportScreen", "Choose Report");
 			} catch (IOException e) {
 				errorLbl.setText("Error: cannot connect to remote\n" + ip + ":" + port);
 			}
 		}
-		
-		
-
 	}
 
 	/**
@@ -112,6 +69,7 @@ public class ConnectionController extends AbstractController {
 		}
 		return -1;
 	}
+
 	@Override
 	public void back(MouseEvent event) {
 		// Not implemented
@@ -120,6 +78,6 @@ public class ConnectionController extends AbstractController {
 	@Override
 	public void setUp(Object... objects) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

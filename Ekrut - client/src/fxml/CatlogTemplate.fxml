@@ -15,16 +15,16 @@
 				<Font name="System Bold" size="14.0" />
 			</font>
 		</Button>
-		<Text fx:id="lblName" layoutX="116.0" layoutY="22.0" nodeOrientation="LEFT_TO_RIGHT" strokeWidth="0.0" text="Name:" wrappingWidth="245.0">
+		<Text fx:id="lblName" layoutX="162.0" layoutY="25.0" nodeOrientation="LEFT_TO_RIGHT" strokeWidth="0.0" wrappingWidth="185.0">
 			<font>
 				<Font size="14.0" />
 			</font>
 		</Text>
-		<Text fx:id="lblPrice" layoutX="116.0" layoutY="70.0" nodeOrientation="LEFT_TO_RIGHT" strokeWidth="0.0" text="Price:" wrappingWidth="245.0">
+		<Text layoutX="113.0" layoutY="69.0" nodeOrientation="LEFT_TO_RIGHT" strokeWidth="0.0" text="Price:" wrappingWidth="245.0">
          <font>
             <Font size="14.0" />
          </font></Text>
-		<Text fx:id="lblID" layoutX="116.0" layoutY="47.0" nodeOrientation="LEFT_TO_RIGHT" strokeWidth="0.0" text="ID:" wrappingWidth="245.0">
+		<Text layoutX="114.0" layoutY="47.0" nodeOrientation="LEFT_TO_RIGHT" strokeWidth="0.0" text="ID:" wrappingWidth="245.0">
          <font>
             <Font size="14.0" />
          </font></Text>
@@ -33,5 +33,20 @@
             <Image url="@../../images/add%20to%20cart%20icon.png" />
          </image>
       </ImageView>
+      <Text layoutX="114.0" layoutY="24.0" nodeOrientation="LEFT_TO_RIGHT" strokeWidth="0.0" text="Name:" wrappingWidth="245.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fx:id="lblID" layoutX="138.0" layoutY="47.0" nodeOrientation="LEFT_TO_RIGHT" strokeWidth="0.0" wrappingWidth="172.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fx:id="lblPrice" layoutX="152.0" layoutY="70.0" nodeOrientation="LEFT_TO_RIGHT" strokeWidth="0.0" wrappingWidth="220.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
 	</children>
 </AnchorPane>
