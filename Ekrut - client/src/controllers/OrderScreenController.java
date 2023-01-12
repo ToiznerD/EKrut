@@ -25,7 +25,13 @@ import Util.Tasks;
 public class OrderScreenController extends AbstractOrderController {
 	private ObservableList<OrderProduct> productOList = FXCollections.observableArrayList();
 	private ObservableList<OrderProduct> cartOList = FXCollections.observableArrayList();
+
+	private static final DecimalFormat decimal = new DecimalFormat("0.00");
+	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private int sum = 0;
+	private Double discount = 1.0;
+	private int shopID;
+
 	@FXML
 	private ListView<OrderProduct> catlogList, cartList;
 
@@ -41,10 +47,7 @@ public class OrderScreenController extends AbstractOrderController {
 	private Text discountPriceText;
 	@FXML
 	private Button checkoutBtn;
-	private int shopID;
-	private static final DecimalFormat decimal = new DecimalFormat("0.00");
-	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
-	private Double discount = 1.0;
+
 
 	@FXML
 	public void initialize() {
@@ -94,9 +97,10 @@ public class OrderScreenController extends AbstractOrderController {
 	private ArrayList<OrderProduct> getProductList() {
 		msg = new Msg(Tasks.Select,
 				"SELECT p.pid,p.pname,p.price,sp.quantity FROM store_product sp ,product p WHERE sp.pid = p.pid AND sp.sid = "
-						+ shopID);
+						+ (shopID == 0 ? 1 : shopID));
 		sendMsg(msg);
 		return (ArrayList<OrderProduct>) msg.getArr(OrderProduct.class);
+
 	}
 
 	private void installDiscount() {
@@ -110,10 +114,10 @@ public class OrderScreenController extends AbstractOrderController {
 			String saleName = msg.getObj(0);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("SALE");
-			alert.setHeaderText(saleName+" Sale!");
+			alert.setHeaderText(saleName + " Sale!");
 			alert.setContentText("SALE for " + saleName + " is now active you can enjoy "
 					+ decimalToInt.format(discount * 100) + "% discount for every item in cart.");
-			alert.show();
+			alert.showAndWait();
 		}
 
 	}

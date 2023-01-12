@@ -6,7 +6,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -18,9 +20,6 @@ public class RunningSaleController extends AbstractController {
 	
     @FXML
     private Button btnRun;
-
-    @FXML
-    private Label lblRunningMsg;
 
     @FXML
     private Label lblErrSales;
@@ -35,15 +34,8 @@ public class RunningSaleController extends AbstractController {
     	//Initializing sales combo-box
     	String salesQuery = null;
     	int userRegion = myUser.getId();
-    	
     	//Getting the region sales related to this marketing employee that are not running already
-    	if(myUser.getRole().equals("marketing_employee"))
-	    	salesQuery = "SELECT saleName FROM sale_initiate WHERE rid = " + userRegion + " AND active = 0";
-    	
-    	//Getting all the sales that are not running already to the CEO
-    	else if(myUser.getRole().equals("ceo"))
-    		salesQuery = "SELECT saleName FROM sale_initiate WHERE active = 0";
-    	
+    	salesQuery = "SELECT saleName FROM sale_initiate WHERE rid = " + userRegion + " AND active = 0"; 	
 	    msg = new Msg(Tasks.Select, salesQuery);
 	    sendMsg(msg);
     	ObservableList<StringBuilder> salesList = FXCollections.observableArrayList(msg.getArr(StringBuilder.class));
@@ -74,10 +66,23 @@ public class RunningSaleController extends AbstractController {
     		String query = "UPDATE sale_initiate SET active = 1 WHERE saleName = '" + lstSales.getValue() + "'";
     		msg = new Msg(Tasks.Update, query);
 	    	sendMsg(msg);
-	    	lblRunningMsg.setText("Running sale succeeded");
+	    	
+	    	//Display a confirmation pop-up message and resetting the fields
+			Alert alert = new Alert(Alert.AlertType.NONE, "Running sale succeeded !", ButtonType.FINISH);
+	        alert.setTitle("Success");
+	        alert.showAndWait();
+	        
+	        //After running a sale, initialize the rest of sales that are available from the database
+	        initialize();
+	        lblErrSales.setText("");
     	}
-    	else
-    		lblRunningMsg.setText("Running sale failed");
+    	else {
+    		//Display an error pop-up message
+			Alert alert = new Alert(Alert.AlertType.ERROR, "Running sale failed !",ButtonType.OK);
+	        alert.setTitle("Failed");
+	        alert.setHeaderText("Error");
+	        alert.showAndWait();
+    	}
     }
     
     /**

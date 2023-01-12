@@ -2,10 +2,10 @@ package controllers;
 
 import java.io.IOException;
 
+import Entities.OrderProduct;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.AnchorPane;
-import Entities.OrderProduct;
 
 public class CatalogCell extends ListCell<OrderProduct> {
 
@@ -25,7 +25,6 @@ public class CatalogCell extends ListCell<OrderProduct> {
 	@Override
 	protected void updateItem(OrderProduct product, boolean empty) {
 		super.updateItem(product, empty);
-
 		if (empty || product == null) {
 			setGraphic(null);
 		} else {
