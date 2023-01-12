@@ -119,18 +119,18 @@ public class ChooseReportController extends AbstractController {
     // ------------------------------------ Handle Customer Report Request ------------------------------------------ //
 
 
-//    public void CustomerReportImgClick() {
-//        // validate details
-//        if (validateDateInput()) {
-//            try {
-//                StockStatusReportController.setDetails(month, year);
-//                start("StockStatusReportScreen", "Stock Status Report");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                // TODO: handle exception
-//            }
-//        }
-//    }
+    public void CustomerReportImgClick() {
+        // validate details
+        if (validateDateInput()) {
+            try {
+                CustomerReportController.setDetails(month, year);
+                start("CustomerReportScreen", "Customer Report");
+            } catch (IOException e) {
+                e.printStackTrace();
+                // TODO: handle exception
+            }
+        }
+    }
 
 
     /**

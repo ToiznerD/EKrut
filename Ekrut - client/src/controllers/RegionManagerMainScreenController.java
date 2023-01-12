@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class RegionManagerMainScreenController extends AbstractController implements Initializable {
+public class RegionManagerMainScreenController extends AbstractController {
     protected static HashMap<String, Integer> storeMap = new HashMap<>();
     private static ObservableList<String> comboBoxOptions;
     public static Integer regionID;
@@ -32,12 +32,11 @@ public class RegionManagerMainScreenController extends AbstractController implem
     Button viewReportsBtn;
 
     /**
-     * JavaFX Initializable interface method, sends a query to db to get locations according to region
-     * @param url
-     * @param rb
+     * sends a query to db to get locations according to region
      */
-    public void initialize(URL url, ResourceBundle rb) {
-        sendMsg(prepareLocationsMsg());
+    @FXML
+    public void initialize() {
+        sendLocationsMsg();
         saveStoreMap();
         getRegion();
         if (myUser.getRole().equals("ceo")) {
@@ -49,7 +48,7 @@ public class RegionManagerMainScreenController extends AbstractController implem
     /**
      * prepares a Message to send a query to server to get all relevant store locations of the region manager connected to the system
      */
-    public static Msg prepareLocationsMsg() {
+    public void sendLocationsMsg() {
         String query;
         if (myUser.getRole().equals("ceo"))
             query = "SELECT s.* FROM store s";
@@ -61,7 +60,7 @@ public class RegionManagerMainScreenController extends AbstractController implem
                     "WHERE rm.uid = " + myUser.getId();
         }
         msg = new Msg(Tasks.getLocations, query);
-        return msg;
+        sendMsg(msg);
     }
 
     /**
@@ -143,7 +142,6 @@ public class RegionManagerMainScreenController extends AbstractController implem
 
     /**
      * triggered when log out is clicked, resets the user and send back to previous screen
-     * @param event
      */
     public void logOutClick() {
         try {

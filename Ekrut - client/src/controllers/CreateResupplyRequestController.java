@@ -73,15 +73,13 @@ public class CreateResupplyRequestController extends AbstractController {
         userCol.setCellValueFactory(new PropertyValueFactory<ResupplyRequest, Integer>("uid"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<ResupplyRequest, Integer>("quantity"));
         requestsTable.setItems(requestsObsList);
+        loadEmployeesIds();
 
     }
 
     public void storeOptionOnAction() {
         productsComboBox.getItems().clear();
         loadProductsComboBox();
-
-        userIDComboBox.getItems().clear();
-        loadEmployeesIds();
     }
 
     public void loadProductsComboBox() {
@@ -148,14 +146,9 @@ public class CreateResupplyRequestController extends AbstractController {
         requestsObsList.add(request);
     }
 
-    // To implement !!!!!!!!!!
+
     public void loadEmployeesIds() {
-        String sname = storeLocationsComboBox.getSelectionModel().getSelectedItem().toString();
-        String query = "SELECT DISTINCT e.uid, u.name\n" +
-                "FROM employees e\n" +
-                "JOIN users u ON e.uid = u.id\n" +
-                "JOIN store s ON e.sid = s.sid\n" +
-                "WHERE s.sid = " + storeMap.get(sname);
+        String query = "SELECT id, name FROM ekrut.users WHERE role = \"operation_employee\"";
 
         msg = new Msg(Select, query);
         sendMsg(msg);
@@ -192,6 +185,8 @@ public class CreateResupplyRequestController extends AbstractController {
 
         if (msg.getBool()) {
             tableErrorLabel.setText("* Requests were added successfully");
+            tableErrorLabel.setStyle("-fx-color: green");
+            requestsObsList.clear();
         } else {
             tableErrorLabel.setText("* There was an error - Requests were nots added successfully");
         }

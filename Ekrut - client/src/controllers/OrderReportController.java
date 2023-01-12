@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 import static Util.Tasks.*;
 import static java.lang.Integer.parseInt;
 
-public class OrderReportController extends AbstractController implements Initializable {
+public class OrderReportController extends AbstractController  {
     private static String month, year;
     protected static List<OrderReport> orderReportsToDisplay;
 
@@ -45,11 +45,9 @@ public class OrderReportController extends AbstractController implements Initial
     /**
      * Overrides the javaFX Initializable interface method
      * displays bar and pie chart according to given details
-     * @param url
-     * @param resourceBundle
      */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize() {
         // Set up label text
         String labelTxt = month + "\\" + year;
         if (myUser.getRole().equals("region_manager")) {
