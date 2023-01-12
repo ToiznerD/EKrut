@@ -43,7 +43,6 @@ public class OrderReportController extends AbstractController  {
     }
 
     /**
-     * Overrides the javaFX Initializable interface method
      * displays bar and pie chart according to given details
      */
     @FXML

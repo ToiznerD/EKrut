@@ -1,22 +1,25 @@
 package Entities;
 
 public class CustomerReport {
-    String s_name, histogram;
-    int year, month;
+    private String sname, histogram;
+    private int year, month, minNumOrders, maxNumOrders;
 
-    public CustomerReport(String s_name, int year, int month, String histogram) {
-        this.s_name = s_name;
+
+    public CustomerReport(String sname, int year, int month, String histogram, int minNumOrders, int maxNumOrders) {
+        this.sname = sname;
         this.histogram = histogram;
         this.year = year;
         this.month = month;
+        this.minNumOrders = minNumOrders;
+        this.maxNumOrders = maxNumOrders;
     }
 
-    public String getS_name() {
-        return s_name;
+    public String getSname() {
+        return sname;
     }
 
-    public void setS_name(String s_name) {
-        this.s_name = s_name;
+    public void setSname(String sname) {
+        this.sname = sname;
     }
 
     public String getHistogram() {
@@ -41,5 +44,21 @@ public class CustomerReport {
 
     public void setMonth(int month) {
         this.month = month;
+    }
+
+    public int getMinNumOrders() {
+        return minNumOrders;
+    }
+
+    public void setMinNumOrders(int minNumOrders) {
+        this.minNumOrders = minNumOrders;
+    }
+
+    public int getMaxNumOrders() {
+        return maxNumOrders;
+    }
+
+    public void setMaxNumOrders(int maxNumOrders) {
+        this.maxNumOrders = maxNumOrders;
     }
 }

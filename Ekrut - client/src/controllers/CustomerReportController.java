@@ -19,6 +19,8 @@ public class CustomerReportController extends AbstractController {
     Label reportDetailsLabel;
     @FXML
     ComboBox<String> locationsComboBox;
+    @FXML
+    Label errorLabel;
 
     @FXML
     public void initialize() {
@@ -43,38 +45,55 @@ public class CustomerReportController extends AbstractController {
         month = month1; year=year1;
     }
 
+    /**
+     * gets triggered when a store is chosen, loads barChart with data from db about customer order distribution
+     */
     public void loadDataToBarChart() {
+        // reset components
+        errorLabel.setText("");
         customerReportBarChart.getData().clear();
 
-        XYChart.Series currReport = new XYChart.Series();
-        currReport.setName("Activity Level");
+        // set new series
+        XYChart.Series customerSeries = new XYChart.Series();
+        customerSeries.setName("Customers Activity Level");
 
+        // get reports from db
         String sname = locationsComboBox.getSelectionModel().getSelectedItem().toString();
         String query = "SELECT * FROM customer_report\n" +
                 "WHERE s_name = '" + sname + "' AND year = " + year + " AND month = " + month;
-
         msg = new Msg(Tasks.Select, query);
         sendMsg(msg);
-
         if (!msg.getBool()) {
-            // handle error
+            errorLabel.setText("* an error has occured while fetching data");
+            return;
         }
 
+        // extract report and parse info
         CustomerReport customerReport = msg.getArr(CustomerReport.class).get(0);
-
         String histogramData = customerReport.getHistogram();
         String[] data = histogramData.split(",");
-        // parse histogram and display
-        //String[] activityLevels = {"0-2","3-4","5-6","7-8","9-10"};
-        String[] activityLevels = {};
-        int min = 2, max = 15;
-        int delta = max-min/data.length;
+        int colNum = data.length;
+        int min = customerReport.getMinNumOrders(), max = customerReport.getMaxNumOrders();
 
+        // generate the activity ranges according to data in db
+        String[] activityLevels = new String[colNum];
+        int delta = (max-min)/colNum;
 
+        for (int i=0;i<colNum-1;i++) {
+            String rangeDisplay=String.format("%d-%d",min, min + delta);
+            activityLevels[i] = rangeDisplay;
+            min += delta+1;
+        }
+
+        String rangeDisplay=String.format("%d-%d",min, max);
+        activityLevels[colNum-1] = rangeDisplay;
+
+        // insert data to the series
         for (int i=0; i< data.length; i++)
-            currReport.getData().add(new XYChart.Data(activityLevels[i], Integer.parseInt(data[i])));
+            customerSeries.getData().add(new XYChart.Data(activityLevels[i], Integer.parseInt(data[i])));
 
-        customerReportBarChart.getData().addAll(currReport);
+        // add series to barChart
+        customerReportBarChart.getData().addAll(customerSeries);
     }
 
     @Override
@@ -84,7 +103,7 @@ public class CustomerReportController extends AbstractController {
     @Override
     public void back(MouseEvent event) {
             try {
-                start("ViewReportsScreen","View Reports");
+                start("ChooseReportScreen","Choose Report");
             } catch (Exception e) {}
     }
 }

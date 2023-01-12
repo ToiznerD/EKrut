@@ -18,18 +18,18 @@ public class CustomerServiceController extends AbstractController{
     
     @FXML
     private Label welcomeLbl;
-    
+
     @FXML
     public void initialize() throws IOException {
-    	//On EK nothing is permitted
-    	if(config.equals("EK")) {
-    		start("UserPanel", "User Dashboard");
-    		return;
-    	}
-    	
-    	String welcome = welcomeLbl.getText() + " ";
-    	welcome = myUser.getName() == null ? welcome + myUser.getUsername() : welcome + myUser.getName();
-    	welcomeLbl.setText(welcome);
+        //On EK nothing is permitted
+        if(config.equals("EK")) {
+            start("UserPanel", "User Dashboard");
+            return;
+        }
+
+        String welcome = welcomeLbl.getText() + " ";
+        welcome = myUser.getName() == null ? welcome + myUser.getUsername() : welcome + myUser.getName();
+        welcomeLbl.setText(welcome);
     }
     
     @FXML
