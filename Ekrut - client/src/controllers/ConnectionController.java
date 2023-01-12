@@ -56,9 +56,6 @@ public class ConnectionController extends AbstractController {
 				errorLbl.setText("Error: cannot connect to remote\n" + ip + ":" + port);
 			}
 		}
-		
-		
-
 	}
 
 	/**
