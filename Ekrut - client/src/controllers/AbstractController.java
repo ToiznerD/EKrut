@@ -59,6 +59,8 @@ public abstract class AbstractController {
 	public void sendMsg(Msg msg) { //Nave
 		try {
 			ClientBackEnd.getInstance().handleMessageFromClientUI(msg);
+			if(msg.getTask()==Tasks.popUp)//erik
+				return;
 			Wait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,7 +82,7 @@ public abstract class AbstractController {
 		}
 	}
 	
-	public void popupAlert(String msg) { //ERIK
+	public static void popupAlert(String msg) { //ERIK
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.initOwner(prStage);
 		alert.setTitle("info");
@@ -88,7 +90,7 @@ public abstract class AbstractController {
 		alert.showAndWait();
 	}
 	
-	public void waitForAlert(String msg) { //erik
+	public static void waitForAlert(String msg) { //erik
 		new Thread(new Runnable() {
 		    @Override public void run() {
 		        Platform.runLater(new Runnable() {

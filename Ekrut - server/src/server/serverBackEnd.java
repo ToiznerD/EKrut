@@ -21,7 +21,7 @@ public class serverBackEnd extends AbstractServer {
 	public serverBackEnd(int port, ServerController sc) {
 		super(port);
 		serverBackEnd.sc = sc;
-		connectedUsers = new HashMap<>();
+		connectedUsers = new HashMap<>();//erik
 	}
 
 	@Override
@@ -31,15 +31,13 @@ public class serverBackEnd extends AbstractServer {
 			connectedUsers.remove(Integer.valueOf(taskMsg.getQuery().substring(taskMsg.getQuery().lastIndexOf(" ")+1)));//IHS
 		if (taskMsg.getTask() == Tasks.Disconnect)
 			clientDisconnected(client);
-		else if(taskMsg.getTask() == Tasks.popUp) { //erik
+		else if(taskMsg.getTask() == Tasks.popUp && connectedUsers.containsKey(taskMsg.getID())) { //erik
 			msg = new Msg(Tasks.popUp, taskMsg.getID(),taskMsg.getAlertMsg());
 			try {
 				sendMsg(connectedUsers.get(taskMsg.getID()), taskMsg);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
+		}//erik
 		else  {
 			try {
 				Tasker.taskerHandler(taskMsg);

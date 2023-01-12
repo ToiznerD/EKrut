@@ -98,7 +98,7 @@ public class DeliveryOrdersController extends AbstractController {
 		msg = new Msg(Tasks.Update, query);
 		sendMsg(msg);
 		if (msg.getBool()) {
-			String msgToSend = "Delivery approved!/nEstimated date and time: " + EstimatedDate;
+			String msgToSend = "Your delivery approved!\nEstimated date and time: " + EstimatedDate + ", " + dataMap.get(orderID).get(2);
 			sendApproval((Integer) dataMap.get(orderID).get(0), msgToSend);
 		}
 	}
