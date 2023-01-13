@@ -65,6 +65,7 @@ public class CustomerPanelController extends AbstractController {
 					else {
 						//Subscriber
 						btnMakeOrder.setVisible(true);
+						errLbl.setDisable(true);
 					}
 				}
 				else {
@@ -72,6 +73,7 @@ public class CustomerPanelController extends AbstractController {
 					btnMakeOrder.setVisible(true);
 					//Subscriber customer
 					btnPickup.setVisible((int)(msg.getObj(1)) == 1);
+					errLbl.setDisable(true);
 				}
 			}
     	}
@@ -90,9 +92,8 @@ public class CustomerPanelController extends AbstractController {
 	/**
 	* The MakeOrder method is used to open the order form or order screen, depending on the system configuration.
 	* If the configuration is OL, it opens the "OrderMethodForm" window.
-	* If the configuration is EK, it skips the "OrderMethodForm" window and opens the "OrderScreen" window and passing the store_id as parameter.
+	* If the configuration is EK, it skips the "OrderMethodForm" window and opens the "OrderScreen" window.
 	*/
-	
 	@FXML
 	public void MakeOrder(ActionEvent event) {
 		if(Config.getConfig().equals("OL")) {
@@ -104,10 +105,19 @@ public class CustomerPanelController extends AbstractController {
 		}
 		else {
 			try {
-				start("OrderScreen","Order Screen", Config.getStore());
+				start("OrderScreen","Order Screen");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	@FXML
+	public void PickupOrder(ActionEvent event) {
+		try {
+			start("PickupForm","Pickup Order Form");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
