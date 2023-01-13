@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="184.0" fitWidth="180.0" layoutX="347.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/EKrut%20logo.png" />
+            <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
       <Label layoutX="41.0" layoutY="31.0" text="Sale template creation" textFill="#cf4c0a">
@@ -25,29 +25,29 @@
             <Image url="@../../images/back%20icon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="492.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
       <Button fx:id="btnCreation" layoutX="385.0" layoutY="346.0" mnemonicParsing="false" onAction="#buttonCreation" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Create Template">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <TextField fx:id="txtTemplateName" layoutX="66.0" layoutY="151.0" prefHeight="25.0" prefWidth="199.0" promptText="Enter template name" />
-      <TextField fx:id="txtDiscount" layoutX="66.0" layoutY="188.0" prefHeight="25.0" prefWidth="199.0" promptText="Enter percent number of discount" />
-      <Label fx:id="lblErrTemplateName" layoutX="284.0" layoutY="155.0" prefHeight="17.0" prefWidth="243.0" textFill="RED">
+      <TextField fx:id="txtTemplateName" layoutX="174.0" layoutY="151.0" prefHeight="25.0" prefWidth="143.0" />
+      <TextField fx:id="txtDiscount" layoutX="174.0" layoutY="188.0" prefHeight="25.0" prefWidth="54.0" />
+      <Label fx:id="lblErrTemplateName" layoutX="328.0" layoutY="155.0" prefHeight="17.0" prefWidth="199.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblErrDiscount" layoutX="284.0" layoutY="192.0" prefHeight="17.0" prefWidth="243.0" textFill="RED">
+      <Label fx:id="lblErrDiscount" layoutX="248.0" layoutY="192.0" prefHeight="17.0" prefWidth="232.0" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblCreationMsg" layoutX="378.0" layoutY="319.0" prefHeight="17.0" prefWidth="166.0" textFill="RED">
+      <Label layoutX="32.0" layoutY="155.0" text="Enter template name:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="32.0" layoutY="192.0" prefHeight="17.0" prefWidth="129.0" text="Enter discount in %:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

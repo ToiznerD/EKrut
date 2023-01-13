@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderMethodFormController">
    <children>
       <ImageView fitHeight="184.0" fitWidth="180.0" layoutX="347.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/EKrut%20logo.png" />
+            <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
       <Label layoutX="47.0" layoutY="31.0" text="Supply options" textFill="#cf4c0a">
@@ -24,90 +21,60 @@
             <Font name="System Bold Italic" size="40.0" />
          </font>
       </Label>
-      <Button alignment="TOP_LEFT" disable="true" layoutX="142.0" layoutY="104.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="150.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Choose location" textAlignment="CENTER">
+      <RadioButton fx:id="rbPickup" layoutX="33.0" layoutY="116.0" mnemonicParsing="false" onAction="#pickupSelected" text="Pickup">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="rbDelivery" layoutX="33.0" layoutY="158.0" mnemonicParsing="false" onAction="#deliverySelected" text="Delivery">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </RadioButton>
+      <Button fx:id="btnProceed" layoutX="385.0" layoutY="346.0" mnemonicParsing="false" onAction="#ProceedToOrderbutton" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Proceed to order">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <ComboBox layoutX="230.0" layoutY="100.0" prefHeight="42.0" prefWidth="0.0" style="-fx-background-color: 00;">
-         <padding>
-            <Insets left="25.0" />
-         </padding>
-      </ComboBox>
-      <Button layoutX="21.0" layoutY="333.0" mnemonicParsing="false" style="-fx-background-color: 0;">
-         <graphic>
-            <ImageView fitHeight="45.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/back%20icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="492.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
-      <RadioButton layoutX="31.0" layoutY="109.0" mnemonicParsing="false" style="-fx-border-color: #;" text="Pick up">
-         <font>
-            <Font name="System Bold Italic" size="16.0" />
-         </font>
-      </RadioButton>
-      <RadioButton layoutX="31.0" layoutY="163.0" mnemonicParsing="false" selected="true" style="-fx-border-color: #;" text="Delivery">
-         <font>
-            <Font name="System Bold Italic" size="16.0" />
-         </font>
-      </RadioButton>
-      <AnchorPane layoutX="31.0" layoutY="200.0">
+      <ComboBox fx:id="lstStore" layoutX="137.0" layoutY="116.0" onAction="#checkStore" opacity="0.7" prefHeight="25.0" prefWidth="118.0" promptText="Choose store" style="-fx-background-color: orange;" visible="false" />
+      <AnchorPane fx:id="apDetails" layoutX="21.0" layoutY="200.0" prefHeight="85.0" prefWidth="368.0" visible="false">
          <children>
-            <DatePicker layoutX="192.0" prefHeight="26.0" prefWidth="109.0" promptText="21/12/2022" />
-            <Label layoutY="3.0" text="Choose supply date and time">
+            <Label layoutX="14.0" layoutY="10.0" text="Address:">
                <font>
-                  <Font size="14.0" />
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="43.0" text="Reciever details:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAddress" layoutX="85.0" layoutY="10.0" prefHeight="20.0" prefWidth="278.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblRecieverDetails" layoutX="137.0" layoutY="43.0" prefHeight="20.0" prefWidth="219.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="29.0" layoutY="244.0" text="Address:    City">
+      <ImageView fitHeight="45.0" fitWidth="118.0" layoutX="20.0" layoutY="342.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/back%20icon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblErrStore" layoutX="259.0" layoutY="120.0" prefHeight="17.0" prefWidth="131.0" textFill="RED">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField layoutX="132.0" layoutY="241.0" prefHeight="26.0" prefWidth="78.0" text="Haifa" />
-      <Label layoutX="231.0" layoutY="244.0" text="Street">
+      <Label fx:id="lblErrProceedButton" layoutX="394.0" layoutY="319.0" prefHeight="17.0" prefWidth="141.0" textFill="RED">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField layoutX="274.0" layoutY="241.0" prefHeight="26.0" prefWidth="98.0" text="Herzel" />
-      <Label layoutX="385.0" layoutY="244.0" text="House number">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField layoutX="484.0" layoutY="241.0" prefHeight="26.0" prefWidth="50.0" text="13" />
-      <Label layoutX="31.0" layoutY="287.0" text="Reciever info:    Name">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField layoutX="179.0" layoutY="284.0" prefHeight="26.0" prefWidth="91.0" text="David Levi" />
-      <Label layoutX="284.0" layoutY="287.0" text="Phone">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField layoutX="330.0" layoutY="284.0" prefHeight="26.0" prefWidth="110.0" text="050-123456" />
-      <Label layoutX="239.0" layoutY="354.0" text="Total cost">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField layoutX="317.0" layoutY="351.0" prefHeight="26.0" prefWidth="52.0" text="\$20.5" />
-      <Button layoutX="385.0" layoutY="346.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Proceed to payment">
-         <font>
-            <Font name="System Bold Italic" size="14.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

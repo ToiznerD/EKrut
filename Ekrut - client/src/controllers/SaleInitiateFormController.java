@@ -9,7 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -17,6 +19,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * A controller class for a JavaFX application that allows marketing managers to initiate sales.
+ * 
+ * @author [Raz]
+ */
 public class SaleInitiateFormController extends AbstractController {
 
     @FXML
@@ -53,9 +60,6 @@ public class SaleInitiateFormController extends AbstractController {
     private Label lblErrName;
     
     @FXML
-    private Label lblInitiateMsg;
-    
-    @FXML
     private Label lblErrTemplate;
     
     @FXML
@@ -80,7 +84,6 @@ public class SaleInitiateFormController extends AbstractController {
     	String regionsQuery = "SELECT name FROM regions";
     	msg = new Msg(Tasks.Select, regionsQuery);
     	sendMsg(msg);
-    	
     	ObservableList<StringBuilder> regionsList = FXCollections.observableArrayList(msg.getArr(StringBuilder.class));
     	lstRegion.setItems(regionsList);
     	
@@ -94,12 +97,16 @@ public class SaleInitiateFormController extends AbstractController {
     	});
 
     	
-    	//Disabling past dates for EndingDate
+    	//Disabling past dates or dates before StartingDate(if picked already) for EndingDate
     	EndingDate.setDayCellFactory(picker -> new DateCell() {
     		public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                LocalDate today = LocalDate.now();
-                setDisable(empty || date.compareTo(today) < 0 );
+                if(StartingDate.getValue() == null) {
+                	LocalDate today = LocalDate.now();
+                	setDisable(empty || date.compareTo(today) < 0 );
+                }
+                else
+                	setDisable(empty || date.compareTo(StartingDate.getValue()) < 0 );
     		}
     	});
     	
@@ -111,9 +118,6 @@ public class SaleInitiateFormController extends AbstractController {
     	ObservableList<String> EndingHoursList = FXCollections.observableArrayList("00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00",
     			"08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00");
     	lstEndingHours.setItems(EndingHoursList);
-    	
-    	//Initializing initiate message as an empty string
-    	lblInitiateMsg.setText("");
     	
     }
     
@@ -279,12 +283,35 @@ public class SaleInitiateFormController extends AbstractController {
 		    			"' , '" + EndingDate.getValue() + "' , '" + lstStartingHours.getValue() + "' , '" + lstEndingHours.getValue() + "')";
 		    	msg = new Msg(Tasks.Insert, query);
 		    	sendMsg(msg);
-		    	lblInitiateMsg.setText("Sale initiate succeeded");
+		    	
+		    	//Display a confirmation pop-up message and resetting the fields
+				Alert alert = new Alert(Alert.AlertType.NONE, "Sale initiate succeeded !", ButtonType.FINISH);
+		        alert.setTitle("Success");
+		        alert.showAndWait();
+		        resetFields();
 	    }
     	else {
-    		//Display an error message
-    		lblInitiateMsg.setText("Sale initiate failed");
+    		//Display an error pop-up message
+    		Alert alert = new Alert(Alert.AlertType.ERROR, "Sale initiate failed !",ButtonType.OK);
+	        alert.setTitle("Failed");
+	        alert.setHeaderText("Error");
+	        alert.showAndWait();
     	}
+    }
+    
+    /**
+     * Resets the fields on the GUI to their default state.
+     */
+    public void resetFields() {
+        lstSaleTemplate.setValue(null);
+        lstRegion.setValue(null);
+        StartingDate.setValue(null);
+        EndingDate.setValue(null);
+        lstStartingHours.setValue(null);
+        lstEndingHours.setValue(null);
+        lblErrTemplate.setText("");
+        lblErrRegion.setText("");
+        txtSaleName.setText("");
     }
     
     
@@ -304,8 +331,7 @@ public class SaleInitiateFormController extends AbstractController {
 
 	@Override
 	public void setUp(Object... objects) {
-		// TODO Auto-generated method stub
-		
+		//Not implemented
 	}
 }
 

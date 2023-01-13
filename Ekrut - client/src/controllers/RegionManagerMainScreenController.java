@@ -7,16 +7,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class RegionManagerMainScreenController extends AbstractController {
     protected static HashMap<String, Integer> storeMap = new HashMap<>();
@@ -27,7 +24,7 @@ public class RegionManagerMainScreenController extends AbstractController {
     @FXML
     Button manageInventoryBtn;
     @FXML
-    Button approveEmployeesBtn;
+    Button approveCustomersBtn;
     @FXML
     Button viewReportsBtn;
 
@@ -41,7 +38,7 @@ public class RegionManagerMainScreenController extends AbstractController {
         getRegion();
         if (myUser.getRole().equals("ceo")) {
             manageInventoryBtn.setVisible(false);
-            approveEmployeesBtn.setVisible(false);
+            approveCustomersBtn.setVisible(false);
         }
     }
 
@@ -56,8 +53,8 @@ public class RegionManagerMainScreenController extends AbstractController {
             query = "SELECT s.*\n" +
                     "FROM store s\n" +
                     "JOIN regions r ON s.rid = r.rid\n" +
-                    "JOIN regions_managers rm ON r.rid = rm.rid\n" +
-                    "WHERE rm.uid = " + myUser.getId();
+                    "JOIN region_employee re ON r.rid = re.rid\n" +
+                    "WHERE re.uid = " + myUser.getId();
         }
         msg = new Msg(Tasks.getLocations, query);
         sendMsg(msg);
@@ -131,7 +128,7 @@ public class RegionManagerMainScreenController extends AbstractController {
     /**
      * loads the approve employees screen
      */
-    public void approveEmployeesBtnClick() {
+    public void approveCustomersBtnClick() {
         try {
             start("ApproveCustomersScreen", "Approve new Customers");
         } catch (Exception e) {

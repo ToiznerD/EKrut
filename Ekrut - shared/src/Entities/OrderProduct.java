@@ -5,22 +5,6 @@ import java.util.Objects;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class OrderProduct {
-	@Override
-	public int hashCode() {
-		return Objects.hash(productID);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OrderProduct other = (OrderProduct) obj;
-		return productID == other.productID;
-	}
 
 	// image
 	private int productID;
@@ -34,6 +18,24 @@ public class OrderProduct {
 		this.name = name;
 		this.price = price;
 		this.quant = quant;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cartQuant, name, price, productID, quant);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderProduct other = (OrderProduct) obj;
+		return Objects.equals(cartQuant, other.cartQuant) && Objects.equals(name, other.name) && price == other.price
+				&& productID == other.productID && quant == other.quant;
 	}
 
 	public int getProductID() {
@@ -91,5 +93,4 @@ public class OrderProduct {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
 }

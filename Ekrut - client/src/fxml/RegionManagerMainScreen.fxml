@@ -44,7 +44,7 @@
             <Image url="@../../images/logout%20icon.png" />
          </image>
       </ImageView>
-      <Button fx:id="approveEmployeesBtn" layoutX="179.0" layoutY="246.0" mnemonicParsing="false" onAction="#approveEmployeesBtnClick" prefHeight="50.0" prefWidth="208.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve new Employees">
+      <Button fx:id="approveCustomersBtn" layoutX="179.0" layoutY="246.0" mnemonicParsing="false" onAction="#approveCustomersBtnClick" prefHeight="50.0" prefWidth="208.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve new Customers">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>

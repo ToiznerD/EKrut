@@ -4,14 +4,16 @@ import Util.Msg;
 import Util.Tasks;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 
 /**
- * A controller class for a JavaFX application that allows users to create sale templates.
+ * A controller class for a JavaFX application that allows marketing managers to create sale templates.
  * 
  * @author [Raz]
  */
@@ -31,9 +33,6 @@ public class SaleTemplateCreationController extends AbstractController{
     
     @FXML
     private Label lblErrDiscount;
-    
-    @FXML
-    private Label lblCreationMsg;
     
     /**
      * Checks if the template name entered in the txtTemplateName text field is valid.
@@ -94,9 +93,6 @@ public class SaleTemplateCreationController extends AbstractController{
     	// Flag to track whether template creation has succeeded
     	boolean flag = true;
     	
-    	// Reset label text
-    	lblCreationMsg.setText("");
-    	
     	 // Check template name and discount for validity
     	if(!checkTemplateName())
     		flag = false;
@@ -105,17 +101,42 @@ public class SaleTemplateCreationController extends AbstractController{
     	
     	// If both template name and discount are valid, create template in database
     	if(flag) {
-    		int discount = Integer.parseInt(txtDiscount.getText());
+    		//Insert discount as a frequent between 0 to 1 to the database
+    		double discount = Double.parseDouble(txtDiscount.getText());
+    		discount =  1 - (discount / 100);
+    		
     		String query = "INSERT into sale_template (templateName, discount)" + "VALUES ('" + txtTemplateName.getText() + "' , " + discount +")";
 	    	msg = new Msg(Tasks.Insert, query);
 	    	sendMsg(msg);
-	    	lblCreationMsg.setText("Template creation succeeded");
-	    }
-		else
-			// Otherwise, indicate that template creation has failed
-			lblCreationMsg.setText("Template creation failed");
+	    	
+	    	//Display a confirmation pop-up message and resetting the fields
+			Alert alert = new Alert(Alert.AlertType.NONE, "Sale template creation succeeded !", ButtonType.FINISH);
+	        alert.setTitle("Success");
+	        alert.showAndWait();
+	        resetFields();
+    	}
+		else {
+			//Display an error pop-up message
+			Alert alert = new Alert(Alert.AlertType.ERROR, "Sale template creation failed !",ButtonType.OK);
+	        alert.setTitle("Failed");
+	        alert.setHeaderText("Error");
+	        alert.showAndWait();
+		}
+    }
+    
+    /**
+     * Resets the fields on the GUI to their default state.
+     */
+    public void resetFields() {
+        txtTemplateName.setText("");
+        txtDiscount.setText("");
     }
 	    
+    /**
+     * Handles the mouse event of the back button.
+     * 
+     * @param event the mouse event that triggered this method
+     */
 	@Override
 	public void back(MouseEvent event) {
 		try {
@@ -127,7 +148,6 @@ public class SaleTemplateCreationController extends AbstractController{
 
 	@Override
 	public void setUp(Object... objects) {
-		// TODO Auto-generated method stub
-		
+		//Not implemented		
 	}
 }

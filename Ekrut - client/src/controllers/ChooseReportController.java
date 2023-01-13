@@ -132,7 +132,6 @@ public class ChooseReportController extends AbstractController {
         }
     }
 
-
     /**
      * goes back to Region manager main screen
      * @param event captures mouse event

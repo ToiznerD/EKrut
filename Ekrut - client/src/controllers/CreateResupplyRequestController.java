@@ -150,6 +150,7 @@ public class CreateResupplyRequestController extends AbstractController {
     public void loadEmployeesIds() {
         String query = "SELECT id, name FROM ekrut.users WHERE role = \"operation_employee\"";
 
+
         msg = new Msg(Select, query);
         sendMsg(msg);
         ArrayList<List<Object>> returnArr = msg.getRawArray();
@@ -187,6 +188,7 @@ public class CreateResupplyRequestController extends AbstractController {
             tableErrorLabel.setText("* Requests were added successfully");
             tableErrorLabel.setStyle("-fx-color: green");
             requestsObsList.clear();
+
         } else {
             tableErrorLabel.setText("* There was an error - Requests were nots added successfully");
         }
