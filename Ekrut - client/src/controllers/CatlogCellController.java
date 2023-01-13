@@ -40,23 +40,21 @@ public class CatlogCellController {
 	@FXML
 	private Text lblPrice;
 
-	private ChangeListener<Number> cartQuantListener = (observable, oldValue, newValue) -> {
-		if (newValue.intValue() == 0) {
-			btnAddToCart.setDisable(false);
-		} else if (newValue.intValue() == 1) {
-			btnAddToCart.setDisable(true);
-		}
-	};
-
 	public void setTemplate(OrderProduct p) {
-		if (product == null)
-			p.getCartQuantProperty().addListener(cartQuantListener);
 		product = p;
 		lblID.setText(String.valueOf(p.getProductID()));
 		lblName.setText(p.getName());
 		lblPrice.setText(String.valueOf(p.getPrice()) + " ₪");
-		//img.setImage(buildImg(p.getName()));
-
+		img.setImage(buildImg(p.getName()));
+		product.getCartQuantProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observe, Number oldVal, Number newVal) {
+				if (newVal.intValue() == 0)
+					btnAddToCart.setDisable(false);
+				if (newVal.intValue() == 1)
+					btnAddToCart.setDisable(true);
+			}
+		});
 	}
 
 	private Image buildImg(String productName) {
@@ -76,13 +74,5 @@ public class CatlogCellController {
 	@FXML
 	public void addClick(ActionEvent event) {
 		product.addToCart();
-	}
-
-	public OrderProduct getProduct() {
-		return product;
-	}
-
-	public ChangeListener<Number> getCartQuantListener() {
-		return cartQuantListener;
 	}
 }
