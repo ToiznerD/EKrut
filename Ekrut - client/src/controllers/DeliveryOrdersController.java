@@ -69,7 +69,7 @@ public class DeliveryOrdersController extends AbstractController {
 				+ " o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
 				+ "	from users u,orders o,deliveries d\r\n"
 				+ "	where o.cid=u.id and o.oid=d.oid and o.method=\"delivery\";";
-		msg = new Msg(Tasks.DeliveryOrders, query);
+		msg = new Msg(Tasks.Select, query);
 		sendMsg(msg);
 		ordersList.clear();
 		for (TableOrders order : msg.getArr(TableOrders.class)) {

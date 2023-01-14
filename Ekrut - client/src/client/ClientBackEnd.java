@@ -39,6 +39,7 @@ public class ClientBackEnd extends AbstractClient {
 		Msg taskMsg = (Msg) msg;
 		if(taskMsg.getTask()==Tasks.popUp) {//erik
 			AbstractController.waitForAlert(taskMsg.getAlertMsg());
+			return;
 		}
 		AbstractController.msg = taskMsg;
 		AbstractController.Notify();
@@ -50,7 +51,7 @@ public class ClientBackEnd extends AbstractClient {
 
 	public void quit() {
 		try {
-			handleMessageFromClientUI(new Msg(Tasks.Disconnect,null));
+			handleMessageFromClientUI(new Msg(Tasks.Disconnect));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

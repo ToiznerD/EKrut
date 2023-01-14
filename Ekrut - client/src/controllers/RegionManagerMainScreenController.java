@@ -60,7 +60,7 @@ public class RegionManagerMainScreenController extends AbstractController implem
                     "JOIN regions_managers rm ON r.rid = rm.rid\n" +
                     "WHERE rm.uid = " + myUser.getId();
         }
-        msg = new Msg(Tasks.getLocations, query);
+        msg = new Msg(Tasks.Select, query);
         return msg;
     }
 
@@ -83,7 +83,7 @@ public class RegionManagerMainScreenController extends AbstractController implem
             String query = "SELECT regions_managers.rid, name FROM regions_managers\n" +
                     "JOIN regions ON regions.rid = regions_managers.rid\n" +
                     " WHERE uid = " + myUser.getId();
-            msg = new Msg(Tasks.getRegion, query);
+            msg = new Msg(Tasks.Select, query);
             sendMsg(msg);
 
             if (msg.getBool()) {
@@ -145,11 +145,10 @@ public class RegionManagerMainScreenController extends AbstractController implem
      * triggered when log out is clicked, resets the user and send back to previous screen
      * @param event
      */
-    public void logOutClick() {
+    public void logOutClick() {//delete!!!
         try {
             //Update isLogged
-            String loginQuery = "UPDATE users SET IsLogged = 0 WHERE id = " + myUser.getId();
-            msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
+            msg = new Msg(Tasks.Logout);
             sendMsg(msg);
 
             if (msg.getBool()) {
