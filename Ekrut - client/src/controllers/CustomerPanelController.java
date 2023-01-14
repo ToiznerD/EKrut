@@ -58,7 +58,7 @@ public class CustomerPanelController extends AbstractController {
 				//Customer approved
 				if(Config.getConfig().equals("OL")) {
 					//OL configuration
-					if(!(boolean)(msg.getObj(1))) {
+					if((int)(msg.getObj(1)) == 0) {
 						//Regular customer
 						errLbl.setText("You need to be a subscriber to login here.");
 					}
@@ -73,9 +73,7 @@ public class CustomerPanelController extends AbstractController {
 					btnMakeOrder.setVisible(true);
 					//Subscriber customer
 					
-					//btnPickup.setVisible((int)(msg.getObj(1)) == 1);
-					
-					btnPickup.setVisible((boolean)(msg.getObj(1)));
+					btnPickup.setVisible((int)(msg.getObj(1)) == 1);
 					errLbl.setDisable(true);
 				}
 			}
