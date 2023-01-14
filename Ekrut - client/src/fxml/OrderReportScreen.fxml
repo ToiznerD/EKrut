@@ -24,11 +24,6 @@
          </font>
       </Label>
       <Button layoutX="21.0" layoutY="333.0" mnemonicParsing="false" style="-fx-background-color: 0;" />
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="691.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
       <PieChart fx:id="storesPieChart" layoutX="34.0" layoutY="128.0" prefHeight="287.0" prefWidth="320.0" />
       <BarChart fx:id="profitBarChart" layoutX="350.0" layoutY="145.0" prefHeight="279.0" prefWidth="378.0" title="Stores Profits">
         <xAxis>
