@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="740.0" style="-fx-background-color: #e8eaca; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="740.0" style="-fx-background-color: #e8eaca; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
    <children>
       <AnchorPane layoutX="14.0" layoutY="121.0" prefHeight="452.0" prefWidth="275.0" style="-fx-border-width: 3; -fx-border-color: #000000; -fx-border-radius: 25;">
          <children>
@@ -38,7 +38,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="db_password" alignment="CENTER" layoutX="117.0" layoutY="288.0" prefHeight="33.0" prefWidth="146.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-width: 2; -fx-border-radius: 100;" text="erik1502">
+            <PasswordField fx:id="db_password" alignment="CENTER" layoutX="117.0" layoutY="288.0" prefHeight="33.0" prefWidth="146.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-width: 2; -fx-border-radius: 100;">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
