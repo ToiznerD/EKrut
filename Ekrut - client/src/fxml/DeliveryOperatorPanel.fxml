@@ -16,7 +16,7 @@
       </ImageView>
       <ImageView fitHeight="179.0" fitWidth="171.0" layoutX="421.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/EKrut%20logo.png" />
+            <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
       <Label layoutX="78.0" layoutY="23.0" text="Welcome back">
@@ -36,7 +36,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="deliveryBtn" layoutX="114.0" layoutY="114.0" mnemonicParsing="false" onAction="#MoveToForm" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Delivery orders">
+      <Button fx:id="deliveryBtn" layoutX="114.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#moveToForm" prefHeight="50.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Delivery orders">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>

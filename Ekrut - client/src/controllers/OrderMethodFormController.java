@@ -93,6 +93,7 @@ public class OrderMethodFormController extends AbstractOrderController {
     }
     
     /**
+<<<<<<< HEAD
      * checkAddress checks if the user has entered the address details.
      * If no, and error message is displayed.
      * 
@@ -118,6 +119,8 @@ public class OrderMethodFormController extends AbstractOrderController {
     }
     
     /**
+=======
+>>>>>>> origin
      * pickupSelected handles the case when the user has selected the pickup option.
      * It reset and hide of the fields that related to delivery option and make the list of store visible.
      */
