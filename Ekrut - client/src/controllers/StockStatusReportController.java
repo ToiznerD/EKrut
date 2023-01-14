@@ -43,8 +43,6 @@ public class StockStatusReportController extends AbstractController {
     @FXML
     Label errorLabel;
 
-
-
     @FXML
     public void initialize() {
         // Set up label text
@@ -103,8 +101,6 @@ public class StockStatusReportController extends AbstractController {
         }
 
         loadDataToBarGraph(savedLastReportsSuccessfully);
-
-        return;
     }
 
     /**

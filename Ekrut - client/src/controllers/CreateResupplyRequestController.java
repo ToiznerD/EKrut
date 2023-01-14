@@ -9,14 +9,19 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 
 import Entities.ResupplyRequest;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javafx.scene.control.TableColumn.CellEditEvent;
+
 
 import static Util.Tasks.*;
 
@@ -73,8 +78,17 @@ public class CreateResupplyRequestController extends AbstractController {
         userCol.setCellValueFactory(new PropertyValueFactory<ResupplyRequest, Integer>("uid"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<ResupplyRequest, Integer>("quantity"));
         requestsTable.setItems(requestsObsList);
+
+        requestsTable.setEditable(true);
+        quantityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
         loadEmployeesIds();
 
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+        ResupplyRequest updatedRequest = (ResupplyRequest) event.getRowValue();
+        updatedRequest.setQuantity((Integer) event.getNewValue());
     }
 
     public void storeOptionOnAction() {
@@ -172,6 +186,9 @@ public class CreateResupplyRequestController extends AbstractController {
             return ;
         }
 
+        tableErrorLabel.setText("");
+        formErrorLabel.setText("");
+
         StringBuilder query = new StringBuilder("INSERT INTO resupply_request (sid,pid,uid,quantity,status) VALUES ");
         String sname, pname, uid, quantity;
         for (ResupplyRequest r : requestsObsList) {
@@ -184,14 +201,17 @@ public class CreateResupplyRequestController extends AbstractController {
         msg = new Msg(Insert, query.toString());
         sendMsg(msg);
 
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         if (msg.getBool()) {
-            tableErrorLabel.setText("* Requests were added successfully");
-            tableErrorLabel.setStyle("-fx-color: green");
-            requestsObsList.clear();
-
+            alert.setTitle("Success");
+            alert.setHeaderText("Resupply requests were added successfully");
         } else {
-            tableErrorLabel.setText("* There was an error - Requests were nots added successfully");
+            alert.setTitle("Error");
+            alert.setHeaderText("Resupply requests were not added successfully");
         }
+        alert.showAndWait();
+
+        requestsObsList.clear();
 
     }
 

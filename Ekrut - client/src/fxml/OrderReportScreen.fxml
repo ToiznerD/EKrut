@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="884.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderReportController">
    <children>
       <ImageView fitHeight="59.0" fitWidth="79.0" layoutX="228.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -24,13 +24,8 @@
          </font>
       </Label>
       <Button layoutX="21.0" layoutY="333.0" mnemonicParsing="false" style="-fx-background-color: 0;" />
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="691.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
-      <PieChart fx:id="storesPieChart" layoutX="34.0" layoutY="128.0" prefHeight="287.0" prefWidth="320.0" />
-      <BarChart fx:id="profitBarChart" layoutX="350.0" layoutY="145.0" prefHeight="279.0" prefWidth="378.0" title="Stores Profits">
+      <PieChart fx:id="storesPieChart" layoutX="29.0" layoutY="111.0" prefHeight="348.0" prefWidth="442.0" />
+      <BarChart fx:id="profitBarChart" layoutX="420.0" layoutY="95.0" prefHeight="392.0" prefWidth="450.0" title="Stores Profits">
         <xAxis>
           <CategoryAxis label="Store" side="BOTTOM" />
         </xAxis>
@@ -47,5 +42,6 @@
             <Image url="file:/C:/Users/97253/Desktop/EKrut/Ekrut%20-%20client/images/back%20icon.png" />
          </image>
       </ImageView>
+      <Label fx:id="deliveryOrdersInfo" layoutX="37.0" layoutY="424.0" />
    </children>
 </AnchorPane>

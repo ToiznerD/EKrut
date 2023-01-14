@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RegionManagerMainScreenController extends AbstractController {
-    protected static HashMap<String, Integer> storeMap = new HashMap<>();
+    protected static HashMap<String, Integer> storeMap;
     private static ObservableList<String> comboBoxOptions;
     public static Integer regionID;
     public static String regionName;
@@ -27,12 +28,18 @@ public class RegionManagerMainScreenController extends AbstractController {
     Button approveCustomersBtn;
     @FXML
     Button viewReportsBtn;
+    @FXML
+    Label welcomeLabel;
 
     /**
      * sends a query to db to get locations according to region
      */
     @FXML
     public void initialize() {
+        if (comboBoxOptions != null)
+            comboBoxOptions.clear();
+
+        welcomeLabel.setText("Welcome back, " + myUser.getName());
         sendLocationsMsg();
         saveStoreMap();
         getRegion();
@@ -64,6 +71,7 @@ public class RegionManagerMainScreenController extends AbstractController {
       * create hashMap of {store_name:store_id} and saves it to storesMap
       */
     public static void saveStoreMap() {
+        storeMap = new HashMap<>();
         List<Store> stores = msg.getArr(Store.class);
         // generate HashMap for storing sname:sid key-value pairs
         for (Store s : stores) {
@@ -76,8 +84,8 @@ public class RegionManagerMainScreenController extends AbstractController {
      */
     private void getRegion() {
         if (myUser.getRole().equals("region_manager")) {
-            String query = "SELECT regions_managers.rid, name FROM regions_managers\n" +
-                    "JOIN regions ON regions.rid = regions_managers.rid\n" +
+            String query = "SELECT region_employee.rid, name FROM region_employee\n" +
+                    "JOIN regions ON regions.rid = region_employee.rid\n" +
                     " WHERE uid = " + myUser.getId();
             msg = new Msg(Tasks.getRegion, query);
             sendMsg(msg);
@@ -95,6 +103,14 @@ public class RegionManagerMainScreenController extends AbstractController {
     public static void loadLocationsComboBox(ComboBox<String> comboBoxToLoad) {
         List<String> options = new ArrayList<>();
         options.addAll(storeMap.keySet());
+
+        for (String s : options) {
+            if (s.equals("Delivery Warehouse")) {
+                options.remove(s);
+                break;
+            }
+        }
+
         comboBoxOptions = FXCollections.observableArrayList(options);
         comboBoxToLoad.setItems(comboBoxOptions);
     }

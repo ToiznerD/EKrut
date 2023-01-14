@@ -5,10 +5,7 @@ import Util.Msg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -108,10 +105,15 @@ public class ApproveCustomersController extends AbstractController {
         msg = new Msg(Update, query);
         sendMsg(msg);
 
-        if (msg.getBool())
-            notificationLabel.setText("* Updated Successfully");
-        else
-            notificationLabel.setText("* Update was not Successfull");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        if (msg.getBool()) {
+            alert.setTitle("Success");
+            alert.setHeaderText("Customer id: " + targetUser.getId() + " changed to " + status);
+        } else {
+            alert.setTitle("Error");
+            alert.setHeaderText("Error updating status");
+        }
+        alert.showAndWait();
 
         // reload userlist
         userObservableList.clear();

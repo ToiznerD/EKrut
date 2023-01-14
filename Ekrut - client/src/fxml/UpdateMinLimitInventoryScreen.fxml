@@ -17,11 +17,6 @@
             <Image url="file:/C:/Users/97253/Desktop/EKrut/Ekrut%20-%20client/images/EKrutLogo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="542.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="file:/C:/Users/97253/Desktop/EKrut/Ekrut%20-%20client/images/min-max-close.png" />
-         </image>
-      </ImageView>
       <Label layoutX="30.0" layoutY="14.0" text="Update Min. limit" textFill="#cf4c0a">
          <font>
             <Font name="System Bold Italic" size="40.0" />

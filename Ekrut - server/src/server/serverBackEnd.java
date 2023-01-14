@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 import DBHandler.DBController;
 import Util.Tasks;
+import Utils.ReportGenerator;
 import tasker.Tasker;
 import Util.Msg;
 import ocsf.server.AbstractServer;

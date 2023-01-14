@@ -64,12 +64,16 @@ public class OrderReportController extends AbstractController  {
         for (OrderReport orderReport : orderReportsToDisplay) {
             pieChartData.add(new PieChart.Data(orderReport.getsName(), orderReport.getNumOrders()));
             series.getData().add(new XYChart.Data(orderReport.getsName(), orderReport.getTotalProfit()));
-            totalOrders = orderReport.getNumOrders();
+            totalOrders = totalOrders + orderReport.getNumOrders();
         }
 
         storesPieChart.setData(pieChartData);
         storesPieChart.setTitle("Total number of orders: " + totalOrders);
         profitBarChart.getData().addAll(series);
+
+        if (myUser.getRole().equals("ceo")) {
+
+        }
     }
     
 
