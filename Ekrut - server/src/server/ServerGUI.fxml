@@ -38,7 +38,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="db_password" alignment="CENTER" layoutX="117.0" layoutY="288.0" prefHeight="33.0" prefWidth="146.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-width: 2; -fx-border-radius: 100;">
+            <PasswordField fx:id="db_password" alignment="CENTER" layoutX="117.0" layoutY="288.0" prefHeight="33.0" prefWidth="146.0" style="-fx-background-radius: 100; -fx-border-color: #000000; -fx-border-width: 2; -fx-border-radius: 100;" text="erik1502">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Msg implements Serializable {
 
 	/**
@@ -13,14 +14,20 @@ public class Msg implements Serializable {
 	private Tasks task;
 	private Tasks subTask;
 	
-	private String query, consoleMsg;
-	private int intReturn;
+	private String query, consoleMsg, alertMsg;
+	private int intReturn, id;
 	private boolean boolReturn;
 	private ArrayList<List<Object>> arrayReturn = new ArrayList<>();
 
 	public Msg(Tasks task, String query) {
 		this.task = task;
 		this.query = query;
+	}
+	
+	public Msg(Tasks task, int id, String alertMsg) {//erik
+		this.task = task;
+		this.id = id;
+		this.alertMsg = alertMsg;
 	}
 	
 	public Msg(Tasks task, Tasks subTask, String query) {
@@ -38,6 +45,14 @@ public class Msg implements Serializable {
 	
 	public Tasks getSubTask() {
 		return subTask;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public String getAlertMsg() {
+		return alertMsg;
 	}
 
 	public void setSubTask(Tasks subTask) {

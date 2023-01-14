@@ -15,7 +15,8 @@ public class DeliveryOperatorController extends AbstractController{
     @FXML
     private Button deliveryBtn;
 
-    public void MoveToForm(ActionEvent event) {
+    @FXML
+    public void moveToForm(MouseEvent event) {
 		try {
 			start("DeliveryOrdersForm", "Delivery Orders");
 		} catch (IOException e) {

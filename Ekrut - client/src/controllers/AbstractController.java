@@ -6,9 +6,11 @@ import Entities.User;
 import Util.Msg;
 import Util.Tasks;
 import client.ClientBackEnd;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -54,6 +56,8 @@ public abstract class AbstractController {
 	public void sendMsg(Msg msg) { //Nave
 		try {
 			ClientBackEnd.getInstance().handleMessageFromClientUI(msg);
+			if(msg.getTask()==Tasks.popUp)//erik
+				return;
 			Wait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,7 +66,7 @@ public abstract class AbstractController {
 
 	public static void Notify() { //Nave
 		synchronized (monitor) {
-			monitor.notifyAll();
+			monitor.notify();
 		}
 	}
 
@@ -74,6 +78,27 @@ public abstract class AbstractController {
 			myUser = null;
 		}
 	}
+	
+	public static void popupAlert(String msg) { //ERIK
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.initOwner(prStage);
+		alert.setTitle("info");
+		alert.setContentText(msg);
+		alert.showAndWait();
+	}
+	
+	public static void waitForAlert(String msg) { //erik
+		new Thread(new Runnable() {
+		    @Override public void run() {
+		        Platform.runLater(new Runnable() {
+		            @Override public void run() {
+		            	popupAlert(msg);
+		            }
+		        });
+		    }
+		}).start();
+	}
+	
 
 	public void logout() {
 		logoutFromDb();
