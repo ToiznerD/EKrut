@@ -65,8 +65,7 @@ public class LoginController extends AbstractController {
 		// String query = "SELECT * FROM users WHERE user = '" + userid + "' AND
 		// password = " + password;
 		String query = String.format("SELECT * FROM users WHERE user='%s' AND password = '%s'", userid, password);
-
-		msg = new Msg(Tasks.Login, query);//subtask
+		msg = new Msg(Tasks.Login, query);
 		sendMsg(msg);
 		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
 
@@ -75,14 +74,11 @@ public class LoginController extends AbstractController {
 		// EK Configuration
 		else if (Config.getConfig().equals("EK")) {
 			start("CustomerPanel", "Customer Dashboard");
-			return;
 		} else {
 			// OL Configuration
 			String role = myUser.getRole();
 			switch (role) {
 			case "new_user":
-				start("CustomerPanel", "Customer Dashboard");
-				break;
 			case "customer":
 				customerConnect();
 				start("CustomerPanel", "Customer Dashboard");
