@@ -32,6 +32,7 @@ public abstract class AbstractController {
 		Scene scene = new Scene(root);
 		prStage.setTitle("Ekrut" + " " + title);
 		prStage.setScene(scene);
+
 		if (fxml != "ConnectionConfig") {
 			prStage.setOnCloseRequest(event -> {
 				logoutFromDb();
@@ -76,29 +77,27 @@ public abstract class AbstractController {
 			myUser = null;
 		}
 	}
-
-	public static void popupAlert(String msg) { // ERIK
+	
+	public static void popupAlert(String msg) { //ERIK
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.initOwner(prStage);
 		alert.setTitle("info");
 		alert.setContentText(msg);
-		alert.show();
+		alert.showAndWait();
 	}
-
-	public static void waitForAlert(String msg) { // erik
+	
+	public static void waitForAlert(String msg) { //erik
 		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						popupAlert(msg);
-					}
-				});
-			}
+		    @Override public void run() {
+		        Platform.runLater(new Runnable() {
+		            @Override public void run() {
+		            	popupAlert(msg);
+		            }
+		        });
+		    }
 		}).start();
 	}
-
+	
 	public void logout() {
 		logoutFromDb();
 		try {

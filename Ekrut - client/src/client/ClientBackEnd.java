@@ -37,7 +37,7 @@ public class ClientBackEnd extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		Msg taskMsg = (Msg) msg;
-		if(taskMsg.getTask()==Tasks.popUp) {//erik
+		if(taskMsg.getTask()==Tasks.popUp) {
 			AbstractController.waitForAlert(taskMsg.getAlertMsg());
 			return;
 		}

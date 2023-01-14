@@ -27,7 +27,7 @@ public class LoginController extends AbstractController {
 
 	@FXML
 	private TextField txtPW;
-
+	
 	@FXML
 	private TextField txtUserid;
 
@@ -109,7 +109,6 @@ public class LoginController extends AbstractController {
 				break;
 			}
 		}
-
 	}
 
 	
@@ -163,6 +162,7 @@ public class LoginController extends AbstractController {
 			}
 		}
 
+
 		String query = "SELECT * FROM users WHERE id =" + Integer.parseInt(idString);
 		msg = new Msg(Tasks.Select, query);
 		sendMsg(msg);
@@ -184,6 +184,7 @@ public class LoginController extends AbstractController {
 		// Connect to the app
 		connect(event);
 	}
+
 
 	@Override
 	public void back(MouseEvent event) {

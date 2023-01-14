@@ -12,12 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class OrderMethodFormController extends AbstractOrderController {
-	//private boolean subscriber;
 	private int storeID;
 	
 	@FXML
@@ -36,6 +37,18 @@ public class OrderMethodFormController extends AbstractOrderController {
     private Label lblErrStore;
     
     @FXML
+    private Label lblErrCity;
+    
+    @FXML
+    private Label lblErrStreet;
+    
+    @FXML
+    private TextField txtCity;
+    
+    @FXML
+    private TextField txtStreet;
+    
+    @FXML
     private AnchorPane apDetails;
     
     @FXML
@@ -43,11 +56,12 @@ public class OrderMethodFormController extends AbstractOrderController {
     
     @FXML
     private RadioButton rbDelivery;
+    
+    @FXML
+    private ProgressBar pb;
 
     /**
-     * Initializes the form by setting up the combo boxes for stores, the user details,
-     * and configuring the date picker field to only allow selecting dates that are not in the past and 3 next days from today.
-     * 
+     * Initializes the form by setting up the combo boxes for stores and the user details.
      */
     @FXML
     public void initialize() {
@@ -59,13 +73,14 @@ public class OrderMethodFormController extends AbstractOrderController {
     	lstStore.setItems(storesList);
     	
     	//Getting the user details
-    	lblAddress.setText(myUser.getAddress());
     	lblRecieverDetails.setText(myUser.getName() + ", " + myUser.getPhone());
-    	
+    	pb.setProgress(0.33);
     }
     
     /**
-     * checkStore checks if the user has selected a store from the list. If no store is selected, an error message is displayed.
+     * checkStore checks if the user has selected a store from the list.
+     * If no store is selected, an error message is displayed.
+     * 
      * @return true if a store is selected, false otherwise
      */
     public boolean checkStore() {
@@ -78,6 +93,34 @@ public class OrderMethodFormController extends AbstractOrderController {
     }
     
     /**
+<<<<<<< HEAD
+     * checkAddress checks if the user has entered the address details.
+     * If no, and error message is displayed.
+     * 
+     * @return
+     */
+    
+    public boolean checkAddress() {
+    	boolean flag = true;
+    	if(txtCity.getText().equals("")) {
+    		lblErrCity.setText("Please enter city");
+    		flag = false;
+    	}
+    	else
+    		lblErrCity.setText("");
+    	
+    	if(txtStreet.getText().equals("")) {
+    		lblErrStreet.setText("Please enter street details");
+    		flag = false;
+    	}
+    	else
+    		lblErrStreet.setText("");
+    	return flag;
+    }
+    
+    /**
+=======
+>>>>>>> origin
      * pickupSelected handles the case when the user has selected the pickup option.
      * It reset and hide of the fields that related to delivery option and make the list of store visible.
      */
@@ -85,6 +128,10 @@ public class OrderMethodFormController extends AbstractOrderController {
     	rbDelivery.setSelected(false);
     	apDetails.setVisible(false);
     	lstStore.setVisible(true);
+    	txtCity.setText("");
+    	txtStreet.setText("");
+    	lblErrCity.setText("");
+    	lblErrStreet.setText("");
     }
     
     /**
@@ -125,7 +172,7 @@ public class OrderMethodFormController extends AbstractOrderController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		else if(rbDelivery.isSelected()) {
+		else if(rbDelivery.isSelected() && checkAddress()) {
 			try {
 				start("OrderScreen", "Order Screen", 0);
 			} catch (IOException e) {
@@ -136,7 +183,7 @@ public class OrderMethodFormController extends AbstractOrderController {
     
 	@Override
 	public void setUp(Object... objects) {
-		//subscriber = (boolean) objects[0];
+		super.setUp(objects);
 	}
 
 	/**

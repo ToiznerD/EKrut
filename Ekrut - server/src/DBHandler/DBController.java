@@ -1,6 +1,5 @@
 package DBHandler;
 
-
 import java.io.FileReader;
 import java.io.Reader;
 import java.nio.file.Path;

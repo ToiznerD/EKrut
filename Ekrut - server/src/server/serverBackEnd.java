@@ -1,17 +1,14 @@
 package server;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 
 import DBHandler.DBController;
-import Util.Tasks;
-import tasker.Tasker;
 import Util.Msg;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+import tasker.Tasker;
 
 public class serverBackEnd extends AbstractServer {
 	// Default port to listen
@@ -21,7 +18,6 @@ public class serverBackEnd extends AbstractServer {
 	public serverBackEnd(int port, ServerController sc) {
 		super(port);
 		serverBackEnd.sc = sc;
-
 	}
 
 	@Override

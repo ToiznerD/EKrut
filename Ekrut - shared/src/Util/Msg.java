@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Msg implements Serializable {
 
 	/**
@@ -11,7 +12,6 @@ public class Msg implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Tasks task;
-
 	private String query, consoleMsg, alertMsg,response;
 	private int intReturn, destinationID;
 	private boolean boolReturn;
@@ -57,7 +57,7 @@ public class Msg implements Serializable {
 	public int getDestinationID() {
 		return destinationID;
 	}
-
+	
 	public String getAlertMsg() {
 		return alertMsg;
 	}

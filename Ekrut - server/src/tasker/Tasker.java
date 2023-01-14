@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DBHandler.DBController;
-import Entities.User;
 import Util.Msg;
 import ocsf.server.ConnectionToClient;
 import server.UserManager;
@@ -53,6 +52,8 @@ public class Tasker {
 		case Logout:
 			UserManager.removeByClient(client);
 			msg.setConsole(logoutMsg);
+			break;
+		default:
 			break;
 		}
 	}
