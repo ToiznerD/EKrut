@@ -78,7 +78,9 @@ public class OrderMethodFormController extends AbstractOrderController {
     }
     
     /**
-     * checkStore checks if the user has selected a store from the list. If no store is selected, an error message is displayed.
+     * checkStore checks if the user has selected a store from the list.
+     * If no store is selected, an error message is displayed.
+     * 
      * @return true if a store is selected, false otherwise
      */
     public boolean checkStore() {
@@ -89,6 +91,13 @@ public class OrderMethodFormController extends AbstractOrderController {
     	lblErrStore.setText("");
     	return true;
     }
+    
+    /**
+     * checkAddress checks if the user has entered the address details.
+     * If no, and error message is displayed.
+     * 
+     * @return
+     */
     
     public boolean checkAddress() {
     	boolean flag = true;

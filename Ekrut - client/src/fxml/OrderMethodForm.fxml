@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#onMouseMove" onDragDone="#onMouseMove" onDragDropped="#onMouseMove" onDragEntered="#onMouseMove" onDragExited="#onMouseMove" onDragOver="#onMouseMove" onMouseDragEntered="#onMouseMove" onMouseDragExited="#onMouseMove" onMouseDragOver="#onMouseMove" onMouseDragReleased="#onMouseMove" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderMethodFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#onMouseMove" onMouseClicked="#onMouseMove" onMouseDragged="#onMouseMove" onMouseEntered="#onMouseMove" onMouseExited="#onMouseMove" onMouseMoved="#onMouseMove" onMousePressed="#onMouseMove" onMouseReleased="#onMouseMove" onScroll="#onMouseMove" onScrollFinished="#onMouseMove" onScrollStarted="#onMouseMove" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderMethodFormController">
    <children>
       <ImageView fitHeight="184.0" fitWidth="180.0" layoutX="347.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
          <image>
