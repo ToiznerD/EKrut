@@ -80,7 +80,6 @@ public class LoginController extends AbstractController {
 			switch (role) {
 			case "new_user":
 			case "customer":
-				customerConnect();
 				start("CustomerPanel", "Customer Dashboard");
 				break;
 			case "service":
@@ -108,30 +107,6 @@ public class LoginController extends AbstractController {
 				start("UserPanel", "User Dashboard");
 				break;
 			}
-		}
-	}
-
-	
-	private void customerConnect() {
-		String customerQuery = "SELECT status, subscriber FROM customer WHERE id = " + myUser.getId();
-		msg = new Msg(Tasks.Select, customerQuery);
-		sendMsg(msg);
-
-		// Check if the customer has been approved
-		// Validates that the customer is a subscriber
-		if (!msg.getBool())
-			return;
-		if (msg.getObj(0).equals("Not Approved")) {
-			try {
-				start("UserPanel", "User Dashboard");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
-		} else if ((int) msg.getObj(1) == 0 && Config.getConfig().equals("OL")) {
-			errMsgLbl.setText("You need to be a subscriber to login here");
-			return;
 		}
 	}
 
