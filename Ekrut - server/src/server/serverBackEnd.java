@@ -5,36 +5,43 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import DBHandler.DBController;
-import Util.Tasks;
-import tasker.Tasker;
 import Util.Msg;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+import tasker.Tasker;
 
 public class serverBackEnd extends AbstractServer {
 	// Default port to listen
 	final public static int DEFAULT_PORT = 5555;
-
 	private static ServerController sc;
 
 	public serverBackEnd(int port, ServerController sc) {
 		super(port);
 		serverBackEnd.sc = sc;
-
 	}
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		Msg taskMsg = (Msg) msg;
-		if (taskMsg.getTask() == Tasks.Disconnect)
+		switch (taskMsg.getTask()) {
+		case Disconnect:
 			clientDisconnected(client);
-		else {
+			break;
+		case popUp:
 			try {
-				Tasker.taskerHandler(taskMsg);
+				UserManager.getClient(taskMsg.getDestinationID()).sendToClient(taskMsg);
+			} catch (Exception e1) {
+				//User not connected
+			}
+			break;
+		default:
+			try {
+				Tasker.taskerHandler(taskMsg, client);
 				sendMsg(client, taskMsg);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			break;
 		}
 	}
 
@@ -47,20 +54,23 @@ public class serverBackEnd extends AbstractServer {
 	@Override
 	protected void clientConnected(ConnectionToClient client) {
 		sc.addConnected(client.getInetAddress());
-		sc.appendConsole(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+": " + "Client " + client.getInetAddress().getHostAddress() + " is Connected to server. ");
+		sc.appendConsole(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + ": " + "Client "
+				+ client.getInetAddress().getHostAddress() + " is Connected to server. ");
 	}
 
 	@Override
 	protected void clientDisconnected(ConnectionToClient client) {
+		UserManager.removeByClient(client);
 		sc.removeConnected(client.getInetAddress());
-		sc.appendConsole(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))+": " + "Client " + client.getInetAddress().getHostAddress() + " is Disconnected from the server. ");
+		sc.appendConsole(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + ": " + "Client "
+				+ client.getInetAddress().getHostAddress() + " is Disconnected from the server. ");
 		try {
 			client.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected boolean importUsers() {
 		return DBController.importUsers();
 	}

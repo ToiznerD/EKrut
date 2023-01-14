@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -15,7 +14,8 @@ public class DeliveryOperatorController extends AbstractController{
     @FXML
     private Button deliveryBtn;
 
-    public void MoveToForm(ActionEvent event) {
+    @FXML
+    public void moveToForm(MouseEvent event) {
 		try {
 			start("DeliveryOrdersForm", "Delivery Orders");
 		} catch (IOException e) {

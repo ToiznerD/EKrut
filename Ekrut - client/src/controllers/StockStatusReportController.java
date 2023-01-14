@@ -77,7 +77,7 @@ public class StockStatusReportController extends AbstractController {
         // get query
         String storeLocation = locationsComboBox.getSelectionModel().getSelectedItem().toString();
         String query = getStockStatusReportQuery(storeLocation);
-        msg = new Msg(Tasks.getStockStatusReport, query);
+        msg = new Msg(Tasks.Select, query);
         sendMsg(msg);
 
         // if query failed - there is no report
@@ -181,7 +181,7 @@ public class StockStatusReportController extends AbstractController {
                 query.append(" OR ");
         }
 
-        msg = new Msg(Tasks.getStockStatusReport, query.toString());
+        msg = new Msg(Tasks.Select, query.toString());
         sendMsg(msg);
 
         if (msg.getBool()) {

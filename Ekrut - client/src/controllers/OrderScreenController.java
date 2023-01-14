@@ -21,11 +21,11 @@ import javafx.scene.text.Text;
 import Entities.OrderProduct;
 import Util.Msg;
 import Util.Tasks;
+import client.Config;
 
 public class OrderScreenController extends AbstractOrderController {
 	private ObservableList<OrderProduct> productOList = FXCollections.observableArrayList();
 	private ObservableList<OrderProduct> cartOList = FXCollections.observableArrayList();
-
 	private static final DecimalFormat decimal = new DecimalFormat("0.00");
 	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private int sum = 0;
@@ -124,7 +124,7 @@ public class OrderScreenController extends AbstractOrderController {
 	@Override
 	public void setUp(Object... objects) {
 		super.setUp();
-		this.shopID = (int) objects[0];
+		//this.shopID = (int) objects[0];
 		installDiscount();
 		productOList.addAll(getProductList());
 		addListeners();
@@ -137,9 +137,29 @@ public class OrderScreenController extends AbstractOrderController {
 		///start(nextWindow,title,cartOList);
 	}
 
+	/**
+     * Handles the mouse event of the back button.
+     * If the configuration is OL, it opens the "OrderMethodForm" window.
+	 * If the configuration is EK, it returns to "CustomerPanel" window.
+     * 
+     * @param event the mouse event that triggered this method
+     */
 	@Override
 	public void back(MouseEvent event) {
-		// TODO Auto-generated method stub
+		if(Config.getConfig().equals("OL")) {
+			try {
+				start("OrderMethodForm","Order Method Form");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			try {
+				start("CustomerPanel","Customer Dashboard", Config.getStore());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}		
 	}
 
 }

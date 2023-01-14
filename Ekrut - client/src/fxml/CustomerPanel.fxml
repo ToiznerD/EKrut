@@ -24,11 +24,6 @@
             <Font name="System Bold Italic" size="36.0" />
          </font>
       </Label>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="537.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="271.0" fitWidth="266.0" layoutX="358.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/EKrutLogo.png" />
@@ -39,12 +34,12 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnPickup" layoutX="103.0" layoutY="200.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Pickup" visible="false">
+      <Button fx:id="btnPickup" layoutX="103.0" layoutY="200.0" mnemonicParsing="false" onAction="#PickupOrder" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Pickup" visible="false">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Label fx:id="errLbl" layoutX="41.0" layoutY="159.0" prefHeight="50.0" prefWidth="532.0" textFill="RED">
+      <Label fx:id="errLbl" layoutX="40.0" layoutY="166.0" prefHeight="19.0" prefWidth="362.0" textFill="RED">
          <font>
             <Font name="Tahoma Bold" size="15.0" />
          </font>

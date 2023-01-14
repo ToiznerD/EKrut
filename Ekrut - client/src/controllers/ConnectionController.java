@@ -44,7 +44,6 @@ public class ConnectionController extends AbstractController {
 				sendMsg(msg);
 				HashMap<String, Integer> map = new HashMap<String, Integer>();
 				Config.showDialog(map, msg.getRawArray());
-
 				start("LoginForm", "Login");
 
 			} catch (IOException e) {

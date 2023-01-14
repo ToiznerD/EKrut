@@ -3,13 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderMethodFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#onMouseMove" onMouseClicked="#onMouseMove" onMouseDragged="#onMouseMove" onMouseEntered="#onMouseMove" onMouseExited="#onMouseMove" onMouseMoved="#onMouseMove" onMousePressed="#onMouseMove" onMouseReleased="#onMouseMove" onScroll="#onMouseMove" onScrollFinished="#onMouseMove" onScrollStarted="#onMouseMove" prefHeight="400.0" prefWidth="556.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderMethodFormController">
    <children>
       <ImageView fitHeight="184.0" fitWidth="180.0" layoutX="347.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -37,26 +38,43 @@
          </font>
       </Button>
       <ComboBox fx:id="lstStore" layoutX="137.0" layoutY="116.0" onAction="#checkStore" opacity="0.7" prefHeight="25.0" prefWidth="118.0" promptText="Choose store" style="-fx-background-color: orange;" visible="false" />
-      <AnchorPane fx:id="apDetails" layoutX="21.0" layoutY="200.0" prefHeight="85.0" prefWidth="368.0" visible="false">
+      <AnchorPane fx:id="apDetails" layoutX="21.0" layoutY="200.0" prefHeight="126.0" prefWidth="518.0" visible="false">
          <children>
-            <Label layoutX="14.0" layoutY="10.0" text="Address:">
+            <Label layoutX="14.0" layoutY="3.0" text="Shipping Address:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="43.0" text="Reciever details:">
+            <Label layoutX="14.0" layoutY="97.0" text="Reciever details:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblAddress" layoutX="85.0" layoutY="10.0" prefHeight="20.0" prefWidth="278.0">
+            <Label fx:id="lblRecieverDetails" layoutX="137.0" layoutY="97.0" prefHeight="20.0" prefWidth="343.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblRecieverDetails" layoutX="137.0" layoutY="43.0" prefHeight="20.0" prefWidth="219.0">
+            <TextField fx:id="txtCity" layoutX="54.0" layoutY="29.0" prefHeight="25.0" prefWidth="91.0" />
+            <TextField fx:id="txtStreet" layoutX="69.0" layoutY="64.0" prefHeight="25.0" prefWidth="219.0" />
+            <Label layoutX="14.0" layoutY="66.0" text="Street:">
                <font>
                   <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="31.0" text="City:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblErrCity" layoutX="153.0" layoutY="33.0" prefHeight="17.0" prefWidth="107.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblErrStreet" layoutX="296.0" layoutY="68.0" prefHeight="17.0" prefWidth="213.0" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Label>
          </children>
@@ -71,10 +89,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblErrProceedButton" layoutX="394.0" layoutY="319.0" prefHeight="17.0" prefWidth="141.0" textFill="RED">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
+      <ProgressBar fx:id="pb" layoutX="194.0" layoutY="354.0" prefHeight="18.0" prefWidth="131.0" progress="0.0" />
    </children>
 </AnchorPane>

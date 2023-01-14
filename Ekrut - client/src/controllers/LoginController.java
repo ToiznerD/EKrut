@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.Optional;
+
 import Entities.User;
 import Util.Msg;
 import Util.Tasks;
@@ -26,7 +27,7 @@ public class LoginController extends AbstractController {
 
 	@FXML
 	private TextField txtPW;
-
+	
 	@FXML
 	private TextField txtUserid;
 
@@ -53,103 +54,60 @@ public class LoginController extends AbstractController {
 	}
 
 	/*
-	 * connect method to login to the system
-	 * this method responsible to check the login details
+	 * connect method to login to the system this method responsible to check the
+	 * login details
+	 * 
 	 * @param event
 	 */
 	public void connect(ActionEvent event) throws IOException {
-		//Connect to server
-		//Create query based on UI input
-		//String query = "SELECT * FROM users WHERE user = '" + userid + "' AND password = " + password;
+		// Connect to server
+		// Create query based on UI input
+		// String query = "SELECT * FROM users WHERE user = '" + userid + "' AND
+		// password = " + password;
 		String query = String.format("SELECT * FROM users WHERE user='%s' AND password = '%s'", userid, password);
-
-		msg = new Msg(Tasks.Login, Tasks.Select, query);
+		msg = new Msg(Tasks.Login, query);
 		sendMsg(msg);
 		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
 
-		if (myUser != null) {
-			if (!myUser.isLogged()) {
-
-				// EK Configuration
-				if (Config.getConfig().equals("EK")) {
-					login();
-					start("CustomerPanel", "Customer Dashboard");
-					return;
-				}
-				//OL Configuration
-				String role = myUser.getRole();
-				switch (role) {
-				case "new_user":
-					login();
-					start("CustomerPanel", "Customer Dashboard");
-					break;
-
-				case "customer":
-					//Get the customer status
-					String customerQuery = "SELECT status, subscriber FROM customer WHERE id = " + myUser.getId();
-					msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
-					sendMsg(msg);
-
-					//Check if the customer has been approved
-					//Validates that the customer is a subscriber
-					if (msg.getBool()) {
-						if (msg.getObj(0).equals("Not Approved")) {
-							login();
-							start("UserPanel", "User Dashboard");
-							return;
-						} else if ((int) msg.getObj(1) == 0 && Config.getConfig().equals("OL")) {
-							errMsgLbl.setText("You need to be a subscriber to login here");
-							return;
-						}
-						login();
-						start("OrderScreen", "Customer Dashboard",1);
-					}
-					break;
-
-				case "service":
-					login();
-					start("CustomerService", "Customer Service Dashboard");
-					break;
-
-				case "marketing_manager":
-					login();
-					start("MarketingManagerPanel", "Marketing Manager Dashboard");
-					break;
-
-				case "marketing_employee":
-					login();
-					start("MarketingEmployeePanel", "Marketing Department Dashboard");
-					break;
-
-				case "region_manager":
-					login();
-					start("RegionManagerMainScreen", "Region Manager Dashboard");
-					break;
-
-				case "ceo":
-					start("RegionManagerMainScreen", "CEO Dashboard");
-					break;
-
-				case "operation_employee":
-					login();
-					start("OperationEmpPanel", "Operation Employee Dashboard");
-					break;
-				default:
-					login();
-					start("UserPanel", "User Dashboard");
-					break;
-				}
-			} else
-				errMsgLbl.setText(userid + " is already logged in");
-		} else
-			errMsgLbl.setText("Wrong Details");
-	}
-
-	private void login() {
-		//Update isLogged
-		String loginQuery = "UPDATE users SET IsLogged = 1 WHERE id = " + myUser.getId();
-		msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
-		sendMsg(msg);
+		if (myUser == null) // refactor erik
+			errMsgLbl.setText(msg.getResponse());
+		// EK Configuration
+		else if (Config.getConfig().equals("EK")) {
+			start("CustomerPanel", "Customer Dashboard");
+		} else {
+			// OL Configuration
+			String role = myUser.getRole();
+			switch (role) {
+			case "new_user":
+			case "customer":
+				start("CustomerPanel", "Customer Dashboard");
+				break;
+			case "service":
+				start("CustomerService", "Customer Service Dashboard");
+				break;
+			case "delivery":
+				start("DeliveryOperatorPanel", "Delivery Operator Dashboard");
+				break;
+			case "marketing_manager":
+				start("MarketingManagerPanel", "Marketing Manager Dashboard");
+				break;
+			case "marketing_employee":
+				start("MarketingEmployeePanel", "Marketing Department Dashboard");
+				break;
+			case "region_manager":
+				start("RegionManagerMainScreen", "Region Manager Dashboard");
+				break;
+			case "ceo":
+				start("RegionManagerMainScreen", "CEO Dashboard");
+				break;
+			case "operation_employee":
+				start("OperationEmpPanel", "Operation Employee Dashboard");
+				break;
+			default:
+				start("UserPanel", "User Dashboard");
+				break;
+			}
+		}
 	}
 
 	/**
@@ -160,7 +118,7 @@ public class LoginController extends AbstractController {
 	 */
 	public void ConnectWithApp(ActionEvent event) throws IOException {
 
-		// Ask for Store 
+		// Ask for Store
 		String idString = null;
 		while (idString == null || idString.equals("")) {
 			// create the text input dialog
@@ -178,6 +136,7 @@ public class LoginController extends AbstractController {
 				idString = result2.get();
 			}
 		}
+
 
 		String query = "SELECT * FROM users WHERE id =" + Integer.parseInt(idString);
 		msg = new Msg(Tasks.Select, query);
@@ -200,6 +159,7 @@ public class LoginController extends AbstractController {
 		// Connect to the app
 		connect(event);
 	}
+
 
 	@Override
 	public void back(MouseEvent event) {
