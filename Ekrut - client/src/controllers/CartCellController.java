@@ -1,7 +1,5 @@
 package controllers;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,21 +26,17 @@ public class CartCellController {
 		this.product = p;
 		nameLbl.setText(p.getName());
 		quantLbl.setText(String.valueOf(p.getCartQuant()));
-		product.getCartQuantProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observe, Number oldVal, Number newVal) {
-				quantLbl.setText(String.valueOf(p.getCartQuant()));
-			}
-		});
 	}
 
 	@FXML
 	public void addPushed(ActionEvent event) {
 		product.addToCart();
+		quantLbl.setText(String.valueOf(product.getCartQuant()));
 	}
 
 	@FXML
 	public void removePushed(ActionEvent event) {
 		product.removeFromCart();
+		quantLbl.setText(String.valueOf(product.getCartQuant()));
 	}
 }

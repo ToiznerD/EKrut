@@ -1,14 +1,12 @@
 package controllers;
 
 import java.io.IOException;
-
 import Entities.OrderProduct;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.AnchorPane;
 
 public class CatalogCell extends ListCell<OrderProduct> {
-
 	private AnchorPane root;
 	private CatlogCellController controller;
 

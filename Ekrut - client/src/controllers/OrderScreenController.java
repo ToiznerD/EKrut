@@ -48,7 +48,6 @@ public class OrderScreenController extends AbstractOrderController {
 	@FXML
 	private Button checkoutBtn;
 
-
 	@FXML
 	public void initialize() {
 		catlogList.setCellFactory(listView -> new CatalogCell());
