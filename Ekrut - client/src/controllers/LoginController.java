@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.Optional;
+
 import Entities.User;
 import Util.Msg;
 import Util.Tasks;
@@ -26,7 +27,7 @@ public class LoginController extends AbstractController {
 
 	@FXML
 	private TextField txtPW;
-
+	
 	@FXML
 	private TextField txtUserid;
 
@@ -71,76 +72,65 @@ public class LoginController extends AbstractController {
 			if (!myUser.isLogged()) {
 
 				// EK Configuration
-				if (Config.getConfig().equals("EK")) {
+				if(Config.getConfig().equals("EK")) {
 					login();
 					start("CustomerPanel", "Customer Dashboard");
 					return;
 				}
+				
 				//OL Configuration
 				String role = myUser.getRole();
 				switch (role) {
-				case "new_user":
-					login();
-					start("CustomerPanel", "Customer Dashboard");
-					break;
-
-				case "customer":
-					//Get the customer status
-					String customerQuery = "SELECT status, subscriber FROM customer WHERE id = " + myUser.getId();
-					msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
-					sendMsg(msg);
-
-					//Check if the customer has been approved
-					//Validates that the customer is a subscriber
-					if (msg.getBool()) {
-						if (msg.getObj(0).equals("Not Approved")) {
-							login();
-							start("UserPanel", "User Dashboard");
-							return;
-						} else if ((int) msg.getObj(1) == 0 && Config.getConfig().equals("OL")) {
-							errMsgLbl.setText("You need to be a subscriber to login here");
-							return;
-						}
+					case "new_user":
 						login();
-						start("OrderScreen", "Customer Dashboard",1);
+						start("CustomerPanel", "Customer Dashboard");
+						break;
+						
+					case "customer":
+						login();
+						start("CustomerPanel", "Customer Dashboard");
+						break; 
+						
+					case "service":
+						login();
+						start("CustomerService", "Customer Service Dashboard");
+						break;
+					
+					case "delivery":
+						login();
+						start("DeliveryOperatorPanel", "Delivery Operator Dashboard");
+						break;
+					
+					case "marketing_manager":
+						login();
+						start("MarketingManagerPanel", "Marketing Manager Dashboard");
+						break;
+						
+					case "marketing_employee":
+						login();
+						start("MarketingEmployeePanel", "Marketing Department Dashboard");
+						break;
+						
+					case "region_manager":
+						login();
+						start("RegionManagerMainScreen", "Region Manager Dashboard");
+						break;
+
+					case "ceo":
+						start("RegionManagerMainScreen", "CEO Dashboard");
+						break;
+	
+					case "operation_employee":
+						login();
+						start("OperationEmpPanel", "Operation Employee Dashboard");
+						break;
+					default:
+						login();
+						start("UserPanel", "User Dashboard");
+						break;
 					}
-					break;
-
-				case "service":
-					login();
-					start("CustomerService", "Customer Service Dashboard");
-					break;
-
-				case "marketing_manager":
-					login();
-					start("MarketingManagerPanel", "Marketing Manager Dashboard");
-					break;
-
-				case "marketing_employee":
-					login();
-					start("MarketingEmployeePanel", "Marketing Department Dashboard");
-					break;
-
-				case "region_manager":
-					login();
-					start("RegionManagerMainScreen", "Region Manager Dashboard");
-					break;
-
-				case "ceo":
-					start("RegionManagerMainScreen", "CEO Dashboard");
-					break;
-
-				case "operation_employee":
-					login();
-					start("OperationEmpPanel", "Operation Employee Dashboard");
-					break;
-				default:
-					login();
-					start("UserPanel", "User Dashboard");
-					break;
-				}
-			} else
-				errMsgLbl.setText(userid + " is already logged in");
+				} else
+					errMsgLbl.setText(userid + " is already logged in");
 		} else
 			errMsgLbl.setText("Wrong Details");
 	}
@@ -179,6 +169,7 @@ public class LoginController extends AbstractController {
 			}
 		}
 
+
 		String query = "SELECT * FROM users WHERE id =" + Integer.parseInt(idString);
 		msg = new Msg(Tasks.Select, query);
 		sendMsg(msg);
@@ -200,6 +191,7 @@ public class LoginController extends AbstractController {
 		// Connect to the app
 		connect(event);
 	}
+
 
 	@Override
 	public void back(MouseEvent event) {
