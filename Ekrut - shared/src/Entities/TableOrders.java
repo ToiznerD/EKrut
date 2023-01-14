@@ -2,42 +2,52 @@ package Entities;
 
 import java.io.Serializable;
 import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Objects;
-
-import javafx.util.converter.LocalTimeStringConverter;
 
 public class TableOrders implements Serializable {
 
 	private static final long serialVersionUID = 2L;
 	private int OrderID, CustomerID;
 	private String RecieverName, RecieverAddress, RecieverPhone, Status;
-	private Date OrderDate, EstimatedDate;
-	private Time OrderTime, EstimatedTime;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
-	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+	private LocalDate OrderDate, EstimatedDate;
+	private LocalTime OrderTime, EstimatedTime;
+	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yy");
+	private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
-	public TableOrders(int CustomerID, int OrderID, String RecieverName, String RecieverAddress, String RecieverPhone, Date OrderDate,
-			Time OrderTime, String Status, Date EstimatedDate, Time EstimatedTime) {
+	public TableOrders(int CustomerID, int OrderID, String RecieverName, String RecieverAddress, String RecieverPhone,
+			Date OrderDate, Time OrderTime, String Status, Date EstimatedDate, Time EstimatedTime) {
 		this.CustomerID = CustomerID;
 		this.OrderID = OrderID;
 		this.RecieverName = RecieverName;
 		this.RecieverAddress = RecieverAddress;
 		this.RecieverPhone = RecieverPhone;
-		this.OrderDate = OrderDate;
-		this.OrderTime = OrderTime;
+		this.OrderDate = convertdate(OrderDate);
+		this.OrderTime = converttime(OrderTime);
 		this.Status = Status;
-		this.EstimatedDate = EstimatedDate;
-		this.EstimatedTime = EstimatedTime;
+		this.EstimatedDate = convertdate(EstimatedDate);
+		this.EstimatedTime = converttime(EstimatedTime);
 	}
-	public int getCustomerID() {//erik
+
+	public LocalDate convertdate(Date date) {
+		if (date == null)
+			return null;
+		return new Timestamp(date.getTime()).toLocalDateTime().toLocalDate().plusDays(1);
+	}
+
+	public LocalTime converttime(Time time) {
+		if (time == null)
+			return null;
+		return new Timestamp(time.getTime()).toLocalDateTime().toLocalTime().plusMinutes(210);
+	}
+
+	public int getCustomerID() {// erik
 		return CustomerID;
 	}
+
 	public int getOrderID() {
 		return OrderID;
 	}
@@ -54,11 +64,11 @@ public class TableOrders implements Serializable {
 		return RecieverPhone;
 	}
 
-	public Date getOrderDate() {
+	public LocalDate getOrderDate() {
 		return OrderDate;
 	}
 
-	public Time getOrderTime() {
+	public LocalTime getOrderTime() {
 		return OrderTime;
 	}
 
@@ -66,20 +76,26 @@ public class TableOrders implements Serializable {
 		return Status;
 	}
 
-	public Date getEstimatedDate() {
+	public LocalDate getEstimatedDate() {
 		return EstimatedDate;
 	}
 
-	public Time getEstimatedTime() {
+	public LocalTime getEstimatedTime() {
 		return EstimatedTime;
 	}
 
 	public String getOrderDateAndTime() {
-		return dateFormat.format(OrderDate) + ", " + timeFormat.format(OrderTime);
+		return OrderDate.format(dateFormat) + ", " + OrderTime.format(timeFormat);
 	}
 
 	public String getEstimatedDelivery() {
-		return EstimatedDate == null ? "Need approval" : dateFormat.format(EstimatedDate) + ", " + timeFormat.format(EstimatedTime);
+		return EstimatedDate == null ? "Need approval"
+				: EstimatedDate.format(dateFormat) + ", " + EstimatedTime.format(timeFormat);
+	}
+
+	public void setEstimatedDelivery(LocalDate date, LocalTime time) {
+		this.EstimatedDate = date;
+		this.EstimatedTime = time;
 	}
 
 }

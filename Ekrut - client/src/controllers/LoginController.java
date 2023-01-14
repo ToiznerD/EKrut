@@ -109,7 +109,10 @@ public class LoginController extends AbstractController {
 					login();
 					start("CustomerService", "Customer Service Dashboard");
 					break;
-
+				case "delivery":
+					login();
+					start("DeliveryOperatorPanel", "Delivery Operator Dashboard");
+					break;
 				case "marketing_manager":
 					login();
 					start("MarketingManagerPanel", "Marketing Manager Dashboard");
