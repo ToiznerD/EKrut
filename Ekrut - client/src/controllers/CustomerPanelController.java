@@ -21,6 +21,9 @@ public class CustomerPanelController extends AbstractController {
     private Button btnPickup;
     
     @FXML
+    private Button btnApproveDelivery;
+    
+    @FXML
     private Label welcomeLbl;
     
     @FXML
@@ -65,6 +68,7 @@ public class CustomerPanelController extends AbstractController {
 					else {
 						//Subscriber
 						btnMakeOrder.setVisible(true);
+						btnApproveDelivery.setVisible(true);
 						errLbl.setDisable(true);
 					}
 				}
@@ -113,10 +117,25 @@ public class CustomerPanelController extends AbstractController {
 		}
 	}
 	
+	/**
+	* The PickupOrder method is used to open the pickup order form,
+	*/
 	@FXML
 	public void PickupOrder(ActionEvent event) {
 		try {
 			start("PickupForm","Pickup Order Form");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	* The ApproveDelivery method is used to open the customer deliveries form,
+	*/
+	@FXML
+	public void ApproveDelivery (ActionEvent event) {
+		try {
+			start("CustomerDeliveriesForm","Customer Deliveries Form");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
