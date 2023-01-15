@@ -12,6 +12,7 @@ public class ManageInventoryController extends AbstractController{
     @FXML
     Button sendResupplyRequestBtn;
 
+    
     public void updateMinLimitBtnClick() {
         try {
             start("UpdateMinLimitInventoryScreen", "Update Min. Limit");

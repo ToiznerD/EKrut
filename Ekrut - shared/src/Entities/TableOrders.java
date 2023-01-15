@@ -1,6 +1,5 @@
 package Entities;
 
-import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -8,9 +7,10 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class TableOrders implements Serializable {
 
-	private static final long serialVersionUID = 2L;
+
+public class TableOrders{
+
 	private int OrderID, CustomerID;
 	private String RecieverName, RecieverAddress, RecieverPhone, Status;
 	private LocalDate OrderDate, EstimatedDate;
