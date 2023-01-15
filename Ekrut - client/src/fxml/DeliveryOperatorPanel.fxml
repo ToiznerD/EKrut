@@ -19,7 +19,7 @@
             <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
-      <Label layoutX="78.0" layoutY="23.0" text="Welcome back">
+      <Label fx:id="welcomeLbl" layoutX="78.0" layoutY="23.0" text="Welcome back">
          <font>
             <Font name="System Bold Italic" size="36.0" />
          </font>

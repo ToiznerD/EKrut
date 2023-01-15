@@ -84,6 +84,7 @@ public abstract class AbstractController {
 		alert.setTitle("info");
 		alert.setContentText(msg);
 		alert.showAndWait();
+		Thread.currentThread().interrupt();
 	}
 	
 	public static void waitForAlert(String msg) { //erik
