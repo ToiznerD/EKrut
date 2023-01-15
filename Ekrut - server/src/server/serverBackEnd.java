@@ -25,6 +25,7 @@ public class serverBackEnd extends AbstractServer {
 		Msg taskMsg = (Msg) msg;
 		switch (taskMsg.getTask()) {
 		case Disconnect:
+			UserManager.removeByClient(client);
 			clientDisconnected(client);
 			break;
 		case popUp:
@@ -60,7 +61,6 @@ public class serverBackEnd extends AbstractServer {
 
 	@Override
 	protected void clientDisconnected(ConnectionToClient client) {
-		UserManager.removeByClient(client);
 		sc.removeConnected(client.getInetAddress());
 		sc.appendConsole(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + ": " + "Client "
 				+ client.getInetAddress().getHostAddress() + " is Disconnected from the server. ");
