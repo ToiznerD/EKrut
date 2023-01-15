@@ -32,7 +32,7 @@ public class PaymentController extends AbstractOrderController {
 	private Text totalSumText, discountText, cardText;
 	@FXML
 	private ImageView backBtn;
-	@FXML
+	@FXML	
 	private Button finishBtn;
 	private int lastOrder;
 
@@ -88,7 +88,7 @@ public class PaymentController extends AbstractOrderController {
 			query.append("(" + lastOrder + ",");
 			query.append(p.getProductID() + ",");
 			query.append(p.getCartQuant() + ",");
-			query.append(order.getProductPrice(p) * p.getCartQuant() + "),");
+			query.append(decimal.format(order.getProductPrice(p) * p.getCartQuant()) + "),");
 		}
 		query.deleteCharAt(query.length() - 1);
 		return query.toString();

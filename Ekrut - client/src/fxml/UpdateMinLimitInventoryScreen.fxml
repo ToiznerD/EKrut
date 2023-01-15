@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="140.0" fitWidth="137.0" layoutX="449.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="../../images/EKrutLogo.png" />
+            <Image url="@../../images/EKrutLogo.png" />
          </image>
       </ImageView>
       <Label layoutX="30.0" layoutY="14.0" text="Update Min. limit" textFill="#cf4c0a">
