@@ -103,7 +103,7 @@ public class SaleTemplateCreationController extends AbstractController{
     	if(flag) {
     		//Insert discount as a frequent between 0 to 1 to the database
     		double discount = Double.parseDouble(txtDiscount.getText());
-    		discount =  1 - (discount / 100);
+    		discount =  discount / 100;
     		
     		String query = "INSERT into sale_template (templateName, discount)" + "VALUES ('" + txtTemplateName.getText() + "' , " + discount +")";
 	    	msg = new Msg(Tasks.Insert, query);

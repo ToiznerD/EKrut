@@ -63,8 +63,7 @@ public class RegionManagerMainScreenController extends AbstractController {
                     "JOIN region_employee re ON r.rid = re.rid\n" +
                     "WHERE re.uid = " + myUser.getId();
         }
-        msg = new Msg(Tasks.getLocations, query);
-        sendMsg(msg);
+        msg = new Msg(Tasks.Select, query);
     }
 
     /**
@@ -87,7 +86,7 @@ public class RegionManagerMainScreenController extends AbstractController {
             String query = "SELECT region_employee.rid, name FROM region_employee\n" +
                     "JOIN regions ON regions.rid = region_employee.rid\n" +
                     " WHERE uid = " + myUser.getId();
-            msg = new Msg(Tasks.getRegion, query);
+            msg = new Msg(Tasks.Select, query);
             sendMsg(msg);
 
             if (msg.getBool()) {
@@ -156,11 +155,10 @@ public class RegionManagerMainScreenController extends AbstractController {
     /**
      * triggered when log out is clicked, resets the user and send back to previous screen
      */
-    public void logOutClick() {
+    public void logOutClick() {//delete!!!
         try {
             //Update isLogged
-            String loginQuery = "UPDATE users SET IsLogged = 0 WHERE id = " + myUser.getId();
-            msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
+            msg = new Msg(Tasks.Logout);
             sendMsg(msg);
 
             if (msg.getBool()) {

@@ -9,68 +9,63 @@ import java.util.List;
 
 import DBHandler.DBController;
 import Util.Msg;
+import ocsf.server.ConnectionToClient;
+import server.UserManager;
 
 public class Tasker {
 	/**
 	 * @throws Exception SQLException on select error
 	 */
-	public static void taskerHandler(Msg msg) throws SQLException {
-		//if(msg.Task == checkoutOrder)
-		//call method Checkout
-		if (msg.getQuery().toLowerCase().startsWith("update") || msg.getQuery().toLowerCase().startsWith("insert"))
-			runUpdate(msg);
-		else if (msg.getQuery().toLowerCase().startsWith("select"))
-			runSelect(msg);
-		else if(msg.getQuery().toLowerCase().startsWith("insert"))
-			runUpdate(msg);
-		updateConsole(msg);
-	}
-	private static void updateConsole(Msg msg) {
-		String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+	private static String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+	private static String loginMsg = time + ": <Login>: Client {ip} {result} logged in";
+	private static String logoutMsg = time + ": <Logout>: Client {ip} logged out";
+
+	public static void taskerHandler(Msg msg, ConnectionToClient client) throws SQLException {
+		// if(msg.Task == checkoutOrder)
+		// call method Checkout
 		switch (msg.getTask()) {
-		case Login:
-			switch(msg.getSubTask()) {
-				case Select:
-					msg.setConsole(time + ": <Login>: Client {ip} trying to login");
-					break;
-				case Update:
-					msg.setConsole(time + ": <Login>: Client {ip} Login successfuly");
-					break;
-				default:
-					break;
-			}
+		case Select:
+			runSelect(msg);
 			break;
-		case CreateCustomer:
-			switch(msg.getSubTask()) {
-				case Select:
-					msg.setConsole(time + ": <Create Customer>: Client {ip} asked for id");
-					break;
-				case CreateCustomer_Insert_Customer:
-					msg.setConsole(time + ": <Create Customer>: Client {ip} adding new customer");
-					break;
-				case CreateCustomer_Update_User:
-					msg.setConsole(time + ": <Create Customer>: Client {ip} adding new user");
-					break;
-				default:
-					break;
+		case Update:
+			runUpdate(msg);
+			break;
+		case Insert:
+			runUpdate(msg);
+			break;
+		case Login:
+			runSelect(msg);
+			if (msg.getBool()) {
+				if (!UserManager.isConnected(msg.getObj(0))) {
+					int id = msg.getObj(0);
+					UserManager.addClient(id, client);
+				}
+				else {
+					msg.setBool(false);
+					msg.setResponse("User already logged in");
+				}
 			}
+				else
+					msg.setResponse("Wrong details");
+			String consoleMsg = msg.getBool() ? loginMsg.replace("{result}", "sucsessfully")
+					: loginMsg.replace("{result}", "faild to");
+			msg.setConsole(consoleMsg);
 			break;
 		case Logout:
-			msg.setConsole(time + ": <Logout>: Client {ip} has logged out.");
-			break;
-		case RequiredStock:
-			if (msg.getBool()) 
-				msg.setConsole(time + ": <RequiredStock>: stock sent successfully to Client {ip}");
+			UserManager.removeByClient(client);
+			msg.setConsole(logoutMsg);
 			break;
 		default:
-			break;	
+			break;
 		}
 	}
+
 	private static void runUpdate(Msg msg) {
 		int returnVal = DBController.update(msg.getQuery());
 		msg.setInt(returnVal);
 		msg.setBool(returnVal > 0 ? true : false);
 	}
+
 	/**
 	 * @throws SQLException error in DB
 	 */
@@ -87,8 +82,7 @@ public class Tasker {
 		msg.setBool(msg.getRawArray().size() == 0 ? false : true);
 	}
 
-	
-	//Checkout method
-	//Get the updated catalog from the DB
-	//check if available to consume
+	// Checkout method
+	// Get the updated catalog from the DB
+	// check if available to consume
 }

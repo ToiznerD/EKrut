@@ -2,6 +2,7 @@ package controllers;
 
 import Entities.OrderReport;
 import Util.Msg;
+import Util.Tasks;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -9,8 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-
-import static Util.Tasks.getOrderReports;
 
 public class ChooseReportController extends AbstractController {
     private String month, year;
@@ -52,7 +51,7 @@ public class ChooseReportController extends AbstractController {
         String query = getOrderReportQuery();
 
         // get report and save it for next screen controller, if dont exist show msg
-        msg = new Msg(getOrderReports, query);
+        msg = new Msg(Tasks.Select, query);
         sendMsg(msg);
         if (msg.getBool())
             OrderReportController.orderReportsToDisplay = msg.getArr(OrderReport.class);

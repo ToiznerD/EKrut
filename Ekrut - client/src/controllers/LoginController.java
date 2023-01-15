@@ -54,92 +54,60 @@ public class LoginController extends AbstractController {
 	}
 
 	/*
-	 * connect method to login to the system
-	 * this method responsible to check the login details
+	 * connect method to login to the system this method responsible to check the
+	 * login details
+	 * 
 	 * @param event
 	 */
 	public void connect(ActionEvent event) throws IOException {
-		//Connect to server
-		//Create query based on UI input
-		//String query = "SELECT * FROM users WHERE user = '" + userid + "' AND password = " + password;
+		// Connect to server
+		// Create query based on UI input
+		// String query = "SELECT * FROM users WHERE user = '" + userid + "' AND
+		// password = " + password;
 		String query = String.format("SELECT * FROM users WHERE user='%s' AND password = '%s'", userid, password);
-
-		msg = new Msg(Tasks.Login, Tasks.Select, query);
+		msg = new Msg(Tasks.Login, query);
 		sendMsg(msg);
 		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
 
-		if (myUser != null) {
-			if (!myUser.isLogged()) {
-
-				// EK Configuration
-				if(Config.getConfig().equals("EK")) {
-					login();
-					start("CustomerPanel", "Customer Dashboard");
-					return;
-				}
-				
-				//OL Configuration
-				String role = myUser.getRole();
-				switch (role) {
-					case "new_user":
-						login();
-						start("CustomerPanel", "Customer Dashboard");
-						break;
-						
-					case "customer":
-						login();
-						start("CustomerPanel", "Customer Dashboard");
-						break; 
-						
-					case "service":
-						login();
-						start("CustomerService", "Customer Service Dashboard");
-						break;
-					
-					case "delivery":
-						login();
-						start("DeliveryOperatorPanel", "Delivery Operator Dashboard");
-						break;
-					
-					case "marketing_manager":
-						login();
-						start("MarketingManagerPanel", "Marketing Manager Dashboard");
-						break;
-						
-					case "marketing_employee":
-						login();
-						start("MarketingEmployeePanel", "Marketing Department Dashboard");
-						break;
-						
-					case "region_manager":
-						login();
-						start("RegionManagerMainScreen", "Region Manager Dashboard");
-						break;
-
-					case "ceo":
-						start("RegionManagerMainScreen", "CEO Dashboard");
-						break;
-	
-					case "operation_employee":
-						login();
-						start("OperationEmpPanel", "Operation Employee Dashboard");
-						break;
-					default:
-						login();
-						start("UserPanel", "User Dashboard");
-						break;
-					}
-				} else
-					errMsgLbl.setText(userid + " is already logged in");
-		} else
-			errMsgLbl.setText("Wrong Details");
-	}
-
-	private void login() {
-		//Update isLogged
-		String loginQuery = "UPDATE users SET IsLogged = 1 WHERE id = " + myUser.getId();
-		msg = new Msg(Tasks.Login, Tasks.Update, loginQuery);
-		sendMsg(msg);
+		if (myUser == null) // refactor erik
+			errMsgLbl.setText(msg.getResponse());
+		// EK Configuration
+		else if (Config.getConfig().equals("EK")) {
+			start("CustomerPanel", "Customer Dashboard");
+		} else {
+			// OL Configuration
+			String role = myUser.getRole();
+			switch (role) {
+			case "new_user":
+			case "customer":
+				start("CustomerPanel", "Customer Dashboard");
+				break;
+			case "service":
+				start("CustomerService", "Customer Service Dashboard");
+				break;
+			case "delivery":
+				start("DeliveryOperatorPanel", "Delivery Operator Dashboard");
+				break;
+			case "marketing_manager":
+				start("MarketingManagerPanel", "Marketing Manager Dashboard");
+				break;
+			case "marketing_employee":
+				start("MarketingEmployeePanel", "Marketing Department Dashboard");
+				break;
+			case "region_manager":
+				start("RegionManagerMainScreen", "Region Manager Dashboard");
+				break;
+			case "ceo":
+				start("RegionManagerMainScreen", "CEO Dashboard");
+				break;
+			case "operation_employee":
+				start("OperationEmpPanel", "Operation Employee Dashboard");
+				break;
+			default:
+				start("UserPanel", "User Dashboard");
+				break;
+			}
+		}
 	}
 
 	/**
@@ -150,7 +118,7 @@ public class LoginController extends AbstractController {
 	 */
 	public void ConnectWithApp(ActionEvent event) throws IOException {
 
-		// Ask for Store 
+		// Ask for Store
 		String idString = null;
 		while (idString == null || idString.equals("")) {
 			// create the text input dialog

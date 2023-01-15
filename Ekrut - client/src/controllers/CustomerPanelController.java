@@ -21,6 +21,9 @@ public class CustomerPanelController extends AbstractController {
     private Button btnPickup;
     
     @FXML
+    private Button btnApproveDelivery;
+    
+    @FXML
     private Label welcomeLbl;
     
     @FXML
@@ -38,7 +41,7 @@ public class CustomerPanelController extends AbstractController {
     	
     	//Get the customer status and check if he is subscriber
 		String customerQuery = "SELECT status, subscriber FROM customer WHERE id = " + myUser.getId();
-		msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
+		msg = new Msg(Tasks.Select, customerQuery);
 		sendMsg(msg);
     	
     	
@@ -58,13 +61,14 @@ public class CustomerPanelController extends AbstractController {
 				//Customer approved
 				if(Config.getConfig().equals("OL")) {
 					//OL configuration
-					if(!(boolean)(msg.getObj(1))) {
+					if((int)(msg.getObj(1)) == 0) {
 						//Regular customer
 						errLbl.setText("You need to be a subscriber to login here.");
 					}
 					else {
 						//Subscriber
 						btnMakeOrder.setVisible(true);
+						btnApproveDelivery.setVisible(true);
 						errLbl.setDisable(true);
 					}
 				}
@@ -73,9 +77,7 @@ public class CustomerPanelController extends AbstractController {
 					btnMakeOrder.setVisible(true);
 					//Subscriber customer
 					
-					//btnPickup.setVisible((int)(msg.getObj(1)) == 1);
-					
-					btnPickup.setVisible((boolean)(msg.getObj(1)));
+					btnPickup.setVisible((int)(msg.getObj(1)) == 1);
 					errLbl.setDisable(true);
 				}
 			}
@@ -115,10 +117,25 @@ public class CustomerPanelController extends AbstractController {
 		}
 	}
 	
+	/**
+	* The PickupOrder method is used to open the pickup order form,
+	*/
 	@FXML
 	public void PickupOrder(ActionEvent event) {
 		try {
 			start("PickupForm","Pickup Order Form");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	* The ApproveDelivery method is used to open the customer deliveries form,
+	*/
+	@FXML
+	public void ApproveDelivery (ActionEvent event) {
+		try {
+			start("CustomerDeliveriesForm","Customer Deliveries Form");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

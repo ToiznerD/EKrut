@@ -12,51 +12,54 @@ public class Msg implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Tasks task;
-	private Tasks subTask;
-	
-	private String query, consoleMsg, alertMsg;
-	private int intReturn, id;
+	private String query, consoleMsg, alertMsg,response;
+	private int intReturn, destinationID;
 	private boolean boolReturn;
 	private ArrayList<List<Object>> arrayReturn = new ArrayList<>();
 
-	public Msg(Tasks task, String query) {
-		this.task = task;
-		this.query = query;
-	}
-	
-	public Msg(Tasks task, int id, String alertMsg) {//erik
-		this.task = task;
-		this.id = id;
-		this.alertMsg = alertMsg;
-	}
-	
-	public Msg(Tasks task, Tasks subTask, String query) {
-		this.task = task;
-		this.query = query;
-		this.subTask = subTask;
+	public Msg(Tasks task, Object... objects) {
+		switch (task) {
+		case Disconnect:
+			this.task = task;
+			break;
+		case popUp:
+			this.task = task;
+			this.destinationID = (Integer) objects[0];
+			this.alertMsg = (String) objects[1];
+			break;
+		case Login:
+			this.task = task;
+			this.query = (String) objects[0];
+			break;
+		case Logout:
+			this.task = task;
+			break;
+		default: // sql queries
+			this.task = task;
+			this.query = (String) objects[0];
+		}
 	}
 
 	/**
 	 * @return Tasks return the Msg task.
 	 */
+	
 	public Tasks getTask() {
 		return task;
 	}
-	
-	public Tasks getSubTask() {
-		return subTask;
+
+	public void setResponse(String response) {
+		this.response = response;
 	}
-	
-	public int getID() {
-		return id;
+	public String getResponse() {
+		return response;
+	}
+	public int getDestinationID() {
+		return destinationID;
 	}
 	
 	public String getAlertMsg() {
 		return alertMsg;
-	}
-
-	public void setSubTask(Tasks subTask) {
-		this.subTask = subTask;
 	}
 
 	/**
@@ -65,30 +68,36 @@ public class Msg implements Serializable {
 	public void setInt(int value) {
 		this.intReturn = value;
 	}
+
 	/**
 	 * @return int number updated row
 	 */
 	public int getInt() {
 		return intReturn;
 	}
+
 	/**
 	 * @param boolean value
 	 */
 	public void setBool(boolean value) {
 		this.boolReturn = value;
 	}
+
 	/**
 	 * @return String query
 	 */
 	public String getQuery() {
 		return query;
 	}
+
 	public void setConsole(String message) {
 		this.consoleMsg = message;
 	}
-	public ArrayList<List<Object>> getRawArray(){
+
+	public ArrayList<List<Object>> getRawArray() {
 		return arrayReturn;
 	}
+
 	/**
 	 * @return boolean false if resultset return empty from selected
 	 */
@@ -114,7 +123,7 @@ public class Msg implements Serializable {
 	}
 
 	/**
-	 * @param <T> class type of wanted return
+	 * @param <T>  class type of wanted return
 	 * @param type ClassName.class , ClassName of wanted type return
 	 * @return List<T> List of wanted class
 	 */

@@ -93,7 +93,7 @@ public class UpdateMinLimitController extends AbstractController implements Init
                 "JOIN product ON product.pid = store_product.pid\n" +
                 "WHERE store.sid = " + sid;
 
-        msg = new Msg(Tasks.getStoreProducts, query);
+        msg = new Msg(Tasks.Select, query);
         sendMsg(msg);
 
         List<StoreProduct> storeProducts = (msg.getArr(StoreProduct.class));
@@ -136,7 +136,7 @@ public class UpdateMinLimitController extends AbstractController implements Init
         }
 
         String query = buildMinQuantityUpdateQuery();
-        msg = new Msg(Tasks.Insert, query);
+        Msg msg = new Msg(Tasks.Update, query);
         sendMsg(msg);
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

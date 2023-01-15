@@ -33,9 +33,10 @@ public class RunningSaleController extends AbstractController {
     public void initialize() {
     	//Initializing sales combo-box
     	String salesQuery = null;
-    	int userRegion = myUser.getId();
+    	int userId = myUser.getId();
     	//Getting the region sales related to this marketing employee that are not running already
-    	salesQuery = "SELECT saleName FROM sale_initiate WHERE rid = " + userRegion + " AND active = 0"; 	
+    	salesQuery = "SELECT distinct s.saleName FROM sale_initiate s, region_employee r1 WHERE  s.active = 0 AND "
+    			+ "r1.rid = (SELECT r.rid FROM region_employee r WHERE " + userId + " = r.uid)";
 	    msg = new Msg(Tasks.Select, salesQuery);
 	    sendMsg(msg);
     	ObservableList<StringBuilder> salesList = FXCollections.observableArrayList(msg.getArr(StringBuilder.class));

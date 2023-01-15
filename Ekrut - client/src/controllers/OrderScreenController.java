@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -28,9 +29,10 @@ public class OrderScreenController extends AbstractOrderController {
 	private ObservableList<OrderProduct> cartOList = FXCollections.observableArrayList();
 	private static final DecimalFormat decimal = new DecimalFormat("0.00");
 	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
-	private int sum = 0;
+	private int totalPrice = 0;
 	private Double discount = 1.0;
 	private int shopID;
+	private boolean discountInstalled = false;
 
 	@FXML
 	private ListView<OrderProduct> catlogList, cartList;
@@ -66,12 +68,12 @@ public class OrderScreenController extends AbstractOrderController {
 						cartOList.remove(p);
 					if (newCartQuant.intValue() == 1 && !cartOList.contains(p))
 						cartOList.add(p);
-					sum += (newCartQuant.intValue() - oldCartQuant.intValue()) * p.getPrice();
-					priceText.setText(String.valueOf(sum));
-					if (discount < 1.0 && sum > 0) {
+					totalPrice += (newCartQuant.intValue() - oldCartQuant.intValue()) * p.getPrice();
+					priceText.setText(String.valueOf(totalPrice));
+					if (discount < 1.0 && totalPrice > 0) {
 						line.setVisible(true);
 						discountLbl.setText("After discount:");
-						discountPriceText.setText(String.valueOf(decimal.format(sum * discount)));
+						discountPriceText.setText(String.valueOf(decimal.format(totalPrice * (1 - discount))));
 					} else {
 						line.setVisible(false);
 						discountLbl.setText("");
@@ -82,8 +84,9 @@ public class OrderScreenController extends AbstractOrderController {
 	}
 
 	private boolean checkOrder() {
-		ArrayList<OrderProduct> arr = getProductList();
-		for (OrderProduct p : arr) {
+		if (cartOList.isEmpty())
+			return false;
+		for (OrderProduct p : productOList) {
 			OrderProduct old = productOList.get(productOList.indexOf(p));
 			old.setQuant(p.getQuant());
 		}
@@ -96,7 +99,7 @@ public class OrderScreenController extends AbstractOrderController {
 	private ArrayList<OrderProduct> getProductList() {
 		msg = new Msg(Tasks.Select,
 				"SELECT p.pid,p.pname,p.price,sp.quantity FROM store_product sp ,product p WHERE sp.pid = p.pid AND sp.sid = "
-						+ (shopID == 0 ? 1 : shopID));
+						+ order.getStore_ID());
 		sendMsg(msg);
 		return (ArrayList<OrderProduct>) msg.getArr(OrderProduct.class);
 
@@ -109,6 +112,7 @@ public class OrderScreenController extends AbstractOrderController {
 						+ java.sql.Date.valueOf(LocalDate.now()) + "\" BETWEEN s.startDate AND s.endDate");
 		sendMsg(msg);
 		if (msg.getBool()) {
+			discountInstalled = true;
 			discount = msg.getObj(1);
 			String saleName = msg.getObj(0);
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -124,42 +128,53 @@ public class OrderScreenController extends AbstractOrderController {
 	@Override
 	public void setUp(Object... objects) {
 		super.setUp();
-		//this.shopID = (int) objects[0];
-		installDiscount();
+		this.shopID = order.getStore_ID(); //filled in last window.
+		if (order.getMethod() == null)
+			order.setMethod("Local");
+		if (!discountInstalled)
+			installDiscount();
+		productOList.clear();
 		productOList.addAll(getProductList());
 		addListeners();
 	}
 
 	@FXML
-	public void checkout(ActionEvent event) {
-		if (checkOrder())
-			System.out.println("ok to send");
-		///start(nextWindow,title,cartOList);
+	public void checkout(ActionEvent event) throws IOException {
+		if (checkOrder()) {
+			ArrayList<OrderProduct> list = new ArrayList<OrderProduct>();
+			for (OrderProduct p : productOList)
+				if (p.getCartQuant() > 0)
+					list.add(p);
+			order.setItems(list);
+			order.setDiscount(discount);
+			order.setTotal_price(totalPrice);
+			start("OrderPaymentScreen", "Payment");
+		} else
+			setUp(shopID); //Restart order window.
 	}
 
 	/**
-     * Handles the mouse event of the back button.
-     * If the configuration is OL, it opens the "OrderMethodForm" window.
+	 * Handles the mouse event of the back button.
+	 * If the configuration is OL, it opens the "OrderMethodForm" window.
 	 * If the configuration is EK, it returns to "CustomerPanel" window.
-     * 
-     * @param event the mouse event that triggered this method
-     */
+	 * 
+	 * @param event the mouse event that triggered this method
+	 */
 	@Override
 	public void back(MouseEvent event) {
-		if(Config.getConfig().equals("OL")) {
+		if (Config.getConfig().equals("OL")) {
 			try {
-				start("OrderMethodForm","Order Method Form");
+				start("OrderMethodForm", "Order Method Form");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				start("CustomerPanel", "Customer Dashboard", Config.getStore());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		else {
-			try {
-				start("CustomerPanel","Customer Dashboard", Config.getStore());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}		
 	}
 
 }
