@@ -22,11 +22,13 @@ public class AbstractOrderController extends AbstractController {
 			task.cancel();
 		setTimer();
 	}
+
 	@FXML
 	public void onMouseExit(MouseEvent e) {
 		if (task != null)
 			task.cancel();
 	}
+
 	private void setTimer() {
 		task = new TimerTask() {
 			@Override
@@ -52,12 +54,11 @@ public class AbstractOrderController extends AbstractController {
 	public void back(MouseEvent event) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void start(String fxml, String title, Object... objects) throws IOException {
-		if (task!=null && (fxml!="OrderMethodForm" || fxml!= "OrderPaymentScreen" ||fxml !="OrderScreen.fxml"))
+		if (task != null && (fxml != "OrderMethodForm" || fxml != "OrderPaymentScreen" || fxml != "OrderScreen.fxml"))
 			task.cancel();
 		super.start(fxml, title, objects);
 	}
-	}
-
 }
