@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -11,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 
 public class AbstractOrderController extends AbstractController {
 	protected static OrderDetails order;
+	protected static String orderFxml;
 	private Timer timer = new Timer();
 	private TimerTask task;
 
@@ -49,7 +51,13 @@ public class AbstractOrderController extends AbstractController {
 	@Override
 	public void back(MouseEvent event) {
 		// TODO Auto-generated method stub
-
+	}
+	@Override
+	public void start(String fxml, String title, Object... objects) throws IOException {
+		if (task!=null && (fxml!="OrderMethodForm" || fxml!= "OrderPaymentScreen" ||fxml !="OrderScreen.fxml"))
+			task.cancel();
+		super.start(fxml, title, objects);
+	}
 	}
 
 }
