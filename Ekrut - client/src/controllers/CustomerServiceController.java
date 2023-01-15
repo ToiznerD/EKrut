@@ -19,7 +19,7 @@ public class CustomerServiceController extends AbstractController{
     
     @FXML
     private Label welcomeLbl;
-    
+
     @FXML
     public void initialize() throws IOException {
     	//On EK nothing is permitted

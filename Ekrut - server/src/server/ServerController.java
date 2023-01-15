@@ -3,8 +3,12 @@ package server;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
 
 import DBHandler.DBController;
+import Utils.ReportGenerator;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -89,6 +93,27 @@ public class ServerController {
 			appendConsole("Driver definition failed.");
 			e.printStackTrace();
 		}
+
+		reportScheduler();
+	}
+
+	// execute scheduled task at start-up
+	private void reportScheduler() {
+		Timer timer = new Timer();
+
+		Calendar calendar = Calendar.getInstance();
+		// add 1 month so that the first report generated will be from the 1st of next month
+		calendar.add(Calendar.MONTH,1);
+
+		// set day at 1st
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		Date firstTime = calendar.getTime();
+
+		timer.schedule(new ReportGenerator(), firstTime);
 	}
 
 	public void disconnectFromServer() throws IOException {

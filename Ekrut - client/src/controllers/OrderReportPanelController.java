@@ -4,7 +4,7 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
-public class OrderReportPanelController extends AbstractController{
+public class OrderReportPanelController extends AbstractController {
     /**
      *
      * @param event

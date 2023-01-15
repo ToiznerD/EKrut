@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `ekrut` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `ekrut`;
--- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: localhost    Database: ekrut
+-- Host: 127.0.0.1    Database: ekrut
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -40,7 +40,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'Approved',1,'1234123412341234'),(3,'Not Approved',0,'1234123412341234'),(4,'Approved',0,'1234123412341234'),(5,'Approved',1,'1234123412341234'),(6,'Not Approved',0,'1231231231231234');
+INSERT INTO `customer` VALUES (1,'Approved',1,'1234123412341234'),(2,'Approved',1,'1231231231231234'),(3,'Not Approved',0,'1234123412341234'),(4,'Approved',0,'1234123412341234'),(5,'Pending',1,'1234123412341234'),(6,'Pending',0,'1231231231231234');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,14 +52,14 @@ DROP TABLE IF EXISTS `customer_report`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_report` (
-  `crp_id` int NOT NULL AUTO_INCREMENT,
-  `sid` int NOT NULL,
-  `year` int DEFAULT NULL,
-  `month` int DEFAULT NULL,
-  `histogram` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`crp_id`),
-  KEY `sid` (`sid`),
-  CONSTRAINT `customer_report_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `store` (`sid`) ON UPDATE CASCADE
+  `s_name` varchar(45) NOT NULL,
+  `year` int NOT NULL,
+  `month` int NOT NULL,
+  `histogram` varchar(45) NOT NULL,
+  `min_num_orders` int DEFAULT NULL,
+  `max_num_orders` int DEFAULT NULL,
+  PRIMARY KEY (`s_name`,`year`,`month`),
+  CONSTRAINT `sname3` FOREIGN KEY (`s_name`) REFERENCES `store` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -69,7 +69,36 @@ CREATE TABLE `customer_report` (
 
 LOCK TABLES `customer_report` WRITE;
 /*!40000 ALTER TABLE `customer_report` DISABLE KEYS */;
+INSERT INTO `customer_report` VALUES ('Abu Dabi',2022,9,'10,6,7,3,2',2,20),('Abu Dabi',2022,10,'1,5,12,6,8',5,25),('Abu Dabi',2022,11,'5,9,11,6,4',0,18),('Abu Dabi',2022,12,'3,10,12,9,7',3,22),('Ashdod',2022,9,'5,9,11,6,4',0,18),('Ashdod',2022,10,'3,10,12,9,7',3,22),('Ashdod',2022,11,'1,5,12,6,8',5,25),('Ashdod',2022,12,'10,6,7,3,2',2,20),('Ashkelon',2022,9,'5,9,11,6,4',3,22),('Ashkelon',2022,10,'3,10,12,9,7',0,18),('Ashkelon',2022,11,'1,5,12,6,8',2,20),('Ashkelon',2022,12,'10,6,7,3,2',5,25),('Dubai',2022,9,'5,9,11,6,4',3,22),('Dubai',2022,10,'1,5,12,6,8',2,20),('Dubai',2022,11,'10,6,7,3,2',5,25),('Dubai',2022,12,'3,10,12,9,7',0,18),('Haifa',2022,9,'10,6,7,3,2',0,18),('Haifa',2022,10,'1,5,12,6,8',3,22),('Haifa',2022,11,'3,10,12,9,7',5,25),('Haifa',2022,12,'5,9,11,6,4',2,20),('Karmiel',2022,9,'1,5,12,6,8',3,22),('Karmiel',2022,10,'3,10,12,9,7',0,18),('Karmiel',2022,11,'10,6,7,3,2',2,20),('Karmiel',2022,12,'5,9,11,6,4',5,25);
 /*!40000 ALTER TABLE `customer_report` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deliveries`
+--
+
+DROP TABLE IF EXISTS `deliveries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `deliveries` (
+  `oid` int NOT NULL,
+  `status` enum('Pending','In Progress','Completed') NOT NULL DEFAULT 'Pending',
+  `estimated_date` date DEFAULT NULL,
+  `estimated_time` time DEFAULT NULL,
+  `shipping_address` varchar(45) NOT NULL,
+  PRIMARY KEY (`oid`),
+  CONSTRAINT `oid1` FOREIGN KEY (`oid`) REFERENCES `orders` (`oid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `deliveries`
+--
+
+LOCK TABLES `deliveries` WRITE;
+/*!40000 ALTER TABLE `deliveries` DISABLE KEYS */;
+INSERT INTO `deliveries` VALUES (19,'Pending',NULL,NULL,'Haifa 4'),(40,'Pending',NULL,NULL,'kiryat ata 4'),(47,'In Progress','2023-01-13','10:00:00','beer sheva 7'),(62,'In Progress','2023-01-14','10:00:00','karmiel 5'),(71,'Pending',NULL,NULL,'qiryat haim 4'),(80,'In Progress','2023-01-14','10:00:00','sdot yam 1'),(86,'In Progress','2023-01-14','10:00:00','herzeliya 5');
+/*!40000 ALTER TABLE `deliveries` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -83,7 +112,7 @@ CREATE TABLE `order_items` (
   `oid` int NOT NULL,
   `pid` int NOT NULL,
   `quantity` int NOT NULL,
-  `total_price` int DEFAULT NULL,
+  `total_price` double DEFAULT NULL,
   PRIMARY KEY (`oid`,`pid`),
   KEY `pid` (`pid`),
   CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`oid`) REFERENCES `orders` (`oid`) ON UPDATE CASCADE,
@@ -108,12 +137,13 @@ DROP TABLE IF EXISTS `order_report`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_report` (
-  `orp_id` int NOT NULL AUTO_INCREMENT,
-  `oid` int NOT NULL,
-  `shipping_address` varchar(50) NOT NULL,
-  PRIMARY KEY (`orp_id`),
-  KEY `oid` (`oid`),
-  CONSTRAINT `order_report_ibfk_1` FOREIGN KEY (`oid`) REFERENCES `orders` (`oid`) ON UPDATE CASCADE
+  `s_name` varchar(45) NOT NULL,
+  `month` int NOT NULL,
+  `year` int NOT NULL,
+  `num_orders` int NOT NULL,
+  `total_profit` int NOT NULL,
+  PRIMARY KEY (`s_name`,`month`,`year`),
+  CONSTRAINT `sname` FOREIGN KEY (`s_name`) REFERENCES `store` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -123,6 +153,7 @@ CREATE TABLE `order_report` (
 
 LOCK TABLES `order_report` WRITE;
 /*!40000 ALTER TABLE `order_report` DISABLE KEYS */;
+INSERT INTO `order_report` VALUES ('Abu Dabi',9,2022,45,450),('Abu Dabi',10,2022,35,350),('Abu Dabi',11,2022,80,800),('Abu Dabi',12,2022,70,750),('Ashdod',9,2022,50,500),('Ashdod',10,2022,60,600),('Ashdod',11,2022,70,700),('Ashdod',12,2022,40,400),('Ashkelon',1,2023,1,100),('Ashkelon',9,2022,80,850),('Ashkelon',10,2022,30,350),('Ashkelon',11,2022,20,200),('Ashkelon',12,2022,50,550),('Delivery Warehouse',9,2022,80,800),('Delivery Warehouse',10,2022,90,900),('Delivery Warehouse',11,2022,100,1050),('Delivery Warehouse',12,2022,95,950),('Dubai',9,2022,80,850),('Dubai',10,2022,70,750),('Dubai',11,2022,90,900),('Dubai',12,2022,20,250),('Haifa',9,2022,60,600),('Haifa',10,2022,50,500),('Haifa',11,2022,40,400),('Haifa',12,2022,30,300),('Karmiel',9,2022,20,200),('Karmiel',10,2022,80,800),('Karmiel',11,2022,70,700),('Karmiel',12,2022,60,600);
 /*!40000 ALTER TABLE `order_report` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,17 +168,17 @@ CREATE TABLE `orders` (
   `oid` int NOT NULL AUTO_INCREMENT,
   `cid` int NOT NULL,
   `sid` int NOT NULL,
-  `total_price` int DEFAULT NULL,
+  `total_price` double DEFAULT NULL,
   `ord_date` date DEFAULT NULL,
   `ord_time` time DEFAULT NULL,
-  `method` enum('Delivery','Not Approved') DEFAULT NULL,
-  `ord_status` enum('In Progress','Completed') DEFAULT NULL,
+  `method` enum('Delivery','Local','Pickup') DEFAULT NULL,
+  `ord_status` enum('In Progress','Completed') DEFAULT 'In Progress',
   PRIMARY KEY (`oid`),
   KEY `cid` (`cid`),
   KEY `sid` (`sid`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `customer` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `store` (`sid`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,6 +187,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (7,1,1,100,'2023-01-01','10:00:00','Pickup','Completed'),(8,1,1,200,'2023-01-01','11:00:00','Local','Completed'),(9,2,2,100,'2023-01-01','10:00:00','Pickup','Completed'),(10,2,2,300,'2023-01-01','11:00:00','Pickup','Completed'),(11,1,3,100,'2023-01-01','12:00:00','Local','Completed'),(12,1,4,100,'2023-01-01','14:00:00','Pickup','Completed'),(13,1,0,100,'2023-01-02','10:00:00','Delivery','Completed'),(14,1,1,150,'2023-01-03','10:15:00','Pickup','Completed'),(15,1,2,200,'2023-01-02','10:00:00','Pickup','Completed'),(16,1,0,100,'2023-01-03','10:15:00','Delivery','Completed'),(17,1,3,150,'2023-01-02','10:00:00','Pickup','Completed'),(18,1,3,200,'2023-01-03','10:15:00','Pickup','Completed'),(19,1,0,250,'2023-01-02','10:00:00','Delivery','In Progress'),(20,1,4,150,'2023-01-03','10:15:00','Pickup','Completed'),(21,1,5,300,'2023-01-02','10:00:00','Pickup','Completed'),(22,1,5,250,'2023-01-03','10:15:00','Pickup','Completed'),(34,2,0,350,'2023-01-02','13:00:00','Delivery','Completed'),(35,2,1,450,'2023-01-03','13:15:00','Pickup','Completed'),(36,2,2,200,'2023-01-02','10:00:00','Pickup','Completed'),(37,2,0,150,'2023-01-03','12:15:00','Delivery','Completed'),(38,2,3,150,'2023-01-02','14:00:00','Pickup','Completed'),(39,2,3,200,'2023-01-03','15:15:00','Pickup','Completed'),(40,2,0,100,'2023-01-02','15:00:00','Delivery','In Progress'),(41,2,4,150,'2023-01-03','16:15:00','Pickup','Completed'),(42,2,5,250,'2023-01-02','22:00:00','Pickup','Completed'),(43,2,5,250,'2023-01-03','21:15:00','Pickup','Completed'),(44,3,0,350,'2023-01-02','13:00:00','Delivery','Completed'),(45,3,1,450,'2023-01-03','13:15:00','Pickup','Completed'),(46,3,2,200,'2023-01-02','10:00:00','Pickup','Completed'),(47,3,0,150,'2023-01-03','12:15:00','Delivery','In Progress'),(48,3,3,150,'2023-01-02','14:00:00','Pickup','Completed'),(49,3,3,200,'2023-01-03','15:15:00','Pickup','Completed'),(50,3,0,100,'2023-01-02','15:00:00','Delivery','Completed'),(51,3,4,150,'2023-01-03','16:15:00','Pickup','Completed'),(52,3,5,250,'2023-01-02','22:00:00','Pickup','Completed'),(53,3,5,250,'2023-01-03','21:15:00','Pickup','Completed'),(54,3,6,150,'2023-01-02','14:00:00','Local','Completed'),(55,3,6,150,'2023-01-05','18:00:00','Pickup','Completed'),(56,4,0,350,'2023-01-04','13:00:00','Delivery','Completed'),(57,4,1,450,'2023-01-03','13:15:00','Pickup','Completed'),(58,4,2,200,'2023-01-04','10:00:00','Pickup','Completed'),(59,4,0,150,'2023-01-03','12:15:00','Delivery','Completed'),(60,4,3,150,'2023-01-04','14:00:00','Pickup','Completed'),(61,4,3,200,'2023-01-03','15:15:00','Pickup','Completed'),(62,4,0,100,'2023-01-04','15:00:00','Delivery','In Progress'),(63,4,4,150,'2023-01-03','16:15:00','Pickup','Completed'),(64,4,5,250,'2023-01-04','22:00:00','Pickup','Completed'),(65,4,5,250,'2023-01-03','21:15:00','Pickup','Completed'),(66,4,6,150,'2023-01-04','14:00:00','Local','Completed'),(67,4,6,150,'2023-01-05','18:00:00','Pickup','Completed'),(68,5,0,350,'2023-01-04','20:00:00','Delivery','Completed'),(69,5,1,450,'2023-01-06','20:18:00','Pickup','Completed'),(70,5,2,200,'2023-01-04','10:00:00','Pickup','Completed'),(71,5,0,180,'2023-01-06','12:18:00','Delivery','In Progress'),(72,5,3,180,'2023-01-04','14:00:00','Pickup','Completed'),(73,5,3,200,'2023-01-06','18:18:00','Pickup','Completed'),(74,5,0,100,'2023-01-04','18:00:00','Delivery','Completed'),(75,5,4,180,'2023-01-06','16:18:00','Pickup','Completed'),(76,5,5,250,'2023-01-04','22:00:00','Pickup','Completed'),(77,5,5,250,'2023-01-06','21:18:00','Pickup','Completed'),(78,5,6,180,'2023-01-04','14:00:00','Local','Completed'),(79,5,6,180,'2023-01-05','18:00:00','Pickup','Completed'),(80,6,0,350,'2023-01-04','20:00:00','Delivery','In Progress'),(81,6,1,450,'2023-01-06','20:18:00','Pickup','Completed'),(82,6,2,200,'2023-01-04','10:00:00','Pickup','Completed'),(83,6,0,180,'2023-01-06','12:18:00','Delivery','Completed'),(84,6,3,180,'2023-01-04','14:00:00','Pickup','Completed'),(85,6,3,200,'2023-01-06','18:18:00','Pickup','Completed'),(86,6,0,100,'2023-01-04','18:00:00','Delivery','In Progress'),(87,6,4,180,'2023-01-06','16:18:00','Pickup','Completed'),(88,6,5,250,'2023-01-04','22:00:00','Pickup','Completed'),(89,6,5,250,'2023-01-06','21:18:00','Pickup','Completed'),(90,6,6,180,'2023-01-04','14:00:00','Local','Completed'),(91,6,6,180,'2023-01-05','18:00:00','Pickup','Completed');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,11 +199,10 @@ DROP TABLE IF EXISTS `pickup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pickup` (
-  `pickId` int NOT NULL AUTO_INCREMENT,
-  `sid` int NOT NULL,
   `oid` int NOT NULL,
+  `sid` int NOT NULL,
   `orderCode` varchar(50) NOT NULL,
-  PRIMARY KEY (`pickId`),
+  PRIMARY KEY (`oid`),
   UNIQUE KEY `orderCode` (`orderCode`),
   KEY `sid` (`sid`),
   KEY `oid` (`oid`),
@@ -186,6 +217,7 @@ CREATE TABLE `pickup` (
 
 LOCK TABLES `pickup` WRITE;
 /*!40000 ALTER TABLE `pickup` DISABLE KEYS */;
+INSERT INTO `pickup` VALUES (7,1,'1061435'),(9,2,'1812643'),(10,2,'2609513'),(12,4,'1993857'),(14,1,'739198'),(15,2,'345765'),(17,3,'2510884'),(18,3,'458066'),(20,4,'2310987'),(21,5,'2557233'),(22,5,'498752'),(35,1,'2267236'),(36,2,'1018885'),(38,3,'1228715'),(39,3,'2725305'),(41,4,'3096457'),(42,5,'2171445'),(43,5,'653487'),(45,1,'2662850'),(46,2,'2562958'),(48,3,'381553'),(49,3,'106503'),(51,4,'2498540'),(52,5,'1056666'),(53,5,'2046746'),(55,6,'1833869'),(57,1,'826703'),(58,2,'2199940'),(60,3,'1626810'),(61,3,'552513'),(63,4,'2118946'),(64,5,'1918496'),(65,5,'1612738'),(67,6,'1445967'),(69,1,'3107659'),(70,2,'2091945'),(72,3,'2159049'),(73,3,'2765310'),(75,4,'2538532'),(76,5,'753808'),(77,5,'480296'),(79,6,'567529'),(81,1,'793506'),(82,2,'1208375'),(84,3,'726218'),(85,3,'999381'),(87,4,'786021'),(88,5,'373268'),(89,5,'1055807'),(91,6,'333545');
 /*!40000 ALTER TABLE `pickup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +270,7 @@ CREATE TABLE `region_employee` (
 
 LOCK TABLES `region_employee` WRITE;
 /*!40000 ALTER TABLE `region_employee` DISABLE KEYS */;
-INSERT INTO `region_employee` VALUES (7,1),(13,2),(14,3);
+INSERT INTO `region_employee` VALUES (7,1),(8,1),(13,2),(16,2),(14,3),(17,3);
 /*!40000 ALTER TABLE `region_employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,7 +286,7 @@ CREATE TABLE `regions` (
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`rid`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +295,7 @@ CREATE TABLE `regions` (
 
 LOCK TABLES `regions` WRITE;
 /*!40000 ALTER TABLE `regions` DISABLE KEYS */;
-INSERT INTO `regions` VALUES (2,'north'),(1,'south'),(3,'uae');
+INSERT INTO `regions` VALUES (0,'global'),(2,'north'),(1,'south'),(3,'uae');
 /*!40000 ALTER TABLE `regions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +307,7 @@ DROP TABLE IF EXISTS `resupply_request`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `resupply_request` (
-  `request_id` int NOT NULL,
+  `request_id` int NOT NULL AUTO_INCREMENT,
   `sid` int NOT NULL,
   `pid` int NOT NULL,
   `uid` int NOT NULL,
@@ -287,8 +319,8 @@ CREATE TABLE `resupply_request` (
   KEY `uid_idx` (`uid`),
   CONSTRAINT `pid` FOREIGN KEY (`pid`) REFERENCES `store_product` (`pid`),
   CONSTRAINT `sid` FOREIGN KEY (`sid`) REFERENCES `store_product` (`sid`),
-  CONSTRAINT `uid` FOREIGN KEY (`uid`) REFERENCES `store_employees` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `uid` FOREIGN KEY (`uid`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -297,6 +329,7 @@ CREATE TABLE `resupply_request` (
 
 LOCK TABLES `resupply_request` WRITE;
 /*!40000 ALTER TABLE `resupply_request` DISABLE KEYS */;
+INSERT INTO `resupply_request` VALUES (34,3,3,10,15,'Pending'),(35,3,4,15,15,'Pending'),(36,1,5,10,11,'Pending'),(37,4,2,15,20,'Pending'),(38,4,2,10,13,'Pending'),(39,6,3,15,18,'Pending'),(40,5,8,10,20,'Pending'),(41,1,9,15,10,'Pending'),(42,1,5,10,11,'Done'),(43,4,2,15,20,'Done'),(44,3,8,10,11,'Done'),(45,5,2,15,20,'Done'),(46,4,10,10,11,'Done'),(47,6,9,15,20,'Done');
 /*!40000 ALTER TABLE `resupply_request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -366,9 +399,12 @@ DROP TABLE IF EXISTS `stock_report`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `stock_report` (
-  `srp_id` int NOT NULL AUTO_INCREMENT,
-  `rep_date` date DEFAULT NULL,
-  PRIMARY KEY (`srp_id`)
+  `s_name` varchar(45) NOT NULL,
+  `stock_data` text NOT NULL,
+  `month` int NOT NULL,
+  `year` int NOT NULL,
+  PRIMARY KEY (`s_name`,`month`,`year`),
+  CONSTRAINT `sname2` FOREIGN KEY (`s_name`) REFERENCES `store` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -378,6 +414,7 @@ CREATE TABLE `stock_report` (
 
 LOCK TABLES `stock_report` WRITE;
 /*!40000 ALTER TABLE `stock_report` DISABLE KEYS */;
+INSERT INTO `stock_report` VALUES ('Abu Dabi','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',9,2022),('Abu Dabi','Cola,15,Bamba,5,Snickers,10,Oreo,15,Bisli,0,Pringles,5,Cheetos,20,Doritos,20,White Kinder Bueno,40,Black Kinder Bueno,30',10,2022),('Abu Dabi','Cola,5,Bamba,10,Snickers,5,Oreo,10,Bisli,15,Pringles,15,Cheetos,10,Doritos,10,White Kinder Bueno,10,Black Kinder Bueno,25',11,2022),('Abu Dabi','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',12,2022),('Ashdod','Cola,15,Bamba,5,Snickers,10,Oreo,15,Bisli,0,Pringles,5,Cheetos,20,Doritos,20,White Kinder Bueno,40,Black Kinder Bueno,30',9,2022),('Ashdod','Cola,5,Bamba,10,Snickers,5,Oreo,10,Bisli,15,Pringles,15,Cheetos,10,Doritos,10,White Kinder Bueno,10,Black Kinder Bueno,25',10,2022),('Ashdod','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',11,2022),('Ashdod','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',12,2022),('Ashkelon','Cola,15,Bamba,5,Snickers,10,Oreo,15,Bisli,0,Pringles,5,Cheetos,20,Doritos,20,White Kinder Bueno,40,Black Kinder Bueno,30',9,2022),('Ashkelon','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',10,2022),('Ashkelon','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',11,2022),('Ashkelon','Cola,5,Bamba,10,Snickers,5,Oreo,10,Bisli,15,Pringles,15,Cheetos,10,Doritos,10,White Kinder Bueno,10,Black Kinder Bueno,25',12,2022),('Dubai','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',9,2022),('Dubai','Cola,5,Bamba,10,Snickers,5,Oreo,10,Bisli,15,Pringles,15,Cheetos,10,Doritos,10,White Kinder Bueno,10,Black Kinder Bueno,25',10,2022),('Dubai','Cola,15,Bamba,5,Snickers,10,Oreo,15,Bisli,0,Pringles,5,Cheetos,20,Doritos,20,White Kinder Bueno,40,Black Kinder Bueno,30',11,2022),('Dubai','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',12,2022),('Haifa','Cola,15,Bamba,5,Snickers,10,Oreo,15,Bisli,0,Pringles,5,Cheetos,20,Doritos,20,White Kinder Bueno,40,Black Kinder Bueno,30',9,2022),('Haifa','Cola,5,Bamba,10,Snickers,5,Oreo,10,Bisli,15,Pringles,15,Cheetos,10,Doritos,10,White Kinder Bueno,10,Black Kinder Bueno,25',10,2022),('Haifa','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',11,2022),('Haifa','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',12,2022),('Karmiel','Cola,15,Bamba,5,Snickers,10,Oreo,15,Bisli,0,Pringles,5,Cheetos,20,Doritos,20,White Kinder Bueno,40,Black Kinder Bueno,30',9,2022),('Karmiel','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',10,2022),('Karmiel','Cola,10,Bamba,15,Snickers,5,Oreo,25,Bisli,20,Pringles,10,Cheetos,5,Doritos,15,White Kinder Bueno,10,Black Kinder Bueno,20',11,2022),('Karmiel','Cola,5,Bamba,10,Snickers,5,Oreo,10,Bisli,15,Pringles,15,Cheetos,10,Doritos,10,White Kinder Bueno,10,Black Kinder Bueno,25',12,2022);
 /*!40000 ALTER TABLE `stock_report` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,7 +434,7 @@ CREATE TABLE `store` (
   UNIQUE KEY `name` (`name`),
   KEY `rid` (`rid`),
   CONSTRAINT `store_ibfk_1` FOREIGN KEY (`rid`) REFERENCES `regions` (`rid`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -406,34 +443,8 @@ CREATE TABLE `store` (
 
 LOCK TABLES `store` WRITE;
 /*!40000 ALTER TABLE `store` DISABLE KEYS */;
-INSERT INTO `store` VALUES (1,1,'Haifa','Yafo 82'),(2,1,'Karmiel','Kineret 33'),(3,2,'Ashdod','Nahal 2'),(4,2,'Ashkelon','Remze 14'),(5,3,'Abu Dabi ','Abu dabi Highway'),(6,3,'Dubai','Emirates 611');
+INSERT INTO `store` VALUES (0,0,'Delivery Warehouse','Everywhere'),(1,1,'Haifa','Yafo 82'),(2,1,'Karmiel','Kineret 33'),(3,2,'Ashdod','Nahal 2'),(4,2,'Ashkelon','Remze 14'),(5,3,'Abu Dabi','Abu dabi Highway'),(6,3,'Dubai','Emirates 611');
 /*!40000 ALTER TABLE `store` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `store_employees`
---
-
-DROP TABLE IF EXISTS `store_employees`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `store_employees` (
-  `uid` int NOT NULL,
-  `sid` int DEFAULT NULL,
-  PRIMARY KEY (`uid`),
-  KEY `sid` (`sid`),
-  CONSTRAINT `store_employees_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `store` (`sid`) ON UPDATE CASCADE,
-  CONSTRAINT `store_employees_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `users` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `store_employees`
---
-
-LOCK TABLES `store_employees` WRITE;
-/*!40000 ALTER TABLE `store_employees` DISABLE KEYS */;
-/*!40000 ALTER TABLE `store_employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -461,7 +472,7 @@ CREATE TABLE `store_product` (
 
 LOCK TABLES `store_product` WRITE;
 /*!40000 ALTER TABLE `store_product` DISABLE KEYS */;
-INSERT INTO `store_product` VALUES (1,1,20,5),(1,2,20,5),(1,3,20,5),(1,4,20,5),(1,5,20,5),(1,6,20,5),(2,1,20,5),(2,2,20,5),(2,3,20,5),(2,4,20,5),(2,5,20,5),(2,6,20,5),(3,1,20,5),(3,2,20,5),(3,3,20,5),(3,4,20,5),(3,5,20,5),(3,6,20,5),(4,1,20,5),(4,2,20,5),(4,3,20,5),(4,4,20,5),(4,5,20,5),(4,6,20,5),(5,1,20,5),(5,2,20,5),(5,3,20,5),(5,4,20,5),(5,5,20,5),(5,6,20,5),(6,1,20,5),(6,2,20,5),(6,3,20,5),(6,4,20,5),(6,5,20,5),(6,6,20,5),(7,1,20,5),(7,2,20,5),(7,3,20,5),(7,4,20,5),(7,5,20,5),(7,6,20,5),(8,1,20,5),(8,2,20,5),(8,3,20,5),(8,4,20,5),(8,5,20,5),(8,6,20,5),(9,1,20,5),(9,2,20,5),(9,3,20,5),(9,4,20,5),(9,5,20,5),(9,6,20,5),(10,1,20,5),(10,2,20,5),(10,3,20,5),(10,4,20,5),(10,5,20,5),(10,6,20,5);
+INSERT INTO `store_product` VALUES (1,0,2147483647,0),(1,1,20,5),(1,2,20,5),(1,3,20,5),(1,4,20,5),(1,5,20,5),(1,6,20,5),(2,0,2147483647,0),(2,1,20,5),(2,2,20,20),(2,3,20,5),(2,4,20,5),(2,5,20,5),(2,6,20,5),(3,0,2147483647,0),(3,1,20,5),(3,2,20,5),(3,3,20,5),(3,4,20,5),(3,5,20,5),(3,6,20,5),(4,0,2147483647,0),(4,1,20,5),(4,2,20,5),(4,3,20,5),(4,4,20,5),(4,5,20,5),(4,6,20,5),(5,0,2147483647,0),(5,1,20,5),(5,2,20,5),(5,3,20,5),(5,4,20,5),(5,5,20,5),(5,6,20,5),(6,0,2147483647,0),(6,1,20,5),(6,2,20,5),(6,3,20,5),(6,4,20,5),(6,5,20,5),(6,6,20,5),(7,0,2147483647,0),(7,1,20,5),(7,2,20,5),(7,3,20,5),(7,4,20,5),(7,5,20,5),(7,6,20,5),(8,0,2147483647,0),(8,1,20,5),(8,2,20,5),(8,3,20,5),(8,4,20,5),(8,5,20,5),(8,6,20,5),(9,0,2147483647,0),(9,1,20,5),(9,2,20,5),(9,3,20,5),(9,4,20,5),(9,5,20,5),(9,6,20,5),(10,0,2147483647,0),(10,1,20,5),(10,2,20,5),(10,3,20,5),(10,4,20,5),(10,5,20,5),(10,6,20,5);
 /*!40000 ALTER TABLE `store_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -493,7 +504,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'service','123','service','danny','0554334123','palmach','service@gmail.com',0),(2,'not_customer','123','new_user','user1','0500000000','Derek hay','user1@gmail.com',0),(3,'na_customer','123','customer','user2','0501111111','zalafim 5','user2@gmail.com',0),(4,'a_customer','123','customer','user3','0502222222','keren hayseed','user3@gmail.com',0),(5,'as_customer','123','customer','user4','0503333333','karma 2','user4@gmail.com',0),(6,'nans_customer','123','customer','user5','0504444444','harel 31','user5@gmail.com',0),(7,'region_manager1','123','region_manager','yaniv','0505555555','radof 2','rm@gmail.com',0),(8,'market_employee','123','marketing_employee','shaul','0506666666','ilanot 34','me@gmail.com',0),(9,'market_manager','123','marketing_manager','eliyahu','0507777777','keren hayesod 91','mm@gmail.com',0),(10,'operation_emp1','123','operation_employee','nave','0501231234','jerusalem 29','nave@gmail.com',0),(11,'ceo','123','ceo','eliya','0501231231','karmiel 3','eliya@gmail.com',0),(12,'deliveryman','123','delivery','erik','0525381648','kiryat ata 1','erik@gmail.com',0),(13,'region_manager2','123','region_manager','aviel','0524213141','kiryat bialik 1','aviel@gmail.com',0),(14,'region_manager3','123','region_manager','yaron','0543215644','kiryat motzkin 2','yaron@gmail.com',0),(15,'operation_emp2','123','operation_employee','nati','0501231232','jerusalem 21','nati@gmail.com',0);
+INSERT INTO `users` VALUES (1,'service','123','service','danny','0554334123','palmach','service@gmail.com',0),(2,'not_customer','123','new_user','user1','0500000000','Derek hay','user1@gmail.com',0),(3,'na_customer','123','customer','user2','0501111111','zalafim 5','user2@gmail.com',0),(4,'a_customer','123','customer','user3','0502222222','keren hayseed','user3@gmail.com',0),(5,'as_customer','123','customer','user4','0503333333','karma 2','user4@gmail.com',0),(6,'nans_customer','123','customer','user5','0504444444','harel 31','user5@gmail.com',0),(7,'region_manager1','123','region_manager','yaniv','0505555555','radof 2','rm@gmail.com',0),(8,'market_employee1','123','marketing_employee','shaul','0506666666','ilanot 34','me@gmail.com',0),(9,'market_manager','123','marketing_manager','eliyahu','0507777777','keren hayesod 91','mm@gmail.com',0),(10,'operation_emp1','123','operation_employee','nave','0501231234','jerusalem 29','nave@gmail.com',0),(11,'ceo','123','ceo','eliya','0501231231','karmiel 3','eliya@gmail.com',0),(12,'deliveryman','123','delivery','erik','0525381648','kiryat ata 1','erik@gmail.com',0),(13,'region_manager2','123','region_manager','aviel','0524213141','kiryat bialik 1','aviel@gmail.com',0),(14,'region_manager3','123','region_manager','yaron','0543215644','kiryat motzkin 2','yaron@gmail.com',0),(15,'operation_emp2','123','operation_employee','nati','0501231232','jerusalem 21','nati@gmail.com',0),(16,'market_employee2','123','marketing_employee','amit','0525381648','karmiel 4','amit@gmail.com',0),(17,'market_employee3','123','marketing_employee','david','0507777777','haifa 2','david@gmail.com',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -506,4 +517,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-10 15:12:04
+-- Dump completed on 2023-01-15 21:59:00

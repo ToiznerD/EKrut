@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -137,6 +138,17 @@ public class UpdateMinLimitController extends AbstractController implements Init
         String query = buildMinQuantityUpdateQuery();
         Msg msg = new Msg(Tasks.Update, query);
         sendMsg(msg);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        if (msg.getBool()) {
+            alert.setTitle("Success");
+            alert.setHeaderText("Minimum Limit updated successfully");
+        } else {
+            alert.setTitle("Error");
+            alert.setHeaderText("Error updating minimum limit");
+        }
+        alert.showAndWait();
+
     }
 
     /**

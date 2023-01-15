@@ -163,18 +163,25 @@ public class OrderMethodFormController extends AbstractOrderController {
     	}
     	if(rbPickup.isSelected() && checkStore())
 			try {
-				//Getting the store id to pass to order screen(so we'll know which supply of store we need to work on)
+				//Getting the store id that picked in the combo-box
 				String query = "SELECT sid FROM store WHERE name = '" + lstStore.getValue() + "'";
 		    	msg = new Msg(Tasks.Select, query);
 		    	sendMsg(msg);
 		    	storeID = msg.getObj(0);
-				start("OrderScreen", "Order Screen", storeID);
+		    	
+		    	order.setMethod("Pickup");
+		    	order.setStore_ID(storeID);
+		    	order.setAddress(null);
+		    	start("OrderScreen", "Order Screen");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		else if(rbDelivery.isSelected() && checkAddress()) {
-			try {
-				start("OrderScreen", "Order Screen", 0);
+			try {				
+				order.setMethod("Delivery");
+				order.setStore_ID(0);
+				order.setAddress(txtCity.getText() + ", " + txtStreet.getText());
+				start("OrderScreen", "Order Screen");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

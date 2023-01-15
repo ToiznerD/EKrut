@@ -18,10 +18,19 @@ public class DBController {
 	private static String DB_ip;
 	private static String DB_User;
 	private static String DB_Password;
-	private static Path SQL_PATH = Paths.get("src\\DBHandler\\DB.sql").toAbsolutePath();
+	private static Path SQL_PATH = Paths.get("Ekrut - server\\src\\DBHandler\\DB.sql").toAbsolutePath();
 
 	public DBController() throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+		try {
+			conn = DriverManager.getConnection(DB_Path, DB_User, DB_Password);
+		} catch (SQLException e) {
+			buildDB();
+			conn = DriverManager.getConnection(DB_Path, DB_User, DB_Password);
+		}
+	}
+
+	private void buildDB() {
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://" + DB_ip + ":?serverTimezone=IST", DB_User, DB_Password);
 			Reader reader = new FileReader(SQL_PATH.toString());
@@ -29,11 +38,8 @@ public class DBController {
 			runner.setLogWriter(null);
 			runner.runScript(reader);
 			conn.close();
-			conn = DriverManager.getConnection(DB_Path, DB_User, DB_Password);
-		} catch (
-
-		SQLException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new RuntimeException();
 		}
 	}
 
