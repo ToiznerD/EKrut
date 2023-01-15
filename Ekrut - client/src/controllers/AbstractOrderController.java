@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 
 public class AbstractOrderController extends AbstractController {
 	protected static OrderDetails order;
-	protected static String orderFxml;
 	private Timer timer = new Timer();
 	private TimerTask task;
 
