@@ -24,11 +24,6 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="590.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
       <Label layoutX="38.0" layoutY="142.0" text="Store:" />
       <Label layoutX="32.0" layoutY="187.0" text="Product:" />
       <Label layoutX="14.0" layoutY="237.0" text="User (ID:name):" />

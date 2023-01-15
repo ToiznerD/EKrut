@@ -41,7 +41,7 @@ public class CustomerPanelController extends AbstractController {
     	
     	//Get the customer status and check if he is subscriber
 		String customerQuery = "SELECT status, subscriber FROM customer WHERE id = " + myUser.getId();
-		msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
+		msg = new Msg(Tasks.Select, customerQuery);
 		sendMsg(msg);
     	
     	

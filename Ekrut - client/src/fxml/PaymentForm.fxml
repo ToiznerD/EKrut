@@ -30,11 +30,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="582.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
       <Button layoutX="212.0" layoutY="431.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Cancel order">
          <font>
             <Font name="System Bold Italic" size="14.0" />
