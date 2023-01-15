@@ -14,11 +14,6 @@
                 <Font name="System Bold Italic" size="25.0" />
             </font>
         </Label>
-        <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="492.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../images/min-max-close.png" />
-            </image>
-        </ImageView>
         <TextField fx:id="yearTxtField" layoutX="193.0" layoutY="83.0" prefHeight="26.0" prefWidth="52.0" promptText="yyyy" />
       <TextField fx:id="monthTxtField" layoutX="116.0" layoutY="84.0" prefHeight="26.0" prefWidth="52.0" promptText="mm" />
       <Label layoutX="207.0" layoutY="135.0" text="Choose Report Type">

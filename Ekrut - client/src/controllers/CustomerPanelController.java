@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 public class CustomerPanelController extends AbstractController {
-	
     @FXML
     private Button btnLogout;
 
@@ -38,38 +37,35 @@ public class CustomerPanelController extends AbstractController {
     	
     	//Get the customer status and check if he is subscriber
 		String customerQuery = "SELECT status, subscriber FROM customer WHERE id = " + myUser.getId();
-		msg = new Msg(Tasks.Login, Tasks.CustomerStatus, customerQuery);
+		msg = new Msg(Tasks.Select, customerQuery);
 		sendMsg(msg);
-    	
-    	
-    	if(myUser.getRole().equals("new_user") || !msg.getBool()) {
-    		//If a new user / not a customer
-    		errLbl.setText("You need to register as a customer to continue.");
-    	}
-    	
-    	else {
-    		//Customer
-			if(msg.getObj(0).equals("Not Approved")) {
-				//Customer not approved
-	    		errLbl.setText("Your account has not been approved yet.");
+
+		if (myUser.getRole().equals("new_user") || !msg.getBool()) {
+			// If a new user / not a customer
+			errLbl.setText("You need to register as a customer to continue.");
+		}
+
+		else {
+			// Customer
+			if (msg.getObj(0).equals("Not Approved")) {
+				// Customer not approved
+				errLbl.setText("Your account has not been approved yet.");
 			}
-			
+
 			else {
-				//Customer approved
-				if(Config.getConfig().equals("OL")) {
-					//OL configuration
-					if(!(boolean)(msg.getObj(1))) {
-						//Regular customer
+				// Customer approved
+				if (Config.getConfig().equals("OL")) {
+					// OL configuration
+					if ((int) msg.getObj(1) == 0) {
+						// Regular customer
 						errLbl.setText("You need to be a subscriber to login here.");
-					}
-					else {
-						//Subscriber
+					} else {
+						// Subscriber
 						btnMakeOrder.setVisible(true);
 						errLbl.setDisable(true);
 					}
-				}
-				else {
-					//EK configuration
+				} else {
+					// EK configuration
 					btnMakeOrder.setVisible(true);
 					//Subscriber customer
 					
@@ -91,6 +87,7 @@ public class CustomerPanelController extends AbstractController {
 	public void back(MouseEvent event) {
 		// not implemented
 	}
+
 	
 	/**
 	* The MakeOrder method is used to open the order form or order screen, depending on the system configuration.
@@ -101,12 +98,11 @@ public class CustomerPanelController extends AbstractController {
 	public void MakeOrder(ActionEvent event) {
 		if(Config.getConfig().equals("OL")) {
 			try {
-				start("OrderMethodForm","Order Method Form");
+				start("OrderMethodForm", "Order Method Form");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			try {
 				start("OrderScreen","Order Screen");
 			} catch (Exception e) {

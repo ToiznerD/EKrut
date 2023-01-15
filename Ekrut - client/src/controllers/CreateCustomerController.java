@@ -89,7 +89,7 @@ public class CreateCustomerController extends AbstractController{
     		
     		// Get the user ID of the user
     		String query2 = String.format("SELECT * FROM users WHERE user = '%s'", username);
-    		msg = new Msg(Tasks.CreateCustomer, Tasks.Select, query2);
+    		msg = new Msg(Tasks.Select, query2);
     		sendMsg(msg);
     		
     		if(!msg.getBool()) {
@@ -174,14 +174,14 @@ public class CreateCustomerController extends AbstractController{
     	}
     	//Update user details
     	String query = String.format("UPDATE users SET role='%s', name='%s', phone = '%s', address='%s', email='%s', isLogged=0 WHERE id=%d", role, name, phone, address, email, id);
-    	msg = new Msg(Tasks.CreateCustomer, Tasks.CreateCustomer_Update_User, query);
+    	msg = new Msg(Tasks.Update, query);
     	sendMsg(msg);
     	if(msg.getInt() == 0) {lblErr.setText("Something went wrong"); return;}
 
     	
     	//Add customer to customer table
     	String query3 = String.format("INSERT INTO customer (id, status, credit_card, subscriber, first_order) VALUES (%d, '%s', '%s', %s, %s)", id, "Not Approved", creditcard, subscriber, subscriber);
-    	msg = new Msg(Tasks.CreateCustomer, Tasks.CreateCustomer_Insert_Customer, query3);
+    	msg = new Msg(Tasks.Insert, query3);
     	sendMsg(msg);
     	
     	if(msg.getInt() != 0) {

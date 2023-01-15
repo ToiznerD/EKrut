@@ -34,11 +34,6 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="543.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="33.0" fitWidth="34.0" layoutX="25.0" layoutY="345.0">
          <image>
             <Image url="@../../images/logout%20icon.png" />

@@ -15,8 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
- * Super abstract class for all controllers
- * All the controllers inherit from this class and the method start
+ * Super abstract class for all controllers All the controllers inherit from
+ * this class and the method start
  */
 public abstract class AbstractController {
 	public static Stage prStage;
@@ -54,18 +54,17 @@ public abstract class AbstractController {
 		}
 	}
 
-	public void sendMsg(Msg msg) { //Nave
+	public void sendMsg(Msg msg) { // Nave
 		try {
 			ClientBackEnd.getInstance().handleMessageFromClientUI(msg);
-			if(msg.getTask()==Tasks.popUp)//erik
-				return;
-			Wait();
+			if (msg.getTask() != Tasks.popUp)// erik
+				Wait();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} //Send task to server
+		} // Send task to server
 	}
 
-	public static void Notify() { //Nave
+	public static void Notify() { // Nave
 		synchronized (monitor) {
 			monitor.notify();
 		}
@@ -73,8 +72,7 @@ public abstract class AbstractController {
 
 	public void logoutFromDb() {
 		if (myUser != null) {
-			String logoutQuery = "UPDATE users SET isLogged = 0 WHERE id = " + myUser.getId();
-			msg = new Msg(Tasks.Logout, logoutQuery);
+			msg = new Msg(Tasks.Logout);
 			sendMsg(msg);
 			myUser = null;
 		}
@@ -100,7 +98,6 @@ public abstract class AbstractController {
 		}).start();
 	}
 	
-
 	public void logout() {
 		logoutFromDb();
 		try {

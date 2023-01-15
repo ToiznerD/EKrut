@@ -91,7 +91,7 @@ public class CreateResupplyRequestController extends AbstractController {
                         "JOIN store s ON s.sid = sp.sid\n" +
                         "JOIN product p ON p.pid = sp.pid\n" +
                         "WHERE s.name = '" + sname + "'";
-        msg = new Msg(getStoreProducts, query);
+        msg = new Msg(Tasks.Select, query);
         sendMsg(msg);
 
         if (msg.getBool()) {
