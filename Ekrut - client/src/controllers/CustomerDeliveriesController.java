@@ -2,7 +2,9 @@ package controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import Entities.TableOrders;
 import Util.Msg;
@@ -20,10 +22,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-public class DeliveryOrdersController extends AbstractController {
+public class CustomerDeliveriesController extends AbstractController {
 
 	private ObservableList<TableOrders> ordersList = FXCollections.observableArrayList();
-	private HashMap<Integer, TableOrders> dataMap = new HashMap<>();
+	private HashMap<Integer, String> dataMap = new HashMap<>();
 
 	@FXML
 	private Button approveBtn;
@@ -41,23 +43,16 @@ public class DeliveryOrdersController extends AbstractController {
 	private TableColumn<TableOrders, Integer> idCell;
 
 	@FXML
-	private TableColumn<TableOrders, String> nameCell, addressCell, phoneCell, dateAndTimeCell, statusCell,
-			deliveryCell;
+	private TableColumn<TableOrders, String> addressCell, dateAndTimeCell, statusCell, deliveryCell;
 
 	@FXML
 	private TableView<TableOrders> ordersTable;
-
-	final int distance = 3;
-	final int droneAvailability = 2;
-	final int shippingTime = 2;
 
 	@FXML
 	protected void initialize() {
 		setOrdersList();
 		idCell.setCellValueFactory(new PropertyValueFactory<TableOrders, Integer>("OrderID"));
-		nameCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("RecieverName"));
 		addressCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("RecieverAddress"));
-		phoneCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("RecieverPhone"));
 		dateAndTimeCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("OrderDateAndTime"));
 		statusCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("Status"));
 		deliveryCell.setCellValueFactory(new PropertyValueFactory<TableOrders, String>("EstimatedDelivery"));
@@ -65,54 +60,40 @@ public class DeliveryOrdersController extends AbstractController {
 	}
 
 	private void setOrdersList() {
-		String query = "select o.cid, o.oid, u.name, d.shipping_address, u.phone, o.ord_date,"
-				+ " o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
-				+ "	from users u,orders o,deliveries d\r\n"
-				+ "	where o.cid=u.id and o.oid=d.oid and o.method=\"Delivery\";";
+		String query ="select o.cid, o.oid, d.shipping_address, o.ord_date, o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
+				+ "	from orders o,deliveries d\r\n"
+				+ "	where o.oid=d.oid and o.method=\"delivery\" and o.cid=;" + myUser.getId();
 		msg = new Msg(Tasks.Select, query);
 		sendMsg(msg);
 		ordersList.clear();
 		for (TableOrders order : msg.getArr(TableOrders.class)) {
 			ordersList.add(order);
-			dataMap.put(Integer.valueOf(order.getOrderID()), order);
+			dataMap.put(Integer.valueOf(order.getOrderID()), order.getStatus());
 		}
 	}
 
-	private LocalDate calculateEstimatedDate(int orderID) {
-		return dataMap.get(orderID).getOrderDate().plusDays(distance + droneAvailability + shippingTime);
-	}
-
 	@FXML
-	private void approveDelivery(MouseEvent event) {
+	private void approveDeliveryAccepted(MouseEvent event) {
 		String labelInput = OrderIdLbl.getText();
 		if (!checkInput(labelInput))
 			return;
 		int orderID = Integer.parseInt(labelInput);
-		LocalDate EstimatedDate = calculateEstimatedDate(orderID);
-		String query = "UPDATE orders o, deliveries d" + " SET d.status = \"In Progress\", d.estimated_date = '"
-				+ EstimatedDate + "'," + " d.estimated_time = '" + dataMap.get(orderID).getOrderTime()
-				+ "' WHERE o.oid = d.oid and o.oid = " + orderID;
+		String query = "update orders o ,deliveries d set d.status = \"Completed\" , o.ord_status = \"Completed\"\r\n"
+					+ "where o.oid=d.oid and o.oid="+ orderID + "and o.cid = " + myUser.getId();
 		msg = new Msg(Tasks.Update, query);
 		sendMsg(msg);
 		if (msg.getBool()) {
+			errorLbl.setTextFill(Color.web("Green"));
+			errorLbl.setText("Success: You approved that delivery accepted");
 			initialize();
-			sendApproval(dataMap.get(orderID));
 		}
-	}
-
-	private void sendApproval(TableOrders order) {
-		errorLbl.setTextFill(Color.web("Green"));
-		errorLbl.setText("Success: Sent alert to client");
-		String msgToSend = "Your delivery approved!\nEstimated date and time: " + order.getEstimatedDelivery();
-		msg = new Msg(Tasks.popUp, order.getCustomerID(), msgToSend);
-		sendMsg(msg);
 	}
 
 	private boolean checkInput(String text) {
 		errorLbl.setTextFill(Color.web("Red"));
 		int labelInput = text.isEmpty() ? 0 : !text.matches("[0-9]+") ? -1 : Integer.parseInt(text);
 		boolean orderExist = dataMap.containsKey(labelInput);
-		String Status = orderExist ? (String) dataMap.get(labelInput).getStatus() : "";
+		String Status = orderExist ? (String) dataMap.get(labelInput) : "";
 		if (Status.equals("pending"))
 			return true;
 		if (labelInput == 0)
