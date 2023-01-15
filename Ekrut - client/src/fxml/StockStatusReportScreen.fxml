@@ -21,11 +21,6 @@
          </font>
       </Label>
       <Button layoutX="21.0" layoutY="333.0" mnemonicParsing="false" style="-fx-background-color: 0;" />
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="689.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
       <Label fx:id="reportDetailsLabel" layoutX="300.0" layoutY="40.0" prefHeight="17.0" prefWidth="109.0" />
       <ImageView fitHeight="45.0" fitWidth="118.0" layoutX="14.0" layoutY="486.0" onMousePressed="#back" pickOnBounds="true" preserveRatio="true">
          <image>

@@ -35,17 +35,18 @@ public class Tasker {
 			break;
 		case Login:
 			runSelect(msg);
-			if (msg.getBool() && !UserManager.isConnected(msg.getObj(0))) {
-				int id = msg.getObj(0);
-				UserManager.addClient(id, client);
+			if (msg.getBool()) {
+				if (!UserManager.isConnected(msg.getObj(0))) {
+					int id = msg.getObj(0);
+					UserManager.addClient(id, client);
+				}
+				else {
+					msg.setBool(false);
+					msg.setResponse("User already logged in");
+				}
 			}
-			else if (!msg.getBool()) {
-				msg.setResponse("Wrong details");
-			} else if (msg.getBool() && UserManager.isConnected(msg.getObj(0))) {
-				msg.setBool(false);
-				msg.setResponse("User already logged in");
-			}
-
+				else
+					msg.setResponse("Wrong details");
 			String consoleMsg = msg.getBool() ? loginMsg.replace("{result}", "sucsessfully")
 					: loginMsg.replace("{result}", "faild to");
 			msg.setConsole(consoleMsg);

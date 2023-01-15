@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="677.0" prefWidth="1030.0" style="-fx-background-color: #faf2d7;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditUserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="677.0" prefWidth="1030.0" style="-fx-background-color: #faf2d7;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditUserController">
    <children>
       <ImageView fitHeight="39.0" fitWidth="109.0" layoutX="14.0" layoutY="624.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -112,10 +112,5 @@
             </TableView>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="26.0" fitWidth="75.0" layoutX="860.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/min-max-close.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>
