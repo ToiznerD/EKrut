@@ -31,6 +31,7 @@ public class Tasker {
 			runUpdate(msg);
 			break;
 		case Insert:
+			runUpdate(msg);
 			break;
 		case Login:
 			runSelect(msg);

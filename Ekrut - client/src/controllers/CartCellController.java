@@ -3,13 +3,12 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import Entities.OrderProduct;
 
 public class CartCellController {
-
-	@FXML
-	private Button addBtn;
 
 	@FXML
 	private Text nameLbl;
@@ -18,7 +17,7 @@ public class CartCellController {
 	private Text quantLbl;
 
 	@FXML
-	private Button removeBtn;
+	private ImageView removeBtn,addBtn;
 
 	private OrderProduct product;
 
@@ -29,13 +28,13 @@ public class CartCellController {
 	}
 
 	@FXML
-	public void addPushed(ActionEvent event) {
+	public void addPushed(MouseEvent event) {
 		product.addToCart();
 		quantLbl.setText(String.valueOf(product.getCartQuant()));
 	}
 
 	@FXML
-	public void removePushed(ActionEvent event) {
+	public void removePushed(MouseEvent event) {
 		product.removeFromCart();
 		quantLbl.setText(String.valueOf(product.getCartQuant()));
 	}

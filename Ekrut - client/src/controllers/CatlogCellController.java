@@ -4,8 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+
 import Entities.OrderProduct;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,14 +37,9 @@ public class CatlogCellController {
 	@FXML
 	private Text lblPrice;
 
-	/*	private ChangeListener<Number> cartQuantListener = (observable, oldValue, newValue) -> {
-			if (newValue.intValue() == 0)
-				btnAddToCart.setDisable(false);
-		};*/
 
 	public void setTemplate(OrderProduct p) {
 		product = p;
-		/*		product.getCartQuantProperty().addListener(cartQuantListener);*/
 		lblID.setText(String.valueOf(p.getProductID()));
 		lblName.setText(p.getName());
 		lblPrice.setText(String.valueOf(p.getPrice()) + " ₪");
@@ -69,10 +64,6 @@ public class CatlogCellController {
 	public void addClick(ActionEvent event) {
 		product.addToCart();
 	}
-
-	/*	public ChangeListener<Number> getCartQuantListener() {
-			return cartQuantListener;
-		}*/
 
 	public OrderProduct getProduct() {
 		return product;

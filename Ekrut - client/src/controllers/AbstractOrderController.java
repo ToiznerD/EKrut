@@ -4,11 +4,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import Entities.OrderDetails;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
 public class AbstractOrderController extends AbstractController {
+	protected static OrderDetails order;
 	private Timer timer = new Timer();
 	private TimerTask task;
 
@@ -18,7 +20,11 @@ public class AbstractOrderController extends AbstractController {
 			task.cancel();
 		setTimer();
 	}
-
+	@FXML
+	public void onMouseExit(MouseEvent e) {
+		if (task != null)
+			task.cancel();
+	}
 	private void setTimer() {
 		task = new TimerTask() {
 			@Override
@@ -36,6 +42,8 @@ public class AbstractOrderController extends AbstractController {
 	@Override
 	public void setUp(Object... objects) {
 		setTimer();
+		if (order == null)
+			order = new OrderDetails(); // raz
 	}
 
 	@Override
