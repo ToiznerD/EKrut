@@ -86,7 +86,6 @@ public class OrderScreenController extends AbstractOrderController {
 	private boolean checkOrder() {
 		if (cartOList.isEmpty())
 			return false;
-		ArrayList<OrderProduct> arr = getProductList();
 		for (OrderProduct p : productOList) {
 			OrderProduct old = productOList.get(productOList.indexOf(p));
 			old.setQuant(p.getQuant());

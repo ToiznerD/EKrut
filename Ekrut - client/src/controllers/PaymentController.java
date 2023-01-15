@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Random;
@@ -20,7 +21,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 public class PaymentController extends AbstractOrderController {
-
+	private static final DecimalFormat decimal = new DecimalFormat("0.00");
+	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private ObservableList<OrderProduct> prodList = FXCollections.observableArrayList();;
 	@FXML
 	private ListView<OrderProduct> listView;
@@ -50,8 +52,8 @@ public class PaymentController extends AbstractOrderController {
 		super.setUp(objects);
 		prodList.addAll(order.getItems());
 		discountText.setVisible(order.hasDiscount());
-		discountText.setText("Discount: " + order.getDiscountText());
-		totalSumText.setText("Total price: " + order.getAfterDiscountText());
+		discountText.setText("Discount: " + decimalToInt.format(order.getDiscount() * 100));
+		totalSumText.setText("Total price: " + decimal.format(order.getAfterDiscount()));
 		switch (Config.getConfig()) {
 		case "EK":
 			methodText.setVisible(false);

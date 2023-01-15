@@ -1,11 +1,9 @@
 package Entities;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class OrderDetails {
-	private static final DecimalFormat decimal = new DecimalFormat("0.00");
-	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
+
 	ArrayList<OrderProduct> items;
 	int total_price, store_id;
 	double discount;
@@ -32,20 +30,6 @@ public class OrderDetails {
 		this.total_price = total_price;
 	}
 
-	public String getAfterDiscountText() {
-		if (discount == 1.0)
-			return String.valueOf(getTotal_price());
-		return decimal.format(total_price * (1 - discount));
-	}
-
-	public double getProductPrice(OrderProduct product) {
-		return product.getPrice() * (1 - discount);
-	}
-
-	public double getAfterDiscount() {
-		return total_price * (1 - discount);
-	}
-
 	public int getStore_ID() {
 		return store_id;
 	}
@@ -60,8 +44,14 @@ public class OrderDetails {
 		return false;
 	}
 
-	public String getDiscountText() {
-		return decimalToInt.format(discount * 100) + "%";
+	public double getProductPrice(OrderProduct product) {
+		return product.getPrice() * (1 - discount);
+	}
+
+	public double getAfterDiscount() {
+		if (discount == 1)
+			return total_price;
+		return total_price * (1 - discount);
 	}
 
 	public double getDiscount() {
