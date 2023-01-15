@@ -7,19 +7,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class RegionManagerMainScreenController extends AbstractController implements Initializable {
-    protected static HashMap<String, Integer> storeMap = new HashMap<>();
+public class RegionManagerMainScreenController extends AbstractController {
+    protected static HashMap<String, Integer> storeMap;
     private static ObservableList<String> comboBoxOptions;
     public static Integer regionID;
     public static String regionName;
@@ -27,29 +25,34 @@ public class RegionManagerMainScreenController extends AbstractController implem
     @FXML
     Button manageInventoryBtn;
     @FXML
-    Button approveEmployeesBtn;
+    Button approveCustomersBtn;
     @FXML
     Button viewReportsBtn;
+    @FXML
+    Label welcomeLabel;
 
     /**
-     * JavaFX Initializable interface method, sends a query to db to get locations according to region
-     * @param url
-     * @param rb
+     * sends a query to db to get locations according to region
      */
-    public void initialize(URL url, ResourceBundle rb) {
-        sendMsg(prepareLocationsMsg());
+    @FXML
+    public void initialize() {
+        if (comboBoxOptions != null)
+            comboBoxOptions.clear();
+
+        welcomeLabel.setText("Welcome back, " + myUser.getName());
+        sendLocationsMsg();
         saveStoreMap();
         getRegion();
         if (myUser.getRole().equals("ceo")) {
             manageInventoryBtn.setVisible(false);
-            approveEmployeesBtn.setVisible(false);
+            approveCustomersBtn.setVisible(false);
         }
     }
 
     /**
      * prepares a Message to send a query to server to get all relevant store locations of the region manager connected to the system
      */
-    public static Msg prepareLocationsMsg() {
+    public void sendLocationsMsg() {
         String query;
         if (myUser.getRole().equals("ceo"))
             query = "SELECT s.* FROM store s";
@@ -57,17 +60,18 @@ public class RegionManagerMainScreenController extends AbstractController implem
             query = "SELECT s.*\n" +
                     "FROM store s\n" +
                     "JOIN regions r ON s.rid = r.rid\n" +
-                    "JOIN regions_managers rm ON r.rid = rm.rid\n" +
-                    "WHERE rm.uid = " + myUser.getId();
+                    "JOIN region_employee re ON r.rid = re.rid\n" +
+                    "WHERE re.uid = " + myUser.getId();
         }
         msg = new Msg(Tasks.Select, query);
-        return msg;
+        sendMsg(msg);
     }
 
     /**
       * create hashMap of {store_name:store_id} and saves it to storesMap
       */
     public static void saveStoreMap() {
+        storeMap = new HashMap<>();
         List<Store> stores = msg.getArr(Store.class);
         // generate HashMap for storing sname:sid key-value pairs
         for (Store s : stores) {
@@ -80,8 +84,8 @@ public class RegionManagerMainScreenController extends AbstractController implem
      */
     private void getRegion() {
         if (myUser.getRole().equals("region_manager")) {
-            String query = "SELECT regions_managers.rid, name FROM regions_managers\n" +
-                    "JOIN regions ON regions.rid = regions_managers.rid\n" +
+            String query = "SELECT region_employee.rid, name FROM region_employee\n" +
+                    "JOIN regions ON regions.rid = region_employee.rid\n" +
                     " WHERE uid = " + myUser.getId();
             msg = new Msg(Tasks.Select, query);
             sendMsg(msg);
@@ -99,6 +103,14 @@ public class RegionManagerMainScreenController extends AbstractController implem
     public static void loadLocationsComboBox(ComboBox<String> comboBoxToLoad) {
         List<String> options = new ArrayList<>();
         options.addAll(storeMap.keySet());
+
+        for (String s : options) {
+            if (s.equals("Delivery Warehouse")) {
+                options.remove(s);
+                break;
+            }
+        }
+
         comboBoxOptions = FXCollections.observableArrayList(options);
         comboBoxToLoad.setItems(comboBoxOptions);
     }
@@ -132,7 +144,7 @@ public class RegionManagerMainScreenController extends AbstractController implem
     /**
      * loads the approve employees screen
      */
-    public void approveEmployeesBtnClick() {
+    public void approveCustomersBtnClick() {
         try {
             start("ApproveCustomersScreen", "Approve new Customers");
         } catch (Exception e) {
@@ -143,7 +155,6 @@ public class RegionManagerMainScreenController extends AbstractController implem
 
     /**
      * triggered when log out is clicked, resets the user and send back to previous screen
-     * @param event
      */
     public void logOutClick() {//delete!!!
         try {

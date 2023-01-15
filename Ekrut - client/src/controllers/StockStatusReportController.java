@@ -43,10 +43,15 @@ public class StockStatusReportController extends AbstractController {
     @FXML
     Label errorLabel;
 
-
-
     @FXML
     public void initialize() {
+        // Set up label text
+        String labelTxt = month + "\\" + year;
+        if (myUser.getRole().equals("region_manager")) {
+            labelTxt = labelTxt + ", " + controllers.RegionManagerMainScreenController.regionName;
+        }
+        reportDetailsLabel.setText(labelTxt);
+
         RegionManagerMainScreenController.loadLocationsComboBox(locationsComboBox);
         productCol.setCellValueFactory(new PropertyValueFactory<StoreProduct, String>("pname"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<StoreProduct, Integer>("quantity"));
@@ -96,8 +101,6 @@ public class StockStatusReportController extends AbstractController {
         }
 
         loadDataToBarGraph(savedLastReportsSuccessfully);
-
-        return;
     }
 
     /**
