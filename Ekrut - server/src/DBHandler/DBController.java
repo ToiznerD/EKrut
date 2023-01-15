@@ -23,17 +23,23 @@ public class DBController {
 	public DBController() throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
 		try {
+			conn = DriverManager.getConnection(DB_Path, DB_User, DB_Password);
+		} catch (SQLException e) {
+			buildDB();
+			conn = DriverManager.getConnection(DB_Path, DB_User, DB_Password);
+		}
+	}
+
+	private void buildDB() {
+		try {
 			conn = DriverManager.getConnection("jdbc:mysql://" + DB_ip + ":?serverTimezone=IST", DB_User, DB_Password);
 			Reader reader = new FileReader(SQL_PATH.toString());
 			ScriptRunner runner = new ScriptRunner(conn);
 			runner.setLogWriter(null);
 			runner.runScript(reader);
 			conn.close();
-			conn = DriverManager.getConnection(DB_Path, DB_User, DB_Password);
-		} catch (
-
-		SQLException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new RuntimeException();
 		}
 	}
 
