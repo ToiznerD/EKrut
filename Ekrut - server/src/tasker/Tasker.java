@@ -28,8 +28,6 @@ public class Tasker {
 			runSelect(msg);
 			break;
 		case Update:
-			runUpdate(msg);
-			break;
 		case Insert:
 			runUpdate(msg);
 			break;
@@ -60,7 +58,7 @@ public class Tasker {
 		}
 	}
 
-	private static void runUpdate(Msg msg) {
+	public static void runUpdate(Msg msg) {
 		int returnVal = DBController.update(msg.getQuery());
 		msg.setInt(returnVal);
 		msg.setBool(returnVal > 0 ? true : false);
@@ -69,7 +67,7 @@ public class Tasker {
 	/**
 	 * @throws SQLException error in DB
 	 */
-	private static void runSelect(Msg msg) throws SQLException {
+	public static void runSelect(Msg msg) throws SQLException {
 		ResultSet rs = DBController.select(msg.getQuery());
 		int columnCount = rs.getMetaData().getColumnCount();
 		while (rs.next()) {

@@ -1,10 +1,12 @@
 package Utils;
 
+import DBHandler.DBController;
 import Entities.Product;
 import Entities.Store;
 import Entities.StoreProduct;
 import Util.Msg;
 import Util.Tasks;
+import org.apache.ibatis.jdbc.SQL;
 import tasker.Tasker;
 
 import java.math.BigDecimal;
@@ -70,7 +72,9 @@ public class ReportGenerator extends TimerTask {
                 "WHERE store.sid = " + s.getSid();
 
         Msg msg = new Msg(Tasks.Select, query);
-        executeQuery(msg);
+        try {
+            Tasker.runSelect(msg);
+        } catch (SQLException e) { e.printStackTrace(); }
 
         List<StoreProduct> productList = msg.getArr(StoreProduct.class);
         StringBuilder stockData = new StringBuilder();
@@ -81,7 +85,7 @@ public class ReportGenerator extends TimerTask {
 
         String insertReportQuery = String.format("INSERT INTO stock_report VALUES ('%s','%s',%d,%d)",s.getName(),stockData.toString(),month,year);
         msg = new Msg(Tasks.Insert, insertReportQuery);
-        executeQuery(msg);
+        Tasker.runUpdate(msg);
 
         if (!msg.getBool())
             return false;
@@ -105,8 +109,9 @@ public class ReportGenerator extends TimerTask {
                 "WHERE YEAR(ord_date) = " + year + " AND MONTH(ord_date) = "
                 + month + " AND sid = " + s.getSid();
         msg = new Msg(Tasks.Select, query);
-        executeQuery(msg);
-
+        try {
+            Tasker.runSelect(msg);
+        } catch (SQLException e) { e.printStackTrace(); }
         totalProfit = msg.getObj(0);
         numOrders = msg.getObj(1);
 
@@ -117,7 +122,7 @@ public class ReportGenerator extends TimerTask {
         insertReportQuery = String.format("INSERT INTO order_report values ('%s',%d,%d,%d,%d)", s.getName(),month,year,numOrders.intValue(),totalProfit.intValue());
 
         msg = new Msg(Tasks.Insert, insertReportQuery);
-        executeQuery(msg);
+        Tasker.runUpdate(msg);
 
         if (!msg.getBool())
             return false;
@@ -128,22 +133,21 @@ public class ReportGenerator extends TimerTask {
     private static void getStores() {
         String query = "SELECT * FROM store";
         Msg msg = new Msg(Tasks.Select, query);
-        executeQuery(msg);
+        try {
+            Tasker.runSelect(msg);
+        } catch (SQLException e) { e.printStackTrace(); }
         storeList = msg.getArr(Store.class);
     }
 
     private static void getProducts() {
         String query = "SELECT pid,price,pname FROM product";
         Msg msg = new Msg(Tasks.Select, query);
-        executeQuery(msg);
+        try {
+            Tasker.runSelect(msg);
+        } catch (SQLException e) { e.printStackTrace(); }
         productList = msg.getArr(Product.class);
     }
 
-    private static void executeQuery(Msg msg) {
-        try {
-            Tasker.taskerHandler(msg);
-        } catch (SQLException e) {}
-    }
 
 
 }

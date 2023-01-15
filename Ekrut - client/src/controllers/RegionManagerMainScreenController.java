@@ -64,6 +64,7 @@ public class RegionManagerMainScreenController extends AbstractController {
                     "WHERE re.uid = " + myUser.getId();
         }
         msg = new Msg(Tasks.Select, query);
+        sendMsg(msg);
     }
 
     /**
