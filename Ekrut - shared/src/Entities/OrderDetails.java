@@ -3,7 +3,6 @@ package Entities;
 import java.util.ArrayList;
 
 public class OrderDetails {
-
 	ArrayList<OrderProduct> items;
 	int total_price, store_id;
 	double discount;
