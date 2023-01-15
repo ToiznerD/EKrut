@@ -10,7 +10,7 @@ public class OrderDetails {
 	String method, address;
 
 	public OrderDetails() {
-		store_id = 7;
+		store_id = 0;
 		discount = 1.0;
 	}
 

@@ -130,7 +130,7 @@ public class OrderScreenController extends AbstractOrderController {
 		super.setUp();
 		this.shopID = order.getStore_ID(); //filled in last window.
 		if (order.getMethod() == null)
-			order.setMethod("Supply");
+			order.setMethod("Local");
 		if (!discountInstalled)
 			installDiscount();
 		productOList.clear();

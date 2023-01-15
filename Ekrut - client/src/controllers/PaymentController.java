@@ -66,12 +66,12 @@ public class PaymentController extends AbstractOrderController {
 
 	//pickup
 	//delivery
-	//supply
+	//Local
 	private String insertOrderQuery() {
 		String values = String.format("%d,%d,%.2f,'%s','%s','%s'", myUser.getId(), order.getStore_ID(),
 				order.getAfterDiscount(), java.sql.Date.valueOf(LocalDate.now()),
 				java.sql.Time.valueOf(LocalTime.now()), order.getMethod());
-		if (order.getMethod() == "Supply") {
+		if (order.getMethod() == "Local") {
 			return "INSERT INTO orders (cid,sid,total_price,ord_date,ord_time,method,ord_status) VALUES (" + values
 					+ ",'Completed'" + ")";
 		} else {
