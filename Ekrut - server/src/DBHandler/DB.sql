@@ -112,7 +112,7 @@ CREATE TABLE `order_items` (
   `oid` int NOT NULL,
   `pid` int NOT NULL,
   `quantity` int NOT NULL,
-  `total_price` int DEFAULT NULL,
+  `total_price` double DEFAULT NULL,
   PRIMARY KEY (`oid`,`pid`),
   KEY `pid` (`pid`),
   CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`oid`) REFERENCES `orders` (`oid`) ON UPDATE CASCADE,
@@ -517,4 +517,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+
 -- Dump completed on 2023-01-15 20:50:16
+

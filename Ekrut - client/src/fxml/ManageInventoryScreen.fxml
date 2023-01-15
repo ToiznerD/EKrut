@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegionManagerMainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #faf2d7; -fx-border-color: #000000; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ManageInventoryController">
    <children>
       <ImageView fitHeight="216.0" fitWidth="150.0" layoutX="445.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/C:/Users/97253/Desktop/EKrut/Ekrut%20-%20client/images/manager.png" />
+            <Image url="@../../images/manager.png" />
          </image>
       </ImageView>
-      <Label fx:id="welcomeLabel" layoutX="19.0" layoutY="18.0" text="Welcome back">
+      <Label fx:id="welcomeLabel" layoutX="19.0" layoutY="18.0" text="Manage Inventory">
          <font>
             <Font name="System Bold Italic" size="36.0" />
          </font>
@@ -29,5 +29,10 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Button>
+      <ImageView fitHeight="39.0" fitWidth="109.0" layoutX="14.0" layoutY="347.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/back%20icon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

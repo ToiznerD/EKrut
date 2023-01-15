@@ -15,6 +15,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Ekrut - server/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Ekrut - shared/lib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Ekrut - shared/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Ekrut - client/images" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
