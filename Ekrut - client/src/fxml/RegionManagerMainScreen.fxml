@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="216.0" fitWidth="150.0" layoutX="445.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/C:/Users/97253/Desktop/EKrut/Ekrut%20-%20client/images/manager.png" />
+            <Image url="@../../images/manager.png" />
          </image>
       </ImageView>
       <Label fx:id="welcomeLabel" layoutX="19.0" layoutY="18.0">
