@@ -83,7 +83,7 @@ public class PaymentController extends AbstractOrderController {
 		msg = new Msg(Tasks.Order, order);
 		sendMsg(msg);
 		endDialog(msg.getBool(), msg.getResponse());
-
+		cleanOrder();
 		try {
 			start("CustomerPanel", "Customer Dashboard");
 		} catch (Exception e) {
@@ -98,9 +98,7 @@ public class PaymentController extends AbstractOrderController {
 	}
 
 	private void cleanOrder() {
-		order.setItems(null);
-		order.setDiscount(1.0);//default
-		order.setTotal_price(0);
+		order = null;
 	}
 
 	@Override

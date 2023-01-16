@@ -59,6 +59,7 @@ public class AbstractOrderController extends AbstractController {
 			if (task != null) {
 				task.cancel();
 				task = null;
+				order = null;
 			}
 			prStage.removeEventHandler(MouseEvent.MOUSE_MOVED, mouseMovedEvent);
 			run = false;

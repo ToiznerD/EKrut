@@ -80,6 +80,7 @@ public class OrderHandler {
 		}
 	}
 
+	//
 	private static boolean checkOrder(OrderDetails order) {
 		if (order.getItems().isEmpty())
 			return false;
