@@ -18,7 +18,7 @@ public class DBController {
 	private static String DB_ip;
 	private static String DB_User;
 	private static String DB_Password;
-	private static Path SQL_PATH = Paths.get("Ekrut - server\\src\\DBHandler\\DB.sql").toAbsolutePath();
+	private static Path SQL_PATH = Paths.get("src\\DBHandler\\DB.sql").toAbsolutePath();
 
 	public DBController() throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
@@ -104,6 +104,14 @@ public class DBController {
 			stmt.executeUpdate("SET GLOBAL local_infile=1");
 			stmt.executeUpdate("load data local infile \"users.txt\" into table users");
 			stmt.executeUpdate("load data local infile \"customer.txt\" into table customer");
+			/*stmt.executeUpdate("ALTER TABLE orders"
+					+ " ADD INDEX orders_cidfk_idx (cid ASC) VISIBLE;"
+					+ " ALTER TABLE orders"
+					+ " ADD CONSTRAINT orders_cidfk"
+					+ " FOREIGN KEY (cid)"
+					+ " REFERENCES customer (id)"
+					+ " ON DELETE NO ACTION"
+					+ " ON UPDATE NO ACTION;");*/
 
 		} catch (SQLException e) {
 			e.printStackTrace();

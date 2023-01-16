@@ -30,7 +30,7 @@
             <Image url="@../../images/back%20icon.png" />
          </image>
       </ImageView>
-      <Button fx:id="approveBtn" layoutX="593.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#approveDelivery" prefHeight="42.0" prefWidth="178.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve delivery">
+      <Button fx:id="approveBtn" layoutX="593.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#approveDeliveryAccepted" prefHeight="42.0" prefWidth="178.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve delivery">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
