@@ -45,7 +45,7 @@ public class AbstractOrderController extends AbstractController {
 	public void setUp(Object... objects) {
 		setTimer();
 		if (order == null)
-			order = new OrderDetails(); // raz
+			order = new OrderDetails(myUser.getId()); // raz
 	}
 
 	@Override

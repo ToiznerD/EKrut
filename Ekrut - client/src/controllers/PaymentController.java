@@ -2,10 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Random;
-
 import Entities.OrderProduct;
 import Util.Msg;
 import Util.Tasks;
@@ -34,10 +30,8 @@ public class PaymentController extends AbstractOrderController {
 	private Text totalSumText, discountText, cardText;
 	@FXML
 	private ImageView backBtn;
-	@FXML	
+	@FXML
 	private Button finishBtn;
-	private int lastOrder;
-
 	@FXML
 	protected void initialize() {
 		listView.setCellFactory(listView -> new OrderViewCell());
@@ -63,90 +57,33 @@ public class PaymentController extends AbstractOrderController {
 		case "OL":
 			methodText.setText("Method: " + order.getMethod());
 		}
-
 	}
 
-	//pickup
-	//delivery
-	//Local
-	private String insertOrderQuery() {
-		String values = String.format("%d,%d,%.2f,'%s','%s','%s'", myUser.getId(), order.getStore_ID(),
-				order.getAfterDiscount(), java.sql.Date.valueOf(LocalDate.now()),
-				java.sql.Time.valueOf(LocalTime.now()), order.getMethod());
-		if (order.getMethod() == "Local") {
-			return "INSERT INTO orders (cid,sid,total_price,ord_date,ord_time,method,ord_status) VALUES (" + values
-					+ ",'Completed'" + ")";
-		} else {
-			return "INSERT INTO orders (cid,sid,total_price,ord_date,ord_time,method) VALUES (" + values + ")";
-		}
-	}
+	private void endDialog(boolean result, String code) {
 
-	/*	private boolean checkOrder() {
-			if (order.getItems().isEmpty())
-				return false;
-			for (OrderProduct p : order.getItems()) {
-				OrderProduct old = order.getItems().get(order.getItems().indexOf(p));
-				old.setQuant(p.getQuant());
-			}
-			for (OrderProduct o : order.getItems())
-				if (o.getQuant() < o.getCartQuant())
-					return false;
-			return true;
-		}*/
-	private String insertItemsQuery() {
-		msg = new Msg(Tasks.Select, "SELECT oid FROM orders ORDER BY oid DESC LIMIT 1");
-		sendMsg(msg);
-		lastOrder = msg.getObj(0);
-		StringBuilder query = new StringBuilder("INSERT INTO order_items VALUES ");
-		for (OrderProduct p : order.getItems()) {
-			query.append("(" + lastOrder + ",");
-			query.append(p.getProductID() + ",");
-			query.append(p.getCartQuant() + ",");
-			query.append(decimal.format(order.getProductPrice(p) * p.getCartQuant()) + "),");
-		}
-		query.deleteCharAt(query.length() - 1);
-		return query.toString();
-	}
-
-	private String createRandomCode() {
-		String rndnumber = "";
-		Random rnd = new Random();
-		for (int i = 0; i < 6; i++)
-			rndnumber = rndnumber + rnd.nextInt(9);
-		return rndnumber;
-	}
-
-	private void SucsessDialog(String code) {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setHeaderText("Order Created Sucsessfully");
-		if (code != null)
-		alert.setContentText("Enjoy your day\nYour code for pickup: "+code);
-		else
+
+		if (result) {
+			alert.setHeaderText("Order Created Sucsessfully");
 			alert.setContentText("Enjoy your day");
-		alert.showAndWait();
+		} else {
+			alert.setHeaderText("Order error ");
+			alert.setContentText("Order is not created because stock is changed, please try again");
+		}
+		if (code != null)
+			alert.setContentText(alert.getContentText() + "\nYour code for pickup: " + code);
+		alert.show();
 	}
+
 	@FXML
 	public void sendOrder(ActionEvent event) {
-		String pickUpCode = null;
-		msg = new Msg(Tasks.Insert, insertOrderQuery());
+		msg = new Msg(Tasks.Order, order);
 		sendMsg(msg);
-		msg = new Msg(Tasks.Insert, insertItemsQuery());
-		sendMsg(msg);
-		if (order.getMethod().equals("Delivery")) {
-			msg = new Msg(Tasks.Insert, "INSERT INTO deliveries (oid,shipping_address) VALUES (" + lastOrder + ",'"
-					+ order.getAddress() + "')");
-			sendMsg(msg);
-		}
-		if (order.getMethod().equals("Pickup")) {
-			pickUpCode = createRandomCode();
-			msg = new Msg(Tasks.Insert, "INSERT INTO pickup (oid,sid,orderCode) VALUES (" + lastOrder + ","
-					+ order.getStore_ID() + "," + pickUpCode + ")");
-			sendMsg(msg);
-		}
-		SucsessDialog(pickUpCode);
+		endDialog(msg.getBool(), msg.getResponse());
+
 		try {
-		start("CustomerPanel","Customer Dashboard");
-		}catch (Exception e) {
+			start("CustomerPanel", "Customer Dashboard");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

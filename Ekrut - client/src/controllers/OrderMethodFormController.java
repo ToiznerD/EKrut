@@ -171,7 +171,7 @@ public class OrderMethodFormController extends AbstractOrderController {
 		    	
 		    	order.setMethod("Pickup");
 		    	order.setStore_ID(storeID);
-		    	order.setAddress(null);
+
 		    	start("OrderScreen", "Order Screen");
 			} catch (IOException e) {
 				e.printStackTrace();

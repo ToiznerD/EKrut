@@ -1,19 +1,37 @@
 package Entities;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class OrderDetails {
+public class OrderDetails implements Serializable{
 
-	ArrayList<OrderProduct> items;
-	int total_price, store_id;
-	double discount;
-	String method, address;
 
-	public OrderDetails() {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6541830393027026985L;
+	private ArrayList<OrderProduct>  items;
+	private int total_price, store_id,userId;
+	private double discount;
+	private String method, address;
+
+	public OrderDetails(int userId) {
+		this.userId = userId;
 		store_id = 0;
 		discount = 1.0;
+		address = "Local";
 	}
 
+	public void setUserId(int id) {
+		userId = id;
+	}
+	public int getUserId() {
+		return userId;
+	}
 	public ArrayList<OrderProduct> getItems() {
 		return items;
 	}
@@ -79,4 +97,34 @@ public class OrderDetails {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	/*	ArrayList<OrderProduct> items;
+		int total_price, store_id,userId;
+		double discount;
+		String method, address;*/
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		out.writeInt(total_price);
+		out.writeInt(store_id);
+		out.writeInt(userId);
+		out.writeDouble(discount);
+		out.writeUTF(address);
+		out.writeUTF(method);
+		 OrderProduct[] itemsArray = items.toArray(new OrderProduct[items.size()]);
+		out.writeObject(itemsArray);
+	}
+
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		total_price = in.readInt();
+		store_id = in.readInt();
+		userId = in.readInt();
+		discount = in.readDouble();
+		address = in.readUTF();
+		method = in.readUTF();
+		OrderProduct[] itemsArray = (OrderProduct[]) in.readObject();
+		items = new ArrayList<>(Arrays.asList(itemsArray));
+	
+	}
+
 }

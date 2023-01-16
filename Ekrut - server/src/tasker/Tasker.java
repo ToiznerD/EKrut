@@ -53,6 +53,8 @@ public class Tasker {
 			UserManager.removeByClient(client);
 			msg.setConsole(logoutMsg);
 			break;
+		case Order:
+			OrderHandler.createOrder(msg);
 		default:
 			break;
 		}
