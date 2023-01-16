@@ -68,6 +68,8 @@ public class OrderScreenController extends AbstractOrderController {
 						cartOList.remove(p);
 					if (newCartQuant.intValue() == 1 && !cartOList.contains(p))
 						cartOList.add(p);
+
+					cartList.refresh();
 					totalPrice += (newCartQuant.intValue() - oldCartQuant.intValue()) * p.getPrice();
 					priceText.setText(String.valueOf(totalPrice));
 					if (discount < 1.0 && totalPrice > 0) {

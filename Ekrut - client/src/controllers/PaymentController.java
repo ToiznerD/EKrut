@@ -32,7 +32,7 @@ public class PaymentController extends AbstractOrderController {
 	private Text totalSumText, discountText, cardText;
 	@FXML
 	private ImageView backBtn;
-	@FXML
+	@FXML	
 	private Button finishBtn;
 	private int lastOrder;
 

@@ -1,5 +1,6 @@
 package controllers;
 
+import Entities.MinimalStoreProduct;
 import Entities.StockReport;
 import Entities.StoreProduct;
 import Util.Msg;
@@ -21,7 +22,7 @@ import java.util.*;
 
 public class StockStatusReportController extends AbstractController {
     private static String month, year;
-    private ObservableList<StoreProduct> itemObsList;
+    private ObservableList<MinimalStoreProduct> itemObsList;
     private static StockReport targetStockReport;
     protected static List<StockReport> lastReports;
     protected HashMap<String, Integer> targetReportsItemsMap;
@@ -31,7 +32,7 @@ public class StockStatusReportController extends AbstractController {
     @FXML
     BarChart dataBarGraph;
     @FXML
-    TableView<StoreProduct> stockTable;
+    TableView<MinimalStoreProduct> stockTable;
     @FXML
     Label reportDetailsLabel;
     @FXML
@@ -217,7 +218,7 @@ public class StockStatusReportController extends AbstractController {
         String stock_data = targetStockReport.getStockData();
         String dataArr[] = stock_data.split(",");
         for (int i=0; i<dataArr.length; i=i+2) {
-            itemObsList.add(new StoreProduct(Integer.valueOf(dataArr[i+1]), dataArr[i]));
+            itemObsList.add(new MinimalStoreProduct(Integer.valueOf(dataArr[i+1]), dataArr[i]));
             targetReportsItemsMap.put(dataArr[i], Integer.valueOf(dataArr[i+1]));
         }
     }

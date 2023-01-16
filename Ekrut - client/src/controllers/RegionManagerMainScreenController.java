@@ -153,29 +153,6 @@ public class RegionManagerMainScreenController extends AbstractController {
         }
     }
 
-    /**
-     * triggered when log out is clicked, resets the user and send back to previous screen
-     */
-    public void logOutClick() {//delete!!!
-        try {
-            //Update isLogged
-            msg = new Msg(Tasks.Logout);
-            sendMsg(msg);
-
-            if (msg.getBool()) {
-                myUser = null;
-                start("LoginForm", "Login");
-            } else {
-                // TODO: handle case where you cant disconnect
-            }
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
-    }
-
-
     @Override
     public void back(MouseEvent event) {
     }
