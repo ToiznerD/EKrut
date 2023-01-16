@@ -45,11 +45,13 @@ public class OrderDetails {
 	}
 
 	public double getProductPrice(OrderProduct product) {
+		if (!hasDiscount())
+			return product.getPrice();
 		return product.getPrice() * (1 - discount);
 	}
 
 	public double getAfterDiscount() {
-		if (discount == 1)
+		if (!hasDiscount())
 			return total_price;
 		return total_price * (1 - discount);
 	}

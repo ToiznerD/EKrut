@@ -14,8 +14,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -79,6 +81,18 @@ public class PaymentController extends AbstractOrderController {
 		}
 	}
 
+	/*	private boolean checkOrder() {
+			if (order.getItems().isEmpty())
+				return false;
+			for (OrderProduct p : order.getItems()) {
+				OrderProduct old = order.getItems().get(order.getItems().indexOf(p));
+				old.setQuant(p.getQuant());
+			}
+			for (OrderProduct o : order.getItems())
+				if (o.getQuant() < o.getCartQuant())
+					return false;
+			return true;
+		}*/
 	private String insertItemsQuery() {
 		msg = new Msg(Tasks.Select, "SELECT oid FROM orders ORDER BY oid DESC LIMIT 1");
 		sendMsg(msg);
@@ -102,8 +116,18 @@ public class PaymentController extends AbstractOrderController {
 		return rndnumber;
 	}
 
+	private void SucsessDialog(String code) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText("Order Created Sucsessfully");
+		if (code != null)
+		alert.setContentText("Enjoy your day\nYour code for pickup: "+code);
+		else
+			alert.setContentText("Enjoy your day");
+		alert.showAndWait();
+	}
 	@FXML
 	public void sendOrder(ActionEvent event) {
+		String pickUpCode = null;
 		msg = new Msg(Tasks.Insert, insertOrderQuery());
 		sendMsg(msg);
 		msg = new Msg(Tasks.Insert, insertItemsQuery());
@@ -111,10 +135,19 @@ public class PaymentController extends AbstractOrderController {
 		if (order.getMethod().equals("Delivery")) {
 			msg = new Msg(Tasks.Insert, "INSERT INTO deliveries (oid,shipping_address) VALUES (" + lastOrder + ",'"
 					+ order.getAddress() + "')");
+			sendMsg(msg);
 		}
 		if (order.getMethod().equals("Pickup")) {
+			pickUpCode = createRandomCode();
 			msg = new Msg(Tasks.Insert, "INSERT INTO pickup (oid,sid,orderCode) VALUES (" + lastOrder + ","
-					+ order.getStore_ID() + "," + createRandomCode() + ")");
+					+ order.getStore_ID() + "," + pickUpCode + ")");
+			sendMsg(msg);
+		}
+		SucsessDialog(pickUpCode);
+		try {
+		start("CustomerPanel","Customer Dashboard");
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
