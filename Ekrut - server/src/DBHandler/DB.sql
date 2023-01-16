@@ -254,16 +254,6 @@ CREATE TABLE `region_employee` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `region_employee`
---
-
-LOCK TABLES `region_employee` WRITE;
-/*!40000 ALTER TABLE `region_employee` DISABLE KEYS */;
-INSERT INTO `region_employee` VALUES (7,1),(8,1),(13,2),(16,2),(14,3),(17,3);
-/*!40000 ALTER TABLE `region_employee` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `regions`
 --
 
@@ -284,7 +274,7 @@ CREATE TABLE `regions` (
 
 LOCK TABLES `regions` WRITE;
 /*!40000 ALTER TABLE `regions` DISABLE KEYS */;
-INSERT INTO `regions` VALUES (0,'global'),(2,'north'),(1,'south'),(3,'uae');
+INSERT INTO `regions` VALUES (0,'global'),(1,'north'),(2,'south'),(3,'uae');
 /*!40000 ALTER TABLE `regions` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -63,6 +63,9 @@ public class CreateResupplyRequestController extends AbstractController {
     @FXML
     Label tableErrorLabel;
 
+    /**
+     * requestTable and comboBox initialization
+     */
     @FXML
     public void initialize() {
         initializeRequestsTable();
@@ -149,15 +152,31 @@ public class CreateResupplyRequestController extends AbstractController {
             return;
         }
 
-        // create a new request if there is no request for this product yet
+        // create a new request if there is no request for this product yet in the current table and in the db
         for (ResupplyRequest request : requestsObsList) {
             if (request.getSname().equals(sname) && request.getPname().equals(pname)) {
                 formErrorLabel.setText("* There is a request for that product\n  please edit or remove it");
                 return;
             }
         }
-        ResupplyRequest request = new ResupplyRequest(sname,pname,intUid,intQuantity);
-        requestsObsList.add(request);
+
+        // check if a resupply request for that store product is already in db
+        // get sid and pid from db
+        String query = "SELECT pid,sid FROM product, store WHERE pname = '" + pname + "' AND name = '" + sname + "'";
+        msg = new Msg(Select, query);
+        sendMsg(msg);
+
+        int pid = msg.getObj(0), sid =  msg.getObj(1);
+        query = "SELECT * FROM resupply_request rs WHERE pid = " + pid + " AND sid = " + sid + " AND status = 'Pending'";
+        msg = new Msg(Select, query);
+        sendMsg(msg);
+
+        if (msg.getBool()) {
+            formErrorLabel.setText("* There is a request for that product\n in the db");
+        } else {
+            ResupplyRequest request = new ResupplyRequest(sname, pname, intUid, intQuantity);
+            requestsObsList.add(request);
+        }
     }
 
 
