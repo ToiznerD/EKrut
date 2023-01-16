@@ -70,13 +70,16 @@ public class PaymentController extends AbstractOrderController {
 			alert.setHeaderText("Order error ");
 			alert.setContentText("Order is not created because stock is changed, please try again");
 		}
+
 		if (code != null)
 			alert.setContentText(alert.getContentText() + "\nYour code for pickup: " + code);
 		alert.show();
+
 	}
 
 	@FXML
 	public void sendOrder(ActionEvent event) {
+
 		msg = new Msg(Tasks.Order, order);
 		sendMsg(msg);
 		endDialog(msg.getBool(), msg.getResponse());

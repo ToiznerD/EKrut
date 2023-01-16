@@ -167,7 +167,7 @@ public class CreateCustomerController extends AbstractController{
     	String creditcard = txtCC.getText();
     	if(creditcard.equals("")) {errCC.setText("Please fill in"); legit = false;}
     	
-    	boolean subscriber = chkboxSub.isSelected();
+    	int subscriber = chkboxSub.isSelected() ? 1 : 0;
     	
     	if(!legit) {
     		return;
@@ -177,10 +177,9 @@ public class CreateCustomerController extends AbstractController{
     	msg = new Msg(Tasks.Update, query);
     	sendMsg(msg);
     	if(msg.getInt() == 0) {lblErr.setText("Something went wrong"); return;}
-
     	
     	//Add customer to customer table
-    	String query3 = String.format("INSERT INTO customer (id, status, credit_card, subscriber, first_order) VALUES (%d, '%s', '%s', %s, %s)", id, "Not Approved", creditcard, subscriber, subscriber);
+    	String query3 = String.format("INSERT INTO customer (id, status, subscriber, credit_card) VALUES (%d, '%s', %d, '%s')", id, "Pending", subscriber, creditcard);
     	msg = new Msg(Tasks.Insert, query3);
     	sendMsg(msg);
     	

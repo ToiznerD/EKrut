@@ -1,4 +1,0 @@
-[{"id":1, "user":"dor", "password":"123", "role":"service", "name":"", "phone":"", "address":"", "email":"", "isLogged":1},
- {"id":2, "user":"user1", "password":"123", "role":"customer", "name":"user1", "phone":"0548005434", "address":"sdfsdf", "email":"adfsa", "isLogged":0},
- {"id":3, "user":"user2", "password":"123", "role":"customer", "name":"user2", "phone":"0503331122", "address":"palmach", "email":"user2@gmail.com", "isLogged":0},
- {"id":4, "user":"user3", "password":"123", "role":"customer", "name":"user3", "phone":"0502221111", "address":"palmach", "email":"ggg@walla.com", "isLogged":0}]
