@@ -28,7 +28,11 @@ public class ReportGenerator extends TimerTask {
         // initialize year and month - get current date and roll one month back
         LocalDate today = LocalDate.now();
         month = today.minusMonths(1).getMonth().getValue();
-        year = today.getYear();
+        if (month == 12)
+            year = today.minusYears(1).getYear();
+        else
+            year = today.getYear();
+
 
         // generate reports
         System.out.println("*** Generating Report ***");
@@ -46,7 +50,7 @@ public class ReportGenerator extends TimerTask {
 
 
     /**
-     * orchestrates the report generation for each store
+     * orchestrates the report generation for each store - only StockStatus and orders reports
      */
     public static void generateReports() {
         getStores();
@@ -99,7 +103,7 @@ public class ReportGenerator extends TimerTask {
      * @return true if the report was generated successfully
      */
     public static boolean generateOrdersReports(Store s) {
-        BigDecimal totalProfit;
+        Double totalProfit;
         Long numOrders;
         String query, insertReportQuery;
         Msg msg;

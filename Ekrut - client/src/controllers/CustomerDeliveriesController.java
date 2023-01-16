@@ -60,7 +60,7 @@ public class CustomerDeliveriesController extends AbstractController {
 	private void setOrdersList() {
 		String query ="select o.cid, o.oid, u.name, d.shipping_address, u.phone, o.ord_date, o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
 				+ "	from users u, orders o,deliveries d\r\n"
-				+ "	where o.cid=u.id and o.oid=d.oid and o.method=\"delivery\" and o.cid=" + myUser.getId()+";";
+				+ "	where o.cid=u.id and o.oid=d.oid and o.method=\"Delivery\" and o.cid=" + myUser.getId()+";";
 		msg = new Msg(Tasks.Select, query);
 		sendMsg(msg);
 		ordersList.clear();
@@ -71,13 +71,13 @@ public class CustomerDeliveriesController extends AbstractController {
 	}
 
 	@FXML
-	public void approveDeliveryAccepted(ActionEvent event) { 
+	public void approveDeliveryAccepted(MouseEvent event) { 
 		String labelInput = OrderIdLbl.getText();
 		if (!checkInput(labelInput))
 			return;
 		int orderID = Integer.parseInt(labelInput);
-		String query = "update orders o ,deliveries d set d.status = \"Completed\" , o.ord_status = \"Completed\"\r\n"
-					+ "where o.oid=d.oid and o.oid= "+ orderID + " and o.cid = " + myUser.getId();
+		String query = "UPDATE orders o ,deliveries d set d.status = \"Completed\" , o.ord_status = \"Completed\""
+					+ " WHERE o.oid=d.oid and o.oid= "+ orderID + " and o.cid = " + myUser.getId();
 		msg = new Msg(Tasks.Update, query);
 		sendMsg(msg);
 		if (msg.getBool()) {
@@ -110,7 +110,7 @@ public class CustomerDeliveriesController extends AbstractController {
 	@Override
 	public void back(MouseEvent event) {
 		try {
-			start("CustomerPanel", "Customer Panel");
+			start("CustomerPanel", "Customer Dashboard");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

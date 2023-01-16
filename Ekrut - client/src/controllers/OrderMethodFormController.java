@@ -66,7 +66,7 @@ public class OrderMethodFormController extends AbstractOrderController {
     @FXML
     public void initialize() {
     	//Initializing stores combo-box
-    	String query = "SELECT name FROM store WHERE sid!=0";
+    	String query = "SELECT name FROM store WHERE sid != 0";
     	msg = new Msg(Tasks.Select, query);
     	sendMsg(msg);
     	ObservableList<StringBuilder> storesList = FXCollections.observableArrayList(msg.getArr(StringBuilder.class));

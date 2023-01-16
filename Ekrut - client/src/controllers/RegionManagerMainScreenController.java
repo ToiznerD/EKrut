@@ -153,7 +153,6 @@ public class RegionManagerMainScreenController extends AbstractController {
         }
     }
 
-
     @Override
     public void back(MouseEvent event) {
     }
