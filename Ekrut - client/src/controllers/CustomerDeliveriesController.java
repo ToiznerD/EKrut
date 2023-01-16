@@ -60,9 +60,9 @@ public class CustomerDeliveriesController extends AbstractController {
 	}
 
 	private void setOrdersList() {
-		String query ="SELECT o.cid, o.oid, d.shipping_address, o.ord_date, o.ord_time,d.status, d.estimated_date, d.estimated_time"
-				+ "	FROM orders o, deliveries d"
-				+ "	WHERE o.oid=d.oid and o.method='delivery' AND o.cid=" + myUser.getId();
+		String query ="SELECT distinct o.cid, o.oid, u.name, d.shipping_address, u.phone, o.ord_date, o.ord_time,d.status, d.estimated_date, d.estimated_time"
+				+ "	FROM orders o, deliveries d, users u"
+				+ "	WHERE o.oid=d.oid and o.method='delivery' AND o.cid=" + myUser.getId() + " AND o.cid = u.id";
 		msg = new Msg(Tasks.Select, query);
 		sendMsg(msg);
 		ordersList.clear();

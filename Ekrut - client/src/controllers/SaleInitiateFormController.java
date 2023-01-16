@@ -278,9 +278,9 @@ public class SaleInitiateFormController extends AbstractController {
 		    	int rid = msg.getObj(0);
 		    	
 		    	//Insert sale to database
-		    	query = "INSERT into sale_initiate (templateId, saleName, rid, startDate, endDate, startHour, endHour) "
+		    	query = "INSERT into sale_initiate (templateId, saleName, rid, startDate, endDate, startHour, endHour, active) "
 		    			+ "VALUES (" + templateId + " , '" + txtSaleName.getText() + "' , " + rid + " , '" + StartingDate.getValue() + 
-		    			"' , '" + EndingDate.getValue() + "' , '" + lstStartingHours.getValue() + "' , '" + lstEndingHours.getValue() + "')";
+		    			"' , '" + EndingDate.getValue() + "' , '" + lstStartingHours.getValue() + "' , '" + lstEndingHours.getValue() + "', 0)";
 		    	msg = new Msg(Tasks.Insert, query);
 		    	sendMsg(msg);
 		    	
