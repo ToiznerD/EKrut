@@ -35,16 +35,6 @@ CREATE TABLE `customer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `customer`
---
-
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'Approved',1,'1234123412341234'),(2,'Approved',1,'1231231231231234'),(3,'Not Approved',0,'1234123412341234'),(4,'Approved',0,'1234123412341234'),(5,'Pending',1,'1234123412341234'),(6,'Pending',0,'1231231231231234');
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `customer_report`
 --
 
@@ -176,7 +166,6 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`oid`),
   KEY `cid` (`cid`),
   KEY `sid` (`sid`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `customer` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `store` (`sid`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -498,15 +487,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `users`
---
+------------------------ table `users`
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'service','123','service','danny','0554334123','palmach','service@gmail.com',0),(2,'not_customer','123','new_user','user1','0500000000','Derek hay','user1@gmail.com',0),(3,'na_customer','123','customer','user2','0501111111','zalafim 5','user2@gmail.com',0),(4,'a_customer','123','customer','user3','0502222222','keren hayseed','user3@gmail.com',0),(5,'as_customer','123','customer','user4','0503333333','karma 2','user4@gmail.com',0),(6,'nans_customer','123','customer','user5','0504444444','harel 31','user5@gmail.com',0),(7,'region_manager1','123','region_manager','yaniv','0505555555','radof 2','rm@gmail.com',0),(8,'market_employee1','123','marketing_employee','shaul','0506666666','ilanot 34','me@gmail.com',0),(9,'market_manager','123','marketing_manager','eliyahu','0507777777','keren hayesod 91','mm@gmail.com',0),(10,'operation_emp1','123','operation_employee','nave','0501231234','jerusalem 29','nave@gmail.com',0),(11,'ceo','123','ceo','eliya','0501231231','karmiel 3','eliya@gmail.com',0),(12,'deliveryman','123','delivery','erik','0525381648','kiryat ata 1','erik@gmail.com',0),(13,'region_manager2','123','region_manager','aviel','0524213141','kiryat bialik 1','aviel@gmail.com',0),(14,'region_manager3','123','region_manager','yaron','0543215644','kiryat motzkin 2','yaron@gmail.com',0),(15,'operation_emp2','123','operation_employee','nati','0501231232','jerusalem 21','nati@gmail.com',0),(16,'market_employee2','123','marketing_employee','amit','0525381648','karmiel 4','amit@gmail.com',0),(17,'market_employee3','123','marketing_employee','david','0507777777','haifa 2','david@gmail.com',0);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -517,4 +499,5 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-15 21:59:00
+
+-- Dump completed on 2023-01-15 20:50:16

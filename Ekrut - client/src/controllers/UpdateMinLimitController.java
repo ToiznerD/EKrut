@@ -151,7 +151,6 @@ public class UpdateMinLimitController extends AbstractController implements Init
             alert.setHeaderText("Error updating minimum limit");
         }
         alert.showAndWait();
-
     }
 
     /**
