@@ -18,13 +18,11 @@ public class TableOrders{
 	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yy");
 	private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
-	public TableOrders(int CustomerID, int OrderID, String RecieverName, String RecieverAddress, String RecieverPhone,
+	public TableOrders(int CustomerID, int OrderID, String RecieverAddress,
 			Date OrderDate, Time OrderTime, String Status, Date EstimatedDate, Time EstimatedTime) {
 		this.CustomerID = CustomerID;
 		this.OrderID = OrderID;
-		this.RecieverName = RecieverName;
 		this.RecieverAddress = RecieverAddress;
-		this.RecieverPhone = RecieverPhone;
 		this.OrderDate = convertdate(OrderDate);
 		this.OrderTime = converttime(OrderTime);
 		this.Status = Status;

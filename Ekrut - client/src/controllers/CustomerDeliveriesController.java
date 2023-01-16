@@ -60,9 +60,9 @@ public class CustomerDeliveriesController extends AbstractController {
 	}
 
 	private void setOrdersList() {
-		String query ="select o.cid, o.oid, d.shipping_address, o.ord_date, o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
-				+ "	from orders o,deliveries d\r\n"
-				+ "	where o.oid=d.oid and o.method=\"delivery\" and o.cid=;" + myUser.getId();
+		String query ="SELECT o.cid, o.oid, d.shipping_address, o.ord_date, o.ord_time,d.status, d.estimated_date, d.estimated_time"
+				+ "	FROM orders o, deliveries d"
+				+ "	WHERE o.oid=d.oid and o.method='delivery' AND o.cid=" + myUser.getId();
 		msg = new Msg(Tasks.Select, query);
 		sendMsg(msg);
 		ordersList.clear();
@@ -78,8 +78,8 @@ public class CustomerDeliveriesController extends AbstractController {
 		if (!checkInput(labelInput))
 			return;
 		int orderID = Integer.parseInt(labelInput);
-		String query = "update orders o ,deliveries d set d.status = \"Completed\" , o.ord_status = \"Completed\"\r\n"
-					+ "where o.oid=d.oid and o.oid="+ orderID + "and o.cid = " + myUser.getId();
+		String query = "UPDATE orders o ,deliveries d set d.status = 'Completed' , o.ord_status = 'Completed'"
+					+ " WHERE o.oid=d.oid and o.oid="+ orderID + "and o.cid = " + myUser.getId();
 		msg = new Msg(Tasks.Update, query);
 		sendMsg(msg);
 		if (msg.getBool()) {
@@ -112,7 +112,7 @@ public class CustomerDeliveriesController extends AbstractController {
 	@Override
 	public void back(MouseEvent event) {
 		try {
-			start("DeliveryOperatorPanel", "Delivery Operator Panel");
+			start("CustomerPanel", "Customer Dashboard");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
