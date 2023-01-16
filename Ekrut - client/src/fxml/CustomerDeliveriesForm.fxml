@@ -30,7 +30,7 @@
             <Image url="@../../images/back%20icon.png" />
          </image>
       </ImageView>
-      <Button fx:id="approveBtn" layoutX="593.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#approveDelivery" prefHeight="42.0" prefWidth="178.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve delivery">
+      <Button fx:id="approveBtn" layoutX="597.0" layoutY="422.0" mnemonicParsing="false" onAction="#approveDeliveryAccepted" prefHeight="42.0" prefWidth="178.0" style="-fx-background-radius: 100; -fx-background-color: #ff5700; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Approve delivery">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -45,17 +45,17 @@
             <Image url="@../../images/refresh.png" />
          </image>
       </ImageView>
-      <Label layoutX="187.0" layoutY="447.0" text="Enter Order ID of delivered order: ">
+      <Label layoutX="187.0" layoutY="429.0" text="Enter Order ID of delivered order: ">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="OrderIdLbl" layoutX="488.0" layoutY="443.0" prefHeight="35.0" prefWidth="76.0">
+      <TextField fx:id="OrderIdLbl" layoutX="488.0" layoutY="425.0" prefHeight="35.0" prefWidth="76.0">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label fx:id="errorLbl" layoutX="611.0" layoutY="521.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="47.0" prefWidth="321.0" textFill="RED">
+      <Label fx:id="errorLbl" layoutX="188.0" layoutY="460.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="47.0" prefWidth="414.0" textFill="RED">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

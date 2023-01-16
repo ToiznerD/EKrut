@@ -136,7 +136,7 @@ public class UpdateMinLimitController extends AbstractController implements Init
         }
 
         String query = buildMinQuantityUpdateQuery();
-        Msg msg = new Msg(Tasks.Update, query);
+        msg = new Msg(Tasks.Update, query);
         sendMsg(msg);
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

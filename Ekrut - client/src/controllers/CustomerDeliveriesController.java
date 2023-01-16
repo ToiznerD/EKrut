@@ -1,16 +1,14 @@
 package controllers;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import Entities.TableOrders;
 import Util.Msg;
 import Util.Tasks;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -60,9 +58,9 @@ public class CustomerDeliveriesController extends AbstractController {
 	}
 
 	private void setOrdersList() {
-		String query ="select o.cid, o.oid, d.shipping_address, o.ord_date, o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
-				+ "	from orders o,deliveries d\r\n"
-				+ "	where o.oid=d.oid and o.method=\"delivery\" and o.cid=;" + myUser.getId();
+		String query ="select o.cid, o.oid, u.name, d.shipping_address, u.phone, o.ord_date, o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
+				+ "	from users u, orders o,deliveries d\r\n"
+				+ "	where o.cid=u.id and o.oid=d.oid and o.method=\"delivery\" and o.cid=" + myUser.getId()+";";
 		msg = new Msg(Tasks.Select, query);
 		sendMsg(msg);
 		ordersList.clear();
@@ -73,13 +71,13 @@ public class CustomerDeliveriesController extends AbstractController {
 	}
 
 	@FXML
-	private void approveDeliveryAccepted(MouseEvent event) {
+	public void approveDeliveryAccepted(ActionEvent event) { 
 		String labelInput = OrderIdLbl.getText();
 		if (!checkInput(labelInput))
 			return;
 		int orderID = Integer.parseInt(labelInput);
 		String query = "update orders o ,deliveries d set d.status = \"Completed\" , o.ord_status = \"Completed\"\r\n"
-					+ "where o.oid=d.oid and o.oid="+ orderID + "and o.cid = " + myUser.getId();
+					+ "where o.oid=d.oid and o.oid= "+ orderID + " and o.cid = " + myUser.getId();
 		msg = new Msg(Tasks.Update, query);
 		sendMsg(msg);
 		if (msg.getBool()) {
@@ -94,7 +92,7 @@ public class CustomerDeliveriesController extends AbstractController {
 		int labelInput = text.isEmpty() ? 0 : !text.matches("[0-9]+") ? -1 : Integer.parseInt(text);
 		boolean orderExist = dataMap.containsKey(labelInput);
 		String Status = orderExist ? (String) dataMap.get(labelInput) : "";
-		if (Status.equals("pending"))
+		if (Status.equals("In Progress"))
 			return true;
 		if (labelInput == 0)
 			errorLbl.setText("Error: Order ID cannot be empty");
@@ -102,9 +100,9 @@ public class CustomerDeliveriesController extends AbstractController {
 			errorLbl.setText("Error: Input must be numbers [0-9]");
 		else if (!orderExist)
 			errorLbl.setText("Order ID not found");
-		else if (Status.equals("in progress"))
-			errorLbl.setText("Error: Order already approved");
-		else if (Status.equals("completed"))
+		else if (Status.equals("Pending"))
+			errorLbl.setText("Error: Order not approved yet");
+		else if (Status.equals("Completed"))
 			errorLbl.setText("Error: Order completed");
 		return false;
 	}
@@ -112,7 +110,7 @@ public class CustomerDeliveriesController extends AbstractController {
 	@Override
 	public void back(MouseEvent event) {
 		try {
-			start("DeliveryOperatorPanel", "Delivery Operator Panel");
+			start("CustomerPanel", "Customer Panel");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -111,10 +111,12 @@ public class PaymentController extends AbstractOrderController {
 		if (order.getMethod().equals("Delivery")) {
 			msg = new Msg(Tasks.Insert, "INSERT INTO deliveries (oid,shipping_address) VALUES (" + lastOrder + ",'"
 					+ order.getAddress() + "')");
+			sendMsg(msg);
 		}
 		if (order.getMethod().equals("Pickup")) {
 			msg = new Msg(Tasks.Insert, "INSERT INTO pickup (oid,sid,orderCode) VALUES (" + lastOrder + ","
 					+ order.getStore_ID() + "," + createRandomCode() + ")");
+			sendMsg(msg);
 		}
 	}
 
