@@ -28,12 +28,6 @@ public class AbstractOrderController extends AbstractController {
 		}
 	};
 
-//	@FXML
-//	public void onMouseExit(MouseEvent e) {
-//		if (task != null)
-//			task.cancel();
-//	}
-
 	private void setTimer() {
 		task = new TimerTask() {
 			@Override
