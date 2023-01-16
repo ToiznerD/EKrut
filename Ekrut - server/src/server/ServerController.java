@@ -103,14 +103,17 @@ public class ServerController {
 
 		Calendar calendar = Calendar.getInstance();
 		// add 1 month so that the first report generated will be from the 1st of next month
-		calendar.add(Calendar.MONTH,1);
-
-		// set day at 1st
-		calendar.set(Calendar.DAY_OF_MONTH, 1);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
+//		calendar.add(Calendar.MONTH,1);
+//
+//		// set day at 1st
+//		calendar.set(Calendar.DAY_OF_MONTH, 1);
+//		calendar.set(Calendar.HOUR_OF_DAY, 0);
+//		calendar.set(Calendar.MINUTE, 0);
+//		calendar.set(Calendar.SECOND, 0);
+//		calendar.set(Calendar.MILLISECOND, 0);
+//		Date firstTime = calendar.getTime();
+		calendar.set(Calendar.HOUR_OF_DAY, 02);
+		calendar.set(Calendar.MINUTE, 28);
 		Date firstTime = calendar.getTime();
 
 		timer.schedule(new ReportGenerator(), firstTime);
