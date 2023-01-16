@@ -48,7 +48,7 @@ public class PaymentController extends AbstractOrderController {
 		super.setUp(objects);
 		prodList.addAll(order.getItems());
 		discountText.setVisible(order.hasDiscount());
-		discountText.setText("Discount: " + decimalToInt.format(order.getDiscount() * 100));
+		discountText.setText("Discount: " + decimalToInt.format(order.getDiscount() * 100)+"%");
 		totalSumText.setText("Total price: " + decimal.format(order.getAfterDiscount()));
 		switch (Config.getConfig()) {
 		case "EK":

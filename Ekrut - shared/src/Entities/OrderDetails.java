@@ -75,7 +75,7 @@ public class OrderDetails implements Serializable{
 	}
 
 	public double getDiscount() {
-		return 1 - discount;
+		return discount;
 	}
 
 	public void setDiscount(double discount) {
