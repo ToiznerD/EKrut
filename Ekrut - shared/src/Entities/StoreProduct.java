@@ -12,11 +12,6 @@ public class StoreProduct {
         this.pname = pname;
     }
 
-    public StoreProduct(int quantity, String pname) {
-        this.quantity = quantity;
-        this.pname = pname;
-    }
-
     public int getPid() {
         return pid;
     }

@@ -84,6 +84,9 @@ public class UpdateMinLimitController extends AbstractController implements Init
      * @param event clicking on a comboBox option
      */
     public void loadItemsToTable(ActionEvent event) {
+        if (locationComboBox.getSelectionModel().getSelectedItem() == null)
+            return;
+
         String storeName = locationComboBox.getSelectionModel().getSelectedItem().toString();
         int sid = storeMap.get(storeName);
 
