@@ -68,6 +68,8 @@ public class OrderScreenController extends AbstractOrderController {
 						cartOList.remove(p);
 					if (newCartQuant.intValue() == 1 && !cartOList.contains(p))
 						cartOList.add(p);
+
+					cartList.refresh();
 					totalPrice += (newCartQuant.intValue() - oldCartQuant.intValue()) * p.getPrice();
 					priceText.setText(String.valueOf(totalPrice));
 					if (discount < 1.0 && totalPrice > 0) {
@@ -129,8 +131,10 @@ public class OrderScreenController extends AbstractOrderController {
 	public void setUp(Object... objects) {
 		super.setUp();
 		this.shopID = order.getStore_ID(); //filled in last window.
-		if (order.getMethod() == null)
+		if (order.getMethod() == null) {
 			order.setMethod("Local");
+			order.setStore_ID(Config.getStore());
+		}
 		if (!discountInstalled)
 			installDiscount();
 		productOList.clear();

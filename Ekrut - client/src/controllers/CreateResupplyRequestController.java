@@ -9,14 +9,19 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 
 import Entities.ResupplyRequest;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javafx.scene.control.TableColumn.CellEditEvent;
+
 
 import static Util.Tasks.*;
 
@@ -74,14 +79,21 @@ public class CreateResupplyRequestController extends AbstractController {
         quantityCol.setCellValueFactory(new PropertyValueFactory<ResupplyRequest, Integer>("quantity"));
         requestsTable.setItems(requestsObsList);
 
+        requestsTable.setEditable(true);
+        quantityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
+        loadEmployeesIds();
+
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+        ResupplyRequest updatedRequest = (ResupplyRequest) event.getRowValue();
+        updatedRequest.setQuantity((Integer) event.getNewValue());
     }
 
     public void storeOptionOnAction() {
         productsComboBox.getItems().clear();
         loadProductsComboBox();
-
-        userIDComboBox.getItems().clear();
-        loadEmployeesIds();
     }
 
     public void loadProductsComboBox() {
@@ -148,14 +160,10 @@ public class CreateResupplyRequestController extends AbstractController {
         requestsObsList.add(request);
     }
 
-    // To implement !!!!!!!!!!
+
     public void loadEmployeesIds() {
-        String sname = storeLocationsComboBox.getSelectionModel().getSelectedItem().toString();
-        String query = "SELECT DISTINCT e.uid, u.name\n" +
-                "FROM employees e\n" +
-                "JOIN users u ON e.uid = u.id\n" +
-                "JOIN store s ON e.sid = s.sid\n" +
-                "WHERE s.sid = " + storeMap.get(sname);
+        String query = "SELECT id, name FROM ekrut.users WHERE role = \"operation_employee\"";
+
 
         msg = new Msg(Select, query);
         sendMsg(msg);
@@ -178,6 +186,9 @@ public class CreateResupplyRequestController extends AbstractController {
             return ;
         }
 
+        tableErrorLabel.setText("");
+        formErrorLabel.setText("");
+
         StringBuilder query = new StringBuilder("INSERT INTO resupply_request (sid,pid,uid,quantity,status) VALUES ");
         String sname, pname, uid, quantity;
         for (ResupplyRequest r : requestsObsList) {
@@ -190,11 +201,17 @@ public class CreateResupplyRequestController extends AbstractController {
         msg = new Msg(Insert, query.toString());
         sendMsg(msg);
 
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         if (msg.getBool()) {
-            tableErrorLabel.setText("* Requests were added successfully");
+            alert.setTitle("Success");
+            alert.setHeaderText("Resupply requests were added successfully");
         } else {
-            tableErrorLabel.setText("* There was an error - Requests were nots added successfully");
+            alert.setTitle("Error");
+            alert.setHeaderText("Resupply requests were not added successfully");
         }
+        alert.showAndWait();
+
+        requestsObsList.clear();
 
     }
 

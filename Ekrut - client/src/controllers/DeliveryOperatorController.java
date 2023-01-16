@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -18,12 +19,21 @@ public class DeliveryOperatorController extends AbstractController{
 
     @FXML
     private Button deliveryBtn;
+    
+    @FXML
+    private Label welcomeLbl;
 
 /**
  * moveToForm is called when a mouse event occurs. It opens a the window "Delivery Orders".
  *@param event The MouseEvent that triggers the method.
  *@throws IOException if there is an issue loading the "DeliveryOrdersForm" form.
  */
+    
+    @FXML
+    public void initialize() {
+    	welcomeLbl.setText("Welcome "+myUser.getName());
+    }
+    
     @FXML
     public void moveToForm(MouseEvent event) {
 		try {
@@ -36,13 +46,11 @@ public class DeliveryOperatorController extends AbstractController{
 
 	@Override
 	public void back(MouseEvent event) {
-		// TODO Auto-generated method stub
 	}
 
 
 	@Override
 	public void setUp(Object... objects) {
-		// TODO Auto-generated method stub
 		
 	}
     

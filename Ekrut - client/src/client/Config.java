@@ -46,7 +46,6 @@ public class Config {
 			dialog.setTitle("Choice Dialog");
 			dialog.setHeaderText("Choose Store");
 			dialog.setContentText("Your choice:");
-
 			// show the dialog and get the user's response
 			Optional<String> result = dialog.showAndWait();
 
@@ -67,7 +66,7 @@ public class Config {
 			setMap(map, rawMsg);
 			while ((config = showFirstDialog()) == null)
 				;
-			while ((Store = showSecondDialog(config, mapper.keySet())) == "Choose Store" && config == "EK")
+			while (((Store = showSecondDialog(config, mapper.keySet())) == "Choose Store" || (Store==null)) && config == "EK")
 				;
 			if (Store == null)
 				configWrite(file, config, 0);

@@ -40,7 +40,7 @@ public class ConnectionController extends AbstractController {
 		if (port != -1) {
 			try {
 				ClientBackEnd.initServer(ip, port); //Initiate client connection instance.
-				msg = new Msg(Tasks.Select, "SELECT name,sid FROM store");
+				msg = new Msg(Tasks.Select, "SELECT name,sid FROM store WHERE sid != 0");
 				sendMsg(msg);
 				HashMap<String, Integer> map = new HashMap<String, Integer>();
 				Config.showDialog(map, msg.getRawArray());

@@ -5,11 +5,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import org.apache.ibatis.annotations.Results;
-
-import com.mysql.cj.protocol.Resultset;
-
 import DBHandler.DBController;
 import ocsf.server.ConnectionToClient;
 

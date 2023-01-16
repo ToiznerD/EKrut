@@ -12,6 +12,7 @@ public class ManageInventoryController extends AbstractController{
     @FXML
     Button sendResupplyRequestBtn;
 
+    
     public void updateMinLimitBtnClick() {
         try {
             start("UpdateMinLimitInventoryScreen", "Update Min. Limit");
@@ -25,7 +26,7 @@ public class ManageInventoryController extends AbstractController{
             // go back to previous screen
             start("CreateResupplyRequestScreen", "Create a new resupply request");
         } catch (IOException e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
 
     }
