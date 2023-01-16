@@ -16,7 +16,7 @@
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding></ListView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="236.0" layoutX="14.0" layoutY="30.0" onMouseMoved="#onMouseMove" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 20;" width="238.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="236.0" layoutX="14.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 20;" width="238.0" />
       <Text fx:id="nameText" layoutX="27.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" underline="true" wrappingWidth="195.10546875">
          <font>
             <Font name="Arial Italic" size="24.0" />
@@ -43,7 +43,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="54.0" layoutX="444.0" layoutY="281.0" onMouseMoved="#onMouseMove" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 20;" width="165.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="54.0" layoutX="444.0" layoutY="281.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 20;" width="165.0" />
       <Text fx:id="discountText" layoutX="455.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Discount: " wrappingWidth="116.8701171875">
          <font>
             <Font size="14.0" />

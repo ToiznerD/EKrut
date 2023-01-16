@@ -120,7 +120,7 @@ public class PaymentController extends AbstractOrderController {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("Order Created Sucsessfully");
 		if (code != null)
-		alert.setContentText("Enjoy your day\nYour code for pickup:"+code);
+		alert.setContentText("Enjoy your day\nYour code for pickup: "+code);
 		else
 			alert.setContentText("Enjoy your day");
 		alert.showAndWait();
