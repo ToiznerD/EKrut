@@ -79,6 +79,18 @@ public class PaymentController extends AbstractOrderController {
 		}
 	}
 
+	/*	private boolean checkOrder() {
+			if (order.getItems().isEmpty())
+				return false;
+			for (OrderProduct p : order.getItems()) {
+				OrderProduct old = order.getItems().get(order.getItems().indexOf(p));
+				old.setQuant(p.getQuant());
+			}
+			for (OrderProduct o : order.getItems())
+				if (o.getQuant() < o.getCartQuant())
+					return false;
+			return true;
+		}*/
 	private String insertItemsQuery() {
 		msg = new Msg(Tasks.Select, "SELECT oid FROM orders ORDER BY oid DESC LIMIT 1");
 		sendMsg(msg);
@@ -88,7 +100,7 @@ public class PaymentController extends AbstractOrderController {
 			query.append("(" + lastOrder + ",");
 			query.append(p.getProductID() + ",");
 			query.append(p.getCartQuant() + ",");
-			query.append(order.getProductPrice(p) * p.getCartQuant() + "),");
+			query.append(decimal.format(order.getProductPrice(p) * p.getCartQuant()) + "),");
 		}
 		query.deleteCharAt(query.length() - 1);
 		return query.toString();
