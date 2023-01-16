@@ -18,7 +18,7 @@ public class DBController {
 	private static String DB_ip;
 	private static String DB_User;
 	private static String DB_Password;
-	private static Path SQL_PATH = Paths.get("src\\DBHandler\\DB.sql").toAbsolutePath();
+	private static Path SQL_PATH = Paths.get("DB.sql").toAbsolutePath();
 
 	public DBController() throws Exception {
 		Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();

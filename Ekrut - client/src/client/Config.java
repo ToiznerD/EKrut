@@ -18,7 +18,7 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
 
 public class Config {
-	private static Path pathToFile = Paths.get("src\\client\\Config.txt").toAbsolutePath();
+	private static Path pathToFile = Paths.get("Config.txt").toAbsolutePath();
 	private static HashMap<String, Integer> mapper;
 
 	public static String showFirstDialog() {
