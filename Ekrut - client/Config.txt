@@ -1,2 +1,1 @@
-Config: EK
-Store: 5
+Config: OL

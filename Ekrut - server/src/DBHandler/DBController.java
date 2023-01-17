@@ -150,6 +150,8 @@ public class DBController {
 	*/
 	public static boolean importUsers() {
 		Statement stmt;
+		if(conn == null)
+			return false;
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate("SET GLOBAL local_infile=1");
