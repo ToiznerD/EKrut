@@ -19,6 +19,8 @@ public class OrderDetails implements Serializable {
 	private int total_price, store_id, userId;
 	private double discount;
 	private String method, address;
+	private boolean first_order = false;
+	private boolean delayed_payment = false;
 
 	
 	/**
@@ -28,6 +30,7 @@ public class OrderDetails implements Serializable {
 		this.userId = userId;
 		discount = 1.0;
 		method = "Local";
+		address = "";
 	}
 
 	/**
@@ -105,7 +108,7 @@ public class OrderDetails implements Serializable {
 	public double getProductPrice(OrderProduct product) {
 		if (!hasDiscount())
 			return product.getPrice();
-		return product.getPrice() * (1 - discount);
+		return product.getPrice() * (1 - discount) * (getFirstOrder() ? 0.8 : 1.0);
 	}
 
 	/**
@@ -113,8 +116,8 @@ public class OrderDetails implements Serializable {
 	 */
 	public double getAfterDiscount() {
 		if (!hasDiscount())
-			return total_price;
-		return total_price * (1 - discount);
+			return total_price * (getFirstOrder() ? 0.8 : 1.0);
+		return total_price * (1 - discount) * (getFirstOrder() ? 0.8 : 1.0);
 	}
 
 	/**
@@ -159,6 +162,26 @@ public class OrderDetails implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	public boolean getFirstOrder() {
+		return first_order;
+	}
+	
+	public void setFirstOrderTrue() {
+		first_order = true;
+	}
+
+
+	public boolean isDelayed_payment() {
+		return delayed_payment;
+	}
+
+
+	public void setDelayed_paymentTrue() {
+		delayed_payment = true;
+	}
+	
+	
 
 	/**
 	 * Writes the object to the ObjectOutputStream. This method is used for serializing the OrderDetails object.
@@ -195,5 +218,6 @@ public class OrderDetails implements Serializable {
 		items = new ArrayList<>(Arrays.asList(itemsArray));
 
 	}
+
 
 }

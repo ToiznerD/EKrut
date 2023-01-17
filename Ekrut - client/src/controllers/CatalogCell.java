@@ -18,6 +18,7 @@ public class CatalogCell extends ListCell<OrderProduct> {
 
 	/**
 	 * Constructor for loading FXML file "CatalogCell".
+   * @throws IOException if there is an issue loading the "CatalogCell".
 	 */
 	public CatalogCell() {
 		try {
