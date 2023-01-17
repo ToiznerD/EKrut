@@ -31,6 +31,8 @@ public class OrderDetails implements Serializable{
 	public int getUserId() {
 		return userId;
 	}
+
+
 	public ArrayList<OrderProduct> getItems() {
 		return items;
 	}

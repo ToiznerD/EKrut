@@ -66,7 +66,6 @@ public class SaleInitiateFormController extends AbstractController {
     /**
      * Initializes the form by setting up the combo boxes for sale templates and regions,
      * and configuring the date picker fields to only allow selecting dates that are not in the past.
-     * 
      */
     @FXML
     public void initialize() {
