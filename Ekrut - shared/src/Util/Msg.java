@@ -55,14 +55,14 @@ public class Msg implements Serializable {
 	}
 
 	/**
-	 * @return Tasks return the task of Msg sent.
+	 * @return the task of Msg sent.
 	 */
 	public Tasks getTask() {
 		return task;
 	}
 
 	/**
-	 * @return OrderDetails entity class
+	 * @return order details data
 	 */
 	public OrderDetails getOrder() {
 		return order;
@@ -70,7 +70,7 @@ public class Msg implements Serializable {
 	
 	/**
 	 * Set respone to be displayed when Msg sent
-	 * @param String with respone message
+	 * @param response message
 	 */
 	public void setResponse(String response) {
 		this.response = response;
@@ -78,7 +78,7 @@ public class Msg implements Serializable {
 	
 	/**
 	 * Get the respone of sent Msg
-	 * @return String with respone message
+	 * @return respone message
 	 */
 	public String getResponse() {
 		return response;
@@ -86,7 +86,7 @@ public class Msg implements Serializable {
 	
 	/**
 	 * Get the user ID for sending pop ups
-	 * @return int of destination user ID
+	 * @return destination user ID
 	 */
 	public int getDestinationID() {
 		return destinationID;
@@ -94,14 +94,14 @@ public class Msg implements Serializable {
 	
 	/**
 	 * Get the message sent with Msg
-	 * @return String with relevant message
+	 * @return alert message to send
 	 */
 	public String getAlertMsg() {
 		return alertMsg;
 	}
 
 	/**
-	 * @param int value
+	 * @param value
 	 */
 	public void setInt(int value) {
 		this.intReturn = value;
@@ -109,7 +109,7 @@ public class Msg implements Serializable {
 
 	/**
 	 * Get number of rows updated
-	 * @return int number updated row
+	 * @return number of updated row
 	 */
 	public int getInt() {
 		return intReturn;
@@ -117,7 +117,7 @@ public class Msg implements Serializable {
 
 	/**
 	 * Set boolean value that returned when Msg sent
-	 * @param boolean value
+	 * @param value
 	 */
 	public void setBool(boolean value) {
 		this.boolReturn = value;
@@ -125,7 +125,7 @@ public class Msg implements Serializable {
 
 	/**
 	 * Get the query sent with Msg
-	 * @return String query
+	 * @return query
 	 */
 	public String getQuery() {
 		return query;
@@ -140,21 +140,21 @@ public class Msg implements Serializable {
 	}
 
 	/**
-	 * @return ArrayList of raw returned from sql query 
+	 * @return List of raw returned from sql query 
 	 */
 	public ArrayList<List<Object>> getRawArray() {
 		return arrayReturn;
 	}
 
 	/**
-	 * @return boolean false if resultset return empty from selected
+	 * @return false if resultset return empty from selected query, true otherwise
 	 */
 	public boolean getBool() {
 		return boolReturn;
 	}
 
 	/**
-	 * @return String message to console
+	 * @return console message
 	 */
 	public String getConsole() {
 		return consoleMsg;
@@ -163,7 +163,7 @@ public class Msg implements Serializable {
 	/**
 	 * @param <T> class type of wanted return
 	 * @param num the number of column in table
-	 * @return <T> object class of wanted return
+	 * @return object class of wanted return
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getObj(int num) {
@@ -173,7 +173,7 @@ public class Msg implements Serializable {
 	/**
 	 * @param <T>  class type of wanted return
 	 * @param type ClassName.class , ClassName of wanted type return
-	 * @return List<T> List of wanted class
+	 * @return List of wanted class
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getArr(Class<T> type) {

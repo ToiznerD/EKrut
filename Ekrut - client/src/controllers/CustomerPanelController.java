@@ -1,7 +1,5 @@
 package controllers;
 
-import java.io.IOException;
-
 import Util.Msg;
 import Util.Tasks;
 import client.Config;
@@ -93,7 +91,6 @@ public class CustomerPanelController extends AbstractController {
     /**
      * Handles the mouse event of the back button.
      * @param event the mouse event that triggered this method
-     * @throws IOException if there is an issue loading the FXML file
      */
 	@Override
 	public void back(MouseEvent event) {
@@ -104,6 +101,7 @@ public class CustomerPanelController extends AbstractController {
 	* The MakeOrder method is used to open the order form or order screen, depending on the system configuration.
 	* If the configuration is OL, it opens the "OrderMethodForm" window.
 	* If the configuration is EK, it skips the "OrderMethodForm" window and opens the "OrderScreen" window.
+    * @param event the mouse event that triggered this method
 	*/
 	@FXML
 	public void MakeOrder(ActionEvent event) {
@@ -123,7 +121,8 @@ public class CustomerPanelController extends AbstractController {
 	}
 
 	/**
-	* The PickupOrder method is used to open the pickup order form,
+	* The PickupOrder method is used to open the pickup order form.
+	* @param event the mouse event that triggered this method
 	*/
 	@FXML
 	public void PickupOrder(ActionEvent event) {
@@ -135,7 +134,8 @@ public class CustomerPanelController extends AbstractController {
 	}
 
 	/**
-	* The ApproveDelivery method is used to open the customer deliveries form,
+	* The ApproveDelivery method is used to open the customer deliveries form.
+	* @param event the mouse event that triggered this method
 	*/
 	@FXML
 	public void ApproveDelivery(ActionEvent event) {

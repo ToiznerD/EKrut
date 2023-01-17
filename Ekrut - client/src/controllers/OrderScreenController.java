@@ -187,7 +187,6 @@ public class OrderScreenController extends AbstractOrderController {
 	 * If the configuration is OL, it opens the "OrderMethodForm" window.
 	 * If the configuration is EK, it returns to "CustomerPanel" window.
 	 * @param event the mouse event that triggered this method
-	 * @throws IOException if there is an issue loading the FXML file
 	 */
 	@Override
 	public void back(MouseEvent event) {

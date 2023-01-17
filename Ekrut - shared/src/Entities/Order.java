@@ -36,7 +36,7 @@ public class Order implements Serializable{
 
     /**
      * Gets the ID of the order.
-     * @return int : order ID
+     * @return order ID
      */
 	public int getOrderID() {
 		return orderID;
@@ -44,7 +44,7 @@ public class Order implements Serializable{
 
     /**
      * Gets the name of the user.
-     * @return String : User name
+     * @return User name
      */
 	public String getRecieverName() {
 		return RecieverName;
@@ -52,7 +52,7 @@ public class Order implements Serializable{
 
     /**
      * Gets the address of the reciever.
-     * @return String : reciever address
+     * @return reciever address
      */
 	public String getRecieverAddress() {
 		return RecieverAddress;
@@ -60,7 +60,7 @@ public class Order implements Serializable{
 	
     /**
      * Gets the phone of the user.
-     * @return String : user phone
+     * @return  user phone
      */
 	public String getRecieverPhone() {
 		return RecieverPhone;
@@ -68,7 +68,7 @@ public class Order implements Serializable{
 
     /**
      * Gets the order shipping date.
-     * @return String : order shipping date
+     * @return order shipping date
      */
 	public String getShippingDate() {
 		return ShippingDate;
@@ -76,7 +76,7 @@ public class Order implements Serializable{
 
     /**
      * Gets the order shipping time.
-     * @return String : order shipping time
+     * @return order shipping time
      */
 	public String getShippingTime() {
 		return ShippingTime;

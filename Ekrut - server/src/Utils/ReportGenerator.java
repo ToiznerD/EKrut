@@ -70,7 +70,6 @@ public class ReportGenerator extends TimerTask {
      * this function gets the stock info for the store s and generates report
      * @param s - store for which we will generate the stock status report
      * @return true if the report was generated successfully
-	 * @throws SQLException when sql actions failed.
      */
     public static boolean generateStockStatusReport(Store s) {
         String query = "SELECT store_product.*, product.pname\n" +
@@ -105,7 +104,6 @@ public class ReportGenerator extends TimerTask {
      * this function gets the orders info for the store s and generates report
      * @param s - store for which we will generate the stock status report
      * @return true if the report was generated successfully
-	 * @throws SQLException when sql actions failed.
      */
     public static boolean generateOrdersReports(Store s) {
         Double totalProfit;
@@ -139,7 +137,6 @@ public class ReportGenerator extends TimerTask {
 
     /**
     * Gets all stores information from DB with Msg object, select task and query.
-	* @throws SQLException when sql select failed.
     */
     private static void getStores() {
         String query = "SELECT * FROM store";
@@ -153,7 +150,6 @@ public class ReportGenerator extends TimerTask {
     /**
     * Gets products : ID, price and name from DB with Msg object, select task and query and set the
     * returned data in a List.
-	* @throws SQLException when sql select failed.
     */
     private static void getProducts() {
         String query = "SELECT pid,price,pname FROM product";

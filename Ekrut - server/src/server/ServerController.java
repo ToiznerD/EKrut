@@ -154,7 +154,6 @@ public class ServerController {
 
 	/**
 	* Closes the server connection and exits the program.
-	* @throws IOException if closing failed
 	*/
 	public void closeConnection() {
 		try {

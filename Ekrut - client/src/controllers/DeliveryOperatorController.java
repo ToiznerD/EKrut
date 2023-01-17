@@ -35,7 +35,6 @@ public class DeliveryOperatorController extends AbstractController{
     /**
      * moveToForm is called when a mouse event occurs. It opens a the window "Delivery Orders".
      * @param event The MouseEvent that triggers the method.
-     * @throws IOException if there is an issue loading the "DeliveryOrdersForm" form.
      */
     @FXML
     public void moveToForm(MouseEvent event) {

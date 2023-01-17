@@ -26,7 +26,7 @@ public class StoreProduct {
 
     /**
      * Gets the ID of a product.
-     * @return int : product ID.
+     * @return product ID.
      */
     public int getPid() {
         return pid;
@@ -34,7 +34,7 @@ public class StoreProduct {
 
     /**
      * Sets the product id.
-     * @param int product id.
+     * @param pid product id.
      */
     public void setPid(int pid) {
         this.pid = pid;
@@ -42,7 +42,7 @@ public class StoreProduct {
 
     /**
      * Gets the ID of a store.
-     * @return int : store ID.
+     * @return store ID.
      */
     public int getSid() {
         return sid;
@@ -50,7 +50,7 @@ public class StoreProduct {
 
     /**
      * Sets the store id.
-     * @param int store id.
+     * @param sid store id.
      */
     public void setSid(int sid) {
         this.sid = sid;
@@ -58,7 +58,7 @@ public class StoreProduct {
 
     /**
      * Gets the quantity of a product.
-     * @return int : product quantity.
+     * @return product quantity.
      */
     public int getQuantity() {
         return quantity;
@@ -66,7 +66,7 @@ public class StoreProduct {
 
     /**
      * Sets the quantity of a product in a store.
-     * @param int : product quantity.
+     * @param quantity product quntity.
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
@@ -74,7 +74,7 @@ public class StoreProduct {
 
     /**
      * Gets the minimum limit of a product in a store.
-     * @return int : product minimum limit.
+     * @return product minimum limit number.
      */
     public int getMinLimit() {
         return minLimit;
@@ -82,7 +82,7 @@ public class StoreProduct {
 
     /**
      * Sets the minimum limit of a product in a store.
-     * @param int : product minimum limit.
+     * @param minLimit product minimum limit number.
      */
     public void setMinLimit(int minLimit) {
         this.minLimit = minLimit;
@@ -90,7 +90,7 @@ public class StoreProduct {
 
     /**
      * Gets the product name.
-     * @return String : product name.
+     * @return product name.
      */
     public String getPname() {
         return pname;
@@ -98,7 +98,7 @@ public class StoreProduct {
 
     /**
      * Sets the product name.
-     * @param String product name
+     * @param pname product name
      */
     public void setPname(String pname) {
         this.pname = pname;
