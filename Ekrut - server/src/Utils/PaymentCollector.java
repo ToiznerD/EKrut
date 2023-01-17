@@ -10,8 +10,17 @@ import Util.Msg;
 import Util.Tasks;
 import tasker.Tasker;
 
+/**
+ * PaymentCollector class extends abstract class <code>TimerTasl</code>
+ * used to collect postponed payments made by customers of the system
+ */
 public class PaymentCollector extends TimerTask {
-	
+	/**
+	 * implements abstract method of TimerTask
+	 * this is the function that the thread of the timed task will run
+	 * selects all the users who have delayed payments, and sets the delayed payment to 0
+	 * this task will run every 1st of the month
+	 */
 	@Override
 	public void run() {
 		String query = "SELECT oid FROM orders WHERE delayed_payment = 1";
