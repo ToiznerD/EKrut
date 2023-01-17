@@ -20,6 +20,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+/**
+ * This class handles the payment process for an order.
+ * It shows the list of items and the total cost, and customer's 
+ * contact information, the method of delivery and the delivery 
+ * address. It also has a button to confirm the order, which sends it to the server.
+ * extending AbstractController to add the functionality of the timer in "Order process" screens.
+ */
 public class PaymentController extends AbstractOrderController {
 	private static final DecimalFormat decimal = new DecimalFormat("0.00");
 	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
@@ -39,6 +46,9 @@ public class PaymentController extends AbstractOrderController {
 	@FXML
 	private CheckBox cboxDelayedPayment;
 
+	/**
+	 * initialize all nodes inside the controller with the first initials value.
+	 */
 	@FXML
 	protected void initialize() {
 		String string = "";
@@ -77,13 +87,22 @@ public class PaymentController extends AbstractOrderController {
 		else
 			addressText.setVisible(false);
 	}
-
+    /**
+     * This method sets up the order and adds all the order items to the observable list.
+     * 
+     * @param Object objects the order object containing the items 
+     */
 	@Override
 	public void setUp(Object... objects) {
 		super.setUp(objects);
 		prodList.addAll(order.getItems());
 	}
-
+    /**
+     * Shows a message on the screen telling if the order was created successfully or not, and if pickup, shows the pickup code.
+     * 
+     * @param boolean result true if order created successfully, false otherwise
+     * @param String code the pickup code for the order.
+     */
 	private void endDialog(boolean result, String code) {
 
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -100,7 +119,12 @@ public class PaymentController extends AbstractOrderController {
 			alert.setContentText(alert.getContentText() + "\nYour code for pickup: " + code);
 		alert.show();
 	}
-
+    /**
+     * Sends the order to the server and shows a message to the user if the order was created successfully or not.
+     * If pickup, it also shows a code for pickup.
+     *
+     * @param ActionEvent event button click event that triggers this method
+     */
 	@FXML
 	public void sendOrder(ActionEvent event) {
 		if(cboxDelayedPayment.isSelected())

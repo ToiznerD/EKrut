@@ -24,6 +24,13 @@ public abstract class AbstractController {
 	public static Msg msg;
 	public static User myUser;
 
+	/**
+	 * starting a new scene in the stage we are on. handles disconnection of client, disconnects him from server.
+	 * @param fxml - fxml filename to load
+	 * @param title - Title for the stage
+	 * @param objects - multiple params that can
+	 * @throws IOException
+	 */
 	public void start(String fxml, String title, Object... objects) throws IOException {
 		FXMLLoader load = new FXMLLoader(getClass().getResource("/fxml/" + fxml + ".fxml"));
 		Parent root = load.load();
@@ -44,6 +51,9 @@ public abstract class AbstractController {
 		prStage.show();
 	}
 
+	/**
+	 * wait method, mainly used for waiting for a server response
+	 */
 	public void Wait() { // Nave
 		try {
 			synchronized (monitor) {
@@ -54,6 +64,10 @@ public abstract class AbstractController {
 		}
 	}
 
+	/**
+	 * sends the instance to <code>ClientBackEnd</code> to send it over to the server
+	 * @param msg - Msg object containing message details
+	 */
 	public void sendMsg(Msg msg) { // Nave
 		try {
 			ClientBackEnd.getInstance().handleMessageFromClientUI(msg);
@@ -64,12 +78,18 @@ public abstract class AbstractController {
 		} // Send task to server
 	}
 
+	/**
+	 * wakes up the waiting thread
+	 */
 	public static void Notify() { // Nave
 		synchronized (monitor) {
 			monitor.notify();
 		}
 	}
 
+	/**
+	 * send a query to db to log out
+	 */
 	public void logoutFromDb() {
 		if (myUser != null) {
 			msg = new Msg(Tasks.Logout);
@@ -77,8 +97,12 @@ public abstract class AbstractController {
 			myUser = null;
 		}
 	}
-	
-	public static void popupAlert(String msg) { //ERIK
+
+	/**
+	 * raises popUp alert
+	 * @param msg - A String object to set the popeUp content
+	 */
+	public static void popupAlert(String msg) { // ERIK
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.initOwner(prStage);
 		alert.setTitle("info");
@@ -86,7 +110,11 @@ public abstract class AbstractController {
 		alert.showAndWait();
 		Thread.currentThread().interrupt();
 	}
-	
+
+	/**
+	 * method that executes popUp task in a new thread
+	 * @param msg - String to pass for the popUp alert
+	 */
 	public static void waitForAlert(String msg) { //erik
 		new Thread(new Runnable() {
 		    @Override public void run() {
@@ -98,7 +126,11 @@ public abstract class AbstractController {
 		    }
 		}).start();
 	}
-	
+
+	/**
+	 * call <code>logoutFromDb()</code> to disconnect from db
+	 * load the LoginForm scene with the <code>start()</code> method
+	 */
 	public void logout() {
 		logoutFromDb();
 		try {
@@ -108,8 +140,16 @@ public abstract class AbstractController {
 		}
 	}
 
+	/**
+	 * abstract method to setUp the scene
+	 * @param objects - can receive multiple objects
+	 */
 	public abstract void setUp(Object... objects);
 
+	/**
+	 * abstract method to go back to previous screen
+	 * @param event - MouseEvent object
+	 */
 	public abstract void back(MouseEvent event);
 
 }

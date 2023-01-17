@@ -19,6 +19,10 @@ import javafx.scene.input.MouseEvent;
 import Entities.ResupplyProduct;
 import Entities.User;
 
+/**
+ * ResupplyReqController class is a controller that interacts with the region employee's resupply requests panel.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class ResupplyReqController extends AbstractController {
 
 	private ObservableList<ResupplyProduct> prodList = FXCollections.observableArrayList();;
@@ -41,6 +45,9 @@ public class ResupplyReqController extends AbstractController {
 	@FXML
 	private Label errorLbl;
 
+	/**
+	 * initializes the Resupply requests table to listen to observable list <code>prodList</code>
+	 */
 	@FXML
 	protected void initialize() {
 		sidCell.setCellValueFactory(new PropertyValueFactory<ResupplyProduct, Integer>("Sid"));
@@ -67,6 +74,10 @@ public class ResupplyReqController extends AbstractController {
 		}
 	}
 
+	/**
+	 * updates quantity of the request that was chosen, adds the number of items that was requested to the store product in the db
+	 * @param event - ActionEvent, click on update
+	 */
 	@FXML
 	public void update(ActionEvent event) {
 		if (checkInput()) {
@@ -85,6 +96,10 @@ public class ResupplyReqController extends AbstractController {
 			errorLbl.setText("Error: product id not found");
 	}
 
+	/**
+	 * method to check valid inputs from text fields
+	 * @return true if input is valid, false otherwise
+	 */
 	private boolean checkInput() {
 		if (sidText.getText().isEmpty() || pidText.getText().isEmpty()) {
 			errorLbl.setText("Error: Product id and Actual quantity cannot be empty");
@@ -101,6 +116,10 @@ public class ResupplyReqController extends AbstractController {
 		return true;
 	}
 
+	/**
+	 * overrides the setUp in <code>AbstractController</code> class initializes resupply requests
+	 * @param objects - can receive multiple objects
+	 */
 	@Override
 	public void setUp(Object... objects) {
 		msg = new Msg(Tasks.Select,

@@ -25,6 +25,12 @@ import Util.Msg;
 import Util.Tasks;
 import client.Config;
 
+
+/**
+ * This class handles the items picking (Cart) process for an order.
+ * it shows every item in the catalog (picrute,name,price)
+ * it also have a cart view, the user can add item from the catalog to his cart.
+ */
 public class OrderScreenController extends AbstractOrderController {
 	private ObservableList<OrderProduct> productOList = FXCollections.observableArrayList();
 	private ObservableList<OrderProduct> cartOList = FXCollections.observableArrayList();
@@ -33,6 +39,7 @@ public class OrderScreenController extends AbstractOrderController {
 	private int totalPrice = 0;
 	private Double discount = 1.0, discount_first_order = 1.0;
 	private boolean discountInstalled = false;
+
 
 	@FXML
 	private ListView<OrderProduct> catlogList, cartList;
@@ -51,6 +58,9 @@ public class OrderScreenController extends AbstractOrderController {
 	@FXML
 	private Button checkoutBtn;
 
+	/**
+	 * initialize all nodes inside the controller with the first initials value.
+	 */
 	@FXML
 	public void initialize() {
 		catlogList.setCellFactory(listView -> new CatalogCell());
@@ -64,6 +74,11 @@ public class OrderScreenController extends AbstractOrderController {
 		line.setVisible(false);
 	}
 
+	
+	/**
+	 * add Listeners to every product in the catalog (screen), 
+	 * listen to change in product quantity in the catalog.
+	 */
 	private void addListeners() {
 		for (OrderProduct p : productOList)
 			p.getCartQuantProperty().addListener(new ChangeListener<Number>() {
@@ -94,6 +109,10 @@ public class OrderScreenController extends AbstractOrderController {
 			});
 	}
 
+	/**
+	 * SELECT every product with a given shop_id.
+	 * @return ArrayList<OrderProduct>
+	 */
 	private ArrayList<OrderProduct> getProductList() {
 		msg = new Msg(Tasks.Select,
 				"SELECT p.pid,p.pname,p.price,sp.quantity FROM store_product sp ,product p WHERE sp.pid = p.pid AND sp.sid = "
@@ -103,6 +122,9 @@ public class OrderScreenController extends AbstractOrderController {
 
 	}
 
+	/**
+	 * Raise a pop up dialog if discount occurred.
+	 */
 	private void installDiscount() {
 		//Check if a customer is a subscriber with first order
 		msg = new Msg(Tasks.Select,
@@ -137,6 +159,14 @@ public class OrderScreenController extends AbstractOrderController {
 
 	}
 
+	/**
+	 * this method call on loading fxml.
+	 * initialize the entire controller,
+	 * call super to start timer,
+	 * raise discount popup if needed,
+	 * set store_id property of order.
+	 * and add all product to invite summary.
+	 */
 	@Override
 	public void setUp(Object... objects) {
 		super.setUp(objects);
@@ -149,6 +179,13 @@ public class OrderScreenController extends AbstractOrderController {
 		addListeners();
 	}
 
+	/**
+	 * Occur when checkout button clicked 
+	 * set items,discount,total_price properties of order
+	 * and switch to next screen.
+	 * @param 	ActionEvent event.
+	 * @throws IOException
+	 */
 	@FXML
 	public void checkout(ActionEvent event) throws IOException {
 		if (!cartOList.isEmpty()) {
