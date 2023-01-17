@@ -47,7 +47,7 @@ public class PaymentController extends AbstractOrderController {
 		phoneText.setText("Phone: " + myUser.getPhone());
 		emailText.setText("Email: " + myUser.getEmail());
 		cardText.setText("Credit Card: " + getCreditCard());
-
+		
 		if (order.getMethod() == "Delivery" || order.getMethod() == "Pickup")
 			methodText.setText("Method: " + order.getMethod());
 		else

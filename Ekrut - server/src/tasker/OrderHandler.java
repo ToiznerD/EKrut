@@ -97,7 +97,7 @@ public class OrderHandler {
 		if (order.getMethod().equals("Pickup")) {
 			pickUpCode = createRandomCode();
 			DBController.update("INSERT INTO pickup (oid,sid,orderCode) VALUES (" + lastOrder + ","
-					+ order.getStore_ID() + "," + pickUpCode + ")");
+					+ order.getStore_ID() + ",'" + pickUpCode + "')");
 		}
 	}
 
