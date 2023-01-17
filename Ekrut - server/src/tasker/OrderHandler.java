@@ -17,6 +17,10 @@ public class OrderHandler {
 	private static int lastOrder = 1;
 	private static String pickUpCode;
 
+	/**
+	 * Inserts a new item to the order_items table in the database
+	 * @param order  the order details object containing the items to be inserted
+	 */
 	private static void insertItemsQuery(OrderDetails order) {
 		StringBuilder query = new StringBuilder("INSERT INTO order_items VALUES ");
 		for (OrderProduct p : order.getItems()) {
@@ -29,6 +33,10 @@ public class OrderHandler {
 		DBController.update(query.toString());
 	}
 
+	/**
+	 * Updates the quantity of products in a store after an order is placed
+	 * @param order  the order details object containing the items to be updated
+	 */
 	private static void updateSotreQuant(OrderDetails order) {
 		for (OrderProduct p : order.getItems()) {
 			DBController.update("UPDATE store_product set quantity = quantity - " + p.getCartQuant() + " WHERE pid = "
@@ -36,6 +44,10 @@ public class OrderHandler {
 		}
 	}
 
+	/**
+	* Inserts a new order into the orders table in the database
+	* @param order  the order details object containing the information to be inserted
+	*/
 	private static void insertOrderQuery(OrderDetails order) {
 		String values = String.format("%d,%d,%.2f,'%s','%s','%s'", order.getUserId(), order.getStore_ID(),
 				order.getAfterDiscount(), java.sql.Date.valueOf(LocalDate.now()),
@@ -50,6 +62,10 @@ public class OrderHandler {
 		updateLastOrder(); //fetch the orderId that we insert now.
 	}
 
+	/**
+	* Generates a random 6 digit code
+	* @return a random 6 digit code as a string
+	*/
 	private static String createRandomCode() {
 		String rndnumber = "";
 		Random rnd = new Random();
@@ -58,6 +74,12 @@ public class OrderHandler {
 		return rndnumber;
 	}
 
+	/**
+	* Check if a store has enough quantity of a product
+	* @param product  the product to be checked
+	* @param storeID  the id of the store
+	* @return true if the store has enough quantity of the product, false otherwise
+	*/
 	private static boolean productQuant(OrderProduct product, int storeID) {
 		ResultSet rs = DBController.select(
 				"SELECT quantity FROM store_product WHERE pid = " + product.getProductID() + " AND sid = " + storeID);
@@ -70,6 +92,9 @@ public class OrderHandler {
 		return false;
 	}
 
+	/**
+	 * get last (this) order id from the database 
+	 */
 	private static void updateLastOrder() {
 		ResultSet rs = DBController.select("SELECT oid FROM orders ORDER BY oid DESC LIMIT 1");//last order
 		try {
@@ -80,7 +105,11 @@ public class OrderHandler {
 		}
 	}
 
-	//
+	/**
+	* Check if an order is valid, quantity in order < quantity in database.
+	* @param order  the order to be checked
+	* @return true if the order is valid, false otherwise
+	*/
 	private static boolean checkOrder(OrderDetails order) {
 		if (order.getItems().isEmpty())
 			return false;
@@ -90,6 +119,11 @@ public class OrderHandler {
 		return true;
 	}
 
+	/**
+	* Inserts order to Delivery/Pickup table in database if order method Delivery/Pickup.  
+	* @param order  the order to insert.
+	* @see OrderDetails
+	*/
 	private static void extraUpdate(OrderDetails order) {
 		if (order.getMethod().equals("Delivery"))
 			DBController.update("INSERT INTO deliveries (oid,shipping_address) VALUES (" + lastOrder + ",'"
@@ -101,6 +135,10 @@ public class OrderHandler {
 		}
 	}
 
+	/**
+	* Creates a new order in the database
+	* @param msg  the message object containing the order details
+	*/
 	public static synchronized void createOrder(Msg msg) {
 		if (!checkOrder(msg.getOrder())) {
 			msg.setBool(false);
