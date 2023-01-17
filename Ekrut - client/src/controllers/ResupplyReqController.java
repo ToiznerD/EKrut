@@ -19,6 +19,10 @@ import javafx.scene.input.MouseEvent;
 import Entities.ResupplyProduct;
 import Entities.User;
 
+/**
+ * ResupplyReqController class is a controller that interacts with the region employee's resupply requests panel.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class ResupplyReqController extends AbstractController {
 
 	private ObservableList<ResupplyProduct> prodList = FXCollections.observableArrayList();;
