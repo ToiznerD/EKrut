@@ -30,7 +30,9 @@ public class OrderDetails implements Serializable {
 		this.userId = userId;
 		discount = 1.0;
 		method = "Local";
+
 		address = "";
+
 	}
 
 	/**

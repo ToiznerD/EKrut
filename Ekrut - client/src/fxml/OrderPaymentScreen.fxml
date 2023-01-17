@@ -67,6 +67,8 @@
          </font>
       </Button>
       <ProgressBar fx:id="pb" layoutX="255.0" layoutY="364.0" prefHeight="18.0" prefWidth="131.0" progress="1.0" />
+
       <CheckBox fx:id="cboxDelayedPayment" layoutX="301.0" layoutY="297.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="117.0" text="Delayed payment" visible="false" />
+
    </children>
 </AnchorPane>

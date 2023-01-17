@@ -37,7 +37,9 @@ public class OrderScreenController extends AbstractOrderController {
 	private static final DecimalFormat decimal = new DecimalFormat("0.00");
 	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private int totalPrice = 0;
+
 	private Double discount = 1.0, discount_first_order = 1.0;
+
 	private boolean discountInstalled = false;
 
 
@@ -109,10 +111,12 @@ public class OrderScreenController extends AbstractOrderController {
 			});
 	}
 
+
 	/**
 	 * SELECT every product with a given shop_id.
 	 * @return List of order products
 	 */
+
 	private ArrayList<OrderProduct> getProductList() {
 		msg = new Msg(Tasks.Select,
 				"SELECT p.pid,p.pname,p.price,sp.quantity FROM store_product sp ,product p WHERE sp.pid = p.pid AND sp.sid = "

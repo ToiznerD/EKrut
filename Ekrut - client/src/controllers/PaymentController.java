@@ -43,6 +43,7 @@ public class PaymentController extends AbstractOrderController {
 	private ImageView backBtn;
 	@FXML
 	private Button finishBtn;
+
 	@FXML
 	private CheckBox cboxDelayedPayment;
 
@@ -54,6 +55,7 @@ public class PaymentController extends AbstractOrderController {
 		String string = "";
 		listView.setCellFactory(listView -> new OrderViewCell());
 		listView.setItems(prodList);
+
 		if(order.getDiscount() < 1.0 || order.getFirstOrder()) {
 			string = "Discount: ";
 			if(order.getDiscount() < 1.0)
@@ -67,17 +69,19 @@ public class PaymentController extends AbstractOrderController {
 		discountText.setText("" + string);
 		totalSumText.setText("Total price: " + decimal.format(order.getAfterDiscount()));
 		//discountText.setVisible(order.hasDiscount());
+
 		nameText.setText(myUser.getName());
 		phoneText.setText("Phone: " + myUser.getPhone());
 		emailText.setText("Email: " + myUser.getEmail());
 		cardText.setText("Credit Card: " + getCreditCard());
-		
+
 		//checking if the customer is a subscriber
 		msg = new Msg(Tasks.Select, "SELECT subscriber FROM customer WHERE id = " + myUser.getId());
 		sendMsg(msg);
 		if((int)msg.getObj(0) == 1)
 			cboxDelayedPayment.setVisible(true);
 		
+
 		if (order.getMethod() == "Delivery" || order.getMethod() == "Pickup")
 			methodText.setText("Method: " + order.getMethod());
 		else
@@ -127,6 +131,7 @@ public class PaymentController extends AbstractOrderController {
      */
 	@FXML
 	public void sendOrder(ActionEvent event) {
+
 		if(cboxDelayedPayment.isSelected())
 			order.setDelayed_paymentTrue();
 		msg = new Msg(Tasks.Order, order);
