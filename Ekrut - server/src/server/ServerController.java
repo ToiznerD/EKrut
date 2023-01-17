@@ -52,9 +52,6 @@ public class ServerController {
 	/**
 	* Connects to the server by creating a serverBackEnd object and connects to mysql DB.
 	* It appends to server console the appropriate message.
-	* @throws IOException when failed to create the server.
-	* @throws SQLException when the mysql DB credentials are wrong.
-	* @throws Exception when driver definition failed.
 	*/
 	public void connectToServer() {
 

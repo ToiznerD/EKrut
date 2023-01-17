@@ -76,7 +76,7 @@ public class StockStatusReportController extends AbstractController {
 
     /**
      * present a stock status report to user
-     * @return
+     * @param event the action event that triggered the method call
      */
     public void getStockStatusReportDetails(ActionEvent event) {
         // reset all info on screen when an option is clicked

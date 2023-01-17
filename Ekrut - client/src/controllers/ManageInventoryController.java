@@ -17,7 +17,6 @@ public class ManageInventoryController extends AbstractController{
 
     /**
     * Opens the Update MinLimit Inventory Screen
-    * @throws Exception when an error occurs loading the fxml file
     */
     public void updateMinLimitBtnClick() {
         try {
@@ -29,7 +28,6 @@ public class ManageInventoryController extends AbstractController{
 
     /**
     * Opens the Create Resupply Request Screen
-    * @throws Exception when an error occurs loading the fxml file
     */
     public void sendResupplyRequestBtnClick() {
         try {

@@ -17,7 +17,6 @@ import server.UserManager;
  * It handles 3 Tasks for DB actions: Select, Update, Insert.
  * It handles special tasks performed in system: Login, Logout, Order.
  * It sets messages on server console when user Login and Logout with current time.
- * @throws SQLException on error while perform actions with mysql DB
  */
 public class Tasker {
 	private static String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));

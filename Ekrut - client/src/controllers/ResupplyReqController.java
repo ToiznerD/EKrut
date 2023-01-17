@@ -100,7 +100,6 @@ public class ResupplyReqController extends AbstractController {
 	/**
 
 	 * Checks if the input valid.
-	 * @param text: the text input got from the label
 	 * @return true if status is pending, false otherwise
 	 */	
 	private boolean checkInput() {
