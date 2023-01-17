@@ -53,9 +53,10 @@ public class CustomerPanelController extends AbstractController {
 			//Customer
 			if (msg.getObj(0).equals("Not Approved")) {
 				//Customer not approved
-				errLbl.setText("Your account has not been approved yet.");
+				errLbl.setText("Your account has been rejected.");
 			}
-
+			else if (msg.getObj(0).equals("Pending"))
+				errLbl.setText("Your account has not been approved yet");
 			else {
 				//Customer approved
 				if (Config.getConfig().equals("OL")) {

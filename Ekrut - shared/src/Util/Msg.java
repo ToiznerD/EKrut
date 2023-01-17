@@ -4,16 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import Entities.OrderDetails;
+
 
 public class Msg implements Serializable {
 
 	/**
-	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private Tasks task;
 	private String query, consoleMsg, alertMsg,response;
 	private int intReturn, destinationID;
+	private OrderDetails order;
 	private boolean boolReturn;
 	private ArrayList<List<Object>> arrayReturn = new ArrayList<>();
 
@@ -34,6 +36,10 @@ public class Msg implements Serializable {
 		case Logout:
 			this.task = task;
 			break;
+		case Order:
+			this.task = task;
+			order = (OrderDetails) objects[0];
+			break;
 		default: // sql queries
 			this.task = task;
 			this.query = (String) objects[0];
@@ -48,6 +54,9 @@ public class Msg implements Serializable {
 		return task;
 	}
 
+	public OrderDetails getOrder() {
+		return order;
+	}
 	public void setResponse(String response) {
 		this.response = response;
 	}

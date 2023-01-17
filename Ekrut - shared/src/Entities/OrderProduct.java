@@ -1,16 +1,24 @@
 package Entities;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Objects;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class OrderProduct {
+public class OrderProduct implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7126677968806442791L;
 	// image
 	private int productID;
 	private String name;
 	private int price, quant;
-	private SimpleIntegerProperty cartQuant = new SimpleIntegerProperty(0);
+	private transient SimpleIntegerProperty cartQuant = new SimpleIntegerProperty(0);
 	// quantity
 
 	public OrderProduct(int productID, String name, int price, int quant) {
@@ -66,6 +74,10 @@ public class OrderProduct {
 		this.quant = quant;
 	}
 
+	public void setCartQuant(int quant) {
+		this.cartQuant.set(quant);
+	}
+
 	public boolean addToCart() {
 		if (cartQuant.get() < quant) {
 			cartQuant.set(cartQuant.get() + 1);
@@ -93,4 +105,23 @@ public class OrderProduct {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		out.writeInt(productID);
+		out.writeUTF(name);
+		out.writeInt(price);
+		out.writeInt(quant);
+		out.writeInt(cartQuant.get());
+	}
+
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		productID = in.readInt();
+		name = in.readUTF();
+		price = in.readInt();
+		quant = in.readInt();
+		cartQuant = new SimpleIntegerProperty(in.readInt());
+	}
+
 }

@@ -1,9 +1,7 @@
 package controllers;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.nio.file.Paths;
+import java.net.URL;
 
 import Entities.OrderProduct;
 import javafx.event.ActionEvent;
@@ -15,8 +13,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 public class CatlogCellController {
-	private static String imgPath = Paths.get("src\\").toAbsolutePath().getParent().toString() + "\\images\\";
-	private static String defaultImg = imgPath + "defaultCatlogImg.png";
+	//private static String imgPath = Paths.get("client.jar\\images").toAbsolutePath().toString()+"\\";
+	private URL imgPath = this.getClass().getResource("/images");
+	private String defaultImg = imgPath + "/defaultCatlogImg.png";
 	private OrderProduct product;
 
 	@FXML
@@ -37,7 +36,6 @@ public class CatlogCellController {
 	@FXML
 	private Text lblPrice;
 
-
 	public void setTemplate(OrderProduct p) {
 		product = p;
 		lblID.setText(String.valueOf(p.getProductID()));
@@ -48,15 +46,10 @@ public class CatlogCellController {
 
 	private Image buildImg(String productName) {
 		InputStream stream = null;
-		try {
-			stream = new FileInputStream(imgPath + productName.toLowerCase() + ".png");
-		} catch (FileNotFoundException e) {
-			try {
-				stream = new FileInputStream(defaultImg);
-			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
-			}
-		}
+		System.out.println(defaultImg);
+		stream = this.getClass().getResourceAsStream("/images/" + productName.toLowerCase() + ".png");
+		if (stream == null)
+			stream = this.getClass().getResourceAsStream("/images/defaultCatlogImg.png");
 		return new Image(stream);
 	}
 
@@ -68,4 +61,5 @@ public class CatlogCellController {
 	public OrderProduct getProduct() {
 		return product;
 	}
+
 }
