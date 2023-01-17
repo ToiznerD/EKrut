@@ -180,8 +180,6 @@ public class OrderDetails implements Serializable {
 	public void setDelayed_paymentTrue() {
 		delayed_payment = true;
 	}
-	
-	
 
 	/**
 	 * Writes the object to the ObjectOutputStream. This method is used for serializing the OrderDetails object.

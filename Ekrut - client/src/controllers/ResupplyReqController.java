@@ -96,6 +96,10 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	/**
+<<<<<<< HEAD
+
+=======
+>>>>>>> 57acccc2a7e75dffbee6995f875c37550ff2127a
 	 * Checks if the input valid.
 	 * @return true if status is pending, false otherwise
 	 */	
