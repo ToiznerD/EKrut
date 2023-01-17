@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 Config: OL
+=======
+Config: EK
+Store: 5
+>>>>>>> 57acccc2a7e75dffbee6995f875c37550ff2127a

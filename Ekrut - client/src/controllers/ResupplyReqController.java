@@ -73,12 +73,10 @@ public class ResupplyReqController extends AbstractController {
 		}
 	}
 
-
     /**
      * update stock of a product in DB (after request send for low stock level).
      * @param event the ActionEvent that triggered this method
      */
-
 	@FXML
 	public void update(ActionEvent event) {
 		if (checkInput()) {
@@ -98,7 +96,10 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	/**
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57acccc2a7e75dffbee6995f875c37550ff2127a
 	 * Checks if the input valid.
 	 * @return true if status is pending, false otherwise
 	 */	
