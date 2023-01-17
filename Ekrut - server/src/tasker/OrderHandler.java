@@ -52,9 +52,9 @@ public class OrderHandler {
 		String values = String.format("%d,%d,%.2f,'%s','%s','%s'", order.getUserId(), order.getStore_ID(),
 				order.getAfterDiscount(), java.sql.Date.valueOf(LocalDate.now()),
 				java.sql.Time.valueOf(LocalTime.now()), order.getMethod());
-		if (order.getMethod() == "Local") {
+		if (order.getMethod().equals("Local")) {
 			DBController.update("INSERT INTO orders (cid,sid,total_price,ord_date,ord_time,method,ord_status,delayed_payment) VALUES ("
-					+ values + ",'Completed'," + (order.isDelayed_payment() ? ",1)" : ",0)"));
+					+ values + ",'Completed'" + (order.isDelayed_payment() ? ",1)" : ",0)"));
 		} else {
 			
 			DBController.update("INSERT INTO orders (cid,sid,total_price,ord_date,ord_time,method,delayed_payment) VALUES ("
