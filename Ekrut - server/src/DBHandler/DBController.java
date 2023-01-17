@@ -104,14 +104,7 @@ public class DBController {
 			stmt.executeUpdate("SET GLOBAL local_infile=1");
 			stmt.executeUpdate("load data local infile \"users.txt\" into table users");
 			stmt.executeUpdate("load data local infile \"customer.txt\" into table customer");
-			/*stmt.executeUpdate("ALTER TABLE orders"
-					+ " ADD INDEX orders_cidfk_idx (cid ASC) VISIBLE;"
-					+ " ALTER TABLE orders"
-					+ " ADD CONSTRAINT orders_cidfk"
-					+ " FOREIGN KEY (cid)"
-					+ " REFERENCES customer (id)"
-					+ " ON DELETE NO ACTION"
-					+ " ON UPDATE NO ACTION;");*/
+			stmt.executeUpdate("load data local infile \"region_employee.txt\" into table region_employee");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

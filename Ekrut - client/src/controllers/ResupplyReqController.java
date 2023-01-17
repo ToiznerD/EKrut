@@ -99,8 +99,10 @@ public class ResupplyReqController extends AbstractController {
 	@Override
 	public void setUp(Object... objects) {
 		msg = new Msg(Tasks.Select,
-				"SELECT DISTINCT s.sid,s.name,p.pid,p.pname,sp.quantity,rs.quantity,rs.status FROM store s,store_product sp,product p,resupply_request rs WHERE rs.uid = "
-						+ myUser.getId() + " AND s.sid=rs.sid AND p.pid=rs.pid AND sp.pid=rs.pid AND status=\"Pending\"");
+				"SELECT DISTINCT s.sid,s.name,p.pid,p.pname,sp.quantity as available,rs.quantity as requested ,rs.status FROM store s,store_product sp,product p,resupply_request rs " +
+						"WHERE rs.uid = " + myUser.getId() + " AND s.sid=rs.sid AND p.pid=rs.pid AND sp.pid=rs.pid AND status='Pending' AND sp.sid = rs.sid");
+
+
 		//store id,Store name,product id,product name,store_product quantity,resupply_request quantity,status
 		sendMsg(msg);
 		prodList.clear();
