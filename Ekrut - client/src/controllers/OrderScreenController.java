@@ -31,7 +31,7 @@ public class OrderScreenController extends AbstractOrderController {
 	private static final DecimalFormat decimal = new DecimalFormat("0.00");
 	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private int totalPrice = 0;
-	private Double discount = 1.0;
+	private Double discount = 1.0, discount_first_order = 1.0;
 	private boolean discountInstalled = false;
 
 	@FXML
@@ -80,7 +80,7 @@ public class OrderScreenController extends AbstractOrderController {
 					if (discount < 1.0 && totalPrice > 0) {
 						line.setVisible(true);
 						discountLbl.setText("After discount:");
-						discountPriceText.setText(String.valueOf(decimal.format(totalPrice * (1 - discount))));
+						discountPriceText.setText(String.valueOf(decimal.format((totalPrice * (1 - discount))*discount_first_order)));
 					} else {
 						line.setVisible(false);
 						discountLbl.setText("");
@@ -100,6 +100,20 @@ public class OrderScreenController extends AbstractOrderController {
 	}
 
 	private void installDiscount() {
+		//Check if a customer is a subscriber with first order
+		msg = new Msg(Tasks.Select,
+				"SELECT first_order FROM customer WHERE id = " + myUser.getId() + " AND subscriber = 1 AND first_order = 1");
+		sendMsg(msg);
+		if(msg.getBool()) {
+			discountInstalled = true;
+			discount_first_order = 0.8;
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("First Order");
+			alert.setHeaderText("Congratulations !");
+			alert.setContentText("This is your first order, enjoy 20% discount for every item in cart.");
+			alert.showAndWait();
+		}
+		
 		msg = new Msg(Tasks.Select,
 				"SELECT s.saleName ,t.discount FROM sale_initiate s,sale_template t WHERE s.active = 1 AND s.templateId=t.templateId AND \""
 						+ java.sql.Time.valueOf(LocalTime.now()) + "\" BETWEEN s.startHour AND s.endHour AND \""
@@ -113,7 +127,7 @@ public class OrderScreenController extends AbstractOrderController {
 			alert.setTitle("SALE");
 			alert.setHeaderText(saleName + " Sale!");
 			alert.setContentText("SALE for " + saleName + " is now active you can enjoy "
-					+ decimalToInt.format(discount * 100) + "% discount for every item in cart.");
+					+ decimalToInt.format((double)msg.getObj(1) * 100) + "% discount for every item in cart.");
 			alert.showAndWait();
 		}
 
@@ -141,6 +155,9 @@ public class OrderScreenController extends AbstractOrderController {
 			order.setItems(list);
 			order.setDiscount(discount);
 			order.setTotal_price(totalPrice);
+			
+			if(discount_first_order == 0.8)
+				order.setFirstOrderTrue();
 			start("OrderPaymentScreen", "Payment");
 		} else
 			setUp(); //Restart order window.

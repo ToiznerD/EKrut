@@ -29,6 +29,7 @@ CREATE TABLE `customer` (
   `status` enum('Approved','Not Approved','Pending') DEFAULT 'Pending',
   `subscriber` tinyint NOT NULL,
   `credit_card` varchar(50) DEFAULT NULL,
+  `first_order` tinyint NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

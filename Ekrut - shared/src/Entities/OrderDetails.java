@@ -18,6 +18,7 @@ public class OrderDetails implements Serializable{
 	private int total_price, store_id,userId;
 	private double discount;
 	private String method, address;
+	private boolean first_order = false;
 
 	public OrderDetails(int userId) {
 		this.userId = userId;
@@ -65,13 +66,13 @@ public class OrderDetails implements Serializable{
 	public double getProductPrice(OrderProduct product) {
 		if (!hasDiscount())
 			return product.getPrice();
-		return product.getPrice() * (1 - discount);
+		return product.getPrice() * (1 - discount) * (getFirstOrder() ? 0.8 : 1.0);
 	}
 
 	public double getAfterDiscount() {
 		if (!hasDiscount())
-			return total_price;
-		return total_price * (1 - discount);
+			return total_price * (getFirstOrder() ? 0.8 : 1.0);
+		return total_price * (1 - discount) * (getFirstOrder() ? 0.8 : 1.0);
 	}
 
 	public double getDiscount() {
@@ -96,6 +97,14 @@ public class OrderDetails implements Serializable{
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public boolean getFirstOrder() {
+		return first_order;
+	}
+	
+	public void setFirstOrderTrue() {
+		first_order = true;
 	}
 
 	/*	ArrayList<OrderProduct> items;

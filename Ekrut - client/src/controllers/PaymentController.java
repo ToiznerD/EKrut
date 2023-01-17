@@ -40,7 +40,7 @@ public class PaymentController extends AbstractOrderController {
 	protected void initialize() {
 		listView.setCellFactory(listView -> new OrderViewCell());
 		listView.setItems(prodList);
-		discountText.setText("Discount: " + decimalToInt.format(order.getDiscount() * 100) + "%");
+		discountText.setText("Discount: " + decimalToInt.format(order.getDiscount() * 100) + "%" + (order.getFirstOrder() ? " + 20%" : ""));
 		totalSumText.setText("Total price: " + decimal.format(order.getAfterDiscount()));
 		discountText.setVisible(order.hasDiscount());
 		nameText.setText(myUser.getName());
@@ -87,12 +87,20 @@ public class PaymentController extends AbstractOrderController {
 		msg = new Msg(Tasks.Order, order);
 		sendMsg(msg);
 		endDialog(msg.getBool(), msg.getResponse());
+		updateFirstOrder();
 		cleanOrder();
 		try {
 			start("CustomerPanel", "Customer Dashboard");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void updateFirstOrder() {
+		if(!order.getFirstOrder())
+			return;
+		msg = new Msg(Tasks.Update, "UPDATE customer SET first_order = 0 WHERE id = " + myUser.getId());
+		sendMsg(msg);
 	}
 
 	private String getCreditCard() {
