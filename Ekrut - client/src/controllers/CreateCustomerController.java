@@ -184,8 +184,6 @@ public class CreateCustomerController extends AbstractController{
     	sendMsg(msg);
     	
     	if(msg.getInt() != 0) {
-			lblErr.setText(txtUser.getText() + " has been added successfuly!");
-			
 			//Email and SMS SIMULATION
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 	        alert.setTitle("Success");

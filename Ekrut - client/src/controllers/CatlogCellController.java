@@ -57,4 +57,5 @@ public class CatlogCellController {
 	public OrderProduct getProduct() {
 		return product;
 	}
+
 }

@@ -158,6 +158,8 @@ public class DBController {
 			stmt.executeUpdate("SET GLOBAL local_infile=1");
 			stmt.executeUpdate("load data local infile \"users.txt\" into table users");
 			stmt.executeUpdate("load data local infile \"customer.txt\" into table customer");
+			stmt.executeUpdate("load data local infile \"region_employee.txt\" into table region_employee");
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
