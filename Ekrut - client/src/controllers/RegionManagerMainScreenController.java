@@ -121,13 +121,12 @@ public class RegionManagerMainScreenController extends AbstractController {
 
     /**
      * loads the reports screen view after the client clicked on the "View Reports" button
-     * @param event  an ActionEvent that captures the "View Reports" button click
+     * @param event an ActionEvent that captures the "View Reports" button click
      */
     public void viewReportsClick(ActionEvent event) {
         try {
             start("ChooseReportScreen", "Choose Report");
         } catch (Exception e) {
-// TODO: handle exception
             e.printStackTrace();
         }
     }

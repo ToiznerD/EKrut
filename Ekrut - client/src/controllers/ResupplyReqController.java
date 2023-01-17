@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 
+import Entities.ResupplyProduct;
 import Util.Msg;
 import Util.Tasks;
 import javafx.collections.FXCollections;
@@ -16,16 +17,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import Entities.ResupplyProduct;
-import Entities.User;
 
+/**
+ * ResupplyReqController is a controller for operation employee.
+ * It uses for handling and managing inventory stock.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class ResupplyReqController extends AbstractController {
 
 	private ObservableList<ResupplyProduct> prodList = FXCollections.observableArrayList();;
 	@FXML
 	private ImageView backBtn;
 	@FXML
-	private Label storeLbl;
+	private Label storeLbl, errorLbl;
 	@FXML
 	private TableColumn<ResupplyProduct, Integer> pidCell, sidCell, addQuantCell, aQuantCell;
 	@FXML
@@ -38,9 +42,12 @@ public class ResupplyReqController extends AbstractController {
 
 	@FXML
 	private TableView<ResupplyProduct> Table;
-	@FXML
-	private Label errorLbl;
-
+	
+	/**
+	 * initialize method is a protected method that is called automatically when the FXML file is loaded.
+	 * It sets the cell value factories for each column in the table view
+	 * and set the data with prodList observable list.
+	 */
 	@FXML
 	protected void initialize() {
 		sidCell.setCellValueFactory(new PropertyValueFactory<ResupplyProduct, Integer>("Sid"));
@@ -56,7 +63,6 @@ public class ResupplyReqController extends AbstractController {
     /**
      * Handles the mouse event of the back button.
      * @param event the mouse event that triggered this method
-     * @throws IOException if there is an issue loading the FXML file
      */
 	@Override
 	public void back(MouseEvent event) {
@@ -67,6 +73,10 @@ public class ResupplyReqController extends AbstractController {
 		}
 	}
 
+    /**
+     * update stock of a product in DB (after request send for low stock level).
+     * @param event the ActionEvent that triggered this method
+     */
 	@FXML
 	public void update(ActionEvent event) {
 		if (checkInput()) {
@@ -85,6 +95,11 @@ public class ResupplyReqController extends AbstractController {
 			errorLbl.setText("Error: product id not found");
 	}
 
+	/**
+	 * Checks if the input valid.
+	 * @param text: the text input got from the label
+	 * @return true if status is pending, false otherwise
+	 */	
 	private boolean checkInput() {
 		if (sidText.getText().isEmpty() || pidText.getText().isEmpty()) {
 			errorLbl.setText("Error: Product id and Actual quantity cannot be empty");
@@ -100,7 +115,11 @@ public class ResupplyReqController extends AbstractController {
 		errorLbl.setText("");
 		return true;
 	}
-
+	
+	/**
+	 * Sets up data when controller is up with selecting query of DB and store the results in prodList.
+	 * @param objects: the text input got from the label
+	 */	
 	@Override
 	public void setUp(Object... objects) {
 		msg = new Msg(Tasks.Select,

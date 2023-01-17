@@ -34,7 +34,6 @@ public class serverBackEnd extends AbstractServer {
 	* It sends a Msg back to a client when tasks performed (depends on the task)
 	* @param msg the Msg sent from client.
 	* @param client the socket of the sender (ConnectionToClient)
-	* @throws Exception when Msg failed to send.
 	*/
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
@@ -89,7 +88,6 @@ public class serverBackEnd extends AbstractServer {
 	/**
 	* Removes the client IP address from the list of connected clients appends message to server console.
 	* @param client the socket of the sender (ConnectionToClient).
-	* @throws IOException when disconnect failed.
 	*/
 	@Override
 	protected void clientDisconnected(ConnectionToClient client) {
@@ -105,7 +103,7 @@ public class serverBackEnd extends AbstractServer {
 
 	/**
 	* Calls Utility import method.
-	* @return boolean : return true of import successed, else return false;
+	* @return return true of import successed, else return false;
 	*/
 	protected boolean importUsers() {
 		return DBController.importUsers();

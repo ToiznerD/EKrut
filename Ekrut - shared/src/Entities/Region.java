@@ -20,7 +20,7 @@ public class Region {
 	
     /**
      * Gets the ID of the region.
-     * @return int : region ID
+     * @return region ID
      */
 	public int getRid() {
 		return rid;
@@ -28,7 +28,7 @@ public class Region {
 
     /**
      * Gets the name of the region.
-     * @return String : region name
+     * @return region name
      */
 	public String getName() {
 		return name;
