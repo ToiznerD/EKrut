@@ -31,7 +31,6 @@ public class CreateResupplyRequestController extends AbstractController {
     private HashMap<String, Integer> productMap = new HashMap<>();
     private HashMap<String, Integer> operationEmployeesMap = new HashMap<>();
 
-
     @FXML
     ComboBox storeLocationsComboBox;
     @FXML
@@ -71,9 +70,12 @@ public class CreateResupplyRequestController extends AbstractController {
         initializeRequestsTable();
         // load comboBox options to comboBox
         RegionManagerMainScreenController.loadLocationsComboBox(storeLocationsComboBox);
-
     }
 
+
+    /**
+     * initialize request table to listen to our observable list of requests
+     */
     private void initializeRequestsTable() {
         requestsObsList = FXCollections.observableArrayList();
         storeCol.setCellValueFactory(new PropertyValueFactory<ResupplyRequest, String>("sname"));
@@ -89,16 +91,26 @@ public class CreateResupplyRequestController extends AbstractController {
 
     }
 
+    /**
+     * updates the quantity of the product that is already in the requests list
+     * @param event
+     */
     public void onCellEdit(CellEditEvent event) {
         ResupplyRequest updatedRequest = (ResupplyRequest) event.getRowValue();
         updatedRequest.setQuantity((Integer) event.getNewValue());
     }
 
+    /**
+     * loads products comboBox when store is picked
+     */
     public void storeOptionOnAction() {
         productsComboBox.getItems().clear();
         loadProductsComboBox();
     }
 
+    /**
+     * querys db for all store_products of the store, loads it to the comboBox
+     */
     public void loadProductsComboBox() {
         String sname = storeLocationsComboBox.getSelectionModel().getSelectedItem().toString();
         String query = "SELECT sp.*, p.pname\n" +
@@ -122,6 +134,9 @@ public class CreateResupplyRequestController extends AbstractController {
         }
     }
 
+    /**
+     * add request to the list of requests, save it locally
+     */
     public void addRequestClick() {
         formErrorLabel.setText("");
 
@@ -179,10 +194,11 @@ public class CreateResupplyRequestController extends AbstractController {
         }
     }
 
-
+    /**
+     * get all employee ids from db and load it to comboBox
+     */
     public void loadEmployeesIds() {
         String query = "SELECT id, name FROM ekrut.users WHERE role = \"operation_employee\"";
-
 
         msg = new Msg(Select, query);
         sendMsg(msg);
@@ -199,6 +215,9 @@ public class CreateResupplyRequestController extends AbstractController {
 
     }
 
+    /**
+     * insert requests list to db, and give a suitable pop-up to user
+     */
     public void saveRequestsClick() {
         if (requestsObsList.size() == 0) {
             tableErrorLabel.setText("* No request to save");
@@ -234,6 +253,9 @@ public class CreateResupplyRequestController extends AbstractController {
 
     }
 
+    /**
+     * remove a request from the table
+     */
     public void removeRequestClick() {
         ResupplyRequest selectedItem = requestsTable.getSelectionModel().getSelectedItem();
         if (selectedItem == null) {
