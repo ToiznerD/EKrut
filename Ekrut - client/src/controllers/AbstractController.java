@@ -79,7 +79,7 @@ public abstract class AbstractController {
 	}
 
 	/**
-	 *
+	 * wakes up the waiting thread
 	 */
 	public static void Notify() { // Nave
 		synchronized (monitor) {
