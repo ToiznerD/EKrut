@@ -174,9 +174,13 @@ public class ServerController {
 	* @param event ActionEvent that triggers the action
 	*/
 	public void importUsers(ActionEvent event) {
-		if(sv.importUsers()) 
-			appendConsole("Users has been imported successfuly.");
+		if(sv != null) {
+			if(sv.importUsers()) 
+				appendConsole("Users has been imported successfuly.");
+			else
+				appendConsole("Import has failed.");
+		}
 		else
-			appendConsole("Import has failed.");
+			appendConsole("Import has failed. Before importing users, connect to Database");
 	}
 }

@@ -132,6 +132,7 @@ public class OrderDetails implements Serializable {
 	 */
 	public void setDiscount(double discount) {
 		if (discount > 1.0 || discount < 0)
+			return;
 		this.discount = discount;
 	}
 
