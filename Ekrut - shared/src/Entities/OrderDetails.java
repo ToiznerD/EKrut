@@ -19,6 +19,7 @@ public class OrderDetails implements Serializable{
 	private double discount;
 	private String method, address;
 	private boolean first_order = false;
+	private boolean delayed_payment = false;
 
 	public OrderDetails(int userId) {
 		this.userId = userId;
@@ -107,6 +108,15 @@ public class OrderDetails implements Serializable{
 		first_order = true;
 	}
 
+	public boolean isDelayed_payment() {
+		return delayed_payment;
+	}
+
+	public void setDelayed_paymentTrue() {
+		delayed_payment = true;
+	}
+	
+	
 	/*	ArrayList<OrderProduct> items;
 		int total_price, store_id,userId;
 		double discount;
@@ -135,5 +145,6 @@ public class OrderDetails implements Serializable{
 		items = new ArrayList<>(Arrays.asList(itemsArray));
 	
 	}
+
 
 }

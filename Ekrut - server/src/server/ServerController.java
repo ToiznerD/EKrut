@@ -3,11 +3,16 @@ package server;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import DBHandler.DBController;
+import Util.Msg;
+import Util.Tasks;
+import Utils.PaymentCollector;
 import Utils.ReportGenerator;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -21,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import tasker.Tasker;
 
 /**
  * ServerController class is the main controller class for the ServerApp.
@@ -81,13 +87,13 @@ public class ServerController {
 			appendConsole("Driver definition failed.");
 			e.printStackTrace();
 		}
-		reportScheduler();
+		Scheduler();
 	}
 
 	/**
 	* Schedules a ReportGenerator to run on the first day of the next month with Timer object(runs once).
 	*/
-	private void reportScheduler() {
+	private void Scheduler() {
 		Timer timer = new Timer();
 
 		Calendar calendar = Calendar.getInstance();
@@ -101,8 +107,8 @@ public class ServerController {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		Date firstTime = calendar.getTime();
-
 		timer.schedule(new ReportGenerator(), firstTime);
+		timer.schedule(new PaymentCollector(), firstTime);
 	}
 
 	/**

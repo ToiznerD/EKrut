@@ -61,6 +61,7 @@ public class OrderScreenController extends AbstractOrderController {
 			pb.setProgress(0.5);
 		else
 			pb.setProgress(0.66);
+		line.setVisible(false);
 	}
 
 	private void addListeners() {
@@ -77,10 +78,13 @@ public class OrderScreenController extends AbstractOrderController {
 					cartList.refresh();
 					totalPrice += (newCartQuant.intValue() - oldCartQuant.intValue()) * p.getPrice();
 					priceText.setText(String.valueOf(totalPrice));
-					if (discount < 1.0 && totalPrice > 0) {
+					if ((discount_first_order < 1.0 || discount < 1.0) && totalPrice > 0) {
 						line.setVisible(true);
 						discountLbl.setText("After discount:");
-						discountPriceText.setText(String.valueOf(decimal.format((totalPrice * (1 - discount))*discount_first_order)));
+						if(discount == 1.0)
+							discountPriceText.setText(String.valueOf(decimal.format((totalPrice * discount_first_order))));
+						else
+							discountPriceText.setText(String.valueOf(decimal.format((totalPrice * (1 - discount))*discount_first_order)));
 					} else {
 						line.setVisible(false);
 						discountLbl.setText("");
