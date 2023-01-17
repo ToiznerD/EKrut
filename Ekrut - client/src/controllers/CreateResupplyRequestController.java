@@ -117,6 +117,10 @@ public class CreateResupplyRequestController extends AbstractController {
      * querys db for all store_products of the store, loads it to the comboBox
      */
     public void loadProductsComboBox() {
+        if (storeLocationsComboBox.getSelectionModel() == null)
+            return;
+        if (storeLocationsComboBox.getSelectionModel().getSelectedItem() == null)
+            return;
         String sname = storeLocationsComboBox.getSelectionModel().getSelectedItem().toString();
         String query = "SELECT sp.*, p.pname\n" +
                         "FROM store_product sp\n" +
