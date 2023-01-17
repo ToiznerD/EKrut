@@ -22,14 +22,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * ServerController class is the main controller class for the ServerApp.
+ * It handles server connect and disconnect actions, users import and console appendage (From GUI)
+ */
 public class ServerController {
+	private ObservableList<InetAddress> connectedObserv = FXCollections.observableArrayList();
 	private serverBackEnd sv;
 
 	@FXML
-	private Button btnConnect;
-
-	@FXML
-	private Button btnDisconnect;
+	private Button btnConnect, btnDisconnect, btnImport;
 
 	@FXML
 	private TableView<InetAddress> connected_table;
@@ -38,38 +40,24 @@ public class ServerController {
 	private TextArea console_textbox;
 
 	@FXML
-	private TextField db_name;
+	private TextField db_name, db_user, ip, port;
 
 	@FXML
 	private PasswordField db_password;
 
-	@FXML
-	private TextField db_user;
 
 	@FXML
-	private TableColumn<InetAddress, String> host_col;
+	private TableColumn<InetAddress, String> host_col, ip_col, status_col;
 
-	@FXML
-	private TextField ip;
-
-	@FXML
-	private TableColumn<InetAddress, String> ip_col;
-
-	@FXML
-	private TextField port;
-
-	@FXML
-	private TableColumn<InetAddress, String> status_col;
-	
-	@FXML
-	private Button btnImport;
-	
-	private ObservableList<InetAddress> connectedObserv = FXCollections.observableArrayList();
-
+	/**
+	* Connects to the server by creating a serverBackEnd object and connects to mysql DB.
+	* It appends to server console the appropriate message.
+	* @throws IOException when failed to create the server.
+	* @throws SQLException when the mysql DB credentials are wrong.
+	* @throws Exception when driver definition failed.
+	*/
 	public void connectToServer() {
 
-		// Start DB Connection
-		// Set connection parameters
 		DBController.setDB_prop(ip.getText(),db_name.getText(),db_user.getText(),db_password.getText());
 		sv = new serverBackEnd(5555, this);
 		try {
@@ -93,11 +81,12 @@ public class ServerController {
 			appendConsole("Driver definition failed.");
 			e.printStackTrace();
 		}
-
 		reportScheduler();
 	}
 
-	// execute scheduled task at start-up
+	/**
+	* Schedules a ReportGenerator to run on the first day of the next month with Timer object(runs once).
+	*/
 	private void reportScheduler() {
 		Timer timer = new Timer();
 
@@ -116,6 +105,10 @@ public class ServerController {
 		timer.schedule(new ReportGenerator(), firstTime);
 	}
 
+	/**
+	* Disconnects from the server and drops the connection to mysql DB and appends a message to server console.
+	* @throws IOException if an error occurs when closing the server
+	*/
 	public void disconnectFromServer() throws IOException {
 		sv.close();
 		DBController.dropConnection();
@@ -123,10 +116,18 @@ public class ServerController {
 		btnConnect.setDisable(false);
 		appendConsole("Driver definition aborted\nDB connection is down\nServer is down");
 	}
-
+	
+	/**
+	* Appends a string to the server console.
+	* @param str String to be appended to console.
+	*/
 	public void appendConsole(String str) {
 		console_textbox.appendText(str + "\n");
 	}
+	
+	/**
+	* Initializes the connected client table (when server app is up)
+	*/
 	@FXML
 	protected void initialize() {
 		host_col.setCellValueFactory(new PropertyValueFactory<InetAddress, String>("HostName"));
@@ -134,14 +135,27 @@ public class ServerController {
 		status_col.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("Connected"));
 		connected_table.setItems(connectedObserv);
 	}
+	
+	/**
+	* Adds the given IP to connectedObserv
+	* @param connected The InetAddress IP to be added
+	*/
 	protected void addConnected(InetAddress connected) {
 		connectedObserv.add(connected);
 	}
 
+	/**
+	* Removes the given IP from connectedObserv
+	* @param connected The InetAddress IP to be removed
+	*/
 	protected void removeConnected(InetAddress connected) {
 		connectedObserv.remove(connected);
 	}
 
+	/**
+	* Closes the server connection and exits the program.
+	* @throws IOException if closing failed
+	*/
 	public void closeConnection() {
 		try {
 			if (sv.isListening())
@@ -153,11 +167,14 @@ public class ServerController {
 		}
 	}
 	
+	/**
+	* Performs server back end Utility import.
+	* @param event ActionEvent that triggers the action
+	*/
 	public void importUsers(ActionEvent event) {
 		if(sv.importUsers()) 
 			appendConsole("Users has been imported successfuly.");
 		else
 			appendConsole("Import has failed.");
-		
 	}
 }

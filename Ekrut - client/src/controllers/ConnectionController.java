@@ -13,9 +13,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * ConnectionController handles the connection between client and server.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class ConnectionController extends AbstractController {
 	public final int DEFAULT_PORT = 5555;
 	private final String DEFAULT_IP = "localhost";
+
 	@FXML
 	private Button connectBtn;
 

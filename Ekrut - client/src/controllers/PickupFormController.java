@@ -12,6 +12,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * PickupFormController is the controller for handling orders of method: pick up.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class PickupFormController extends AbstractController{
 
     @FXML
@@ -76,8 +80,8 @@ public class PickupFormController extends AbstractController{
 
     /**
      * Handles the mouse event of the back button.
-     * 
      * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
      */
 	@Override
 	public void back(MouseEvent event) {

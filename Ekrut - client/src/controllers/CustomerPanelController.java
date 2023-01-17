@@ -1,5 +1,7 @@
 package controllers;
 
+import java.io.IOException;
+
 import Util.Msg;
 import Util.Tasks;
 import client.Config;
@@ -9,6 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * CustomerPanelController is the main controller for costumer panel.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class CustomerPanelController extends AbstractController {
 
 	@FXML
@@ -84,11 +90,11 @@ public class CustomerPanelController extends AbstractController {
 		}
 	}
 
-	/**
-	 * Handles the mouse event of the back button.
-	 * 
-	 * @param event the mouse event that triggered this method
-	 */
+    /**
+     * Handles the mouse event of the back button.
+     * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
+     */
 	@Override
 	public void back(MouseEvent event) {
 		// not implemented

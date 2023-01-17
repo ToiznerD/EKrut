@@ -22,18 +22,21 @@ public class DeliveryOperatorController extends AbstractController{
     
     @FXML
     private Label welcomeLbl;
-
-/**
- * moveToForm is called when a mouse event occurs. It opens a the window "Delivery Orders".
- *@param event The MouseEvent that triggers the method.
- *@throws IOException if there is an issue loading the "DeliveryOrdersForm" form.
- */
     
+	/**
+	 * initialize method is a protected method that is called automatically when the FXML file is loaded.
+	 * It sets the welcome label with "Welcome" string and user name.
+	 */
     @FXML
     public void initialize() {
     	welcomeLbl.setText("Welcome "+myUser.getName());
     }
     
+    /**
+     * moveToForm is called when a mouse event occurs. It opens a the window "Delivery Orders".
+     * @param event The MouseEvent that triggers the method.
+     * @throws IOException if there is an issue loading the "DeliveryOrdersForm" form.
+     */
     @FXML
     public void moveToForm(MouseEvent event) {
 		try {

@@ -10,6 +10,9 @@ import Entities.OrderDetails;
 public class Msg implements Serializable {
 
 	/**
+	 * Msg class is used to wrap the data need to be sent from client to server and vice versa.
+	 * It implements serializable Interface to send objects over network.
+	 * It constructor initializes fields based on the task it gets.
 	 */
 	private static final long serialVersionUID = 1L;
 	private Tasks task;
@@ -19,6 +22,11 @@ public class Msg implements Serializable {
 	private boolean boolReturn;
 	private ArrayList<List<Object>> arrayReturn = new ArrayList<>();
 
+	/**
+     * Constructor for the Msg class.
+     * @param task : The task to perform.
+     * @param objects : Information required for the task, such as query ,order details, messages etc.
+     */
 	public Msg(Tasks task, Object... objects) {
 		switch (task) {
 		case Disconnect:
@@ -47,26 +55,47 @@ public class Msg implements Serializable {
 	}
 
 	/**
-	 * @return Tasks return the Msg task.
+	 * @return Tasks return the task of Msg sent.
 	 */
-	
 	public Tasks getTask() {
 		return task;
 	}
 
+	/**
+	 * @return OrderDetails entity class
+	 */
 	public OrderDetails getOrder() {
 		return order;
 	}
+	
+	/**
+	 * Set respone to be displayed when Msg sent
+	 * @param String with respone message
+	 */
 	public void setResponse(String response) {
 		this.response = response;
 	}
+	
+	/**
+	 * Get the respone of sent Msg
+	 * @return String with respone message
+	 */
 	public String getResponse() {
 		return response;
 	}
+	
+	/**
+	 * Get the user ID for sending pop ups
+	 * @return int of destination user ID
+	 */
 	public int getDestinationID() {
 		return destinationID;
 	}
 	
+	/**
+	 * Get the message sent with Msg
+	 * @return String with relevant message
+	 */
 	public String getAlertMsg() {
 		return alertMsg;
 	}
@@ -79,6 +108,7 @@ public class Msg implements Serializable {
 	}
 
 	/**
+	 * Get number of rows updated
 	 * @return int number updated row
 	 */
 	public int getInt() {
@@ -86,6 +116,7 @@ public class Msg implements Serializable {
 	}
 
 	/**
+	 * Set boolean value that returned when Msg sent
 	 * @param boolean value
 	 */
 	public void setBool(boolean value) {
@@ -93,16 +124,24 @@ public class Msg implements Serializable {
 	}
 
 	/**
+	 * Get the query sent with Msg
 	 * @return String query
 	 */
 	public String getQuery() {
 		return query;
 	}
 
+	/**
+	 * Set the console message
+	 * @param message: String message to set on console
+	 */
 	public void setConsole(String message) {
 		this.consoleMsg = message;
 	}
 
+	/**
+	 * @return ArrayList of raw returned from sql query 
+	 */
 	public ArrayList<List<Object>> getRawArray() {
 		return arrayReturn;
 	}

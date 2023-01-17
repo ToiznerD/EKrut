@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * RegionManagerMainScreenController is the main controller for region manager.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class RegionManagerMainScreenController extends AbstractController {
     protected static HashMap<String, Integer> storeMap;
     private static ObservableList<String> comboBoxOptions;

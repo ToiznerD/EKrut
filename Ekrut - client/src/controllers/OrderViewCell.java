@@ -7,11 +7,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 
+/**
+ * OrderViewCell is a controller class for an order list.
+ * It displays OrderProduct information.
+ * It extends ListCell class and overrides methods of it.
+ */
 public class OrderViewCell extends ListCell<OrderProduct> {
 
 	private Parent root;
 	private OrderViewController controller;
 
+	/**
+	 * Constructor for loading FXML file "OrderViewList".
+     * @throws IOException if there is an issue loading the "OrderViewList" form.
+	 */
 	public OrderViewCell() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/OrderViewList.fxml"));
@@ -22,6 +31,11 @@ public class OrderViewCell extends ListCell<OrderProduct> {
 		}
 	}
 
+	/**
+	* Updates the view of a single OrderProduct in the ListView.
+	* @param product The OrderProduct object to be displayed in the cell.
+	* @param empty boolean indicating whether the cell is empty or not.
+	*/	
 	@Override
 	protected void updateItem(OrderProduct product, boolean empty) {
 		super.updateItem(product, empty);

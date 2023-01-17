@@ -15,29 +15,33 @@ import java.util.List;
 import static Util.Tasks.Select;
 import static Util.Tasks.Update;
 
+/**
+ * ApproveCustomersController is a controller class used for approve or disapprove new customers.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class ApproveCustomersController extends AbstractController {
 
     @FXML
     TableView<User> newCustomersTable;
+    
     @FXML
     TableColumn<User, Integer> idCol;
+    
     @FXML
-    TableColumn<User, String> nameCol;
+    TableColumn<User, String> nameCol, addressCol, phoneCol, emailCol;
+    
     @FXML
-    TableColumn<User, String> addressCol;
-    @FXML
-    TableColumn<User, String> phoneCol;
-    @FXML
-    TableColumn<User, String> emailCol;
-    @FXML
-    Button approveCustomerBtn;
-    @FXML
-    Button disapproveCustomerBtn;
+    Button approveCustomerBtn, disapproveCustomerBtn;
+
     @FXML
     Label notificationLabel;
+    
     @FXML
     ObservableList<User> userObservableList;
 
+    /**
+     * initialize method is a protected method that is called automatically when the FXML file is loaded.
+     */
     @FXML
     public void initialize() {
         tableInitialization();
@@ -125,6 +129,11 @@ public class ApproveCustomersController extends AbstractController {
 
     }
 
+    /**
+     * Handles the mouse event of the back button.
+     * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
+     */
     @Override
     public void back(MouseEvent event) {
         try {

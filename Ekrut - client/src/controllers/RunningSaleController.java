@@ -13,6 +13,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * RunningSaleController is the controller for handling running sales.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class RunningSaleController extends AbstractController {
 
 	@FXML
@@ -88,8 +92,8 @@ public class RunningSaleController extends AbstractController {
     
     /**
      * Handles the mouse event of the back button.
-     * 
      * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
      */
     @Override
 	public void back(MouseEvent event) {

@@ -22,6 +22,10 @@ import java.util.ResourceBundle;
 import static Util.Tasks.*;
 import static java.lang.Integer.parseInt;
 
+/**
+ * OrderReportController is the controller for handling orders reports.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class OrderReportController extends AbstractController  {
     private static String month, year;
     protected static List<OrderReport> orderReportsToDisplay;
@@ -78,7 +82,9 @@ public class OrderReportController extends AbstractController  {
     
 
     /**
-     * triggered when back image is clicked, goes back to previous screen
+     * Handles the mouse event of the back button.
+     * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
      */
     @Override
     public void back(MouseEvent event) {

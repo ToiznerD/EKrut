@@ -14,7 +14,6 @@ public class OrderProduct implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7126677968806442791L;
-	// image
 	private int productID;
 	private String name;
 	private int price, quant;
