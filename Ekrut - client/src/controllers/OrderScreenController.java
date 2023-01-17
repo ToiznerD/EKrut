@@ -38,7 +38,7 @@ public class OrderScreenController extends AbstractOrderController {
 	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private int totalPrice = 0;
 	private Double discount = 1.0;
-	private static boolean discountInstalled = false;
+	private boolean discountInstalled = false;
 
 	@FXML
 	private ListView<OrderProduct> catlogList, cartList;
