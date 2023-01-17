@@ -1,15 +1,16 @@
 package DBHandler;
 
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 /**
@@ -21,7 +22,7 @@ public class DBController {
 	private static String DB_ip;
 	private static String DB_User;
 	private static String DB_Password;
-	private static Path SQL_PATH = Paths.get("DB.sql").toAbsolutePath();
+	//private static Path SQL_PATH = Paths.get("DB.sql").toAbsolutePath();
 
 	/**
 	* Constructor for the DBController class.
@@ -45,11 +46,13 @@ public class DBController {
 	private void buildDB() {
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://" + DB_ip + ":?serverTimezone=IST", DB_User, DB_Password);
-			Reader reader = new FileReader(SQL_PATH.toString());
+			InputStream in = getClass().getResourceAsStream("DB.sql");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			ScriptRunner runner = new ScriptRunner(conn);
 			runner.setLogWriter(null);
 			runner.runScript(reader);
 			conn.close();
+			
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
@@ -156,9 +159,9 @@ public class DBController {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate("SET GLOBAL local_infile=1");
-			stmt.executeUpdate("load data local infile \"users.txt\" into table users");
-			stmt.executeUpdate("load data local infile \"customer.txt\" into table customer");
-			stmt.executeUpdate("load data local infile \"region_employee.txt\" into table region_employee");
+			stmt.executeUpdate("load data local infile \"C:/users.txt\" into table users");
+			stmt.executeUpdate("load data local infile \"C:/customer.txt\" into table customer");
+			stmt.executeUpdate("load data local infile \"C:/region_employee.txt\" into table region_employee");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
