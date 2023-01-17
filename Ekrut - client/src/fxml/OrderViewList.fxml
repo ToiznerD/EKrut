@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="41.0" prefWidth="309.0" style="-fx-border-radius: 25; -fx-background-radius: 25; -fx-border-insets: 0; -fx-background-insets: 0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderViewController">
    <children>
       <ImageView fitHeight="31.0" fitWidth="42.0" layoutX="6.0" layoutY="11.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -27,7 +26,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Text>
-      <Separator layoutX="214.0" layoutY="7.0" orientation="VERTICAL" prefHeight="28.0" prefWidth="7.0" />
+      <Separator layoutX="214.0" layoutY="13.0" orientation="VERTICAL" prefHeight="28.0" prefWidth="7.0" />
       <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="217.0" layoutY="3.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/priceIcon.png" />

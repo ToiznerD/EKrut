@@ -60,7 +60,8 @@ public class DeliveryOrdersController extends AbstractController {
 	final int droneAvailability = 2;
 	final int shippingTime = 2;
 
-/**initialize method is a protected method that is called automatically when the FXML file is loaded.
+/**
+ * initialize method is a protected method that is called automatically when the FXML file is loaded.
  * It sets the cell value factories for each column in the table view
  * and set the data with orderList observable list.
  */
@@ -77,7 +78,8 @@ public class DeliveryOrdersController extends AbstractController {
 		ordersTable.setItems(ordersList);
 	}
 
-/**setOrdersList method is a private method that is called from initialize method.
+/**
+ * setOrdersList method is a private method that is called from initialize method.
  * It builds a 'SELECT' query, sends it to server with Msg, gets the return data values
  * and puts it in orderList and dataMap
  */
@@ -95,7 +97,8 @@ public class DeliveryOrdersController extends AbstractController {
 		}
 	}
 
-/**calculateEstimatedDate method is a private method that calculates the estimated delivery date for an order.
+/**
+ * calculateEstimatedDate method is a private method that calculates the estimated delivery date for an order.
  * It takes the relevant orderID from dataMap, takes the orderDate and add days of 3 integers saved for delivery time.
  * @param orderID The ID of the relevant order
  * @return LocalDate the estimated delivery date for the order
@@ -105,12 +108,12 @@ public class DeliveryOrdersController extends AbstractController {
 	}
 
 /**
- *approveDelivery private method is called when a mouse event occurs. It approves a existing delivery order and send
- *a pop up alert to the customer with the estimated date (only when this customer is conencted).
- *It takes the order ID to approve from the label input and checks if the input is valid (with checkInput method)
- *It updates the data of the relevant order in mysql with Msg that sent to server.
- *when Msg indicates that the action is a success (getBool) it will initialize the table and send the pop up to customer
- *@param event The MouseEvent that triggers the method.
+ * approveDelivery private method is called when a mouse event occurs. It approves a existing delivery order and send
+ * a pop up alert to the customer with the estimated date (only when this customer is conencted).
+ * It takes the order ID to approve from the label input and checks if the input is valid (with checkInput method)
+ * It updates the data of the relevant order in mysql with Msg that sent to server.
+ * when Msg indicates that the action is a success (getBool) it will initialize the table and send the pop up to customer
+ * @param event The MouseEvent that triggers the method.
  */	
 	@FXML
 	private void approveDelivery(MouseEvent event) {
@@ -131,9 +134,9 @@ public class DeliveryOrdersController extends AbstractController {
 	}
 
 /**
- *sendApproval private method is called when 'UPDATE' action has successed, it sends a pop up alert to the relevant customer.
- *It sets in error label success message, and sends to server Msg of popUp with customer ID and the message to send.
- *@param order: the relevant order data.
+ * sendApproval private method is called when 'UPDATE' action has successed, it sends a pop up alert to the relevant customer.
+ * It sets in error label success message, and sends to server Msg of popUp with customer ID and the message to send.
+ * @param order: the relevant order data.
  */	
 	private void sendApproval(TableOrders order) {
 		errorLbl.setTextFill(Color.web("Green"));
@@ -144,9 +147,9 @@ public class DeliveryOrdersController extends AbstractController {
 	}
 
 /**
- *checkInput private method is called when client try to approve delivery. It checks if the input is valid.
- *It checks if the input is filled, if it is an integer, and if the status of that order is "Pending".
- *@param text: the text input got from the label
+ * checkInput private method is called when client try to approve delivery. It checks if the input is valid.
+ * It checks if the input is filled, if it is an integer, and the status of that order.
+ * @param text: the text input got from the label
  */	
 	private boolean checkInput(String text) {
 		errorLbl.setTextFill(Color.web("Red"));
@@ -168,12 +171,11 @@ public class DeliveryOrdersController extends AbstractController {
 		return false;
 	}
 
-/**
- *back public method override (from Abstract Controller), it moves to the previous form ("DeliveryOperatorPanel")
- *It checks if the input is filled, if it is an integer, and if the status of that order is "Pending".
- *@param event The MouseEvent that triggers the method.
- *@throws IOException if there is an issue loading the "DeliveryOperatorPanel" form.
- */	
+    /**
+     * Handles the mouse event of the back button.
+     * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
+     */
 	@Override
 	public void back(MouseEvent event) {
 		try {
@@ -185,7 +187,6 @@ public class DeliveryOrdersController extends AbstractController {
 
 	@Override
 	public void setUp(Object... objects) {
-		// TODO Auto-generated method stub
-
+		//not implemented
 	}
 }

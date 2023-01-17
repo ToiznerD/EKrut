@@ -8,17 +8,23 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * ManageInventoryController is the main controller class for the operation employee.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class OperationEmpController extends AbstractController {
 
 	@FXML
-	private Button logoutBtn;
-
-	@FXML
-	private Button stockBtn;
+	private Button logoutBtn, stockBtn;
 
 	@FXML
 	private Label welcomeText;
 
+    /**
+     * switchScreen is called when a action event occurs. It opens a the window "ResupplyReqScreen".
+     * @param event The ActionEvent that triggers the method.
+     * @throws IOException if there is an issue loading the "ResupplyReqScreen" form.
+     */
 	@FXML
 	void switchScreen(ActionEvent event) {
 		try {
@@ -29,15 +35,11 @@ public class OperationEmpController extends AbstractController {
 	}
 
 	@Override
-	public void back(MouseEvent event) {
-		// TODO Auto-generated method stub
-		
+	public void back(MouseEvent event) {		
 	}
 
 	@Override
-	public void setUp(Object... objects) {
-		// TODO Auto-generated method stub
-		
+	public void setUp(Object... objects) {		
 	}
 
 }

@@ -105,6 +105,11 @@ public class PaymentController extends AbstractOrderController {
 		order = null;
 	}
 
+    /**
+     * Handles the mouse event of the back button.
+     * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
+     */
 	@Override
 	@FXML
 	public void back(MouseEvent event) {

@@ -6,6 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * MarketingManagerController is the main controller class for marketing manager.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class MarketingManagerController extends AbstractController {
 
     @FXML

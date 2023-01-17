@@ -8,8 +8,15 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
+
 import Entities.CustomerReport;
 
+/**
+ * CustomerReportController is the controller for handling customer reports.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class CustomerReportController extends AbstractController {
     private static String month, year;
 
@@ -100,6 +107,11 @@ public class CustomerReportController extends AbstractController {
     public void setUp(Object... objects) {
     }
 
+    /**
+     * Handles the mouse event of the back button.
+     * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
+     */
     @Override
     public void back(MouseEvent event) {
             try {

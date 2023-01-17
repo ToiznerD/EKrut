@@ -1,27 +1,32 @@
 package Utils;
 
-import DBHandler.DBController;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import Entities.Product;
 import Entities.Store;
 import Entities.StoreProduct;
 import Util.Msg;
 import Util.Tasks;
-import org.apache.ibatis.jdbc.SQL;
 import tasker.Tasker;
 
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.*;
 
+/**
+ * ReportGenerator class used to generates reports for stock status and orders for all stores (except Warhouse)
+ * It runs monthly from first day of a month.
+ */
 public class ReportGenerator extends TimerTask {
     private static List<Store> storeList;
     private static List<Product> productList;
     private static int month, year;
 
     /**
-     * Overrides the TimerTask <code>run</code> method, setting the year and month and generating reports
+     * Overrides the TimerTask run method, setting the year and month and generating reports
      */
     @Override
     public void run() {
@@ -32,7 +37,6 @@ public class ReportGenerator extends TimerTask {
             year = today.minusYears(1).getYear();
         else
             year = today.getYear();
-
 
         // generate reports
         System.out.println("*** Generating Report ***");
@@ -56,17 +60,17 @@ public class ReportGenerator extends TimerTask {
         getStores();
         getProducts();
         for (Store s : storeList) {
-            if (!s.getName().equals("Delivery Warehouse")) {
+            if (!s.getName().equals("Delivery Warehouse")) 
                 generateStockStatusReport(s);
-            }
             generateOrdersReports(s);
         }
     }
 
     /**
-     * this function gets the stock info for the store <code>s</code> and generates report
+     * this function gets the stock info for the store s and generates report
      * @param s - store for which we will generate the stock status report
      * @return true if the report was generated successfully
+	 * @throws SQLException when sql actions failed.
      */
     public static boolean generateStockStatusReport(Store s) {
         String query = "SELECT store_product.*, product.pname\n" +
@@ -87,27 +91,27 @@ public class ReportGenerator extends TimerTask {
             stockData.append(product.getPname() + "," + product.getQuantity() + ",");
         stockData.setLength(stockData.length()-1);
 
-        String insertReportQuery = String.format("INSERT INTO stock_report VALUES ('%s','%s',%d,%d)",s.getName(),stockData.toString(),month,year);
+        String insertReportQuery = String.format("INSERT INTO stock_report VALUES ('%s','%s',%d,%d)",
+        						s.getName(),stockData.toString(),month,year);
         msg = new Msg(Tasks.Insert, insertReportQuery);
         Tasker.runUpdate(msg);
 
         if (!msg.getBool())
             return false;
-
         return true;
     }
 
     /**
-     * this function gets the orders info for the store <code>s</code> and generates report
+     * this function gets the orders info for the store s and generates report
      * @param s - store for which we will generate the stock status report
      * @return true if the report was generated successfully
+	 * @throws SQLException when sql actions failed.
      */
     public static boolean generateOrdersReports(Store s) {
         Double totalProfit;
         Long numOrders;
         String query, insertReportQuery;
         Msg msg;
-
 
         query = "SELECT SUM(total_price), COUNT(*) FROM orders " +
                 "WHERE YEAR(ord_date) = " + year + " AND MONTH(ord_date) = "
@@ -119,21 +123,24 @@ public class ReportGenerator extends TimerTask {
         totalProfit = msg.getObj(0);
         numOrders = msg.getObj(1);
 
-        if (totalProfit == null || numOrders == null) {
+        if (totalProfit == null || numOrders == null) 
             return false;
-        }
 
-        insertReportQuery = String.format("INSERT INTO order_report values ('%s',%d,%d,%d,%d)", s.getName(),month,year,numOrders.intValue(),totalProfit.intValue());
+        insertReportQuery = String.format("INSERT INTO order_report values ('%s',%d,%d,%d,%d)",
+        			s.getName(),month,year,numOrders.intValue(),totalProfit.intValue());
 
         msg = new Msg(Tasks.Insert, insertReportQuery);
         Tasker.runUpdate(msg);
 
         if (!msg.getBool())
             return false;
-
         return true;
     }
 
+    /**
+    * Gets all stores information from DB with Msg object, select task and query.
+	* @throws SQLException when sql select failed.
+    */
     private static void getStores() {
         String query = "SELECT * FROM store";
         Msg msg = new Msg(Tasks.Select, query);
@@ -143,6 +150,11 @@ public class ReportGenerator extends TimerTask {
         storeList = msg.getArr(Store.class);
     }
 
+    /**
+    * Gets products : ID, price and name from DB with Msg object, select task and query and set the
+    * returned data in a List.
+	* @throws SQLException when sql select failed.
+    */
     private static void getProducts() {
         String query = "SELECT pid,price,pname FROM product";
         Msg msg = new Msg(Tasks.Select, query);
@@ -151,7 +163,4 @@ public class ReportGenerator extends TimerTask {
         } catch (SQLException e) { e.printStackTrace(); }
         productList = msg.getArr(Product.class);
     }
-
-
-
 }
