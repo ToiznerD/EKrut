@@ -3,6 +3,7 @@ package Entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+
 public class ResupplyProduct implements Serializable {
 
 	/**

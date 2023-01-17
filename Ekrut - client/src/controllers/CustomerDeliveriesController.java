@@ -8,7 +8,6 @@ import Util.Msg;
 import Util.Tasks;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +19,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+
+/**
+ * CustomerDeliveriesController is a controller class for a customer delivery orders.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class CustomerDeliveriesController extends AbstractController {
 
 	private ObservableList<TableOrders> ordersList = FXCollections.observableArrayList();
@@ -46,6 +50,11 @@ public class CustomerDeliveriesController extends AbstractController {
 	@FXML
 	private TableView<TableOrders> ordersTable;
 
+	/**
+	 * initialize method is a protected method that is called automatically when the FXML file is loaded.
+	 * It sets the cell value factories for each column in the table view
+	 * and set the data with orderList observable list.
+	 */
 	@FXML
 	protected void initialize() {
 		setOrdersList();
@@ -57,6 +66,11 @@ public class CustomerDeliveriesController extends AbstractController {
 		ordersTable.setItems(ordersList);
 	}
 
+	/**
+	 * setOrdersList method is a private method that is called from initialize method.
+	 * It builds a 'SELECT' query, sends it to server with Msg, gets the return data values
+	 * and puts it in orderList and dataMap
+	 */
 	private void setOrdersList() {
 		String query ="select o.cid, o.oid, u.name, d.shipping_address, u.phone, o.ord_date, o.ord_time,d.status, d.estimated_date, d.estimated_time\r\n"
 				+ "	from users u, orders o,deliveries d\r\n"
@@ -70,6 +84,13 @@ public class CustomerDeliveriesController extends AbstractController {
 		}
 	}
 
+	/**
+	 * approveDeliveryAccepted private method is called when a mouse event occurs.
+	 * It used when customer want to confirm his delivery arrived.
+	 * It updates the status of the order and delivery in it DB tables.
+	 * when Msg indicates that the action is a success (getBool) it will initialize the table and send the pop up to customer
+	 * @param event The MouseEvent that triggers the method.
+	 */	
 	@FXML
 	public void approveDeliveryAccepted(MouseEvent event) { 
 		String labelInput = OrderIdLbl.getText();
@@ -87,6 +108,11 @@ public class CustomerDeliveriesController extends AbstractController {
 		}
 	}
 
+	/**
+	 * checkInput private method is called when customer try to approve delivery arrived. It checks if the input is valid.
+	 * It checks if the input is filled, if it is an integer, and the status of that order.
+	 * @param text: the text input got from the label
+	 */	
 	private boolean checkInput(String text) {
 		errorLbl.setTextFill(Color.web("Red"));
 		int labelInput = text.isEmpty() ? 0 : !text.matches("[0-9]+") ? -1 : Integer.parseInt(text);
@@ -107,6 +133,11 @@ public class CustomerDeliveriesController extends AbstractController {
 		return false;
 	}
 
+    /**
+     * Handles the mouse event of the back button.
+     * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
+     */
 	@Override
 	public void back(MouseEvent event) {
 		try {
@@ -118,7 +149,6 @@ public class CustomerDeliveriesController extends AbstractController {
 
 	@Override
 	public void setUp(Object... objects) {
-		// TODO Auto-generated method stub
-
+		//not implemented
 	}
 }

@@ -14,8 +14,6 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * A controller class for a JavaFX application that allows marketing managers to create sale templates.
- * 
- * @author [Raz]
  */
 public class SaleTemplateCreationController extends AbstractController{
 
@@ -134,8 +132,8 @@ public class SaleTemplateCreationController extends AbstractController{
 	    
     /**
      * Handles the mouse event of the back button.
-     * 
      * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
      */
 	@Override
 	public void back(MouseEvent event) {

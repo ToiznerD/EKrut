@@ -15,10 +15,20 @@ import java.util.Set;
 
 import javafx.scene.control.ChoiceDialog;
 
+/**
+ * Config is a utility class used for configuration of app set up.
+ * It will set the up in accordance to set up choise.
+ * Choosing 'EK' for set up the system in a store.
+ * Choosing 'OL' for set up the system to users private use.
+ */
 public class Config {
 	private static Path pathToFile = Paths.get("Config.txt").toAbsolutePath();
 	private static HashMap<String, Integer> mapper;
 
+	/**
+	* Show a dialog to the user for choosing between EK and OL.
+	* @return String the user choice
+	*/
 	public static String showFirstDialog() {
 		String config = null;
 		ChoiceDialog<String> dialog = new ChoiceDialog<>("EK", "EK", "OL");
@@ -36,6 +46,12 @@ public class Config {
 		return config;
 	}
 
+	/**
+	* Show a dialog to the user for choosing a store (After choosing EK)
+	* @param config the user's choice from the first dialog
+	* @param stores the set of stores to choose from
+	* @return String the user choice
+	*/
 	public static String showSecondDialog(String config, Set<String> stores) {
 		if (config.equals("EK")) {
 			// Ask for Store ID
@@ -55,6 +71,12 @@ public class Config {
 		return null;
 	}
 
+	/**
+	* The process of the set up choosing with first and second dialog.
+	* It guarantees that no mistakes will happend on configuration set up and write to config file the chosen result.
+	* @param map the HashMap store of config
+	* @param rawMsg the raw message containing store information
+	*/
 	public static void showDialog(HashMap<String, Integer> map, ArrayList<List<Object>> rawMsg) {
 
 		File file = new File(pathToFile.toString());
@@ -73,6 +95,11 @@ public class Config {
 		}
 	}
 
+	/**
+	* Sets the HashMap of config using the rawMsg containing stores information
+	* @param map the HashMap store of config
+	* @param rawMsg the raw message containing store information
+	*/
 	public static void setMap(HashMap<String, Integer> map, ArrayList<List<Object>> rawMsg) {
 		for (List<Object> o : rawMsg) {
 			map.put((String) o.get(0), (Integer) o.get(1));
@@ -80,6 +107,13 @@ public class Config {
 		mapper = map;
 	}
 
+	/**
+	* Writes the configuration data to a file
+	* @param file the configuration file
+	* @param config the configuration data
+	* @param StoreID the store ID
+	* @throws IOException when writing failed
+	*/
 	private static void configWrite(File file, String config, int StoreID) {
 		try {
 			file.createNewFile();
@@ -93,6 +127,10 @@ public class Config {
 		}
 	}
 
+	/**
+	* Gets the current configuration from the config file
+	* @throws Exception when reading failed
+	*/
 	public static String getConfig() {
 		String config = null;
 		File file = new File(pathToFile.toString());
@@ -107,6 +145,10 @@ public class Config {
 		return config;
 	}
 
+	/**
+	* Gets the store ID chosen in configuration
+	* @throws Exception when reading failed
+	*/
 	public static int getStore() {
 		int StoreID = -1;
 		File file = new File(pathToFile.toString());

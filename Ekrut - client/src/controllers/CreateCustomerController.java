@@ -211,10 +211,10 @@ public class CreateCustomerController extends AbstractController{
 		lblErr.setText("");
 	}
 	
-	/**
-     * Navigates back to the Customer Service screen.
-     *
-     * @param event The MouseEvent that triggered this method.
+    /**
+     * Handles the mouse event of the back button.
+     * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
      */
     @Override
 	public void back(MouseEvent event) {

@@ -10,6 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * ChooseReportController handles the user's choice of report type.
+ * It allows the user to choose between Order Report, Stock Status Report, and Customer Report.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class ChooseReportController extends AbstractController {
     private String month, year;
 
@@ -131,8 +136,9 @@ public class ChooseReportController extends AbstractController {
     }
 
     /**
-     * goes back to Region manager main screen
-     * @param event captures mouse event
+     * Handles the mouse event of the back button.
+     * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
      */
     @Override
     public void back(MouseEvent event) {

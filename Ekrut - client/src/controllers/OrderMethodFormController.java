@@ -18,6 +18,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * OrderMethodFormController is a controller for order methods: pick up / delivery.
+ * It extends AbstractController and overrides methods of it.
+ */
 public class OrderMethodFormController extends AbstractOrderController {
 	private int storeID;
 	
@@ -80,7 +84,6 @@ public class OrderMethodFormController extends AbstractOrderController {
     /**
      * checkStore checks if the user has selected a store from the list.
      * If no store is selected, an error message is displayed.
-     * 
      * @return true if a store is selected, false otherwise
      */
     public boolean checkStore() {
@@ -93,11 +96,9 @@ public class OrderMethodFormController extends AbstractOrderController {
     }
     
     /**
-<<<<<<< HEAD
      * checkAddress checks if the user has entered the address details.
      * If no, and error message is displayed.
-     * 
-     * @return
+     * @return boolean: returns true if labels filled properly, else false
      */
     
     public boolean checkAddress() {
@@ -119,8 +120,6 @@ public class OrderMethodFormController extends AbstractOrderController {
     }
     
     /**
-=======
->>>>>>> origin
      * pickupSelected handles the case when the user has selected the pickup option.
      * It reset and hide of the fields that related to delivery option and make the list of store visible.
      */
@@ -193,10 +192,10 @@ public class OrderMethodFormController extends AbstractOrderController {
 		super.setUp(objects);
 	}
 
-	/**
+    /**
      * Handles the mouse event of the back button.
-     * 
      * @param event the mouse event that triggered this method
+     * @throws IOException if there is an issue loading the FXML file
      */
 	@Override
 	public void back(MouseEvent event) {
