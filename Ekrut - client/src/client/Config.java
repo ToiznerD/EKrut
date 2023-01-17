@@ -112,7 +112,6 @@ public class Config {
 	* @param file the configuration file
 	* @param config the configuration data
 	* @param StoreID the store ID
-	* @throws IOException when writing failed
 	*/
 	private static void configWrite(File file, String config, int StoreID) {
 		try {
@@ -129,7 +128,7 @@ public class Config {
 
 	/**
 	* Gets the current configuration from the config file
-	* @throws Exception when reading failed
+	* @return config name "EK","OL"
 	*/
 	public static String getConfig() {
 		String config = null;
@@ -147,7 +146,6 @@ public class Config {
 
 	/**
 	* Gets the store ID chosen in configuration
-	* @throws Exception when reading failed
 	*/
 	public static int getStore() {
 		int StoreID = -1;

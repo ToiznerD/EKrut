@@ -19,7 +19,6 @@ public class CartCell extends ListCell<OrderProduct> {
 
 	/**
 	 * Constructor for loading FXML file "CartProduct".
-     * @throws IOException if there is an issue loading the "CartProduct".
 	 */
 	public CartCell() {
 		try {

@@ -70,7 +70,7 @@ public class PaymentController extends AbstractOrderController {
     /**
      * This method sets up the order and adds all the order items to the observable list.
      * 
-     * @param Object objects the order object containing the items 
+     * @param objects objects the order object containing the items 
      */
 	@Override
 	public void setUp(Object... objects) {
@@ -80,8 +80,8 @@ public class PaymentController extends AbstractOrderController {
     /**
      * Shows a message on the screen telling if the order was created successfully or not, and if pickup, shows the pickup code.
      * 
-     * @param boolean result true if order created successfully, false otherwise
-     * @param String code the pickup code for the order.
+     * @param result true if order created successfully, false otherwise
+     * @param code the pickup code for the order.
      */
 	private void endDialog(boolean result, String code) {
 
@@ -104,7 +104,7 @@ public class PaymentController extends AbstractOrderController {
      * Sends the order to the server and shows a message to the user if the order was created successfully or not.
      * If pickup, it also shows a code for pickup.
      *
-     * @param ActionEvent event button click event that triggers this method
+     * @param event button click event that triggers this method
      */
 	@FXML
 	public void sendOrder(ActionEvent event) {

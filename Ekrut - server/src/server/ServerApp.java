@@ -10,7 +10,6 @@ import javafx.stage.Stage;
  * ServerApp class is starting the server app.
  * It extends Application class.
  * It loads FXML file : ServerGUI and sets it controller : ServerController
- * @throws Exception on error while loading the FXML file.
  */
 public class ServerApp extends Application {
 	
