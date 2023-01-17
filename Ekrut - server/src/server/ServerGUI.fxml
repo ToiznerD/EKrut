@@ -111,13 +111,13 @@
       <TextArea fx:id="console_textbox" layoutX="300.0" layoutY="347.0" prefHeight="223.0" prefWidth="426.0" style="-fx-border-width: 3; -fx-border-color: #000000;" />
       <ImageView fitHeight="204.0" fitWidth="216.0" layoutX="411.0" layoutY="357.0" opacity="0.1" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../Ekrut%20-%20client/images/EKrut%20logo.png" />
+            <Image url="@../../../Ekrut - server/images/EKrutLogo.png" />
          </image>
       </ImageView>
       <Separator layoutX="300.0" layoutY="295.0" prefHeight="6.0" prefWidth="404.0" />
       <ImageView fitHeight="122.0" fitWidth="289.0" layoutX="-15.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../Ekrut%20-%20client/images/Server.png" />
+            <Image url="@../../../Ekrut - server/images/server.png" />
          </image>
       </ImageView>
       <Button fx:id="btnImport" layoutX="434.0" layoutY="250.0" mnemonicParsing="false" onAction="#importUsers" prefHeight="27.0" prefWidth="171.0" style="-fx-background-radius: 100; -fx-background-color: #7fb975; -fx-border-color: #000000; -fx-border-radius: 100; -fx-border-width: 2;" text="Import Users">

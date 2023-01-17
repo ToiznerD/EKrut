@@ -6,6 +6,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+/**
+* CartCellController class is the controller class for the CartCell FXML file.
+*/
 public class CartCellController {
 
 	@FXML
@@ -19,18 +22,28 @@ public class CartCellController {
 
 	private OrderProduct product;
 
-	public void setTemplate(OrderProduct p) {
-		this.product = p;
-		nameLbl.setText(p.getName());
-		quantLbl.setText(String.valueOf(p.getCartQuant()));
+	/**
+	 * fill ("construct") all the node in the cell
+	 * @param product a product from the catalog.
+	 * @see 	OrderProduct
+	 */
+	public void setTemplate(OrderProduct product) {
+		this.product = product;
+		nameLbl.setText(product.getName());
+		quantLbl.setText(String.valueOf(product.getCartQuant()));
 	}
 
+	/**
+	 * @param event when button "plus" clicked, increase by 1 the cart quantity of the product represented by the cell.
+	 */
 	@FXML
 	public void addPushed(MouseEvent event) {
 		product.addToCart();
 		quantLbl.setText(String.valueOf(product.getCartQuant()));
 	}
-
+	/**
+	 * @param event when button "minus" clicked, reduce by 1 to cart quantity of the product represented by the cell.
+	 */
 	@FXML
 	public void removePushed(MouseEvent event) {
 		product.removeFromCart();

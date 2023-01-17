@@ -15,7 +15,6 @@ public class OrderReportPanelController extends AbstractController {
     /**
      * BackImgClick is called when a action event occurs. It opens a the window "ViewReportsScreen".
      * @param event The ActionEvent that triggers the method.
-     * @throws IOException if there is an issue loading the "ViewReportsScreen" form.
      */
     public void BackImgClick (ActionEvent event) {
         try {
@@ -28,7 +27,6 @@ public class OrderReportPanelController extends AbstractController {
     /**
      * showReportBtnClick is called when a action event occurs. It opens a the window "ViewReportsScreen".
      * @param event The ActionEvent that triggers the method.
-     * @throws IOException if there is an issue loading the "ViewReportsScreen" form.
      */
     public void showReportBtnClick(ActionEvent event) {
         try {

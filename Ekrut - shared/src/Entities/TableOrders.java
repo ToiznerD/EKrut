@@ -76,7 +76,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the ID of the user.
-     * @return int : User ID.
+     * @return User ID.
      */
 	public int getCustomerID() {// erik
 		return CustomerID;
@@ -84,7 +84,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the ID of the order.
-     * @return int : order ID.
+     * @return order ID.
      */
 	public int getOrderID() {
 		return OrderID;
@@ -92,7 +92,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the name of the user.
-     * @return String : User name.
+     * @return User name.
      */
 	public String getRecieverName() {
 		return RecieverName;
@@ -100,7 +100,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the address of the reciever.
-     * @return String : reciever address.
+     * @return reciever address.
      */
 	public String getRecieverAddress() {
 		return RecieverAddress;
@@ -108,7 +108,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the phone of the user.
-     * @return String : user phone.
+     * @return User phone.
      */
 	public String getRecieverPhone() {
 		return RecieverPhone;
@@ -116,7 +116,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the order date.
-     * @return LocalDate : order date.
+     * @return order date.
      */
 	public LocalDate getOrderDate() {
 		return OrderDate;
@@ -124,7 +124,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the order time.
-     * @return LocalTime : order time.
+     * @return order time.
      */
 	public LocalTime getOrderTime() {
 		return OrderTime;
@@ -132,7 +132,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the status of the order.
-     * @return String : order status.
+     * @return order status.
      */
 	public String getStatus() {
 		return Status;
@@ -140,7 +140,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the estimated order date.
-     * @return LocalDate : estimated order date.
+     * @return estimated order date.
      */
 	public LocalDate getEstimatedDate() {
 		return EstimatedDate;
@@ -148,7 +148,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the estimated order time.
-     * @return LocalTime : estimated order time.
+     * @return estimated order time.
      */
 	public LocalTime getEstimatedTime() {
 		return EstimatedTime;
@@ -156,7 +156,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the the order date and time.
-     * @return String : order date and time
+     * @return order date and time
      */
 	public String getOrderDateAndTime() {
 		return OrderDate.format(dateFormat) + ", " + OrderTime.format(timeFormat);
@@ -164,7 +164,7 @@ public class TableOrders implements Serializable{
 
     /**
      * Gets the the estimated order date and time.
-     * @return String : estimated order date and time
+     * @return estimated order date and time
      */
 	public String getEstimatedDelivery() {
 		return EstimatedDate == null ? "Need approval"

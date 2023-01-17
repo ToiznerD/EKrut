@@ -179,7 +179,7 @@ public class CreateCustomerController extends AbstractController{
     	if(msg.getInt() == 0) {lblErr.setText("Something went wrong"); return;}
     	
     	//Add customer to customer table
-    	String query3 = String.format("INSERT INTO customer (id, status, subscriber, credit_card) VALUES (%d, '%s', %d, '%s')", id, "Pending", subscriber, creditcard);
+    	String query3 = String.format("INSERT INTO customer (id, status, subscriber, credit_card, first_order) VALUES (%d, '%s', %d, '%s', %d)", id, "Pending", subscriber, creditcard, subscriber);
     	msg = new Msg(Tasks.Insert, query3);
     	sendMsg(msg);
     	
@@ -212,7 +212,6 @@ public class CreateCustomerController extends AbstractController{
     /**
      * Handles the mouse event of the back button.
      * @param event the mouse event that triggered this method
-     * @throws IOException if there is an issue loading the FXML file
      */
     @Override
 	public void back(MouseEvent event) {

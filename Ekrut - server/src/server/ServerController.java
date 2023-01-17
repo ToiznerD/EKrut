@@ -3,11 +3,16 @@ package server;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import DBHandler.DBController;
+import Util.Msg;
+import Util.Tasks;
+import Utils.PaymentCollector;
 import Utils.ReportGenerator;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -21,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import tasker.Tasker;
 
 /**
  * ServerController class is the main controller class for the ServerApp.
@@ -52,9 +58,6 @@ public class ServerController {
 	/**
 	* Connects to the server by creating a serverBackEnd object and connects to mysql DB.
 	* It appends to server console the appropriate message.
-	* @throws IOException when failed to create the server.
-	* @throws SQLException when the mysql DB credentials are wrong.
-	* @throws Exception when driver definition failed.
 	*/
 	public void connectToServer() {
 
@@ -81,13 +84,13 @@ public class ServerController {
 			appendConsole("Driver definition failed.");
 			e.printStackTrace();
 		}
-		reportScheduler();
+		Scheduler();
 	}
 
 	/**
 	* Schedules a ReportGenerator to run on the first day of the next month with Timer object(runs once).
 	*/
-	private void reportScheduler() {
+	private void Scheduler() {
 		Timer timer = new Timer();
 
 		Calendar calendar = Calendar.getInstance();
@@ -101,8 +104,8 @@ public class ServerController {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		Date firstTime = calendar.getTime();
-
 		timer.schedule(new ReportGenerator(), firstTime);
+		timer.schedule(new PaymentCollector(), firstTime);
 	}
 
 	/**
@@ -154,7 +157,6 @@ public class ServerController {
 
 	/**
 	* Closes the server connection and exits the program.
-	* @throws IOException if closing failed
 	*/
 	public void closeConnection() {
 		try {
@@ -172,9 +174,13 @@ public class ServerController {
 	* @param event ActionEvent that triggers the action
 	*/
 	public void importUsers(ActionEvent event) {
-		if(sv.importUsers()) 
-			appendConsole("Users has been imported successfuly.");
+		if(sv != null) {
+			if(sv.importUsers()) 
+				appendConsole("Users has been imported successfuly.");
+			else
+				appendConsole("Import has failed.");
+		}
 		else
-			appendConsole("Import has failed.");
+			appendConsole("Import has failed. Before importing users, connect to Database");
 	}
 }

@@ -35,7 +35,7 @@ public class ChooseReportController extends AbstractController {
         if (getOrderReportDetails()) {
             try {
                 OrderReportController.setDetails(month, year);
-                start("orderReportScreen", "Order Report");
+                start("OrderReportScreen", "Order Report");
             } catch (IOException e) {
                 // TODO: handle exception
             }
@@ -138,7 +138,6 @@ public class ChooseReportController extends AbstractController {
     /**
      * Handles the mouse event of the back button.
      * @param event the mouse event that triggered this method
-     * @throws IOException if there is an issue loading the FXML file
      */
     @Override
     public void back(MouseEvent event) {

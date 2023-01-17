@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="39.0" fitWidth="109.0" layoutX="14.0" layoutY="624.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../images/back%20icon.png" />
+            <Image url="@../images/back%20icon.png" />
          </image>
       </ImageView>
       <Label layoutX="342.0" layoutY="14.0" text="Users List">

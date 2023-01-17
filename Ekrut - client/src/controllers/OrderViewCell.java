@@ -19,7 +19,6 @@ public class OrderViewCell extends ListCell<OrderProduct> {
 
 	/**
 	 * Constructor for loading FXML file "OrderViewList".
-     * @throws IOException if there is an issue loading the "OrderViewList" form.
 	 */
 	public OrderViewCell() {
 		try {

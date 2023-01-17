@@ -25,6 +25,11 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 
 import static Util.Tasks.*;
 
+/**
+ *  CreateResupplyRequestController class is a controller that interacts with the region manager's resupply request panel.
+ *  It extends AbstractController and overrides methods of it.
+ */
+
 public class CreateResupplyRequestController extends AbstractController {
     private ObservableList<ResupplyRequest> requestsObsList;
     private HashMap<String, Integer> storeMap = RegionManagerMainScreenController.storeMap;
@@ -273,7 +278,6 @@ public class CreateResupplyRequestController extends AbstractController {
     /**
      * Handles the mouse event of the back button.
      * @param event the mouse event that triggered this method
-     * @throws IOException if there is an issue loading the FXML file
      */
     @Override
     public void back(MouseEvent event) {

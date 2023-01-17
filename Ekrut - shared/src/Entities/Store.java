@@ -34,7 +34,7 @@ public class Store implements Serializable  {
 
     /**
      * Gets the ID of the store.
-     * @return int : store ID.
+     * @return store ID.
      */
     public int getSid() {
         return sid;
@@ -42,7 +42,7 @@ public class Store implements Serializable  {
 
     /**
      * Sets the the ID of the store.
-     * @param int store ID
+     * @param sid store ID
      */
     public void setSid(int sid) {
         this.sid = sid;
@@ -50,7 +50,7 @@ public class Store implements Serializable  {
 
     /**
      * Gets the ID of the region the store belongs.
-     * @return int : region ID.
+     * @return region ID.
      */
     public int getRid() {
         return rid;
@@ -58,7 +58,7 @@ public class Store implements Serializable  {
 
     /**
      * Sets the the ID of the region the store belongs.
-     * @param int region ID
+     * @param rid region ID
      */
     public void setRid(int rid) {
         this.rid = rid;
@@ -66,7 +66,7 @@ public class Store implements Serializable  {
 
     /**
      * Gets the name of the store.
-     * @return String : store name.
+     * @return store name.
      */
     public String getName() {
         return name;
@@ -74,7 +74,7 @@ public class Store implements Serializable  {
 
     /**
      * Sets the name of a store.
-     * @param String name of the store
+     * @param name store name
      */
     public void setName(String name) {
         this.name = name;
@@ -82,7 +82,7 @@ public class Store implements Serializable  {
 
     /**
      * Gets the address of the store.
-     * @return String : store address.
+     * @return store address.
      */
     public String getAddress() {
         return address;
@@ -90,7 +90,7 @@ public class Store implements Serializable  {
 
     /**
      * Sets the address of a store.
-     * @param String address of the store
+     * @param address store address
      */
     public void setAddress(String address) {
         this.address = address;

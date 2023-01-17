@@ -66,7 +66,6 @@ public class SaleInitiateFormController extends AbstractController {
     /**
      * Initializes the form by setting up the combo boxes for sale templates and regions,
      * and configuring the date picker fields to only allow selecting dates that are not in the past.
-     * 
      */
     @FXML
     public void initialize() {
@@ -316,7 +315,6 @@ public class SaleInitiateFormController extends AbstractController {
     /**
      * Handles the mouse event of the back button.
      * @param event the mouse event that triggered this method
-     * @throws IOException if there is an issue loading the FXML file
      */
     @Override
     public void back(MouseEvent event) {

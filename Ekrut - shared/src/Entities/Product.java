@@ -22,7 +22,7 @@ public class Product {
 
     /**
      * Gets the ID of the product.
-     * @return int : product ID.
+     * @return product ID.
      */
     public int getPid() {
         return pid;
@@ -30,7 +30,7 @@ public class Product {
 
     /**
      * Sets the the ID of the product.
-     * @param int product ID
+     * @param pid product ID
      */
     public void setPid(int pid) {
         this.pid = pid;
@@ -38,7 +38,7 @@ public class Product {
 
     /**
      * Gets the price of the product.
-     * @return int : product price.
+     * @return product price.
      */
     public int getPrice() {
         return price;
@@ -46,7 +46,7 @@ public class Product {
 
     /**
      * Sets the the price of the product.
-     * @param int product price
+     * @param price product price
      */
     public void setPrice(int price) {
         this.price = price;
@@ -54,7 +54,7 @@ public class Product {
 
     /**
      * Gets the name of the product.
-     * @return String : product name.
+     * @return product name.
      */
     public String getPname() {
         return pname;
@@ -62,7 +62,7 @@ public class Product {
 
     /**
      * Sets the the name of the product.
-     * @param String product name
+     * @param pname product name
      */
     public void setPname(String pname) {
         this.pname = pname;
