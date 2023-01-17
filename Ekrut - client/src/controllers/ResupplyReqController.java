@@ -42,7 +42,7 @@ public class ResupplyReqController extends AbstractController {
 
 	@FXML
 	private TableView<ResupplyProduct> Table;
-	
+
 	/**
 	 * initialize method is a protected method that is called automatically when the FXML file is loaded.
 	 * It sets the cell value factories for each column in the table view
@@ -73,10 +73,12 @@ public class ResupplyReqController extends AbstractController {
 		}
 	}
 
+
     /**
      * update stock of a product in DB (after request send for low stock level).
      * @param event the ActionEvent that triggered this method
      */
+
 	@FXML
 	public void update(ActionEvent event) {
 		if (checkInput()) {
@@ -96,6 +98,7 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	/**
+
 	 * Checks if the input valid.
 	 * @param text: the text input got from the label
 	 * @return true if status is pending, false otherwise
@@ -115,11 +118,11 @@ public class ResupplyReqController extends AbstractController {
 		errorLbl.setText("");
 		return true;
 	}
-	
+
 	/**
 	 * Sets up data when controller is up with selecting query of DB and store the results in prodList.
 	 * @param objects: the text input got from the label
-	 */	
+	 */
 	@Override
 	public void setUp(Object... objects) {
 		msg = new Msg(Tasks.Select,

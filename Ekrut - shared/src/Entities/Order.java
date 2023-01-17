@@ -18,7 +18,7 @@ public class Order implements Serializable{
 	
 	/**
 	* Constructor for Order object.
-	* @param OrderID the ID of the order
+	* @param orderID the ID of the order
 	* @param RecieverName the name of the customer
 	* @param RecieverAddress the destination address specified in the order
 	* @param RecieverPhone the phone number of the customer
