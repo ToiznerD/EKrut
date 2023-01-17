@@ -13,9 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 public class CatlogCellController {
-	//private static String imgPath = Paths.get("client.jar\\images").toAbsolutePath().toString()+"\\";
-	private URL imgPath = this.getClass().getResource("/images");
-	private String defaultImg = imgPath + "/defaultCatlogImg.png";
+
 	private OrderProduct product;
 
 	@FXML
@@ -46,7 +44,6 @@ public class CatlogCellController {
 
 	private Image buildImg(String productName) {
 		InputStream stream = null;
-		System.out.println(defaultImg);
 		stream = this.getClass().getResourceAsStream("/images/" + productName.toLowerCase() + ".png");
 		if (stream == null)
 			stream = this.getClass().getResourceAsStream("/images/defaultCatlogImg.png");

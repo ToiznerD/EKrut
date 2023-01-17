@@ -117,7 +117,7 @@ public class Config {
 			StoreID = Integer.parseInt(br.readLine().split(": ")[1]);
 			br.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			return 0;
 		}
 		return StoreID;
 	}

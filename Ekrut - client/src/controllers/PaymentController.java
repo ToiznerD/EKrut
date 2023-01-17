@@ -32,31 +32,33 @@ public class PaymentController extends AbstractOrderController {
 	private ImageView backBtn;
 	@FXML
 	private Button finishBtn;
+
 	@FXML
 	protected void initialize() {
 		listView.setCellFactory(listView -> new OrderViewCell());
 		listView.setItems(prodList);
+		discountText.setText("Discount: " + decimalToInt.format(order.getDiscount() * 100) + "%");
+		totalSumText.setText("Total price: " + decimal.format(order.getAfterDiscount()));
+		discountText.setVisible(order.hasDiscount());
 		nameText.setText(myUser.getName());
 		phoneText.setText("Phone: " + myUser.getPhone());
-		addressText.setText("Address: " + myUser.getAddress());
 		emailText.setText("Email: " + myUser.getEmail());
 		cardText.setText("Credit Card: " + getCreditCard());
+
+		if (order.getMethod() == "Delivery" || order.getMethod() == "Pickup")
+			methodText.setText("Method: " + order.getMethod());
+		else
+			methodText.setVisible(false);
+		if (order.getMethod() == "Delivery")
+			addressText.setText("Address: " + order.getAddress());
+		else
+			addressText.setVisible(false);
 	}
 
 	@Override
 	public void setUp(Object... objects) {
 		super.setUp(objects);
 		prodList.addAll(order.getItems());
-		discountText.setVisible(order.hasDiscount());
-		discountText.setText("Discount: " + decimalToInt.format(order.getDiscount() * 100)+"%");
-		totalSumText.setText("Total price: " + decimal.format(order.getAfterDiscount()));
-		switch (Config.getConfig()) {
-		case "EK":
-			methodText.setVisible(false);
-			break;
-		case "OL":
-			methodText.setText("Method: " + order.getMethod());
-		}
 	}
 
 	private void endDialog(boolean result, String code) {
@@ -79,7 +81,6 @@ public class PaymentController extends AbstractOrderController {
 
 	@FXML
 	public void sendOrder(ActionEvent event) {
-
 		msg = new Msg(Tasks.Order, order);
 		sendMsg(msg);
 		endDialog(msg.getBool(), msg.getResponse());

@@ -31,7 +31,6 @@ public class OrderScreenController extends AbstractOrderController {
 	private static final DecimalFormat decimalToInt = new DecimalFormat("0");
 	private int totalPrice = 0;
 	private Double discount = 1.0;
-	private int shopID;
 	private boolean discountInstalled = false;
 
 	@FXML
@@ -85,19 +84,6 @@ public class OrderScreenController extends AbstractOrderController {
 			});
 	}
 
-	private boolean checkOrder() {
-		if (cartOList.isEmpty())
-			return false;
-		for (OrderProduct p : productOList) {
-			OrderProduct old = productOList.get(productOList.indexOf(p));
-			old.setQuant(p.getQuant());
-		}
-		for (OrderProduct o : productOList)
-			if (o.getQuant() < o.getCartQuant())
-				return false;
-		return true;
-	}
-
 	private ArrayList<OrderProduct> getProductList() {
 		msg = new Msg(Tasks.Select,
 				"SELECT p.pid,p.pname,p.price,sp.quantity FROM store_product sp ,product p WHERE sp.pid = p.pid AND sp.sid = "
@@ -129,12 +115,9 @@ public class OrderScreenController extends AbstractOrderController {
 
 	@Override
 	public void setUp(Object... objects) {
-		super.setUp();
-		this.shopID = order.getStore_ID(); //filled in last window.
-		if (order.getMethod() == null) {
-			order.setMethod("Local");
+		super.setUp(objects);
+		if (Config.getConfig().equals("EK"))
 			order.setStore_ID(Config.getStore());
-		}
 		if (!discountInstalled)
 			installDiscount();
 		productOList.clear();
@@ -144,7 +127,7 @@ public class OrderScreenController extends AbstractOrderController {
 
 	@FXML
 	public void checkout(ActionEvent event) throws IOException {
-		if (checkOrder()) {
+		if (!cartOList.isEmpty()) {
 			ArrayList<OrderProduct> list = new ArrayList<OrderProduct>();
 			for (OrderProduct p : productOList)
 				if (p.getCartQuant() > 0)
@@ -154,7 +137,7 @@ public class OrderScreenController extends AbstractOrderController {
 			order.setTotal_price(totalPrice);
 			start("OrderPaymentScreen", "Payment");
 		} else
-			setUp(shopID); //Restart order window.
+			setUp(); //Restart order window.
 	}
 
 	/**

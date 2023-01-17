@@ -21,9 +21,8 @@ public class OrderDetails implements Serializable{
 
 	public OrderDetails(int userId) {
 		this.userId = userId;
-		store_id = 0;
 		discount = 1.0;
-		address = "Local";
+		method = "Local";
 	}
 
 	public void setUserId(int id) {
