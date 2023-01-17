@@ -21,7 +21,8 @@ public class UserManager {
 	 * addClient public static method is adding a connected client to the map and
 	 * updates it in mysql the "isLogged" column to 1.
 	 * 
-	 * @params id: client ID, client: relevant client socket (ConnectionToClient)
+	 * @param id client ID,
+	 * @param client the relevant client socket (ConnectionToClient)
 	 */
 	public static void addClient(int id, ConnectionToClient client) {
 		map.put(id, client);
@@ -42,7 +43,7 @@ public class UserManager {
 	/**
 	 * getEntries public static method for get the map data: keys and values
 	 * 
-	 * @return SetEntery of the map
+	 * @return Set entery of the map
 	 */
 	public static Set<Entry<Integer, ConnectionToClient>> getEntries() {
 		return map.entrySet();

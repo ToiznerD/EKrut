@@ -101,7 +101,6 @@ public class DBController {
 	* Perform Select from DB and returns quantity of a product.
 	@param id ID of a product.
 	@return The quantity of the product or -1 if an error occurs.
-	@throws SQLException if select failed
 	*/
 	public static int getQuant(int id) {
 		ResultSet rs = DBController.select("SELECT quant FROM products WHERE id = " + id);
@@ -116,8 +115,7 @@ public class DBController {
 	/**
 	* Perform Select from DB and returns Result Set.
 	* @param query The Select statement to be executed.
-	* @return ResultSet results that returned from the SELECT statement, or null if an error occurs.
-	* @throws SQLException if Select failed.
+	* @return results that returned from the SELECT statement, or null if an error occurs.
 	*/
 	public static ResultSet select(String query) {
 		try {
@@ -133,8 +131,7 @@ public class DBController {
 	/**
 	* Perform Update to DB and number of rows affected.
 	* @param query The Update statement to be executed.
-	* @return Integer indicates the number of rows affected.
-	* @throws SQLException if Update failed.
+	* @return the number of rows affected.
 	*/
 	public static Integer update(String query) {
 		try {
@@ -149,8 +146,7 @@ public class DBController {
 	/**
 	* Utility import method.
 	* Imports users and customers data from users.txt and customer.txt files to the DB by executing Update queries.
-	* @return boolean : return true of import successed, else return false;
-	* @throws SQLException if Update failed.
+	* @return return true of import successed, else return false;
 	*/
 	public static boolean importUsers() {
 		Statement stmt;

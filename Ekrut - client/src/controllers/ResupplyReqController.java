@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 
+import Entities.ResupplyProduct;
 import Util.Msg;
 import Util.Tasks;
 import javafx.collections.FXCollections;
@@ -16,11 +17,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import Entities.ResupplyProduct;
-import Entities.User;
 
 /**
- * ResupplyReqController class is a controller that interacts with the region employee's resupply requests panel.
+ * ResupplyReqController is a controller for operation employee.
+ * It uses for handling and managing inventory stock.
  * It extends AbstractController and overrides methods of it.
  */
 public class ResupplyReqController extends AbstractController {
@@ -29,7 +29,7 @@ public class ResupplyReqController extends AbstractController {
 	@FXML
 	private ImageView backBtn;
 	@FXML
-	private Label storeLbl;
+	private Label storeLbl, errorLbl;
 	@FXML
 	private TableColumn<ResupplyProduct, Integer> pidCell, sidCell, addQuantCell, aQuantCell;
 	@FXML
@@ -42,11 +42,11 @@ public class ResupplyReqController extends AbstractController {
 
 	@FXML
 	private TableView<ResupplyProduct> Table;
-	@FXML
-	private Label errorLbl;
 
 	/**
-	 * initializes the Resupply requests table to listen to observable list <code>prodList</code>
+	 * initialize method is a protected method that is called automatically when the FXML file is loaded.
+	 * It sets the cell value factories for each column in the table view
+	 * and set the data with prodList observable list.
 	 */
 	@FXML
 	protected void initialize() {
@@ -63,7 +63,6 @@ public class ResupplyReqController extends AbstractController {
     /**
      * Handles the mouse event of the back button.
      * @param event the mouse event that triggered this method
-     * @throws IOException if there is an issue loading the FXML file
      */
 	@Override
 	public void back(MouseEvent event) {
@@ -74,10 +73,10 @@ public class ResupplyReqController extends AbstractController {
 		}
 	}
 
-	/**
-	 * updates quantity of the request that was chosen, adds the number of items that was requested to the store product in the db
-	 * @param event - ActionEvent, click on update
-	 */
+    /**
+     * update stock of a product in DB (after request send for low stock level).
+     * @param event the ActionEvent that triggered this method
+     */
 	@FXML
 	public void update(ActionEvent event) {
 		if (checkInput()) {
@@ -97,9 +96,9 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	/**
-	 * method to check valid inputs from text fields
-	 * @return true if input is valid, false otherwise
-	 */
+	 * Checks if the input valid.
+	 * @return true if status is pending, false otherwise
+	 */	
 	private boolean checkInput() {
 		if (sidText.getText().isEmpty() || pidText.getText().isEmpty()) {
 			errorLbl.setText("Error: Product id and Actual quantity cannot be empty");
@@ -117,8 +116,8 @@ public class ResupplyReqController extends AbstractController {
 	}
 
 	/**
-	 * overrides the setUp in <code>AbstractController</code> class initializes resupply requests
-	 * @param objects - can receive multiple objects
+	 * Sets up data when controller is up with selecting query of DB and store the results in prodList.
+	 * @param objects: the text input got from the label
 	 */
 	@Override
 	public void setUp(Object... objects) {

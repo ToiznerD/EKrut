@@ -107,7 +107,7 @@ public class OrderHandler {
 	}
 
 	/**
-	* Check if an order is valid, quantity in order < quantity in database.
+	* Check if an order is valid, quantity in order quant less then quantity in database.
 	* @param order  the order to be checked
 	* @return true if the order is valid, false otherwise
 	*/

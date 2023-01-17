@@ -23,7 +23,6 @@ public class OperationEmpController extends AbstractController {
     /**
      * switchScreen is called when a action event occurs. It opens a the window "ResupplyReqScreen".
      * @param event The ActionEvent that triggers the method.
-     * @throws IOException if there is an issue loading the "ResupplyReqScreen" form.
      */
 	@FXML
 	void switchScreen(ActionEvent event) {

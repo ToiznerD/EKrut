@@ -37,7 +37,7 @@ public class User {
 
     /**
      * Gets the name of the user.
-     * @return String : User name.
+     * @return User name.
      */
 	public String getName() {
 		return name;
@@ -45,7 +45,7 @@ public class User {
 
     /**
      * Sets the name of the user.
-     * @param name : User name.
+     * @param name User name.
      */
 	public void setName(String name) {
 		this.name = name;
@@ -53,7 +53,7 @@ public class User {
 
     /**
      * Gets the phone of the user.
-     * @return String : User phone.
+     * @return User phone.
      */
 	public String getPhone() {
 		return phone;
@@ -69,7 +69,7 @@ public class User {
 
     /**
      * Gets the address of the user.
-     * @return String : User address.
+     * @return User address.
      */
 	public String getAddress() {
 		return address;
@@ -85,7 +85,7 @@ public class User {
 
     /**
      * Gets the email of the user.
-     * @return String : User email.
+     * @return User email.
      */
 	public String getEmail() {
 		return email;
@@ -101,7 +101,7 @@ public class User {
 
     /**
      * Gets true/false if User is currently logged
-     * @return boolean true=connected, false=disconnected
+     * @return true if connected false if disconnected
      */
 	public boolean isLogged() {
 		return isLogged;
@@ -117,7 +117,7 @@ public class User {
 
     /**
      * Gets the ID of the user.
-     * @return int : User ID.
+     * @return User ID.
      */
 	public int getId() {
 		return id;
@@ -125,7 +125,7 @@ public class User {
 
     /**
      * Gets the username of the user.
-     * @return String : User username.
+     * @return User username.
      */
 	public String getUsername() {
 		return username;
@@ -133,7 +133,7 @@ public class User {
 
     /**
      * Gets the password of the user.
-     * @return String : User password.
+     * @return User password.
      */
 	public String getPassword() {
 		return password;
@@ -141,7 +141,7 @@ public class User {
 
     /**
      * Gets the role of the user.
-     * @return String : User role.
+     * @return User role.
      */
 	public String getRole() {
 		return role;

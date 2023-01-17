@@ -171,6 +171,7 @@ public class OrderDetails implements Serializable {
 		first_order = true;
 	}
 
+
 	public boolean isDelayed_payment() {
 		return delayed_payment;
 	}
@@ -181,17 +182,12 @@ public class OrderDetails implements Serializable {
 	}
 	
 	
-	/*	ArrayList<OrderProduct> items;
-		int total_price, store_id,userId;
-		double discount;
-		String method, address;*/
 
 	/**
 	 * Writes the object to the ObjectOutputStream. This method is used for serializing the OrderDetails object.
 	 * @param out the ObjectOutputStream to write the object to
 	 * @throws IOException if an I/O error occurs while writing the object
 	 */
-
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
 		out.writeInt(total_price);

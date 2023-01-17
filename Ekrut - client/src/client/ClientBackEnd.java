@@ -87,7 +87,6 @@ public class ClientBackEnd extends AbstractClient {
 
 	/**
 	* Close the connection of the client.
-	* @throws IOException if error occured when sending Msg to server
 	*/
 	public void quit() {
 		try {

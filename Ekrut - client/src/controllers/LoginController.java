@@ -42,7 +42,7 @@ public class LoginController extends AbstractController {
 	 * Logs in to the app with the given username and password.
 	 *
 	 * @param event the action event that triggered the method call
-	 * @throws IOException if an I/O error occurs while communicating with the app
+	 * @throws IOException if an error occurs while communicating with the app
 	 */
 	public void regulerLogin(ActionEvent event) throws IOException {
 		// Get the username and password from the text fields
@@ -57,7 +57,8 @@ public class LoginController extends AbstractController {
 	 * connect method to login to the system this method responsible to check the
 	 * login details
 	 * 
-	 * @param event
+	 * @param event the action event that triggered the method call
+	 * @throws IOException if an error occurs while communicating with the app
 	 */
 	public void connect(ActionEvent event) throws IOException {
 		// Connect to server

@@ -76,7 +76,7 @@ public class StockStatusReportController extends AbstractController {
 
     /**
      * present a stock status report to user
-     * @return
+     * @param event the action event that triggered the method call
      */
     public void getStockStatusReportDetails(ActionEvent event) {
         // reset all info on screen when an option is clicked
@@ -235,7 +235,6 @@ public class StockStatusReportController extends AbstractController {
     /**
      * Handles the mouse event of the back button.
      * @param event the mouse event that triggered this method
-     * @throws IOException if there is an issue loading the FXML file
      */
     @Override
     public void back(MouseEvent event) {

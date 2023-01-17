@@ -24,7 +24,7 @@ public class StockReport {
 
     /**
      * Gets the ID of the store.
-     * @return String : store ID.
+     * @return store ID.
      */
     public String getSid() {
         return sid;
@@ -32,7 +32,7 @@ public class StockReport {
 
     /**
      * Sets the the ID of the store.
-     * @param String store ID
+     * @param sid store ID
      */
     public void setSid(String sid) {
         this.sid = sid;
@@ -40,7 +40,7 @@ public class StockReport {
 
     /**
      * Gets the month of the report.
-     * @return int : report month.
+     * @return report month.
      */
     public int getMonth() {
         return month;
@@ -48,7 +48,7 @@ public class StockReport {
 
     /**
      * Sets the the month of the report.
-     * @param int report month
+     * @param month the month number
      */
     public void setMonth(int month) {
         this.month = month;
@@ -56,7 +56,7 @@ public class StockReport {
 
     /**
      * Gets the year of the report.
-     * @return int : report year.
+     * @return year the year in numbers
      */
     public int getYear() {
         return year;
@@ -64,7 +64,7 @@ public class StockReport {
 
     /**
      * Sets the the year of the report.
-     * @param int report year
+     * @param year report year
      */
     public void setYear(int year) {
         this.year = year;
@@ -72,7 +72,7 @@ public class StockReport {
 
     /**
      * Gets the data of the stock.
-     * @return String : stock data
+     * @return stock data
      */
     public String getStockData() {
         return stockData;
@@ -80,7 +80,7 @@ public class StockReport {
 
     /**
      * Sets the stock data.
-     * @param String stock data
+     * @param stockData the data of stock
      */
     public void setStockData(String stockData) {
         this.stockData = stockData;

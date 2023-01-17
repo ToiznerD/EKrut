@@ -111,7 +111,7 @@ public class OrderScreenController extends AbstractOrderController {
 
 	/**
 	 * SELECT every product with a given shop_id.
-	 * @return ArrayList<OrderProduct>
+	 * @return List of order products
 	 */
 	private ArrayList<OrderProduct> getProductList() {
 		msg = new Msg(Tasks.Select,
@@ -183,7 +183,7 @@ public class OrderScreenController extends AbstractOrderController {
 	 * Occur when checkout button clicked 
 	 * set items,discount,total_price properties of order
 	 * and switch to next screen.
-	 * @param 	ActionEvent event.
+	 * @param event action event.
 	 * @throws IOException
 	 */
 	@FXML
@@ -209,7 +209,6 @@ public class OrderScreenController extends AbstractOrderController {
 	 * If the configuration is OL, it opens the "OrderMethodForm" window.
 	 * If the configuration is EK, it returns to "CustomerPanel" window.
 	 * @param event the mouse event that triggered this method
-	 * @throws IOException if there is an issue loading the FXML file
 	 */
 	@Override
 	public void back(MouseEvent event) {

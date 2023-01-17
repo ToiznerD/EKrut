@@ -101,7 +101,7 @@ public class DeliveryOrdersController extends AbstractController {
  * calculateEstimatedDate method is a private method that calculates the estimated delivery date for an order.
  * It takes the relevant orderID from dataMap, takes the orderDate and add days of 3 integers saved for delivery time.
  * @param orderID The ID of the relevant order
- * @return LocalDate the estimated delivery date for the order
+ * @return the estimated delivery date for the order
  */
 	private LocalDate calculateEstimatedDate(int orderID) {
 		return dataMap.get(orderID).getOrderDate().plusDays(distance + droneAvailability + shippingTime);
@@ -150,6 +150,7 @@ public class DeliveryOrdersController extends AbstractController {
  * checkInput private method is called when client try to approve delivery. It checks if the input is valid.
  * It checks if the input is filled, if it is an integer, and the status of that order.
  * @param text: the text input got from the label
+ * @return true if status is pending, false otherwise
  */	
 	private boolean checkInput(String text) {
 		errorLbl.setTextFill(Color.web("Red"));
@@ -174,7 +175,6 @@ public class DeliveryOrdersController extends AbstractController {
     /**
      * Handles the mouse event of the back button.
      * @param event the mouse event that triggered this method
-     * @throws IOException if there is an issue loading the FXML file
      */
 	@Override
 	public void back(MouseEvent event) {

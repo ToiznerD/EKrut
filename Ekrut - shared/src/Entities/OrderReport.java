@@ -26,19 +26,23 @@ public class OrderReport implements Serializable {
 
     /**
      * Gets the number of orders of a store
-     * @return int : number of orders
+     * @return number of orders
      */
     public int getNumOrders() {
         return numOrders;
     }
 
+    /**
+     * Sets thenumber of orders in the report
+     * @param numOrders number of orders
+     */
     public void setNumOrders(int numOrders) {
         this.numOrders = numOrders;
     }
 
     /**
      * Gets the total profit of all orders in the report
-     * @return int : total profit
+     * @return total profit
      */
     public int getTotalProfit() {
         return totalProfit;
@@ -46,7 +50,7 @@ public class OrderReport implements Serializable {
 
     /**
      * Sets the total profit of all orders in the report
-     * @param int : total profit
+     * @param totalProfit the total profit of a store
      */
     public void setTotalProfit(int totalProfit) {
         this.totalProfit = totalProfit;
@@ -54,7 +58,7 @@ public class OrderReport implements Serializable {
 
     /**
      * Gets the name of the store
-     * @return String : store name
+     * @return store name
      */
     public String getsName() {
         return sName;
@@ -62,7 +66,7 @@ public class OrderReport implements Serializable {
 
     /**
      * Sets the name of the store
-     * @param String store name
+     * @param sName name of the store
      */
     public void setsName(String sName) {
         this.sName = sName;
@@ -70,15 +74,15 @@ public class OrderReport implements Serializable {
 
     /**
      * Gets the month of the report.
-     * @return int : report month.
+     * @return report month.
      */
     public int getMonth() {
         return month;
     }
 
     /**
-     * Sets the  month of the report.
-     * @param int report month
+     * Sets the month of the report.
+     * @param month the number of the month
      */
     public void setMonth(int month) {
         this.month = month;
@@ -86,7 +90,7 @@ public class OrderReport implements Serializable {
 
     /**
      * Gets the year of the report.
-     * @return int : report year.
+     * @return report year.
      */
     public int getYear() {
         return year;
@@ -94,7 +98,7 @@ public class OrderReport implements Serializable {
 
     /**
      * Sets the the year of the report.
-     * @param int report year
+     * @param year the year in numbers
      */
     public void setYear(int year) {
         this.year = year;
