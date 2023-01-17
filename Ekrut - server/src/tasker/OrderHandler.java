@@ -53,11 +53,12 @@ public class OrderHandler {
 				order.getAfterDiscount(), java.sql.Date.valueOf(LocalDate.now()),
 				java.sql.Time.valueOf(LocalTime.now()), order.getMethod());
 		if (order.getMethod() == "Local") {
-			DBController.update("INSERT INTO orders (cid,sid,total_price,ord_date,ord_time,method,ord_status) VALUES ("
-					+ values + ",'Completed'" + ")");
+			DBController.update("INSERT INTO orders (cid,sid,total_price,ord_date,ord_time,method,ord_status,delayed_payment) VALUES ("
+					+ values + ",'Completed'," + (order.isDelayed_payment() ? ",1)" : ",0)"));
 		} else {
-			DBController.update(
-					"INSERT INTO orders (cid,sid,total_price,ord_date,ord_time,method) VALUES (" + values + ")");
+			
+			DBController.update("INSERT INTO orders (cid,sid,total_price,ord_date,ord_time,method,delayed_payment) VALUES ("
+			+ values + (order.isDelayed_payment() ? ",1)" : ",0)"));
 		}
 		updateLastOrder(); //fetch the orderId that we insert now.
 	}
@@ -131,7 +132,7 @@ public class OrderHandler {
 		if (order.getMethod().equals("Pickup")) {
 			pickUpCode = createRandomCode();
 			DBController.update("INSERT INTO pickup (oid,sid,orderCode) VALUES (" + lastOrder + ","
-					+ order.getStore_ID() + "," + pickUpCode + ")");
+					+ order.getStore_ID() + ",'" + pickUpCode + "')");
 		}
 	}
 
