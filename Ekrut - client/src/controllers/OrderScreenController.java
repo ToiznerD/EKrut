@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
@@ -35,7 +36,8 @@ public class OrderScreenController extends AbstractOrderController {
 
 	@FXML
 	private ListView<OrderProduct> catlogList, cartList;
-
+	@FXML
+	private ProgressBar pb;
 	@FXML
 	private ImageView backBtn;
 	@FXML
@@ -55,6 +57,10 @@ public class OrderScreenController extends AbstractOrderController {
 		cartList.setCellFactory(listView -> new CartCell());
 		cartList.setItems(cartOList);
 		catlogList.setItems(productOList);
+		if (Config.getConfig().equals("EK"))
+			pb.setProgress(0.5);
+		else
+			pb.setProgress(0.66);
 	}
 
 	private void addListeners() {

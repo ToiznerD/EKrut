@@ -32,11 +32,11 @@ public class CreateResupplyRequestController extends AbstractController {
     private HashMap<String, Integer> operationEmployeesMap = new HashMap<>();
 
     @FXML
-    ComboBox storeLocationsComboBox;
+    ComboBox<String> storeLocationsComboBox;
     @FXML
-    ComboBox productsComboBox;
+    ComboBox<String> productsComboBox;
     @FXML
-    ComboBox userIDComboBox;
+    ComboBox<String> userIDComboBox;
     @FXML
     TextField pnameTxtField;
     @FXML

@@ -2,18 +2,19 @@ package controllers;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+
 import Entities.OrderProduct;
 import Util.Msg;
 import Util.Tasks;
-import client.Config;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -24,6 +25,8 @@ public class PaymentController extends AbstractOrderController {
 	private ObservableList<OrderProduct> prodList = FXCollections.observableArrayList();;
 	@FXML
 	private ListView<OrderProduct> listView;
+    @FXML
+    private ProgressBar pb;
 	@FXML
 	private Text addressText, nameText, phoneText, methodText, emailText;
 	@FXML
