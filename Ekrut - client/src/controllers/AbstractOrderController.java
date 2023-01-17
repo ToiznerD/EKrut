@@ -60,12 +60,12 @@ public class AbstractOrderController extends AbstractController {
 
 	@Override
 	public void start(String fxml, String title, Object... objects) throws IOException {
-		if ((fxml != "OrderMethodForm" || fxml != "OrderPaymentScreen" || fxml != "OrderScreen")) {
+		if (fxml != "OrderMethodForm" && fxml != "OrderPaymentScreen" && fxml != "OrderScreen") {
 			if (task != null) {
 				task.cancel();
 				task = null;
-				order = null;
 			}
+			order = null;
 			prStage.removeEventHandler(MouseEvent.MOUSE_MOVED, mouseMovedEvent);
 			run = false;
 		} else {

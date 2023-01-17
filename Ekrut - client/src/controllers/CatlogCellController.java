@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.InputStream;
-import java.net.URL;
 
 import Entities.OrderProduct;
 import javafx.event.ActionEvent;
@@ -13,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 public class CatlogCellController {
+
 	private OrderProduct product;
 
 	@FXML
