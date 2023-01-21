@@ -7,6 +7,7 @@ import Entities.User;
 import Util.Msg;
 import Util.Tasks;
 import client.Config;
+import controllers.LoginControllerTest.ConnectionServiceStub;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -38,6 +39,93 @@ public class LoginController extends AbstractController {
 
 	private String password;
 
+	private IConnectionService connectionService;
+	
+	public LoginController() {
+		connectionService = new ConnectionService();
+	}
+	
+	public LoginController(IConnectionService conService) {
+		connectionService = conService;
+	}
+	
+	public class ConnectionService implements IConnectionService {
+		public void setUser(User user) {
+			myUser = user;
+		}
+
+		/*
+		 * connect method to login to the system this method responsible to check the
+		 * login details
+		 * 
+		 * @param event the action event that triggered the method call
+		 * @throws IOException if an error occurs while communicating with the app
+		 */
+		public void connect(String userId, String pass) throws IOException {
+			// Connect to server
+			// Create query based on UI input
+			// String query = "SELECT * FROM users WHERE user = '" + userid + "' AND
+			// password = " + password;
+			String query = String.format("SELECT * FROM users WHERE user='%s' AND password = '%s'", userid, password);
+			msg = new Msg(Tasks.Login, query);
+			sendMsg(msg);
+			
+			// set user
+			if (msg.getBool())
+				setUser(msg.getArr(User.class).get(0));
+			else
+				setUser(null);
+			
+
+			if (myUser == null) // refactor erik
+				errMsgLbl.setText(msg.getResponse());
+			// EK Configuration
+			else if (Config.getConfig().equals("EK")) {
+				start("CustomerPanel", "Customer Dashboard");
+			} else {
+				// OL Configuration
+				String role = myUser.getRole();
+				switch (role) {
+				case "new_user":
+				case "customer":
+					start("CustomerPanel", "Customer Dashboard");
+					break;
+				case "service":
+					start("CustomerService", "Customer Service Dashboard");
+					break;
+				case "delivery":
+					start("DeliveryOperatorPanel", "Delivery Operator Dashboard");
+					break;
+				case "marketing_manager":
+					start("MarketingManagerPanel", "Marketing Manager Dashboard");
+					break;
+				case "marketing_employee":
+					start("MarketingEmployeePanel", "Marketing Department Dashboard");
+					break;
+				case "region_manager":
+					start("RegionManagerMainScreen", "Region Manager Dashboard");
+					break;
+				case "ceo":
+					start("RegionManagerMainScreen", "CEO Dashboard");
+					break;
+				case "operation_employee":
+					start("OperationEmpPanel", "Operation Employee Dashboard");
+					break;
+				default:
+					start("UserPanel", "User Dashboard");
+					break;
+				}
+			}
+		}
+	
+		@Override
+		public void appConnector(int id) {
+			String query = "SELECT * FROM users WHERE id =" + id;
+			msg = new Msg(Tasks.Select, query);
+			sendMsg(msg);
+		}
+	}
+
 	/**
 	 * Logs in to the app with the given username and password.
 	 *
@@ -50,67 +138,10 @@ public class LoginController extends AbstractController {
 		password = txtPW.getText();
 
 		// Connect to the app
-		connect(event);
+		connectionService.connect(userid, password);
 	}
 
-	/*
-	 * connect method to login to the system this method responsible to check the
-	 * login details
-	 * 
-	 * @param event the action event that triggered the method call
-	 * @throws IOException if an error occurs while communicating with the app
-	 */
-	public void connect(ActionEvent event) throws IOException {
-		// Connect to server
-		// Create query based on UI input
-		// String query = "SELECT * FROM users WHERE user = '" + userid + "' AND
-		// password = " + password;
-		String query = String.format("SELECT * FROM users WHERE user='%s' AND password = '%s'", userid, password);
-		msg = new Msg(Tasks.Login, query);
-		sendMsg(msg);
-		myUser = msg.getBool() ? msg.getArr(User.class).get(0) : null;
-
-		if (myUser == null) // refactor erik
-			errMsgLbl.setText(msg.getResponse());
-		// EK Configuration
-		else if (Config.getConfig().equals("EK")) {
-			start("CustomerPanel", "Customer Dashboard");
-		} else {
-			// OL Configuration
-			String role = myUser.getRole();
-			switch (role) {
-			case "new_user":
-			case "customer":
-				start("CustomerPanel", "Customer Dashboard");
-				break;
-			case "service":
-				start("CustomerService", "Customer Service Dashboard");
-				break;
-			case "delivery":
-				start("DeliveryOperatorPanel", "Delivery Operator Dashboard");
-				break;
-			case "marketing_manager":
-				start("MarketingManagerPanel", "Marketing Manager Dashboard");
-				break;
-			case "marketing_employee":
-				start("MarketingEmployeePanel", "Marketing Department Dashboard");
-				break;
-			case "region_manager":
-				start("RegionManagerMainScreen", "Region Manager Dashboard");
-				break;
-			case "ceo":
-				start("RegionManagerMainScreen", "CEO Dashboard");
-				break;
-			case "operation_employee":
-				start("OperationEmpPanel", "Operation Employee Dashboard");
-				break;
-			default:
-				start("UserPanel", "User Dashboard");
-				break;
-			}
-		}
-	}
-
+	
 	/**
 	 * Connects to the app with the given ID.
 	 *
@@ -139,9 +170,8 @@ public class LoginController extends AbstractController {
 		}
 
 
-		String query = "SELECT * FROM users WHERE id =" + Integer.parseInt(idString);
-		msg = new Msg(Tasks.Select, query);
-		sendMsg(msg);
+		
+		connectionService.appConnector(Integer.parseInt(idString));
 		if (!msg.getBool()) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Error Dialog");
@@ -158,10 +188,13 @@ public class LoginController extends AbstractController {
 		password = msg.getObj(2);
 
 		// Connect to the app
-		connect(event);
+		connectionService.connect(userid, password);
 	}
 
-
+	public IConnectionService getConnectionService() {
+		return connectionService;
+	}
+	
 	@Override
 	public void back(MouseEvent event) {
 		// TODO Auto-generated method stub

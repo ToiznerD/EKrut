@@ -1,5 +1,7 @@
 package Entities;
 
+import java.util.Objects;
+
 /**
  * User class represents a user in the system. (Entity)
  * It has fields for the information of the user.
@@ -33,6 +35,32 @@ public class User {
 		this.address = address;
 		this.email = email;
 		this.isLogged = isLogged;
+	}
+	
+	
+    /**
+     * Constructor for the User class object. this constructor dont get isLogged param, but sets it to false as default
+     * @param id : User unique ID
+     * @param username : User username to login the system
+     * @param password : User password to login the system
+     * @param role : User role in the system
+     * @param name : User name
+     * @param phone : User phone number
+     * @param address : User address
+     * @param email : User email address
+     */
+	public User(int id, String username, String password, String role, String name, String phone, String address,
+			String email) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+		this.email = email;
+		this.isLogged = false;
 	}
 
     /**
@@ -145,6 +173,21 @@ public class User {
      */
 	public String getRole() {
 		return role;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(address, other.address) && Objects.equals(email, other.email) && id == other.id
+				&& Objects.equals(name, other.name)
+				&& Objects.equals(password, other.password) && Objects.equals(phone, other.phone)
+				&& Objects.equals(role, other.role) && Objects.equals(username, other.username);
 	}
 	
 	
