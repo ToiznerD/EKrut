@@ -1,5 +1,6 @@
 package Utils;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import DBHandler.DBController;
 import Entities.Product;
 import Entities.Store;
 import Entities.StoreProduct;
@@ -23,8 +25,30 @@ import tasker.Tasker;
 public class ReportGenerator extends TimerTask {
     private static List<Store> storeList;
     private static List<Product> productList;
-    private static int month, year;
-
+    private Integer month, year;
+    
+    public void setMonth(Integer month) {
+    	if (month != null && month <= 12 && month > 0) 
+    		this.month = month;
+    	else
+    		this.month = LocalDate.now().getMonth().getValue();
+    }
+    
+    public void setYear(Integer year) {
+    	if (year != null) 
+    		this.year = year;
+    	else
+    		this.year = LocalDate.now().getYear();
+    }
+    
+    public Integer getMonth() {
+    	return month;
+    }
+    
+    public Integer getYear() {
+    	return year;
+    }
+    
     /**
      * Overrides the TimerTask run method, setting the year and month and generating reports
      */
@@ -38,8 +62,11 @@ public class ReportGenerator extends TimerTask {
         else
             year = today.getYear();
 
+        
+        getStores();
+        getProducts();
         // generate reports
-        System.out.println("*** Generating Report ***");
+        System.out.println("*** Generating Report ***");  
         generateReports();
         storeList = null; productList = null;
 
@@ -56,22 +83,20 @@ public class ReportGenerator extends TimerTask {
     /**
      * orchestrates the report generation for each store - only StockStatus and orders reports
      */
-    public static void generateReports() {
-        getStores();
-        getProducts();
+    public void generateReports() {
         for (Store s : storeList) {
             if (!s.getName().equals("Delivery Warehouse")) 
                 generateStockStatusReport(s);
             generateOrdersReports(s);
         }
     }
-
+    
     /**
      * this function gets the stock info for the store s and generates report
      * @param s - store for which we will generate the stock status report
      * @return true if the report was generated successfully
      */
-    public static boolean generateStockStatusReport(Store s) {
+    public boolean generateStockStatusReport(Store s) {
         String query = "SELECT store_product.*, product.pname\n" +
                 "FROM store\n" +
                 "JOIN store_product ON store.sid = store_product.sid\n" +
@@ -105,7 +130,7 @@ public class ReportGenerator extends TimerTask {
      * @param s - store for which we will generate the stock status report
      * @return true if the report was generated successfully
      */
-    public static boolean generateOrdersReports(Store s) {
+    public boolean generateOrdersReports(Store s) {
         Double totalProfit;
         Long numOrders;
         String query, insertReportQuery;
@@ -159,4 +184,16 @@ public class ReportGenerator extends TimerTask {
         } catch (SQLException e) { e.printStackTrace(); }
         productList = msg.getArr(Product.class);
     }
+
+	public boolean stockReportExist(Integer month, Integer year, String s_name) {
+		String s = String.format("SELECT s_name FROM stock_report WHERE month = %d AND year = %d AND s_name = '%s'", month, year, s_name);
+		ResultSet rs = DBController.select(s);
+		
+		try {
+			return rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

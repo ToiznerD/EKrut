@@ -29,7 +29,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class ServerController {
 	private ObservableList<InetAddress> connectedObserv = FXCollections.observableArrayList();
 	private serverBackEnd sv;
-	private Calendar calendar = Calendar.getInstance();
 	private Boolean isCalendarInjected = false;
 	@FXML
 	private Button btnConnect, btnDisconnect, btnImport;
@@ -84,8 +83,7 @@ public class ServerController {
 	/**
 	 * @param calendar setter for calendar property.
 	 */
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setCalendarInjectedProperty() {
 		isCalendarInjected = true;
 	}
 
@@ -94,9 +92,10 @@ public class ServerController {
 	*/
 	private void Scheduler() {
 		Timer timer = new Timer();
-
+		
+		Calendar calendar = Calendar.getInstance();
 		if (!isCalendarInjected)
-			setNextMonth();
+			calendar = setNextMonth(calendar);
 		Date firstTime = calendar.getTime();
 		timer.schedule(new ReportGenerator(), firstTime);
 		// if isCalendarInjected is true, testing mode, reportGenerator only.
@@ -104,7 +103,7 @@ public class ServerController {
 			timer.schedule(new PaymentCollector(), firstTime);
 	}
 
-	private void setNextMonth() {
+	private Calendar setNextMonth(Calendar calendar) {
 		// add 1 month so that the first report generated will be from the 1st of next month
 		calendar.add(Calendar.MONTH, 1);
 
@@ -114,6 +113,8 @@ public class ServerController {
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
+		
+		return calendar;
 	}
 
 	/**
