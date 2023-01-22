@@ -21,11 +21,10 @@ public class StockStatusReportControllerTest {
 				int intMonth = Integer.parseInt(month), intYear = Integer.parseInt(year);
 			
 				if (reportInDb.getMonth() != intMonth || reportInDb.getYear() != intYear || !reportInDb.getSname().equals(storeLocation)) {
-					stockReportController.setStockReportToDisplay(null);
 					return;
 				}
 			} catch (NumberFormatException e) {
-				stockReportController.setStockReportToDisplay(null);
+				return;
 			}
 			
 			stockReportController.setStockReportToDisplay(reportInDb);
@@ -114,7 +113,6 @@ public class StockStatusReportControllerTest {
 		assertEquals(stockReportController.getStockReportToDisplay(), null);
 	}
 	
-	
 	// checking functionality: fetching a report of a store that dont exist
 	// input data: sname = Karmiel, month = 9, year = ""
 	// expected result: true, stockReportController.stockReportToDisplay is not initialized
@@ -144,5 +142,4 @@ public class StockStatusReportControllerTest {
 		// Assert
 		assertEquals(stockReportController.getStockReportToDisplay(), null);
 	}
-	
 }

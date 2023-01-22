@@ -51,11 +51,11 @@ public class ReportGeneratorTest {
 			DBController.update(s.toString());
 		}
 	}
-
+	
 	// checking functionality: report creation in database success.
-	// input data: month = now(), year = now(), store = valid.
+	// input data: month = valid, year = valid, store = valid.
 	// expected result: true.
-	// actual result = equals: storeExcpectedQuantity = reportResultQuantity.
+	// actual result = true: stockReportExist().
 	@Test
 	void existingStoreReportCrationSucsess() {
 		store = new Store(2, 1, "Karmiel", "Kineret 33");
@@ -67,12 +67,8 @@ public class ReportGeneratorTest {
 		try {
 			HashMap<String, Integer> map = buildMap(store);
 			ResultSet rs = getProducts(store);
-			while (rs.next()) {
-				String productName = rs.getString(1);
-				int storeExcpectedQuantity = rs.getInt(2);
-				int reportResultQuantity = map.get(productName);
-				assertEquals(storeExcpectedQuantity, reportResultQuantity);
-			}
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
 		} catch (Exception e) {
 			fail();
 		}
@@ -93,9 +89,9 @@ public class ReportGeneratorTest {
 	}
 
 	// checking functionality: report creation in database success.
-	// input data: month = null, year = now(), store = valid.
+	// input data: month = non valid, year = valid, store = valid.
 	// expected result: true.
-	// actual result = equals: storeExcpectedQuantity = reportResultQuantity.
+	// actual result = true: stockReportExist().
 	@Test
 	void monthNullReportCreationSucsess() {
 		store = new Store(2, 1, "Karmiel", "Kineret 33");
@@ -107,21 +103,17 @@ public class ReportGeneratorTest {
 		try {
 			HashMap<String, Integer> map = buildMap(store);
 			ResultSet rs = getProducts(store);
-			while (rs.next()) {
-				String productName = rs.getString(1);
-				int storeExcpectedQuantity = rs.getInt(2);
-				int reportResultQuantity = map.get(productName);
-				assertEquals(storeExcpectedQuantity, reportResultQuantity);
-			}
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
 		} catch (Exception e) {
 			fail();
 		}
 	}
 
 	// checking functionality: report creation in database success.
-	// input data: month = -1, year = now(), store = valid.
+	// input data: month = non valid, year = valid, store = valid.
 	// expected result: true.
-	// actual result = equals: storeExcpectedQuantity = reportResultQuantity.
+	// actual result = true: stockReportExist().
 	@Test
 	void monthNegativeReportCreationSuccsess() {
 		store = new Store(2, 1, "Karmiel", "Kineret 33");
@@ -133,21 +125,17 @@ public class ReportGeneratorTest {
 		try {
 			HashMap<String, Integer> map = buildMap(store);
 			ResultSet rs = getProducts(store);
-			while (rs.next()) {
-				String productName = rs.getString(1);
-				int storeExcpectedQuantity = rs.getInt(2);
-				int reportResultQuantity = map.get(productName);
-				assertEquals(storeExcpectedQuantity, reportResultQuantity);
-			}
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
 		} catch (Exception e) {
 			fail();
 		}
 	}
 
 	// checking functionality: report creation in database success.
-	// input data: month = 13, year = now(), store = valid.
+	// input data: month = non valid, year = valid, store = valid.
 	// expected result: true.
-	// actual result = equals: storeExcpectedQuantity = reportResultQuantity.
+	// actual result = true: stockReportExist().
 	@Test
 	void monthBiggerThan12ReportCreationSuccsess() {
 		store = new Store(2, 1, "Karmiel", "Kineret 33");
@@ -159,21 +147,17 @@ public class ReportGeneratorTest {
 		try {
 			HashMap<String, Integer> map = buildMap(store);
 			ResultSet rs = getProducts(store);
-			while (rs.next()) {
-				String productName = rs.getString(1);
-				int storeExcpectedQuantity = rs.getInt(2);
-				int reportResultQuantity = map.get(productName);
-				assertEquals(storeExcpectedQuantity, reportResultQuantity);
-			}
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
 		} catch (Exception e) {
 			fail();
 		}
 	}
 
 	// checking functionality: report creation in database success.
-	// input data: month = now() , year = null, store = valid.
+	// input data: month = non valid, year = valid, store = valid.
 	// expected result: true.
-	// actual result = equals: storeExcpectedQuantity = reportResultQuantity.
+	// actual result = true: stockReportExist().
 	@Test
 	void yearNullReportCreationSuccsess() {
 		store = new Store(2, 1, "Karmiel", "Kineret 33");
@@ -185,21 +169,17 @@ public class ReportGeneratorTest {
 		try {
 			HashMap<String, Integer> map = buildMap(store);
 			ResultSet rs = getProducts(store);
-			while (rs.next()) {
-				String productName = rs.getString(1);
-				int storeExcpectedQuantity = rs.getInt(2);
-				int reportResultQuantity = map.get(productName);
-				assertEquals(storeExcpectedQuantity, reportResultQuantity);
-			}
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
 		} catch (Exception e) {
 			fail();
 		}
 	}
 
 	// checking functionality: report creation in database success.
-	// input data: month = null, year = null, store = valid.
+	// input data: month = non valid, year = valid, store = valid.
 	// expected result: true.
-	// actual result = equals: storeExcpectedQuantity = reportResultQuantity.
+	// actual result = true: stockReportExist().
 	@Test
 	void yearAndMonthNullReportCreationSuccsess() {
 		store = new Store(2, 1, "Karmiel", "Kineret 33");
@@ -211,12 +191,8 @@ public class ReportGeneratorTest {
 		try {
 			HashMap<String, Integer> map = buildMap(store);
 			ResultSet rs = getProducts(store);
-			while (rs.next()) {
-				String productName = rs.getString(1);
-				int storeExcpectedQuantity = rs.getInt(2);
-				int reportResultQuantity = map.get(productName);
-				assertEquals(storeExcpectedQuantity, reportResultQuantity);
-			}
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
 		} catch (Exception e) {
 			fail();
 		}
