@@ -24,7 +24,6 @@ public class StockStatusReportControllerTest {
 			
 			stockReportController.setStockReportToDisplay(reportInDb);
 		}
-	
 	}
 	
 	@BeforeEach
