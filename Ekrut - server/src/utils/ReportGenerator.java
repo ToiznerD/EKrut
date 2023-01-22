@@ -31,14 +31,14 @@ public class ReportGenerator extends TimerTask {
     	if (month != null && month <= 12 && month > 0) 
     		this.month = month;
     	else
-    		this.month = LocalDate.now().getMonth().getValue();
+    		throw new RuntimeException("month is not valid");
     }
     
     public void setYear(Integer year) {
     	if (year != null) 
     		this.year = year;
     	else
-    		this.year = LocalDate.now().getYear();
+    		throw new RuntimeException("month is not valid");
     }
     
     public Integer getMonth() {
