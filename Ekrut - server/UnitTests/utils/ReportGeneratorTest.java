@@ -55,10 +55,11 @@ public class ReportGeneratorTest {
 			DBController.update(s.toString());
 		}
 	}
-
+	
 	// checking functionality: report creation in database success.
 	// input data: month = now(), year = now(), validStore = (id=2,rid=1,name=karmiel,address=kineret 33).
 	// expected result: equals: validStoreExcpectedQuantity = reportResultQuantity.
+
 	@Test
 	void existingStoreReportCrationSucsess_generateStockStatusReport() {
 		reportGenerator.setMonth(month);
@@ -95,6 +96,7 @@ public class ReportGeneratorTest {
 	// checking functionality: report creation in database success.
 	// input data: month = now(), year = now(), validStore = (id=2,rid=1,name=karmiel,address=kineret 33).
 	// expected result: equals: validStoreExcpectedQuantity = reportResultQuantity.
+
 	@Test
 	void monthNullReportCreationSucsess_generateStockStatusReport() {
 
@@ -104,6 +106,7 @@ public class ReportGeneratorTest {
 		reportGenerator.generateStockStatusReport(validStore);
 		assertTrue(reportGenerator.stockReportExist(month, year, validStore.getName()));
 		try {
+
 			HashMap<String, Integer> map = buildMap(validStore);
 			ResultSet rs = getProducts(validStore);
 			while (rs.next()) {
@@ -112,6 +115,7 @@ public class ReportGeneratorTest {
 				int reportResultQuantity = map.get(productName);
 				assertEquals(validStoreExcpectedQuantity, reportResultQuantity);
 			}
+
 		} catch (Exception e) {
 			fail();
 		}
@@ -120,6 +124,7 @@ public class ReportGeneratorTest {
 	// checking functionality: report creation in database success.
 	// input data: month = now(), year = now(), validStore = (id=2,rid=1,name=karmiel,address=kineret 33).
 	// expected result: equals: validStoreExcpectedQuantity = reportResultQuantity.
+
 	@Test
 	void monthNegativeReportCreationSuccsess_generateStockStatusReport() {
 		reportGenerator.setMonth(-1);
@@ -161,6 +166,7 @@ public class ReportGeneratorTest {
 				int reportResultQuantity = map.get(productName);
 				assertEquals(validStoreExcpectedQuantity, reportResultQuantity);
 			}
+
 		} catch (Exception e) {
 			fail();
 		}
@@ -169,6 +175,7 @@ public class ReportGeneratorTest {
 	// checking functionality: report creation in database success.
 	// input data: month = now(), year = now(), validStore = (id=2,rid=1,name=karmiel,address=kineret 33).
 	// expected result: equals: validStoreExcpectedQuantity = reportResultQuantity.
+
 	@Test
 	void yearNullReportCreationSuccsess_generateStockStatusReport() {
 		reportGenerator.setMonth(month);
@@ -193,6 +200,7 @@ public class ReportGeneratorTest {
 	// checking functionality: report creation in database success.
 	// input data: month = now(), year = now(), validStore = (id=2,rid=1,name=karmiel,address=kineret 33).
 	// expected result: equals: validStoreExcpectedQuantity = reportResultQuantity.
+
 	@Test
 	void yearAndMonthNullReportCreationSuccsess_generateStockStatusReport() {
 		reportGenerator.setMonth(null);
