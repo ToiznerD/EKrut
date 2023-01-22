@@ -16,7 +16,7 @@ public class Msg implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Tasks task;
-	private String query, consoleMsg, alertMsg,response;
+	private String query, consoleMsg, alertMsg, response;
 	private int intReturn, destinationID;
 	private OrderDetails order;
 	private boolean boolReturn;
@@ -74,6 +74,10 @@ public class Msg implements Serializable {
 	 */
 	public void setResponse(String response) {
 		this.response = response;
+	}
+	
+	public void setArrReturn(ArrayList<List<Object>> arrayReturn) {
+		 this.arrayReturn = arrayReturn;
 	}
 	
 	/**

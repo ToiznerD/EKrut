@@ -6,17 +6,17 @@ package Entities;
  */
 public class StockReport {
     private int month, year;
-    private String sid, stockData;
+    private String sname, stockData;
 
 	/**
 	* Constructor for StockReport object.
-	* @param sid the ID of the store
+	* @param sname the ID of the store
 	* @param stockData the data of stock
 	* @param month of the report
 	* @param year of the report
 	*/
-    public StockReport(String sid, String stockData, int month, int year) {
-        this.sid = sid;
+    public StockReport(String sname, String stockData, int month, int year) {
+        this.sname = sname;
         this.month = month;
         this.year = year;
         this.stockData = stockData;
@@ -26,16 +26,16 @@ public class StockReport {
      * Gets the ID of the store.
      * @return store ID.
      */
-    public String getSid() {
-        return sid;
+    public String getSname() {
+        return sname;
     }
 
     /**
      * Sets the the ID of the store.
      * @param sid store ID
      */
-    public void setSid(String sid) {
-        this.sid = sid;
+    public void setSname(String sname) {
+        this.sname = sname;
     }
 
     /**

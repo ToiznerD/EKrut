@@ -27,11 +27,19 @@ import java.util.*;
 public class StockStatusReportController extends AbstractController {
     private static String month, year;
     private ObservableList<MinimalStoreProduct> itemObsList;
-    private static StockReport targetStockReport;
+    private StockReport stockReportToDisplay;
     protected static List<StockReport> lastReports;
     protected HashMap<String, Integer> targetReportsItemsMap;
     protected ArrayList<HashMap<String, Integer>> lastReportsItemsMaps;
+    IReportService reportService;
 
+    public StockStatusReportController() {
+    	reportService = new ReportRetriever();
+    }
+    
+    public StockStatusReportController(IReportService reportService) {
+    	this.reportService = reportService;
+    }
 
     @FXML
     BarChart dataBarGraph;
@@ -47,6 +55,10 @@ public class StockStatusReportController extends AbstractController {
     TableColumn<StoreProduct, Integer> quantityCol;
     @FXML
     Label errorLabel;
+    
+    public StockReport getStockReportToDisplay() {
+    	return stockReportToDisplay;
+    }
 
     @FXML
     public void initialize() {
@@ -65,6 +77,31 @@ public class StockStatusReportController extends AbstractController {
 
     }
 
+    
+    class ReportRetriever implements IReportService {
+    	
+    	@Override
+        public void getReportFromDb(String storeLocation, String month, String year) {
+       	 String query = getStockStatusReportQuery(storeLocation, month, year);
+            msg = new Msg(Tasks.Select, query);
+            sendMsg(msg);
+            
+         // if query failed - there is no report
+            if (!msg.getBool()) {
+                errorLabel.setText("* Report does not exist");
+                return;
+            }
+
+            setStockReportToDisplay(msg.getArr(StockReport.class).get(0));
+       }
+    	
+    }
+    
+    
+    public void setStockReportToDisplay(StockReport stockReport) {
+    	stockReportToDisplay = stockReport;
+    }
+    
     /**
      * static method to pass date to this screen, used by previous screen (Choose Report)
      * @param month1 report month
@@ -86,18 +123,9 @@ public class StockStatusReportController extends AbstractController {
 
         // get query
         String storeLocation = locationsComboBox.getSelectionModel().getSelectedItem().toString();
-        String query = getStockStatusReportQuery(storeLocation);
-        msg = new Msg(Tasks.Select, query);
-        sendMsg(msg);
-
-        // if query failed - there is no report
-        if (!msg.getBool()) {
-            errorLabel.setText("* Report does not exist");
-            return;
-        }
-
-        targetStockReport = msg.getArr(StockReport.class).get(0);
-
+        
+        reportService.getReportFromDb(storeLocation, month, year);
+        
         fillProductTable();
 
         boolean savedLastReportsSuccessfully = getLastReports(storeLocation);
@@ -107,6 +135,9 @@ public class StockStatusReportController extends AbstractController {
 
         loadDataToBarGraph(savedLastReportsSuccessfully);
     }
+    
+
+
 
     /**
      * fills the barGraph with data we fetched earlier
@@ -205,7 +236,7 @@ public class StockStatusReportController extends AbstractController {
      * @param storeLocation location of the store the report is for
      * @return a db query
      */
-    private String getStockStatusReportQuery(String storeLocation) {
+    private String getStockStatusReportQuery(String storeLocation, String month, String year) {
         String query = "SELECT DISTINCT s_name, stock_data, month, year FROM stock_report\n" +
                 "INNER JOIN store ON stock_report.s_name = \"" + storeLocation + "\"\n" +
                 "WHERE month = " + month + " AND year = " + year;
@@ -219,7 +250,7 @@ public class StockStatusReportController extends AbstractController {
     private void fillProductTable() {
         itemObsList.clear();
         targetReportsItemsMap = new HashMap<>();
-        String stock_data = targetStockReport.getStockData();
+        String stock_data = stockReportToDisplay.getStockData();
         String dataArr[] = stock_data.split(",");
         for (int i=0; i<dataArr.length; i=i+2) {
             itemObsList.add(new MinimalStoreProduct(Integer.valueOf(dataArr[i+1]), dataArr[i]));
