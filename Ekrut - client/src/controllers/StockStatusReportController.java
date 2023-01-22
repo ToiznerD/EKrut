@@ -31,7 +31,7 @@ public class StockStatusReportController extends AbstractController {
     protected static List<StockReport> lastReports;
     protected HashMap<String, Integer> targetReportsItemsMap;
     protected ArrayList<HashMap<String, Integer>> lastReportsItemsMaps;
-    private IReportService reportService;
+    IReportService reportService;
 
     public StockStatusReportController() {
     	reportService = new ReportRetriever();
