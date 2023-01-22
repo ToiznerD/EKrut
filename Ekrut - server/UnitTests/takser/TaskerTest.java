@@ -1,10 +1,13 @@
 package takser;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +26,7 @@ public class TaskerTest {
 	@BeforeAll
 	static void setUp() throws Exception {
 		// connect to DB
-		DBController.setDB_prop("localhost", "ekrut", "root", "erik1502");
+		DBController.setDB_prop("localhost", "ekrut", "root", "Aa123456");
 
 	}
 	@BeforeEach
