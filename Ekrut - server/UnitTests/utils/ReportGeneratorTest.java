@@ -31,7 +31,7 @@ public class ReportGeneratorTest {
 	@BeforeAll
 	static void setUp() throws SQLException {
 
-		DBController.setDB_prop("localhost", "ekrut", "root", "n1a2v3e4");
+		DBController.setDB_prop("localhost", "ekrut", "root", "Aa123456");
 		ResultSet rs = DBController.select("SELECT name FROM store");
 		while (rs.next()) {
 			String s = String.format("DELETE FROM stock_report WHERE month = %d AND year = %d AND s_name = '%s'", month,

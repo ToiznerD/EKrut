@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,16 +20,21 @@ public class TaskerTest {
 	Msg msg;
 	
 	//set up before each test case: set DB connection, reset isLogged columns for all users and clear users map
-	@BeforeEach
-	void setUp() throws Exception {
+	@BeforeAll
+	static void setUp() throws Exception {
 		// connect to DB
-		DBController.setDB_prop("localhost", "ekrut", "root", "erik1502");
+		DBController.setDB_prop("localhost", "ekrut", "root", "Aa123456");
+
+	}
+	@BeforeEach
+	void setUpEach() throws SQLException {
 		// set all users to be logged off in db
 		ResultSet rs = DBController.select("SELECT id from users");
 		while(rs.next()) 
 			DBController.update("UPDATE users SET isLogged = 0 WHERE id = " + rs.getInt(1));
 		UserManager.Clear();
 	}
+
 	
 	//Login process for given user
 	void connectUser(String user, String pass) {
