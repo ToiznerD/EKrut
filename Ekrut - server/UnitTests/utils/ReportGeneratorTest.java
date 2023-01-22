@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,17 +13,24 @@ import org.junit.jupiter.api.Test;
 import DBHandler.DBController;
 import Entities.Store;
 
+/**
+ * This class test the creation of stock status report
+ * using database connection.
+ */
 public class ReportGeneratorTest {
 	ReportGenerator reportGenerator = new ReportGenerator();
 	private Store store;
-	private static int month = 1, year = 2023;
+	private static int month = LocalDate.now().getMonth().getValue(), year = LocalDate.now().getYear();
 
+	/**
+	 * 1. connect to DB from a given properties.
+	 * 2. clear/clean all database stock report of this month/year
+	 * @throws SQLException
+	 */
 	@BeforeAll
-	static void setUp() throws Exception {
-		// connect to DB
-		DBController.setDB_prop("localhost", "ekrut", "root", "n1a2v3e4");
-		//
-		// set all users to be logged off in db
+	static void setUp() throws SQLException {
+
+		DBController.setDB_prop("localhost", "ekrut", "root", "Aa123456");
 		ResultSet rs = DBController.select("SELECT name FROM store");
 		while (rs.next()) {
 			String s = String.format("DELETE FROM stock_report WHERE month = %d AND year = %d AND s_name = '%s'", month,
@@ -31,21 +39,25 @@ public class ReportGeneratorTest {
 		}
 	}
 
+	/**
+	 * remove after every test case the store stock status report that created.
+	 * @throws SQLException on database connection error.
+	 */
 	@AfterEach
-	void tearDown() throws Exception {
-		// delete all reports that was generated in each test case
+	void tearDown() throws SQLException {
 		if (store != null) {
 			String s = String.format("DELETE FROM stock_report WHERE month = %d AND year = %d AND s_name = '%s'",
 					reportGenerator.getMonth(), reportGenerator.getYear(), store.getName());
 			DBController.update(s.toString());
 		}
 	}
-
-	/*
-	 * Test cases : StoreThatExist, StoreDontExist,month = null > 12 < 0,year=null,both=null
-	 */
+	
+	// checking functionality: report creation in database success.
+	// input data: month = valid, year = valid, store = valid.
+	// expected result: true.
+	// actual result = true: stockReportExist().
 	@Test
-	void correctKarmielStoreGenerateStockStatusReport() {
+	void existingStoreReportCrationSucsess() {
 		store = new Store(2, 1, "Karmiel", "Kineret 33");
 		reportGenerator.setMonth(month);
 		reportGenerator.setYear(year);
@@ -62,6 +74,135 @@ public class ReportGeneratorTest {
 		}
 	}
 
+	// checking functionality: report creation in database failed.
+	// input data: month = valid, year = valid, store = non valid.
+	// expected result: false.
+	// actual result = false: stockReportExist().
+	@Test
+	void nonExistingStoreReportCrationFail() {
+		store = new Store(2, 1, "kiryat ata", "Kineret 233");
+		reportGenerator.setMonth(month);
+		reportGenerator.setYear(year);
+		assertFalse(reportGenerator.stockReportExist(month, year, store.getName()));
+		reportGenerator.generateStockStatusReport(store);
+		assertFalse(reportGenerator.stockReportExist(month, year, store.getName()));
+	}
+
+	// checking functionality: report creation in database success.
+	// input data: month = non valid, year = valid, store = valid.
+	// expected result: true.
+	// actual result = true: stockReportExist().
+	@Test
+	void monthNullReportCreationSucsess() {
+		store = new Store(2, 1, "Karmiel", "Kineret 33");
+		reportGenerator.setMonth(null);
+		reportGenerator.setYear(year);
+		assertFalse(reportGenerator.stockReportExist(month, year, store.getName()));
+		reportGenerator.generateStockStatusReport(store);
+		assertTrue(reportGenerator.stockReportExist(month, year, store.getName()));
+		try {
+			HashMap<String, Integer> map = buildMap(store);
+			ResultSet rs = getProducts(store);
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
+		} catch (Exception e) {
+			fail();
+		}
+	}
+
+	// checking functionality: report creation in database success.
+	// input data: month = non valid, year = valid, store = valid.
+	// expected result: true.
+	// actual result = true: stockReportExist().
+	@Test
+	void monthNegativeReportCreationSuccsess() {
+		store = new Store(2, 1, "Karmiel", "Kineret 33");
+		reportGenerator.setMonth(-1);
+		reportGenerator.setYear(year);
+		assertFalse(reportGenerator.stockReportExist(month, year, store.getName()));
+		reportGenerator.generateStockStatusReport(store);
+		assertTrue(reportGenerator.stockReportExist(month, year, store.getName()));
+		try {
+			HashMap<String, Integer> map = buildMap(store);
+			ResultSet rs = getProducts(store);
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
+		} catch (Exception e) {
+			fail();
+		}
+	}
+
+	// checking functionality: report creation in database success.
+	// input data: month = non valid, year = valid, store = valid.
+	// expected result: true.
+	// actual result = true: stockReportExist().
+	@Test
+	void monthBiggerThan12ReportCreationSuccsess() {
+		store = new Store(2, 1, "Karmiel", "Kineret 33");
+		reportGenerator.setMonth(13);
+		reportGenerator.setYear(year);
+		assertFalse(reportGenerator.stockReportExist(month, year, store.getName()));
+		reportGenerator.generateStockStatusReport(store);
+		assertTrue(reportGenerator.stockReportExist(month, year, store.getName()));
+		try {
+			HashMap<String, Integer> map = buildMap(store);
+			ResultSet rs = getProducts(store);
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
+		} catch (Exception e) {
+			fail();
+		}
+	}
+
+	// checking functionality: report creation in database success.
+	// input data: month = non valid, year = valid, store = valid.
+	// expected result: true.
+	// actual result = true: stockReportExist().
+	@Test
+	void yearNullReportCreationSuccsess() {
+		store = new Store(2, 1, "Karmiel", "Kineret 33");
+		reportGenerator.setMonth(month);
+		reportGenerator.setYear(null);
+		assertFalse(reportGenerator.stockReportExist(month, year, store.getName()));
+		reportGenerator.generateStockStatusReport(store);
+		assertTrue(reportGenerator.stockReportExist(month, year, store.getName()));
+		try {
+			HashMap<String, Integer> map = buildMap(store);
+			ResultSet rs = getProducts(store);
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
+		} catch (Exception e) {
+			fail();
+		}
+	}
+
+	// checking functionality: report creation in database success.
+	// input data: month = non valid, year = valid, store = valid.
+	// expected result: true.
+	// actual result = true: stockReportExist().
+	@Test
+	void yearAndMonthNullReportCreationSuccsess() {
+		store = new Store(2, 1, "Karmiel", "Kineret 33");
+		reportGenerator.setMonth(null);
+		reportGenerator.setYear(null);
+		assertFalse(reportGenerator.stockReportExist(month, year, store.getName()));
+		reportGenerator.generateStockStatusReport(store);
+		assertTrue(reportGenerator.stockReportExist(month, year, store.getName()));
+		try {
+			HashMap<String, Integer> map = buildMap(store);
+			ResultSet rs = getProducts(store);
+			while (rs.next())
+				assertEquals(rs.getInt(2), map.get(rs.getString(1)));
+		} catch (Exception e) {
+			fail();
+		}
+	}
+
+	/**
+	 * @param store the store of the report.
+	 * @return map productID : quantity in store
+	 * @throws SQLException on database connection error.
+	 */
 	private HashMap<String, Integer> buildMap(Store store) throws SQLException {
 		String stockQuery = String.format(
 				"SELECT stock_data FROM stock_report WHERE month = %d AND year = %d AND s_name = '%s'",
@@ -75,6 +216,10 @@ public class ReportGeneratorTest {
 		return map;
 	}
 
+	/**
+	 * @param store the store of the report
+	 * @return resultset containing stock_data
+	 */
 	private ResultSet getProducts(Store store) {
 		String query = String.format(
 				"SELECT product.pname,store_product.quantity FROM store JOIN store_product ON store.sid = store_product.sid"
