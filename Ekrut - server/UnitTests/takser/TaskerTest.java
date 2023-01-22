@@ -23,7 +23,7 @@ public class TaskerTest {
 	@BeforeAll
 	static void setUp() throws Exception {
 		// connect to DB
-		DBController.setDB_prop("localhost", "ekrut", "root", "Aa123456s");
+		DBController.setDB_prop("localhost", "ekrut", "root", "erik1502");
 
 	}
 	@BeforeEach
@@ -247,6 +247,47 @@ public class TaskerTest {
 		assertFalse(msg.getBool());
 		assertEquals(msg.getResponse(),"Wrong details");
 		assertFalse(UserManager.containesInMap(userID));
+	}
+	
+	// checking functionality: view stock status report that existing in DB
+	// input data: storeLocation = "Karmiel", month = "12" , year = "2022"
+	//			   stockData = "Cola,5,Bamba,10,Snickers,5,Oreo,10,Bisli,15,Pringles,15,Cheetos,10,Doritos
+	//			  		 ,10,White Kinder Bueno,10,Black Kinder Bueno,25"
+	// expected result: equals : resultStockData = expectedStockData
+	@Test
+	void existingReport_viewStockReport() {
+		String storeLocation = "Karmiel", month = "12" , year = "2022";
+		String expectedStockData = "Cola,5,Bamba,10,Snickers,5,Oreo,10,Bisli,15,Pringles,15,Cheetos,10,Doritos"
+								+ ",10,White Kinder Bueno,10,Black Kinder Bueno,25";
+		String query = "SELECT DISTINCT s_name, stock_data, month, year FROM stock_report\n" +
+                "INNER JOIN store ON stock_report.s_name = \"" + storeLocation + "\"\n" +
+                "WHERE month = " + month + " AND year = " + year;
+		msg = new Msg(Tasks.Select, query);
+		try {
+			Tasker.taskerHandler(msg, null);
+		} catch (SQLException e) {
+			fail();
+		}
+		String resultStockData = msg.getObj(1);
+		assertEquals(resultStockData, expectedStockData);
+	}
+	
+	// checking functionality: view stock status report that not existing in DB
+	// input data: storeLocation = "Karmiel", month = "12" , year = "2024"
+	// expected result: msg.getBool() is set to false
+	@Test
+	void nonExistingReport_viewStockReport() {
+		String storeLocation = "Karmiel", month = "12" , year = "2024";
+		String query = "SELECT DISTINCT s_name, stock_data, month, year FROM stock_report\n" +
+                "INNER JOIN store ON stock_report.s_name = \"" + storeLocation + "\"\n" +
+                "WHERE month = " + month + " AND year = " + year;
+		msg = new Msg(Tasks.Select, query);
+		try {
+			Tasker.taskerHandler(msg, null);
+		} catch (SQLException e) {
+			fail();
+		}
+		assertFalse(msg.getBool());
 	}
 	
 }
