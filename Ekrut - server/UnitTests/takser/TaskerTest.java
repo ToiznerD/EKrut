@@ -23,7 +23,7 @@ public class TaskerTest {
 	@BeforeAll
 	static void setUp() throws Exception {
 		// connect to DB
-		DBController.setDB_prop("localhost", "ekrut", "root", "Aa123456");
+		DBController.setDB_prop("localhost", "ekrut", "root", "Aa123456s");
 
 	}
 	@BeforeEach
