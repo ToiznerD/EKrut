@@ -15,7 +15,7 @@ import Entities.User;
 
 
 
-class LoginControllerTest {
+public class LoginControllerTest {
 	User userInDb;
 	LoginController loginController = new LoginController(new ConnectionServiceStub());
 	
