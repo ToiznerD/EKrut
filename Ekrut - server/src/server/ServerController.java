@@ -3,15 +3,10 @@ package server;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
-
 import DBHandler.DBController;
-import Util.Msg;
-import Util.Tasks;
 import Utils.PaymentCollector;
 import Utils.ReportGenerator;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -26,7 +21,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import tasker.Tasker;
 
 /**
  * ServerController class is the main controller class for the ServerApp.
@@ -35,7 +29,8 @@ import tasker.Tasker;
 public class ServerController {
 	private ObservableList<InetAddress> connectedObserv = FXCollections.observableArrayList();
 	private serverBackEnd sv;
-
+	private Calendar calendar = Calendar.getInstance();
+	private Boolean isCalendarInjected = false;
 	@FXML
 	private Button btnConnect, btnDisconnect, btnImport;
 
@@ -51,7 +46,6 @@ public class ServerController {
 	@FXML
 	private PasswordField db_password;
 
-
 	@FXML
 	private TableColumn<InetAddress, String> host_col, ip_col, status_col;
 
@@ -61,7 +55,7 @@ public class ServerController {
 	*/
 	public void connectToServer() {
 
-		DBController.setDB_prop(ip.getText(),db_name.getText(),db_user.getText(),db_password.getText());
+		DBController.setDB_prop(ip.getText(), db_name.getText(), db_user.getText(), db_password.getText());
 		sv = new serverBackEnd(5555, this);
 		try {
 
@@ -71,7 +65,7 @@ public class ServerController {
 			// Start server
 			sv.listen();
 			appendConsole("Server is up.");
-			
+
 			btnConnect.setDisable(true);
 			btnDisconnect.setDisable(false);
 
@@ -88,14 +82,31 @@ public class ServerController {
 	}
 
 	/**
+	 * @param calendar setter for calendar property.
+	 */
+	public void setCalendar(Calendar calendar) {
+		this.calendar = calendar;
+		isCalendarInjected = true;
+	}
+
+	/**
 	* Schedules a ReportGenerator to run on the first day of the next month with Timer object(runs once).
 	*/
 	private void Scheduler() {
 		Timer timer = new Timer();
 
-		Calendar calendar = Calendar.getInstance();
+		if (!isCalendarInjected)
+			setNextMonth();
+		Date firstTime = calendar.getTime();
+		timer.schedule(new ReportGenerator(), firstTime);
+		// if isCalendarInjected is true, testing mode, reportGenerator only.
+		if (!isCalendarInjected)
+			timer.schedule(new PaymentCollector(), firstTime);
+	}
+
+	private void setNextMonth() {
 		// add 1 month so that the first report generated will be from the 1st of next month
-		calendar.add(Calendar.MONTH,1);
+		calendar.add(Calendar.MONTH, 1);
 
 		// set day at 1st
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -103,9 +114,6 @@ public class ServerController {
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
-		Date firstTime = calendar.getTime();
-		timer.schedule(new ReportGenerator(), firstTime);
-		timer.schedule(new PaymentCollector(), firstTime);
 	}
 
 	/**
@@ -119,7 +127,7 @@ public class ServerController {
 		btnConnect.setDisable(false);
 		appendConsole("Driver definition aborted\nDB connection is down\nServer is down");
 	}
-	
+
 	/**
 	* Appends a string to the server console.
 	* @param str String to be appended to console.
@@ -127,7 +135,7 @@ public class ServerController {
 	public void appendConsole(String str) {
 		console_textbox.appendText(str + "\n");
 	}
-	
+
 	/**
 	* Initializes the connected client table (when server app is up)
 	*/
@@ -138,7 +146,7 @@ public class ServerController {
 		status_col.setCellValueFactory(cellData -> new ReadOnlyStringWrapper("Connected"));
 		connected_table.setItems(connectedObserv);
 	}
-	
+
 	/**
 	* Adds the given IP to connectedObserv
 	* @param connected The InetAddress IP to be added
@@ -168,19 +176,18 @@ public class ServerController {
 			System.exit(0);
 		}
 	}
-	
+
 	/**
 	* Performs server back end Utility import.
 	* @param event ActionEvent that triggers the action
 	*/
 	public void importUsers(ActionEvent event) {
-		if(sv != null) {
-			if(sv.importUsers()) 
+		if (sv != null) {
+			if (sv.importUsers())
 				appendConsole("Users has been imported successfuly.");
 			else
 				appendConsole("Import has failed.");
-		}
-		else
+		} else
 			appendConsole("Import has failed. Before importing users, connect to Database");
 	}
 }
