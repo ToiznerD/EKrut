@@ -169,9 +169,8 @@ public class LoginController extends AbstractController {
 			}
 		}
 
-
-		
 		connectionService.appConnector(Integer.parseInt(idString));
+		
 		if (!msg.getBool()) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Error Dialog");

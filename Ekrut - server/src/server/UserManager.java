@@ -39,6 +39,13 @@ public class UserManager {
 		map.remove(id);
 		DBController.update("UPDATE users SET isLogged = 0 WHERE id = " + id);
 	}
+	
+	public static void removeAll() {
+		for(int id : map.keySet()) 
+			DBController.update("UPDATE users SET isLogged = 0 WHERE id = " + id);
+		
+		map.clear();
+	}
 
 	/**
 	 * getEntries public static method for get the map data: keys and values

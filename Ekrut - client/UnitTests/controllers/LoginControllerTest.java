@@ -26,7 +26,6 @@ class LoginControllerTest {
 			if (!username.equals(userInDb.getUsername()) || !pass.equals(userInDb.getPassword()) || userInDb.isLogged() )
 				myUser = null;
 			else {
-				
 				setUser(new User(userInDb.getId(), userInDb.getUsername(), userInDb.getPassword(),
 								  userInDb.getRole(), userInDb.getName(), userInDb.getPhone(), userInDb.getAddress(), 
 								  userInDb.getEmail(), userInDb.isLogged()));
@@ -72,8 +71,7 @@ class LoginControllerTest {
 		try {
 			loginController.getConnectionService().connect("a_customer1", "123");
 		} catch (IOException e) {
-			fail();
-			e.printStackTrace();
+			fail();	
 		}
 		
 		assertEquals(myUser, userInDb);
@@ -91,7 +89,6 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("NotMyUsername", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
 		}
 		
 		assertNotEquals(myUser, userInDb);
@@ -108,7 +105,6 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("as_customer1", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
 		}
 		
 		assertEquals(myUser, userInDb);
@@ -125,7 +121,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("service", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 	
 		assertEquals(myUser, userInDb);
@@ -142,7 +138,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("rm_south", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 		
 		assertEquals(myUser, userInDb);
@@ -159,7 +155,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("market_manager", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 		
 		assertEquals(myUser, userInDb);
@@ -176,7 +172,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("me_south", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 		
 		assertEquals(myUser, userInDb);
@@ -193,7 +189,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("ceo", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 		
 		assertEquals(myUser, userInDb);
@@ -210,7 +206,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("delivery1", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 		
 		assertEquals(myUser, userInDb);
@@ -228,7 +224,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("operation1", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 		
 		assertEquals(myUser, userInDb);
@@ -246,7 +242,6 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("", "");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
 		}
 		
 		assertNotEquals(myUser, userInDb);
@@ -263,7 +258,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("a_customer1", "");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 		
 		assertNotEquals(myUser, userInDb);
@@ -280,7 +275,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("", "123");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 		
 		assertNotEquals(myUser, userInDb);
@@ -297,7 +292,7 @@ class LoginControllerTest {
 			loginController.getConnectionService().connect("", "");
 		} catch (IOException e) {
 			fail();
-			e.printStackTrace();
+			
 		}
 		
 		assertNotEquals(myUser, userInDb);

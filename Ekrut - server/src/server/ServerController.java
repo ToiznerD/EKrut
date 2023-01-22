@@ -46,7 +46,7 @@ public class ServerController {
 	private TextArea console_textbox;
 
 	@FXML
-	private TextField db_name, db_user, ip, port;
+	public TextField db_name, db_user, ip, port;
 
 	@FXML
 	private PasswordField db_password;
