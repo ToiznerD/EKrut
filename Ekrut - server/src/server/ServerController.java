@@ -7,8 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import DBHandler.DBController;
-import Utils.PaymentCollector;
-import Utils.ReportGenerator;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +19,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import utils.PaymentCollector;
+import utils.ReportGenerator;
 
 /**
  * ServerController class is the main controller class for the ServerApp.
