@@ -50,9 +50,6 @@ public class LoginController extends AbstractController {
 	}
 	
 	public class ConnectionService implements IConnectionService {
-		public void setUser(User user) {
-			myUser = user;
-		}
 
 		/*
 		 * connect method to login to the system this method responsible to check the
@@ -126,6 +123,14 @@ public class LoginController extends AbstractController {
 		}
 	}
 
+	public void setUser(User user) {
+		myUser = user;
+	}
+	
+	public User getUser() {
+		return myUser;
+	}
+	
 	/**
 	 * Logs in to the app with the given username and password.
 	 *
