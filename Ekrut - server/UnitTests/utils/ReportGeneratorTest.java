@@ -25,6 +25,7 @@ public class ReportGeneratorTest {
 	/**
 	 * 1. connect to DB from a given properties.
 	 * 2. clear/clean all database stock report of this month/year
+	 * 3. set validStore - store exist in DB, nonValidStore - store not exist in DB.
 	 * @throws SQLException
 	 */
 	@BeforeAll
@@ -60,7 +61,6 @@ public class ReportGeneratorTest {
 	// expected result: equals: validStoreExcpectedQuantity = reportResultQuantity.
 	@Test
 	void existingStoreReportCrationSucsess_generateStockStatusReport() {
-		validStore = new Store(2, 1, "Karmiel", "Kineret 33");
 		reportGenerator.setMonth(month);
 		reportGenerator.setYear(year);
 		assertFalse(reportGenerator.stockReportExist(month, year, validStore.getName()));
