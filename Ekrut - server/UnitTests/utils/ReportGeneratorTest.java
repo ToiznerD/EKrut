@@ -40,7 +40,6 @@ public class ReportGeneratorTest {
 		}
 		validStore = new Store(2, 1, "Karmiel", "Kineret 33");
 		nonValidStore = new Store(2, 1, "Kiryat ata", "Kineret 33");
-
 	}
 
 	/**
@@ -89,19 +88,20 @@ public class ReportGeneratorTest {
 		reportGenerator.setMonth(month);
 		reportGenerator.setYear(year);
 		assertFalse(reportGenerator.stockReportExist(month, year, nonValidStore.getName()));
-		reportGenerator.generateStockStatusReport(validStore);
+		reportGenerator.generateStockStatusReport(nonValidStore); // nati
 		assertFalse(reportGenerator.stockReportExist(month, year, nonValidStore.getName()));
 	}
 
+	
 	// checking functionality: report creation in database success.
 	// input data: month = now(), year = now(), validStore = (id=2,rid=1,name=karmiel,address=kineret 33).
 	// expected result: RuntimeException thrown.
-
 	@Test
 	void monthNullReportCreationSucsess_generateStockStatusReport() {
 		try {
 			reportGenerator.setMonth(null);
 			reportGenerator.setYear(year);
+			reportGenerator.generateStockStatusReport(validStore); 
 		} catch (RuntimeException e) {
 			return;
 		}
@@ -117,6 +117,7 @@ public class ReportGeneratorTest {
 		try {
 			reportGenerator.setMonth(-1);
 			reportGenerator.setYear(year);
+			reportGenerator.generateStockStatusReport(validStore); 
 		} catch (RuntimeException e) {
 			return;
 		}
@@ -131,13 +132,14 @@ public class ReportGeneratorTest {
 		try {
 			reportGenerator.setMonth(13);
 			reportGenerator.setYear(year);
+			reportGenerator.generateStockStatusReport(validStore); 
 		} catch (RuntimeException e) {
 			return;
 		}
 		fail("Not sepoused to faild");
 	}
 
-	// checking functionality: report creation in database success.
+	// checking functionality: report creation in database fail.
 	// input data: month = now(), year = now(), validStore = (id=2,rid=1,name=karmiel,address=kineret 33).
 	// expected result: RuntimeException thrown.
 
@@ -146,13 +148,14 @@ public class ReportGeneratorTest {
 		try {
 			reportGenerator.setMonth(month);
 			reportGenerator.setYear(null);
+			reportGenerator.generateStockStatusReport(validStore); 
 		} catch (RuntimeException e) {
 			return;
 		}
 		fail("Not sepoused to faild");
 	}
 
-	// checking functionality: report creation in database success.
+	// checking functionality: report creation in database fail.
 	// input data: month = now(), year = now(), validStore = (id=2,rid=1,name=karmiel,address=kineret 33).
 	// expected result: RuntimeException thrown.
 
@@ -161,6 +164,7 @@ public class ReportGeneratorTest {
 		try {
 			reportGenerator.setMonth(null);
 			reportGenerator.setYear(null);
+			reportGenerator.generateStockStatusReport(validStore); 
 		} catch (RuntimeException e) {
 			return;
 		}
@@ -168,7 +172,7 @@ public class ReportGeneratorTest {
 	}
 
 	/**
-	 * @param validStore the validStore of the report.
+	 * @param validStore the Store of the report.
 	 * @return map productID : quantity in validStore
 	 * @throws SQLException on database connection error.
 	 */

@@ -79,7 +79,6 @@ public class StockStatusReportController extends AbstractController {
 
     
     class ReportRetriever implements IReportService {
-    	
     	@Override
         public void getReportFromDb(String storeLocation, String month, String year) {
        	 String query = getStockStatusReportQuery(storeLocation, month, year);
@@ -94,7 +93,6 @@ public class StockStatusReportController extends AbstractController {
 
             setStockReportToDisplay(msg.getArr(StockReport.class).get(0));
        }
-    	
     }
     
     

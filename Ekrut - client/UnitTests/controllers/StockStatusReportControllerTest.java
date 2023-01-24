@@ -26,7 +26,6 @@ public class StockStatusReportControllerTest {
 			} catch (NumberFormatException e) {
 				return;
 			}
-			
 			stockReportController.setStockReportToDisplay(reportInDb);
 		}
 	}
@@ -86,13 +85,13 @@ public class StockStatusReportControllerTest {
 	}
 	
 	// checking functionality: fetching a report with a null sname value
-	// input data: sname = "", month = 9, year = 2022
+	// input data: sname = null, month = 9, year = 2022
 	// expected result: true, stockReportController.stockReportToDisplay is not initialized
 	@Test
 	void nullStore_GetReportFromDb() {
 		//Arrange
 		assertEquals(stockReportController.getStockReportToDisplay(), null);
-		String month = "9", year = "2022", sname = "";
+		String month = "9", year = "2022", sname = null;
 		// Act
 		stockReportController.reportService.getReportFromDb(sname, month, year);	
 		// Assert
@@ -100,13 +99,13 @@ public class StockStatusReportControllerTest {
 	}
 	
 	// checking functionality: fetching a report with a null month value
-	// input data: sname = Karmiel, month = "", year = 2022
+	// input data: sname = Karmiel, month = null, year = 2022
 	// expected result: true, stockReportController.stockReportToDisplay is not initialized
 	@Test
 	void nullMonth_GetReportFromDb() {
 		//Arrange
 		assertEquals(stockReportController.getStockReportToDisplay(), null);
-		String month = "", year = "2025", sname = "Karmiel";
+		String month = null, year = "2025", sname = "Karmiel";
 		// Act
 		stockReportController.reportService.getReportFromDb(sname, month, year);	
 		// Assert
@@ -114,14 +113,14 @@ public class StockStatusReportControllerTest {
 	}
 	
 	// checking functionality: fetching a report of a store that dont exist
-	// input data: sname = Karmiel, month = 9, year = ""
+	// input data: sname = Karmiel, month = 9, year = null
 	// expected result: true, stockReportController.stockReportToDisplay is not initialized
 	// actual result: true
 	@Test
 	void nullYear_GetReportFromDb() {
 		//Arrange
 		assertEquals(stockReportController.getStockReportToDisplay(), null);
-		String month = "9", year = "", sname = "Karmiel";
+		String month = "9", year = null, sname = "Karmiel";
 		// Act
 		stockReportController.reportService.getReportFromDb(sname, month, year);	
 		// Assert
@@ -129,14 +128,14 @@ public class StockStatusReportControllerTest {
 	}
 	
 	// checking functionality: fetching a report of a store that dont exist
-	// input data: sname = "", month = "", year = ""
+	// input data: sname = null, month = null, year = null
 	// expected result: true, stockReportController.stockReportToDisplay is not initialized
 	// actual result: true
 	@Test
 	void allNullInputs_GetReportFromDb() {
 		//Arrange
 		assertEquals(stockReportController.getStockReportToDisplay(), null);
-		String month = "", year = "", sname = "";
+		String month = null, year = null, sname = null;
 		// Act
 		stockReportController.reportService.getReportFromDb(sname, month, year);	
 		// Assert
