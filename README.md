@@ -1,6 +1,11 @@
 # EKrut
-A vending machine management Client-Server system maintained by a database in Java &amp; JavaFX.
+A vending machine management Client-Server system maintained by MySQL Database in Java &amp; JavaFX.
 
-![alt text](https://imgtr.ee/i/YfCJB)
-![alt text](https://imgtr.ee/i/YfI6Q)
-![alt text](https://imgtr.ee/i/YfeFR)
+# Login Page
+![alt text](https://imgtr.ee/images/2023/06/18/YfCJB.jpg)
+
+# Product Catalog
+![alt text](https://imgtr.ee/images/2023/06/18/YfI6Q.jpg)
+
+# Order Details
+![alt text](https://imgtr.ee/images/2023/06/18/YfeFR.jpg)
