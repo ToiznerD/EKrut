@@ -28,6 +28,14 @@ public class UserManager {
 		map.put(id, client);
 		DBController.update("UPDATE users SET isLogged = 1 WHERE id = " + id);
 	}
+	
+	public static boolean containesInMap(int id) {
+		return map.containsKey(id);
+	}
+	
+	public static void Clear() {
+		map.clear();
+	}
 
 	/**
 	 * addClient public static method is removing a connected client to the map and
@@ -38,6 +46,13 @@ public class UserManager {
 	public static void removeClient(int id) {
 		map.remove(id);
 		DBController.update("UPDATE users SET isLogged = 0 WHERE id = " + id);
+	}
+	
+	public static void removeAll() {
+		for(int id : map.keySet()) 
+			DBController.update("UPDATE users SET isLogged = 0 WHERE id = " + id);
+		
+		map.clear();
 	}
 
 	/**

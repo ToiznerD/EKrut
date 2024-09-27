@@ -343,7 +343,7 @@ CREATE TABLE `sale_initiate` (
 
 LOCK TABLES `sale_initiate` WRITE;
 /*!40000 ALTER TABLE `sale_initiate` DISABLE KEYS */;
-INSERT INTO `sale_initiate` VALUES (1,'purim sale',1,'2023-01-10','2023-01-20','10:00:00','20:00:00',1),(2,'spring sale',1,'2023-01-25','2023-02-15','10:00:00','20:00:00',0),(3,'summer sale',1,'2023-03-10','2023-03-20','10:00:00','20:00:00',1);
+INSERT INTO `sale_initiate` VALUES (1,'purim sale',1,'2023-01-10','2023-05-20','00:00:00','23:59:00',1),(2,'spring sale',1,'2023-01-25','2023-02-15','10:00:00','20:00:00',0),(3,'summer sale',1,'2023-03-10','2023-03-20','10:00:00','20:00:00',1);
 /*!40000 ALTER TABLE `sale_initiate` ENABLE KEYS */;
 UNLOCK TABLES;
 
